@@ -1,2 +1,10 @@
-*.class
-*.log
+logs
+target
+/.bsp
+/.idea
+/.idea_modules
+/.classpath
+/.project
+/.settings
+/RUNNING_PID
+.env

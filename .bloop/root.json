@@ -1,0 +1,2138 @@
+{
+    "version": "1.4.0",
+    "project": {
+        "name": "root",
+        "directory": "/home/luivatra/develop/ergo/pratir-backend",
+        "workspaceDir": "/home/luivatra/develop/ergo/pratir-backend",
+        "sources": [
+            "/home/luivatra/develop/ergo/pratir-backend/app",
+            "/home/luivatra/develop/ergo/pratir-backend/app-2.12",
+            "/home/luivatra/develop/ergo/pratir-backend/app-2",
+            "/home/luivatra/develop/ergo/pratir-backend/target/scala-2.12/src_managed/main",
+            "/home/luivatra/develop/ergo/pratir-backend/target/scala-2.12/twirl/main",
+            "/home/luivatra/develop/ergo/pratir-backend/target/scala-2.12/routes/main",
+            "/home/luivatra/develop/ergo/pratir-backend/target/scala-2.13/routes/main/controllers/routes.java",
+            "/home/luivatra/develop/ergo/pratir-backend/target/scala-2.13/routes/main/controllers/ReverseRoutes.scala",
+            "/home/luivatra/develop/ergo/pratir-backend/target/scala-2.13/routes/main/router/Routes.scala",
+            "/home/luivatra/develop/ergo/pratir-backend/target/scala-2.13/routes/main/controllers/javascript/JavaScriptReverseRoutes.scala",
+            "/home/luivatra/develop/ergo/pratir-backend/target/scala-2.13/routes/main/router/RoutesPrefix.scala"
+        ],
+        "dependencies": [
+            
+        ],
+        "classpath": [
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.12.17/scala-library-2.12.17.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/play/twirl-api_2.12/1.5.1/twirl-api_2.12-1.5.1.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/play/play-server_2.12/2.8.18/play-server_2.12-2.8.18.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/play/play-logback_2.12/2.8.18/play-logback_2.12-2.8.18.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/play/play-akka-http-server_2.12/2.8.18/play-akka-http-server_2.12-2.8.18.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/play/filters-helpers_2.12/2.8.18/filters-helpers_2.12-2.8.18.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/play/play-guice_2.12/2.8.18/play-guice_2.12-2.8.18.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/play/play-slick_2.12/5.0.0/play-slick_2.12-5.0.0.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/postgresql/postgresql/42.2.12/postgresql-42.2.12.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/ergoplatform/ergo-appkit_2.12/5.0.0/ergo-appkit_2.12-5.0.0.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-xml_2.12/1.2.0/scala-xml_2.12-1.2.0.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/play/play_2.12/2.8.18/play_2.12-2.8.18.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/ch/qos/logback/logback-classic/1.2.11/logback-classic-1.2.11.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/play/play-streams_2.12/2.8.18/play-streams_2.12-2.8.18.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/akka/akka-http-core_2.12/10.1.15/akka-http-core_2.12-10.1.15.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/google/inject/guice/4.2.3/guice-4.2.3.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/google/inject/extensions/guice-assistedinject/4.2.3/guice-assistedinject-4.2.3.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/slick/slick_2.12/3.3.2/slick_2.12-3.3.2.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/slick/slick-hikaricp_2.12/3.3.2/slick-hikaricp_2.12-3.3.2.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/play/play-jdbc-api_2.12/2.8.0/play-jdbc-api_2.12-2.8.0.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scorexfoundation/sigma-state_2.12/5.0.2/sigma-state_2.12-5.0.2.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/ergoplatform/ergo-wallet_2.12/5.0.2/ergo-wallet_2.12-5.0.2.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/squareup/okhttp3/okhttp/3.12.0/okhttp-3.12.0.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/io/gsonfire/gson-fire/1.8.3/gson-fire-1.8.3.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/io/swagger/core/v3/swagger-annotations/2.0.0/swagger-annotations-2.0.0.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/squareup/retrofit2/retrofit/2.6.2/retrofit-2.6.2.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/squareup/retrofit2/converter-scalars/2.6.2/converter-scalars-2.6.2.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/squareup/retrofit2/converter-gson/2.6.2/converter-gson-2.6.2.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/play/build-link/2.8.18/build-link-2.8.18.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/slf4j/slf4j-api/1.7.36/slf4j-api-1.7.36.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/slf4j/jul-to-slf4j/1.7.36/jul-to-slf4j-1.7.36.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/slf4j/jcl-over-slf4j/1.7.36/jcl-over-slf4j-1.7.36.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/akka/akka-actor_2.12/2.6.20/akka-actor_2.12-2.6.20.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/akka/akka-actor-typed_2.12/2.6.20/akka-actor-typed_2.12-2.6.20.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/akka/akka-slf4j_2.12/2.6.20/akka-slf4j_2.12-2.6.20.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/akka/akka-serialization-jackson_2.12/2.6.20/akka-serialization-jackson_2.12-2.6.20.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-core/2.11.4/jackson-core-2.11.4.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-annotations/2.11.4/jackson-annotations-2.11.4.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/fasterxml/jackson/datatype/jackson-datatype-jdk8/2.11.4/jackson-datatype-jdk8-2.11.4.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/fasterxml/jackson/datatype/jackson-datatype-jsr310/2.11.4/jackson-datatype-jsr310-2.11.4.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-databind/2.11.4/jackson-databind-2.11.4.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/play/play-json_2.12/2.8.2/play-json_2.12-2.8.2.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/google/guava/guava/30.1.1-jre/guava-30.1.1-jre.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/io/jsonwebtoken/jjwt/0.9.1/jjwt-0.9.1.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/jakarta/xml/bind/jakarta.xml.bind-api/2.3.3/jakarta.xml.bind-api-2.3.3.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/jakarta/transaction/jakarta.transaction-api/1.3.3/jakarta.transaction-api-1.3.3.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/javax/inject/javax.inject/1/javax.inject-1.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-java8-compat_2.12/0.9.1/scala-java8-compat_2.12-0.9.1.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/ssl-config-core_2.12/0.4.3/ssl-config-core_2.12-0.4.3.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-parser-combinators_2.12/1.1.2/scala-parser-combinators_2.12-1.1.2.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/ch/qos/logback/logback-core/1.2.11/logback-core-1.2.11.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/reactivestreams/reactive-streams/1.0.3/reactive-streams-1.0.3.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/akka/akka-stream_2.12/2.6.20/akka-stream_2.12-2.6.20.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/akka/akka-parsing_2.12/10.1.15/akka-parsing_2.12-10.1.15.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/aopalliance/aopalliance/1.0/aopalliance-1.0.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/config/1.4.2/config-1.4.2.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-collection-compat_2.12/2.0.0/scala-collection-compat_2.12-2.0.0.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/zaxxer/HikariCP/3.2.0/HikariCP-3.2.0.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-reflect/2.12.17/scala-reflect-2.12.17.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/spire-math/debox_2.12/0.8.0/debox_2.12-0.8.0.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/commons-io/commons-io/2.5/commons-io-2.5.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scorexfoundation/scrypto_2.12/2.1.10/scrypto_2.12-2.1.10.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/bouncycastle/bcprov-jdk15on/1.66/bcprov-jdk15on-1.66.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scorexfoundation/scorex-util_2.12/0.1.8/scorex-util_2.12-0.1.8.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/bitbucket/inkytonik/kiama/kiama_2.12/2.1.0/kiama_2.12-2.1.0.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/fastparse_2.12/1.0.0/fastparse_2.12-1.0.0.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/apache/commons/commons-math3/3.2/commons-math3-3.2.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/io/circe/circe-core_2.12/0.13.0/circe-core_2.12-0.13.0.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/io/circe/circe-generic_2.12/0.13.0/circe-generic_2.12-0.13.0.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/io/circe/circe-parser_2.12/0.13.0/circe-parser_2.12-0.13.0.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scodec/scodec-bits_2.12/1.1.6/scodec-bits_2.12-1.1.6.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/squareup/okio/okio/1.15.0/okio-1.15.0.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/google/code/gson/gson/2.8.5/gson-2.8.5.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/play/play-exceptions/2.8.18/play-exceptions-2.8.18.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/fasterxml/jackson/module/jackson-module-parameter-names/2.11.4/jackson-module-parameter-names-2.11.4.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/fasterxml/jackson/dataformat/jackson-dataformat-cbor/2.11.4/jackson-dataformat-cbor-2.11.4.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/fasterxml/jackson/module/jackson-module-scala_2.12/2.11.4/jackson-module-scala_2.12-2.11.4.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/lz4/lz4-java/1.8.0/lz4-java-1.8.0.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/play/play-functional_2.12/2.8.2/play-functional_2.12-2.8.2.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/joda-time/joda-time/2.10.5/joda-time-2.10.5.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/google/guava/failureaccess/1.0.1/failureaccess-1.0.1.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/google/guava/listenablefuture/9999.0-empty-to-avoid-conflict-with-guava/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/checkerframework/checker-qual/3.8.0/checker-qual-3.8.0.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/google/errorprone/error_prone_annotations/2.5.1/error_prone_annotations-2.5.1.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/google/j2objc/j2objc-annotations/1.3/j2objc-annotations-1.3.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/jakarta/activation/jakarta.activation-api/1.2.2/jakarta.activation-api-1.2.2.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/akka/akka-protobuf-v3_2.12/2.6.20/akka-protobuf-v3_2.12-2.6.20.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/typelevel/spire_2.12/0.14.1/spire_2.12-0.14.1.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/rudogma/supertagged_2.12/1.5/supertagged_2.12-1.5.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/scala-logging/scala-logging_2.12/3.9.2/scala-logging_2.12-3.9.2.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/whispersystems/curve25519-java/0.5.0/curve25519-java-0.5.0.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/bitbucket/inkytonik/dsinfo/dsinfo_2.12/0.4.0/dsinfo_2.12-0.4.0.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/bitbucket/inkytonik/dsprofile/dsprofile_2.12/0.4.0/dsprofile_2.12-0.4.0.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/rogach/scallop_2.12/2.1.1/scallop_2.12-2.1.1.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/jline/jline/2.14.3/jline-2.14.3.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/fastparse-utils_2.12/1.0.0/fastparse-utils_2.12-1.0.0.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/sourcecode_2.12/0.1.4/sourcecode_2.12-0.1.4.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/io/circe/circe-numbers_2.12/0.13.0/circe-numbers_2.12-0.13.0.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/typelevel/cats-core_2.12/2.1.0/cats-core_2.12-2.1.0.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/chuusai/shapeless_2.12/2.3.3/shapeless_2.12-2.3.3.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/io/circe/circe-jawn_2.12/0.13.0/circe-jawn_2.12-0.13.0.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/fasterxml/jackson/module/jackson-module-paranamer/2.11.4/jackson-module-paranamer-2.11.4.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/typelevel/spire-macros_2.12/0.14.1/spire-macros_2.12-0.14.1.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/typelevel/machinist_2.12/0.6.1/machinist_2.12-0.6.1.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/typelevel/algebra_2.12/0.7.0/algebra_2.12-0.7.0.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/typelevel/cats-macros_2.12/2.1.0/cats-macros_2.12-2.1.0.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/typelevel/cats-kernel_2.12/2.1.0/cats-kernel_2.12-2.1.0.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/typelevel/macro-compat_2.12/1.1.1/macro-compat_2.12-1.1.1.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/typelevel/jawn-parser_2.12/1.0.0/jawn-parser_2.12-1.0.0.jar",
+            "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/thoughtworks/paranamer/paranamer/2.8/paranamer-2.8.jar"
+        ],
+        "out": "/home/luivatra/develop/ergo/pratir-backend/.bloop/root",
+        "classesDir": "/home/luivatra/develop/ergo/pratir-backend/.bloop/root/scala-2.12/classes",
+        "resources": [
+            "/home/luivatra/develop/ergo/pratir-backend/conf",
+            "/home/luivatra/develop/ergo/pratir-backend/target/scala-2.12/resource_managed/main"
+        ],
+        "scala": {
+            "organization": "org.scala-lang",
+            "name": "scala-compiler",
+            "version": "2.12.17",
+            "options": [
+                "-deprecation",
+                "-unchecked",
+                "-encoding",
+                "utf8"
+            ],
+            "jars": [
+                "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.12.17/scala-library-2.12.17.jar",
+                "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-compiler/2.12.17/scala-compiler-2.12.17.jar",
+                "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-reflect/2.12.17/scala-reflect-2.12.17.jar",
+                "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-xml_2.12/2.1.0/scala-xml_2.12-2.1.0.jar",
+                "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/jline/jline/2.14.6/jline-2.14.6.jar"
+            ],
+            "setup": {
+                "order": "mixed",
+                "addLibraryToBootClasspath": true,
+                "addCompilerToClasspath": false,
+                "addExtraJarsToClasspath": false,
+                "manageBootClasspath": true,
+                "filterLibraryFromClasspath": true
+            }
+        },
+        "java": {
+            "options": [
+                "-encoding",
+                "utf8",
+                "-g"
+            ]
+        },
+        "test": {
+            "frameworks": [
+                {
+                    "names": [
+                        "org.scalacheck.ScalaCheckFramework"
+                    ]
+                },
+                {
+                    "names": [
+                        "org.specs2.runner.Specs2Framework",
+                        "org.specs2.runner.SpecsFramework"
+                    ]
+                },
+                {
+                    "names": [
+                        "org.specs.runner.SpecsFramework"
+                    ]
+                },
+                {
+                    "names": [
+                        "org.scalatest.tools.Framework",
+                        "org.scalatest.tools.ScalaTestFramework"
+                    ]
+                },
+                {
+                    "names": [
+                        "com.novocode.junit.JUnitFramework"
+                    ]
+                },
+                {
+                    "names": [
+                        "munit.Framework"
+                    ]
+                }
+            ],
+            "options": {
+                "excludes": [
+                    
+                ],
+                "arguments": [
+                    
+                ]
+            }
+        },
+        "platform": {
+            "name": "jvm",
+            "config": {
+                "home": "/usr/lib/jvm/java-11-openjdk-amd64",
+                "options": [
+                    "-Duser.dir=/home/luivatra/develop/ergo/pratir-backend"
+                ]
+            },
+            "mainClass": [
+                
+            ]
+        },
+        "resolution": {
+            "modules": [
+                {
+                    "organization": "org.scala-lang",
+                    "name": "scala-library",
+                    "version": "2.12.17",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "scala-library",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.12.17/scala-library-2.12.17.jar"
+                        },
+                        {
+                            "name": "scala-library",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.12.17/scala-library-2.12.17-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.typesafe.play",
+                    "name": "twirl-api_2.12",
+                    "version": "1.5.1",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "twirl-api_2.12",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/play/twirl-api_2.12/1.5.1/twirl-api_2.12-1.5.1.jar"
+                        },
+                        {
+                            "name": "twirl-api_2.12",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/play/twirl-api_2.12/1.5.1/twirl-api_2.12-1.5.1-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.typesafe.play",
+                    "name": "play-server_2.12",
+                    "version": "2.8.18",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "play-server_2.12",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/play/play-server_2.12/2.8.18/play-server_2.12-2.8.18.jar"
+                        },
+                        {
+                            "name": "play-server_2.12",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/play/play-server_2.12/2.8.18/play-server_2.12-2.8.18-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.typesafe.play",
+                    "name": "play-logback_2.12",
+                    "version": "2.8.18",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "play-logback_2.12",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/play/play-logback_2.12/2.8.18/play-logback_2.12-2.8.18.jar"
+                        },
+                        {
+                            "name": "play-logback_2.12",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/play/play-logback_2.12/2.8.18/play-logback_2.12-2.8.18-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.typesafe.play",
+                    "name": "play-akka-http-server_2.12",
+                    "version": "2.8.18",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "play-akka-http-server_2.12",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/play/play-akka-http-server_2.12/2.8.18/play-akka-http-server_2.12-2.8.18.jar"
+                        },
+                        {
+                            "name": "play-akka-http-server_2.12",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/play/play-akka-http-server_2.12/2.8.18/play-akka-http-server_2.12-2.8.18-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.typesafe.play",
+                    "name": "filters-helpers_2.12",
+                    "version": "2.8.18",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "filters-helpers_2.12",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/play/filters-helpers_2.12/2.8.18/filters-helpers_2.12-2.8.18.jar"
+                        },
+                        {
+                            "name": "filters-helpers_2.12",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/play/filters-helpers_2.12/2.8.18/filters-helpers_2.12-2.8.18-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.typesafe.play",
+                    "name": "play-guice_2.12",
+                    "version": "2.8.18",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "play-guice_2.12",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/play/play-guice_2.12/2.8.18/play-guice_2.12-2.8.18.jar"
+                        },
+                        {
+                            "name": "play-guice_2.12",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/play/play-guice_2.12/2.8.18/play-guice_2.12-2.8.18-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.typesafe.play",
+                    "name": "play-slick_2.12",
+                    "version": "5.0.0",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "play-slick_2.12",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/play/play-slick_2.12/5.0.0/play-slick_2.12-5.0.0.jar"
+                        },
+                        {
+                            "name": "play-slick_2.12",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/play/play-slick_2.12/5.0.0/play-slick_2.12-5.0.0-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.postgresql",
+                    "name": "postgresql",
+                    "version": "42.2.12",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "postgresql",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/postgresql/postgresql/42.2.12/postgresql-42.2.12.jar"
+                        },
+                        {
+                            "name": "postgresql",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/postgresql/postgresql/42.2.12/postgresql-42.2.12-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.ergoplatform",
+                    "name": "ergo-appkit_2.12",
+                    "version": "5.0.0",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "ergo-appkit_2.12",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/ergoplatform/ergo-appkit_2.12/5.0.0/ergo-appkit_2.12-5.0.0.jar"
+                        },
+                        {
+                            "name": "ergo-appkit_2.12",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/ergoplatform/ergo-appkit_2.12/5.0.0/ergo-appkit_2.12-5.0.0-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.scala-lang.modules",
+                    "name": "scala-xml_2.12",
+                    "version": "1.2.0",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "scala-xml_2.12",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-xml_2.12/1.2.0/scala-xml_2.12-1.2.0.jar"
+                        },
+                        {
+                            "name": "scala-xml_2.12",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-xml_2.12/1.2.0/scala-xml_2.12-1.2.0-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.typesafe.play",
+                    "name": "play_2.12",
+                    "version": "2.8.18",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "play_2.12",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/play/play_2.12/2.8.18/play_2.12-2.8.18.jar"
+                        },
+                        {
+                            "name": "play_2.12",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/play/play_2.12/2.8.18/play_2.12-2.8.18-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "ch.qos.logback",
+                    "name": "logback-classic",
+                    "version": "1.2.11",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "logback-classic",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/ch/qos/logback/logback-classic/1.2.11/logback-classic-1.2.11.jar"
+                        },
+                        {
+                            "name": "logback-classic",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/ch/qos/logback/logback-classic/1.2.11/logback-classic-1.2.11-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.typesafe.play",
+                    "name": "play-streams_2.12",
+                    "version": "2.8.18",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "play-streams_2.12",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/play/play-streams_2.12/2.8.18/play-streams_2.12-2.8.18.jar"
+                        },
+                        {
+                            "name": "play-streams_2.12",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/play/play-streams_2.12/2.8.18/play-streams_2.12-2.8.18-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.typesafe.akka",
+                    "name": "akka-http-core_2.12",
+                    "version": "10.1.15",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "akka-http-core_2.12",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/akka/akka-http-core_2.12/10.1.15/akka-http-core_2.12-10.1.15.jar"
+                        },
+                        {
+                            "name": "akka-http-core_2.12",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/akka/akka-http-core_2.12/10.1.15/akka-http-core_2.12-10.1.15-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.google.inject",
+                    "name": "guice",
+                    "version": "4.2.3",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "guice",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/google/inject/guice/4.2.3/guice-4.2.3.jar"
+                        },
+                        {
+                            "name": "guice",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/google/inject/guice/4.2.3/guice-4.2.3-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.google.inject.extensions",
+                    "name": "guice-assistedinject",
+                    "version": "4.2.3",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "guice-assistedinject",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/google/inject/extensions/guice-assistedinject/4.2.3/guice-assistedinject-4.2.3.jar"
+                        },
+                        {
+                            "name": "guice-assistedinject",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/google/inject/extensions/guice-assistedinject/4.2.3/guice-assistedinject-4.2.3-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.typesafe.slick",
+                    "name": "slick_2.12",
+                    "version": "3.3.2",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "slick_2.12",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/slick/slick_2.12/3.3.2/slick_2.12-3.3.2.jar"
+                        },
+                        {
+                            "name": "slick_2.12",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/slick/slick_2.12/3.3.2/slick_2.12-3.3.2-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.typesafe.slick",
+                    "name": "slick-hikaricp_2.12",
+                    "version": "3.3.2",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "slick-hikaricp_2.12",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/slick/slick-hikaricp_2.12/3.3.2/slick-hikaricp_2.12-3.3.2.jar"
+                        },
+                        {
+                            "name": "slick-hikaricp_2.12",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/slick/slick-hikaricp_2.12/3.3.2/slick-hikaricp_2.12-3.3.2-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.typesafe.play",
+                    "name": "play-jdbc-api_2.12",
+                    "version": "2.8.0",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "play-jdbc-api_2.12",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/play/play-jdbc-api_2.12/2.8.0/play-jdbc-api_2.12-2.8.0.jar"
+                        },
+                        {
+                            "name": "play-jdbc-api_2.12",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/play/play-jdbc-api_2.12/2.8.0/play-jdbc-api_2.12-2.8.0-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.scorexfoundation",
+                    "name": "sigma-state_2.12",
+                    "version": "5.0.2",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "sigma-state_2.12",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scorexfoundation/sigma-state_2.12/5.0.2/sigma-state_2.12-5.0.2.jar"
+                        },
+                        {
+                            "name": "sigma-state_2.12",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scorexfoundation/sigma-state_2.12/5.0.2/sigma-state_2.12-5.0.2-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.ergoplatform",
+                    "name": "ergo-wallet_2.12",
+                    "version": "5.0.2",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "ergo-wallet_2.12",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/ergoplatform/ergo-wallet_2.12/5.0.2/ergo-wallet_2.12-5.0.2.jar"
+                        },
+                        {
+                            "name": "ergo-wallet_2.12",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/ergoplatform/ergo-wallet_2.12/5.0.2/ergo-wallet_2.12-5.0.2-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.squareup.okhttp3",
+                    "name": "okhttp",
+                    "version": "3.12.0",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "okhttp",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/squareup/okhttp3/okhttp/3.12.0/okhttp-3.12.0.jar"
+                        },
+                        {
+                            "name": "okhttp",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/squareup/okhttp3/okhttp/3.12.0/okhttp-3.12.0-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.google.code.findbugs",
+                    "name": "jsr305",
+                    "version": "3.0.2",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "jsr305",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.jar"
+                        },
+                        {
+                            "name": "jsr305",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "io.gsonfire",
+                    "name": "gson-fire",
+                    "version": "1.8.3",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "gson-fire",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/io/gsonfire/gson-fire/1.8.3/gson-fire-1.8.3.jar"
+                        },
+                        {
+                            "name": "gson-fire",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/io/gsonfire/gson-fire/1.8.3/gson-fire-1.8.3-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "io.swagger.core.v3",
+                    "name": "swagger-annotations",
+                    "version": "2.0.0",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "swagger-annotations",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/io/swagger/core/v3/swagger-annotations/2.0.0/swagger-annotations-2.0.0.jar"
+                        },
+                        {
+                            "name": "swagger-annotations",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/io/swagger/core/v3/swagger-annotations/2.0.0/swagger-annotations-2.0.0-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.squareup.retrofit2",
+                    "name": "retrofit",
+                    "version": "2.6.2",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "retrofit",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/squareup/retrofit2/retrofit/2.6.2/retrofit-2.6.2.jar"
+                        },
+                        {
+                            "name": "retrofit",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/squareup/retrofit2/retrofit/2.6.2/retrofit-2.6.2-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.squareup.retrofit2",
+                    "name": "converter-scalars",
+                    "version": "2.6.2",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "converter-scalars",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/squareup/retrofit2/converter-scalars/2.6.2/converter-scalars-2.6.2.jar"
+                        },
+                        {
+                            "name": "converter-scalars",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/squareup/retrofit2/converter-scalars/2.6.2/converter-scalars-2.6.2-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.squareup.retrofit2",
+                    "name": "converter-gson",
+                    "version": "2.6.2",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "converter-gson",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/squareup/retrofit2/converter-gson/2.6.2/converter-gson-2.6.2.jar"
+                        },
+                        {
+                            "name": "converter-gson",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/squareup/retrofit2/converter-gson/2.6.2/converter-gson-2.6.2-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.typesafe.play",
+                    "name": "build-link",
+                    "version": "2.8.18",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "build-link",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/play/build-link/2.8.18/build-link-2.8.18.jar"
+                        },
+                        {
+                            "name": "build-link",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/play/build-link/2.8.18/build-link-2.8.18-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.slf4j",
+                    "name": "slf4j-api",
+                    "version": "1.7.36",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "slf4j-api",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/slf4j/slf4j-api/1.7.36/slf4j-api-1.7.36.jar"
+                        },
+                        {
+                            "name": "slf4j-api",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/slf4j/slf4j-api/1.7.36/slf4j-api-1.7.36-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.slf4j",
+                    "name": "jul-to-slf4j",
+                    "version": "1.7.36",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "jul-to-slf4j",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/slf4j/jul-to-slf4j/1.7.36/jul-to-slf4j-1.7.36.jar"
+                        },
+                        {
+                            "name": "jul-to-slf4j",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/slf4j/jul-to-slf4j/1.7.36/jul-to-slf4j-1.7.36-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.slf4j",
+                    "name": "jcl-over-slf4j",
+                    "version": "1.7.36",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "jcl-over-slf4j",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/slf4j/jcl-over-slf4j/1.7.36/jcl-over-slf4j-1.7.36.jar"
+                        },
+                        {
+                            "name": "jcl-over-slf4j",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/slf4j/jcl-over-slf4j/1.7.36/jcl-over-slf4j-1.7.36-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.typesafe.akka",
+                    "name": "akka-actor_2.12",
+                    "version": "2.6.20",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "akka-actor_2.12",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/akka/akka-actor_2.12/2.6.20/akka-actor_2.12-2.6.20.jar"
+                        },
+                        {
+                            "name": "akka-actor_2.12",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/akka/akka-actor_2.12/2.6.20/akka-actor_2.12-2.6.20-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.typesafe.akka",
+                    "name": "akka-actor-typed_2.12",
+                    "version": "2.6.20",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "akka-actor-typed_2.12",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/akka/akka-actor-typed_2.12/2.6.20/akka-actor-typed_2.12-2.6.20.jar"
+                        },
+                        {
+                            "name": "akka-actor-typed_2.12",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/akka/akka-actor-typed_2.12/2.6.20/akka-actor-typed_2.12-2.6.20-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.typesafe.akka",
+                    "name": "akka-slf4j_2.12",
+                    "version": "2.6.20",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "akka-slf4j_2.12",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/akka/akka-slf4j_2.12/2.6.20/akka-slf4j_2.12-2.6.20.jar"
+                        },
+                        {
+                            "name": "akka-slf4j_2.12",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/akka/akka-slf4j_2.12/2.6.20/akka-slf4j_2.12-2.6.20-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.typesafe.akka",
+                    "name": "akka-serialization-jackson_2.12",
+                    "version": "2.6.20",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "akka-serialization-jackson_2.12",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/akka/akka-serialization-jackson_2.12/2.6.20/akka-serialization-jackson_2.12-2.6.20.jar"
+                        },
+                        {
+                            "name": "akka-serialization-jackson_2.12",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/akka/akka-serialization-jackson_2.12/2.6.20/akka-serialization-jackson_2.12-2.6.20-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.fasterxml.jackson.core",
+                    "name": "jackson-core",
+                    "version": "2.11.4",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "jackson-core",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-core/2.11.4/jackson-core-2.11.4.jar"
+                        },
+                        {
+                            "name": "jackson-core",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-core/2.11.4/jackson-core-2.11.4-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.fasterxml.jackson.core",
+                    "name": "jackson-annotations",
+                    "version": "2.11.4",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "jackson-annotations",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-annotations/2.11.4/jackson-annotations-2.11.4.jar"
+                        },
+                        {
+                            "name": "jackson-annotations",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-annotations/2.11.4/jackson-annotations-2.11.4-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.fasterxml.jackson.datatype",
+                    "name": "jackson-datatype-jdk8",
+                    "version": "2.11.4",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "jackson-datatype-jdk8",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/fasterxml/jackson/datatype/jackson-datatype-jdk8/2.11.4/jackson-datatype-jdk8-2.11.4.jar"
+                        },
+                        {
+                            "name": "jackson-datatype-jdk8",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/fasterxml/jackson/datatype/jackson-datatype-jdk8/2.11.4/jackson-datatype-jdk8-2.11.4-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.fasterxml.jackson.datatype",
+                    "name": "jackson-datatype-jsr310",
+                    "version": "2.11.4",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "jackson-datatype-jsr310",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/fasterxml/jackson/datatype/jackson-datatype-jsr310/2.11.4/jackson-datatype-jsr310-2.11.4.jar"
+                        },
+                        {
+                            "name": "jackson-datatype-jsr310",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/fasterxml/jackson/datatype/jackson-datatype-jsr310/2.11.4/jackson-datatype-jsr310-2.11.4-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.fasterxml.jackson.core",
+                    "name": "jackson-databind",
+                    "version": "2.11.4",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "jackson-databind",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-databind/2.11.4/jackson-databind-2.11.4.jar"
+                        },
+                        {
+                            "name": "jackson-databind",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-databind/2.11.4/jackson-databind-2.11.4-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.typesafe.play",
+                    "name": "play-json_2.12",
+                    "version": "2.8.2",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "play-json_2.12",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/play/play-json_2.12/2.8.2/play-json_2.12-2.8.2.jar"
+                        },
+                        {
+                            "name": "play-json_2.12",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/play/play-json_2.12/2.8.2/play-json_2.12-2.8.2-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.google.guava",
+                    "name": "guava",
+                    "version": "30.1.1-jre",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "guava",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/google/guava/guava/30.1.1-jre/guava-30.1.1-jre.jar"
+                        },
+                        {
+                            "name": "guava",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/google/guava/guava/30.1.1-jre/guava-30.1.1-jre-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "io.jsonwebtoken",
+                    "name": "jjwt",
+                    "version": "0.9.1",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "jjwt",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/io/jsonwebtoken/jjwt/0.9.1/jjwt-0.9.1.jar"
+                        },
+                        {
+                            "name": "jjwt",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/io/jsonwebtoken/jjwt/0.9.1/jjwt-0.9.1-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "jakarta.xml.bind",
+                    "name": "jakarta.xml.bind-api",
+                    "version": "2.3.3",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "jakarta.xml.bind-api",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/jakarta/xml/bind/jakarta.xml.bind-api/2.3.3/jakarta.xml.bind-api-2.3.3.jar"
+                        },
+                        {
+                            "name": "jakarta.xml.bind-api",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/jakarta/xml/bind/jakarta.xml.bind-api/2.3.3/jakarta.xml.bind-api-2.3.3-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "jakarta.transaction",
+                    "name": "jakarta.transaction-api",
+                    "version": "1.3.3",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "jakarta.transaction-api",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/jakarta/transaction/jakarta.transaction-api/1.3.3/jakarta.transaction-api-1.3.3.jar"
+                        },
+                        {
+                            "name": "jakarta.transaction-api",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/jakarta/transaction/jakarta.transaction-api/1.3.3/jakarta.transaction-api-1.3.3-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "javax.inject",
+                    "name": "javax.inject",
+                    "version": "1",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "javax.inject",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/javax/inject/javax.inject/1/javax.inject-1.jar"
+                        },
+                        {
+                            "name": "javax.inject",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/javax/inject/javax.inject/1/javax.inject-1-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.scala-lang.modules",
+                    "name": "scala-java8-compat_2.12",
+                    "version": "0.9.1",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "scala-java8-compat_2.12",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-java8-compat_2.12/0.9.1/scala-java8-compat_2.12-0.9.1.jar"
+                        },
+                        {
+                            "name": "scala-java8-compat_2.12",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-java8-compat_2.12/0.9.1/scala-java8-compat_2.12-0.9.1-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.typesafe",
+                    "name": "ssl-config-core_2.12",
+                    "version": "0.4.3",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "ssl-config-core_2.12",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/ssl-config-core_2.12/0.4.3/ssl-config-core_2.12-0.4.3.jar"
+                        },
+                        {
+                            "name": "ssl-config-core_2.12",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/ssl-config-core_2.12/0.4.3/ssl-config-core_2.12-0.4.3-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.scala-lang.modules",
+                    "name": "scala-parser-combinators_2.12",
+                    "version": "1.1.2",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "scala-parser-combinators_2.12",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-parser-combinators_2.12/1.1.2/scala-parser-combinators_2.12-1.1.2.jar"
+                        },
+                        {
+                            "name": "scala-parser-combinators_2.12",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-parser-combinators_2.12/1.1.2/scala-parser-combinators_2.12-1.1.2-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "ch.qos.logback",
+                    "name": "logback-core",
+                    "version": "1.2.11",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "logback-core",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/ch/qos/logback/logback-core/1.2.11/logback-core-1.2.11.jar"
+                        },
+                        {
+                            "name": "logback-core",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/ch/qos/logback/logback-core/1.2.11/logback-core-1.2.11-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.reactivestreams",
+                    "name": "reactive-streams",
+                    "version": "1.0.3",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "reactive-streams",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/reactivestreams/reactive-streams/1.0.3/reactive-streams-1.0.3.jar"
+                        },
+                        {
+                            "name": "reactive-streams",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/reactivestreams/reactive-streams/1.0.3/reactive-streams-1.0.3-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.typesafe.akka",
+                    "name": "akka-stream_2.12",
+                    "version": "2.6.20",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "akka-stream_2.12",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/akka/akka-stream_2.12/2.6.20/akka-stream_2.12-2.6.20.jar"
+                        },
+                        {
+                            "name": "akka-stream_2.12",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/akka/akka-stream_2.12/2.6.20/akka-stream_2.12-2.6.20-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.typesafe.akka",
+                    "name": "akka-parsing_2.12",
+                    "version": "10.1.15",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "akka-parsing_2.12",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/akka/akka-parsing_2.12/10.1.15/akka-parsing_2.12-10.1.15.jar"
+                        },
+                        {
+                            "name": "akka-parsing_2.12",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/akka/akka-parsing_2.12/10.1.15/akka-parsing_2.12-10.1.15-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "aopalliance",
+                    "name": "aopalliance",
+                    "version": "1.0",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "aopalliance",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/aopalliance/aopalliance/1.0/aopalliance-1.0.jar"
+                        },
+                        {
+                            "name": "aopalliance",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/aopalliance/aopalliance/1.0/aopalliance-1.0-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.typesafe",
+                    "name": "config",
+                    "version": "1.4.2",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "config",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/config/1.4.2/config-1.4.2.jar"
+                        },
+                        {
+                            "name": "config",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/config/1.4.2/config-1.4.2-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.scala-lang.modules",
+                    "name": "scala-collection-compat_2.12",
+                    "version": "2.0.0",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "scala-collection-compat_2.12",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-collection-compat_2.12/2.0.0/scala-collection-compat_2.12-2.0.0.jar"
+                        },
+                        {
+                            "name": "scala-collection-compat_2.12",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-collection-compat_2.12/2.0.0/scala-collection-compat_2.12-2.0.0-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.zaxxer",
+                    "name": "HikariCP",
+                    "version": "3.2.0",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "HikariCP",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/zaxxer/HikariCP/3.2.0/HikariCP-3.2.0.jar"
+                        },
+                        {
+                            "name": "HikariCP",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/zaxxer/HikariCP/3.2.0/HikariCP-3.2.0-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.scala-lang",
+                    "name": "scala-reflect",
+                    "version": "2.12.17",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "scala-reflect",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-reflect/2.12.17/scala-reflect-2.12.17.jar"
+                        },
+                        {
+                            "name": "scala-reflect",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-reflect/2.12.17/scala-reflect-2.12.17-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.spire-math",
+                    "name": "debox_2.12",
+                    "version": "0.8.0",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "debox_2.12",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/spire-math/debox_2.12/0.8.0/debox_2.12-0.8.0.jar"
+                        },
+                        {
+                            "name": "debox_2.12",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/spire-math/debox_2.12/0.8.0/debox_2.12-0.8.0-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "commons-io",
+                    "name": "commons-io",
+                    "version": "2.5",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "commons-io",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/commons-io/commons-io/2.5/commons-io-2.5.jar"
+                        },
+                        {
+                            "name": "commons-io",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/commons-io/commons-io/2.5/commons-io-2.5-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.scorexfoundation",
+                    "name": "scrypto_2.12",
+                    "version": "2.1.10",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "scrypto_2.12",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scorexfoundation/scrypto_2.12/2.1.10/scrypto_2.12-2.1.10.jar"
+                        },
+                        {
+                            "name": "scrypto_2.12",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scorexfoundation/scrypto_2.12/2.1.10/scrypto_2.12-2.1.10-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.bouncycastle",
+                    "name": "bcprov-jdk15on",
+                    "version": "1.66",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "bcprov-jdk15on",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/bouncycastle/bcprov-jdk15on/1.66/bcprov-jdk15on-1.66.jar"
+                        },
+                        {
+                            "name": "bcprov-jdk15on",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/bouncycastle/bcprov-jdk15on/1.66/bcprov-jdk15on-1.66-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.scorexfoundation",
+                    "name": "scorex-util_2.12",
+                    "version": "0.1.8",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "scorex-util_2.12",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scorexfoundation/scorex-util_2.12/0.1.8/scorex-util_2.12-0.1.8.jar"
+                        },
+                        {
+                            "name": "scorex-util_2.12",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scorexfoundation/scorex-util_2.12/0.1.8/scorex-util_2.12-0.1.8-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.bitbucket.inkytonik.kiama",
+                    "name": "kiama_2.12",
+                    "version": "2.1.0",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "kiama_2.12",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/bitbucket/inkytonik/kiama/kiama_2.12/2.1.0/kiama_2.12-2.1.0.jar"
+                        },
+                        {
+                            "name": "kiama_2.12",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/bitbucket/inkytonik/kiama/kiama_2.12/2.1.0/kiama_2.12-2.1.0-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.lihaoyi",
+                    "name": "fastparse_2.12",
+                    "version": "1.0.0",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "fastparse_2.12",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/fastparse_2.12/1.0.0/fastparse_2.12-1.0.0.jar"
+                        },
+                        {
+                            "name": "fastparse_2.12",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/fastparse_2.12/1.0.0/fastparse_2.12-1.0.0-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.apache.commons",
+                    "name": "commons-math3",
+                    "version": "3.2",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "commons-math3",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/apache/commons/commons-math3/3.2/commons-math3-3.2.jar"
+                        },
+                        {
+                            "name": "commons-math3",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/apache/commons/commons-math3/3.2/commons-math3-3.2-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "io.circe",
+                    "name": "circe-core_2.12",
+                    "version": "0.13.0",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "circe-core_2.12",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/io/circe/circe-core_2.12/0.13.0/circe-core_2.12-0.13.0.jar"
+                        },
+                        {
+                            "name": "circe-core_2.12",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/io/circe/circe-core_2.12/0.13.0/circe-core_2.12-0.13.0-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "io.circe",
+                    "name": "circe-generic_2.12",
+                    "version": "0.13.0",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "circe-generic_2.12",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/io/circe/circe-generic_2.12/0.13.0/circe-generic_2.12-0.13.0.jar"
+                        },
+                        {
+                            "name": "circe-generic_2.12",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/io/circe/circe-generic_2.12/0.13.0/circe-generic_2.12-0.13.0-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "io.circe",
+                    "name": "circe-parser_2.12",
+                    "version": "0.13.0",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "circe-parser_2.12",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/io/circe/circe-parser_2.12/0.13.0/circe-parser_2.12-0.13.0.jar"
+                        },
+                        {
+                            "name": "circe-parser_2.12",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/io/circe/circe-parser_2.12/0.13.0/circe-parser_2.12-0.13.0-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.scodec",
+                    "name": "scodec-bits_2.12",
+                    "version": "1.1.6",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "scodec-bits_2.12",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scodec/scodec-bits_2.12/1.1.6/scodec-bits_2.12-1.1.6.jar"
+                        },
+                        {
+                            "name": "scodec-bits_2.12",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scodec/scodec-bits_2.12/1.1.6/scodec-bits_2.12-1.1.6-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.squareup.okio",
+                    "name": "okio",
+                    "version": "1.15.0",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "okio",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/squareup/okio/okio/1.15.0/okio-1.15.0.jar"
+                        },
+                        {
+                            "name": "okio",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/squareup/okio/okio/1.15.0/okio-1.15.0-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.google.code.gson",
+                    "name": "gson",
+                    "version": "2.8.5",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "gson",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/google/code/gson/gson/2.8.5/gson-2.8.5.jar"
+                        },
+                        {
+                            "name": "gson",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/google/code/gson/gson/2.8.5/gson-2.8.5-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.typesafe.play",
+                    "name": "play-exceptions",
+                    "version": "2.8.18",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "play-exceptions",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/play/play-exceptions/2.8.18/play-exceptions-2.8.18.jar"
+                        },
+                        {
+                            "name": "play-exceptions",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/play/play-exceptions/2.8.18/play-exceptions-2.8.18-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.fasterxml.jackson.module",
+                    "name": "jackson-module-parameter-names",
+                    "version": "2.11.4",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "jackson-module-parameter-names",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/fasterxml/jackson/module/jackson-module-parameter-names/2.11.4/jackson-module-parameter-names-2.11.4.jar"
+                        },
+                        {
+                            "name": "jackson-module-parameter-names",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/fasterxml/jackson/module/jackson-module-parameter-names/2.11.4/jackson-module-parameter-names-2.11.4-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.fasterxml.jackson.dataformat",
+                    "name": "jackson-dataformat-cbor",
+                    "version": "2.11.4",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "jackson-dataformat-cbor",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/fasterxml/jackson/dataformat/jackson-dataformat-cbor/2.11.4/jackson-dataformat-cbor-2.11.4.jar"
+                        },
+                        {
+                            "name": "jackson-dataformat-cbor",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/fasterxml/jackson/dataformat/jackson-dataformat-cbor/2.11.4/jackson-dataformat-cbor-2.11.4-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.fasterxml.jackson.module",
+                    "name": "jackson-module-scala_2.12",
+                    "version": "2.11.4",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "jackson-module-scala_2.12",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/fasterxml/jackson/module/jackson-module-scala_2.12/2.11.4/jackson-module-scala_2.12-2.11.4.jar"
+                        },
+                        {
+                            "name": "jackson-module-scala_2.12",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/fasterxml/jackson/module/jackson-module-scala_2.12/2.11.4/jackson-module-scala_2.12-2.11.4-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.lz4",
+                    "name": "lz4-java",
+                    "version": "1.8.0",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "lz4-java",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/lz4/lz4-java/1.8.0/lz4-java-1.8.0.jar"
+                        },
+                        {
+                            "name": "lz4-java",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/lz4/lz4-java/1.8.0/lz4-java-1.8.0-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.typesafe.play",
+                    "name": "play-functional_2.12",
+                    "version": "2.8.2",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "play-functional_2.12",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/play/play-functional_2.12/2.8.2/play-functional_2.12-2.8.2.jar"
+                        },
+                        {
+                            "name": "play-functional_2.12",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/play/play-functional_2.12/2.8.2/play-functional_2.12-2.8.2-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "joda-time",
+                    "name": "joda-time",
+                    "version": "2.10.5",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "joda-time",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/joda-time/joda-time/2.10.5/joda-time-2.10.5.jar"
+                        },
+                        {
+                            "name": "joda-time",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/joda-time/joda-time/2.10.5/joda-time-2.10.5-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.google.guava",
+                    "name": "failureaccess",
+                    "version": "1.0.1",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "failureaccess",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/google/guava/failureaccess/1.0.1/failureaccess-1.0.1.jar"
+                        },
+                        {
+                            "name": "failureaccess",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/google/guava/failureaccess/1.0.1/failureaccess-1.0.1-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.google.guava",
+                    "name": "listenablefuture",
+                    "version": "9999.0-empty-to-avoid-conflict-with-guava",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "listenablefuture",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/google/guava/listenablefuture/9999.0-empty-to-avoid-conflict-with-guava/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.checkerframework",
+                    "name": "checker-qual",
+                    "version": "3.8.0",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "checker-qual",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/checkerframework/checker-qual/3.8.0/checker-qual-3.8.0.jar"
+                        },
+                        {
+                            "name": "checker-qual",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/checkerframework/checker-qual/3.8.0/checker-qual-3.8.0-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.google.errorprone",
+                    "name": "error_prone_annotations",
+                    "version": "2.5.1",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "error_prone_annotations",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/google/errorprone/error_prone_annotations/2.5.1/error_prone_annotations-2.5.1.jar"
+                        },
+                        {
+                            "name": "error_prone_annotations",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/google/errorprone/error_prone_annotations/2.5.1/error_prone_annotations-2.5.1-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.google.j2objc",
+                    "name": "j2objc-annotations",
+                    "version": "1.3",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "j2objc-annotations",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/google/j2objc/j2objc-annotations/1.3/j2objc-annotations-1.3.jar"
+                        },
+                        {
+                            "name": "j2objc-annotations",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/google/j2objc/j2objc-annotations/1.3/j2objc-annotations-1.3-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "jakarta.activation",
+                    "name": "jakarta.activation-api",
+                    "version": "1.2.2",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "jakarta.activation-api",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/jakarta/activation/jakarta.activation-api/1.2.2/jakarta.activation-api-1.2.2.jar"
+                        },
+                        {
+                            "name": "jakarta.activation-api",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/jakarta/activation/jakarta.activation-api/1.2.2/jakarta.activation-api-1.2.2-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.typesafe.akka",
+                    "name": "akka-protobuf-v3_2.12",
+                    "version": "2.6.20",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "akka-protobuf-v3_2.12",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/akka/akka-protobuf-v3_2.12/2.6.20/akka-protobuf-v3_2.12-2.6.20.jar"
+                        },
+                        {
+                            "name": "akka-protobuf-v3_2.12",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/akka/akka-protobuf-v3_2.12/2.6.20/akka-protobuf-v3_2.12-2.6.20-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.typelevel",
+                    "name": "spire_2.12",
+                    "version": "0.14.1",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "spire_2.12",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/typelevel/spire_2.12/0.14.1/spire_2.12-0.14.1.jar"
+                        },
+                        {
+                            "name": "spire_2.12",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/typelevel/spire_2.12/0.14.1/spire_2.12-0.14.1-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.rudogma",
+                    "name": "supertagged_2.12",
+                    "version": "1.5",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "supertagged_2.12",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/rudogma/supertagged_2.12/1.5/supertagged_2.12-1.5.jar"
+                        },
+                        {
+                            "name": "supertagged_2.12",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/rudogma/supertagged_2.12/1.5/supertagged_2.12-1.5-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.typesafe.scala-logging",
+                    "name": "scala-logging_2.12",
+                    "version": "3.9.2",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "scala-logging_2.12",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/scala-logging/scala-logging_2.12/3.9.2/scala-logging_2.12-3.9.2.jar"
+                        },
+                        {
+                            "name": "scala-logging_2.12",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/scala-logging/scala-logging_2.12/3.9.2/scala-logging_2.12-3.9.2-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.whispersystems",
+                    "name": "curve25519-java",
+                    "version": "0.5.0",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "curve25519-java",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/whispersystems/curve25519-java/0.5.0/curve25519-java-0.5.0.jar"
+                        },
+                        {
+                            "name": "curve25519-java",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/whispersystems/curve25519-java/0.5.0/curve25519-java-0.5.0-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.bitbucket.inkytonik.dsinfo",
+                    "name": "dsinfo_2.12",
+                    "version": "0.4.0",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "dsinfo_2.12",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/bitbucket/inkytonik/dsinfo/dsinfo_2.12/0.4.0/dsinfo_2.12-0.4.0.jar"
+                        },
+                        {
+                            "name": "dsinfo_2.12",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/bitbucket/inkytonik/dsinfo/dsinfo_2.12/0.4.0/dsinfo_2.12-0.4.0-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.bitbucket.inkytonik.dsprofile",
+                    "name": "dsprofile_2.12",
+                    "version": "0.4.0",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "dsprofile_2.12",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/bitbucket/inkytonik/dsprofile/dsprofile_2.12/0.4.0/dsprofile_2.12-0.4.0.jar"
+                        },
+                        {
+                            "name": "dsprofile_2.12",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/bitbucket/inkytonik/dsprofile/dsprofile_2.12/0.4.0/dsprofile_2.12-0.4.0-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.rogach",
+                    "name": "scallop_2.12",
+                    "version": "2.1.1",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "scallop_2.12",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/rogach/scallop_2.12/2.1.1/scallop_2.12-2.1.1.jar"
+                        },
+                        {
+                            "name": "scallop_2.12",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/rogach/scallop_2.12/2.1.1/scallop_2.12-2.1.1-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "jline",
+                    "name": "jline",
+                    "version": "2.14.3",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "jline",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/jline/jline/2.14.3/jline-2.14.3.jar"
+                        },
+                        {
+                            "name": "jline",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/jline/jline/2.14.3/jline-2.14.3-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.lihaoyi",
+                    "name": "fastparse-utils_2.12",
+                    "version": "1.0.0",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "fastparse-utils_2.12",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/fastparse-utils_2.12/1.0.0/fastparse-utils_2.12-1.0.0.jar"
+                        },
+                        {
+                            "name": "fastparse-utils_2.12",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/fastparse-utils_2.12/1.0.0/fastparse-utils_2.12-1.0.0-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.lihaoyi",
+                    "name": "sourcecode_2.12",
+                    "version": "0.1.4",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "sourcecode_2.12",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/sourcecode_2.12/0.1.4/sourcecode_2.12-0.1.4.jar"
+                        },
+                        {
+                            "name": "sourcecode_2.12",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/sourcecode_2.12/0.1.4/sourcecode_2.12-0.1.4-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "io.circe",
+                    "name": "circe-numbers_2.12",
+                    "version": "0.13.0",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "circe-numbers_2.12",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/io/circe/circe-numbers_2.12/0.13.0/circe-numbers_2.12-0.13.0.jar"
+                        },
+                        {
+                            "name": "circe-numbers_2.12",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/io/circe/circe-numbers_2.12/0.13.0/circe-numbers_2.12-0.13.0-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.typelevel",
+                    "name": "cats-core_2.12",
+                    "version": "2.1.0",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "cats-core_2.12",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/typelevel/cats-core_2.12/2.1.0/cats-core_2.12-2.1.0.jar"
+                        },
+                        {
+                            "name": "cats-core_2.12",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/typelevel/cats-core_2.12/2.1.0/cats-core_2.12-2.1.0-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.chuusai",
+                    "name": "shapeless_2.12",
+                    "version": "2.3.3",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "shapeless_2.12",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/chuusai/shapeless_2.12/2.3.3/shapeless_2.12-2.3.3.jar"
+                        },
+                        {
+                            "name": "shapeless_2.12",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/chuusai/shapeless_2.12/2.3.3/shapeless_2.12-2.3.3-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "io.circe",
+                    "name": "circe-jawn_2.12",
+                    "version": "0.13.0",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "circe-jawn_2.12",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/io/circe/circe-jawn_2.12/0.13.0/circe-jawn_2.12-0.13.0.jar"
+                        },
+                        {
+                            "name": "circe-jawn_2.12",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/io/circe/circe-jawn_2.12/0.13.0/circe-jawn_2.12-0.13.0-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.fasterxml.jackson.module",
+                    "name": "jackson-module-paranamer",
+                    "version": "2.11.4",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "jackson-module-paranamer",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/fasterxml/jackson/module/jackson-module-paranamer/2.11.4/jackson-module-paranamer-2.11.4.jar"
+                        },
+                        {
+                            "name": "jackson-module-paranamer",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/fasterxml/jackson/module/jackson-module-paranamer/2.11.4/jackson-module-paranamer-2.11.4-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.typelevel",
+                    "name": "spire-macros_2.12",
+                    "version": "0.14.1",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "spire-macros_2.12",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/typelevel/spire-macros_2.12/0.14.1/spire-macros_2.12-0.14.1.jar"
+                        },
+                        {
+                            "name": "spire-macros_2.12",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/typelevel/spire-macros_2.12/0.14.1/spire-macros_2.12-0.14.1-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.typelevel",
+                    "name": "machinist_2.12",
+                    "version": "0.6.1",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "machinist_2.12",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/typelevel/machinist_2.12/0.6.1/machinist_2.12-0.6.1.jar"
+                        },
+                        {
+                            "name": "machinist_2.12",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/typelevel/machinist_2.12/0.6.1/machinist_2.12-0.6.1-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.typelevel",
+                    "name": "algebra_2.12",
+                    "version": "0.7.0",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "algebra_2.12",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/typelevel/algebra_2.12/0.7.0/algebra_2.12-0.7.0.jar"
+                        },
+                        {
+                            "name": "algebra_2.12",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/typelevel/algebra_2.12/0.7.0/algebra_2.12-0.7.0-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.typelevel",
+                    "name": "cats-macros_2.12",
+                    "version": "2.1.0",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "cats-macros_2.12",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/typelevel/cats-macros_2.12/2.1.0/cats-macros_2.12-2.1.0.jar"
+                        },
+                        {
+                            "name": "cats-macros_2.12",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/typelevel/cats-macros_2.12/2.1.0/cats-macros_2.12-2.1.0-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.typelevel",
+                    "name": "cats-kernel_2.12",
+                    "version": "2.1.0",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "cats-kernel_2.12",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/typelevel/cats-kernel_2.12/2.1.0/cats-kernel_2.12-2.1.0.jar"
+                        },
+                        {
+                            "name": "cats-kernel_2.12",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/typelevel/cats-kernel_2.12/2.1.0/cats-kernel_2.12-2.1.0-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.typelevel",
+                    "name": "macro-compat_2.12",
+                    "version": "1.1.1",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "macro-compat_2.12",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/typelevel/macro-compat_2.12/1.1.1/macro-compat_2.12-1.1.1.jar"
+                        },
+                        {
+                            "name": "macro-compat_2.12",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/typelevel/macro-compat_2.12/1.1.1/macro-compat_2.12-1.1.1-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.typelevel",
+                    "name": "jawn-parser_2.12",
+                    "version": "1.0.0",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "jawn-parser_2.12",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/typelevel/jawn-parser_2.12/1.0.0/jawn-parser_2.12-1.0.0.jar"
+                        },
+                        {
+                            "name": "jawn-parser_2.12",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/typelevel/jawn-parser_2.12/1.0.0/jawn-parser_2.12-1.0.0-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.thoughtworks.paranamer",
+                    "name": "paranamer",
+                    "version": "2.8",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "paranamer",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/thoughtworks/paranamer/paranamer/2.8/paranamer-2.8.jar"
+                        },
+                        {
+                            "name": "paranamer",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/thoughtworks/paranamer/paranamer/2.8/paranamer-2.8-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.scala-lang",
+                    "name": "scala-library",
+                    "version": "2.12.17",
+                    "configurations": "optional",
+                    "artifacts": [
+                        {
+                            "name": "scala-library",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.12.17/scala-library-2.12.17.jar"
+                        },
+                        {
+                            "name": "scala-library",
+                            "classifier": "sources",
+                            "path": "/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.12.17/scala-library-2.12.17-sources.jar"
+                        }
+                    ]
+                }
+            ]
+        },
+        "tags": [
+            "library"
+        ]
+    }
+}

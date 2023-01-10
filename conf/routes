@@ -1,0 +1,8 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# https://www.playframework.com/documentation/latest/ScalaRouting
+# ~~~~
+
+GET     /sale                   controllers.SaleController.getAll()
+GET     /sale/:saleId           controllers.SaleController.getSale(saleId: String)
+POST    /sale                   controllers.SaleController.createSale()
