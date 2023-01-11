@@ -6,3 +6,4 @@
 GET     /sale                   controllers.SaleController.getAll()
 GET     /sale/:saleId           controllers.SaleController.getSale(saleId: String)
 POST    /sale                   controllers.SaleController.createSale()
+POST    /order                  controllers.SaleController.buyOrder()

@@ -25,7 +25,8 @@ extends  HasDatabaseConfigProvider[JdbcProfile]{
         TableQuery[TokensForSale.TokensForSale].schema ++
         TableQuery[Prices.Prices].schema ++
         TableQuery[Packs.Packs].schema ++
-        TableQuery[PackEntries.PackEntries].schema
+        TableQuery[PackEntries.PackEntries].schema ++ 
+        TableQuery[TokenOrders.TokenOrders].schema
       // the block of code that will be executed
       Await.result(db.run(DBIO.seq(
           // schema.dropIfExists,

@@ -6,8 +6,6 @@ import play.api.libs.json.Reads
 import play.api.libs.json.Writes
 import slick.jdbc.PostgresProfile.api._
 import contracts.SaleBox
-import org.ergoplatform.appkit.impl.ErgoTreeContract
-import org.ergoplatform.appkit.NetworkType
 
 object SaleStatus extends Enumeration {
     type SaleStatus = Value

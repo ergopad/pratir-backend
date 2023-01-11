@@ -10,12 +10,7 @@
             "/home/luivatra/develop/ergo/pratir-backend/app-2",
             "/home/luivatra/develop/ergo/pratir-backend/target/scala-2.12/src_managed/main",
             "/home/luivatra/develop/ergo/pratir-backend/target/scala-2.12/twirl/main",
-            "/home/luivatra/develop/ergo/pratir-backend/target/scala-2.12/routes/main",
-            "/home/luivatra/develop/ergo/pratir-backend/target/scala-2.13/routes/main/controllers/routes.java",
-            "/home/luivatra/develop/ergo/pratir-backend/target/scala-2.13/routes/main/controllers/ReverseRoutes.scala",
-            "/home/luivatra/develop/ergo/pratir-backend/target/scala-2.13/routes/main/router/Routes.scala",
-            "/home/luivatra/develop/ergo/pratir-backend/target/scala-2.13/routes/main/controllers/javascript/JavaScriptReverseRoutes.scala",
-            "/home/luivatra/develop/ergo/pratir-backend/target/scala-2.13/routes/main/router/RoutesPrefix.scala"
+            "/home/luivatra/develop/ergo/pratir-backend/target/scala-2.12/routes/main"
         ],
         "dependencies": [
             

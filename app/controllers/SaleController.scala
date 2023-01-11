@@ -14,6 +14,23 @@ import java.util.UUID
 import scala.concurrent.duration.Duration
 import scala.concurrent.Await
 import _root_.util.Pratir
+import org.ergoplatform.appkit.BoxOperations
+import org.ergoplatform.appkit.RestApiErgoClient
+import org.ergoplatform.appkit.NetworkType
+import org.ergoplatform.appkit.BlockchainContext
+import contracts.BuyOrder
+import org.ergoplatform.appkit.impl.ErgoTreeContract
+import org.ergoplatform.appkit.ExplorerAndPoolUnspentBoxesLoader
+import scala.collection.mutable.HashMap
+import org.ergoplatform.appkit.ErgoToken
+import org.ergoplatform.appkit.scalaapi.ErgoValueBuilder
+import sigmastate.eval.Colls
+import java.nio.charset.CharsetEncoder
+import java.nio.charset.StandardCharsets
+import org.ergoplatform.appkit.Address
+import scala.collection.JavaConverters._
+import special.collection.Coll
+import org.ergoplatform.appkit.UnsignedTransaction
 
 @Singleton
 class SaleController @Inject()(protected val dbConfigProvider: DatabaseConfigProvider, val controllerComponents: ControllerComponents)(implicit ec: ExecutionContext)
@@ -30,6 +47,13 @@ extends BaseController
     implicit val packFullJson = Json.format[PackFull]
     implicit val tokenForSaleJson = Json.format[TokenForSale]
     implicit val saleFullJson = Json.format[SaleFull]
+    implicit val buyPackRequestJson = Json.format[BuyPackRequest]
+    implicit val buySaleRequestJson = Json.format[BuySaleRequest]
+    implicit val buyRequestJson = Json.format[BuyRequest]
+    implicit val mTokenJson = Json.format[MToken]
+    implicit val mInputJson = Json.format[MInput]
+    implicit val mOutputJson = Json.format[MOutput]
+    implicit val mUnsignedTransactionJson = Json.format[MUnsignedTransaction]
 
     def getAll(): Action[AnyContent] = Action.async { implicit request =>
         val salesdao = new SalesDAO(dbConfigProvider)
@@ -90,4 +114,65 @@ extends BaseController
                 Created(Json.toJson(saleAdded))
         }
     }
-}
+
+    def buyOrder() = Action { implicit request =>
+        val salesdao = new SalesDAO(dbConfigProvider)
+        val content = request.body
+        val jsonObject = content.asJson
+        val buyRequest: Option[BuyRequest] = 
+            jsonObject.flatMap( 
+                Json.fromJson[BuyRequest](_).asOpt 
+            ) 
+        buyRequest match {
+            case None => BadRequest
+            case Some(buyOrder) => {
+                val salesdao = new SalesDAO(dbConfigProvider)
+                val ergoClient = RestApiErgoClient.create(sys.env.get("ERGO_NODE").get,NetworkType.MAINNET,"",sys.env.get("ERGO_EXPLORER").get)
+                Ok(Json.toJson(MUnsignedTransaction(ergoClient.execute(new java.util.function.Function[BlockchainContext,UnsignedTransaction] {
+                        override def apply(ctx: BlockchainContext): UnsignedTransaction = {
+                            val buyOrderBoxes = buyOrder.requests.flatMap((bsr: BuySaleRequest) => {
+                                bsr.packRequests.flatMap(bpr => {
+                                    val packPrice = Await.result(salesdao.getPrice(bpr.packId), Duration.Inf)
+                                    val combinedPrices = new HashMap[String, Long]()
+                                    packPrice.foreach(p => combinedPrices.put(p.tokenId, p.amount + combinedPrices.getOrElse(p.tokenId,0L)))
+                                    scala.collection.immutable.Range(0,bpr.count).map(i => {
+                                        val outBoxBuilder = ctx.newTxBuilder()
+                                            .outBoxBuilder()
+                                            .registers(
+                                                ErgoValueBuilder.buildFor(Colls.fromArray(bsr.saleId.toString().getBytes(StandardCharsets.UTF_8))),
+                                                ErgoValueBuilder.buildFor(Colls.fromArray(bpr.packId.toString().getBytes(StandardCharsets.UTF_8))),
+                                                ErgoValueBuilder.buildFor(Colls.fromArray(Address.create(buyOrder.targetAddress).toPropositionBytes())),
+                                                ErgoValueBuilder.buildFor(Colls.fromArray(UUID.randomUUID().toString().getBytes(StandardCharsets.UTF_8)))
+                                            )
+                                            .contract(new ErgoTreeContract(BuyOrder.contract(buyOrder.userWallet(0)), NetworkType.MAINNET))
+                                            .value(combinedPrices.getOrElse("0"*64, 0L) + 2000000L)
+                                        if (combinedPrices.filterNot(_._1 == "0"*64).size > 0) 
+                                            outBoxBuilder
+                                            .tokens(
+                                                combinedPrices.filterNot(_._1 == "0"*64).map((kv: (String, Long)) => new ErgoToken(kv._1,kv._2)).toArray:_*
+                                            )
+                                            .build()
+                                        else
+                                            outBoxBuilder.build()
+                                    })
+                                })
+                            }) 
+                            val boxesLoader = new ExplorerAndPoolUnspentBoxesLoader().withAllowChainedTx(true)
+                            val boxOperations = BoxOperations.createForSenders(buyOrder.userWallet.map(Address.create(_)).toList.asJava,ctx).withInputBoxesLoader(boxesLoader)
+                                .withMaxInputBoxesToSelect(20).withFeeAmount(1000000L)
+                            val unsigned = boxOperations.buildTxWithDefaultInputs(tb => tb.addOutputs(buyOrderBoxes:_*))
+                            buyOrderBoxes.foreach(bob => {
+                                 Await.result(salesdao.newTokenOrder(
+                                    buyOrder.targetAddress, 
+                                    UUID.fromString(new String(bob.getRegisters().get(0).getValue().asInstanceOf[Coll[Byte]].toArray, StandardCharsets.UTF_8)),
+                                    UUID.fromString(new String(bob.getRegisters().get(1).getValue().asInstanceOf[Coll[Byte]].toArray, StandardCharsets.UTF_8)),
+                                    UUID.fromString(new String(bob.getRegisters().get(3).getValue().asInstanceOf[Coll[Byte]].toArray, StandardCharsets.UTF_8))
+                                ), Duration.Inf)
+                            })
+                            unsigned
+                        }
+                }))))
+            }
+        }
+    }
+ }

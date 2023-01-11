@@ -3447,3 +3447,2145 @@ WARNING: Unmatched cancel notification for request id 12688
 2023.01.10 17:28:19 INFO  time: compiled root in 0.83s
 Jan 10, 2023 5:29:41 PM org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
 INFO: Unsupported notification method: $/setTrace
+2023.01.11 08:10:15 INFO  compiling root (1 scala source)
+2023.01.11 08:10:15 INFO  time: compiled root in 0.17s
+2023.01.11 08:10:33 INFO  compiling root (1 scala source)
+2023.01.11 08:10:33 INFO  time: compiled root in 0.8s
+2023.01.11 08:12:50 INFO  compiling root (1 scala source)
+2023.01.11 08:12:50 INFO  time: compiled root in 0.66s
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/models/BuyRequest.scala in Array[String]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/models/BuyRequest.scala, 61, 61, 73)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/models/BuyRequest.scala in Array[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/models/BuyRequest.scala, 90, 90, 105)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/models/BuyRequest.scala in Array[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/models/BuyRequest.scala, 90, 90, 98)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/models/BuyRequest.scala in Array[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/models/BuyRequest.scala, 90, 90, 100)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/models/BuyRequest.scala in Array[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/models/BuyRequest.scala, 90, 90, 101)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/models/BuyRequest.scala in Array[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/models/BuyRequest.scala, 90, 90, 103)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/models/BuyRequest.scala in Array[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/models/BuyRequest.scala, 90, 90, 104)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/models/BuyRequest.scala in Array[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/models/BuyRequest.scala, 90, 90, 105)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/models/BuyRequest.scala in Array[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/models/BuyRequest.scala, 90, 90, 106)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/models/BuyRequest.scala in Array[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/models/BuyRequest.scala, 90, 90, 107)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/models/BuyRequest.scala in Array[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/models/BuyRequest.scala, 90, 90, 108)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/models/BuyRequest.scala in Array[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/models/BuyRequest.scala, 90, 90, 109)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/models/BuyRequest.scala in Array[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/models/BuyRequest.scala, 90, 90, 110)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/models/BuyRequest.scala in Array[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/models/BuyRequest.scala, 90, 90, 111)
+2023.01.11 08:14:07 INFO  compiling root (1 scala source)
+2023.01.11 08:14:07 INFO  time: compiled root in 86ms
+2023.01.11 08:14:13 INFO  compiling root (2 scala sources)
+2023.01.11 08:14:13 INFO  time: compiled root in 0.62s
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/models/BuySaleRequest.scala in Array[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/models/BuySaleRequest.scala, 85, 85, 100)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/models/BuySaleRequest.scala in Array[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/models/BuySaleRequest.scala, 85, 85, 93)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/models/BuySaleRequest.scala in Array[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/models/BuySaleRequest.scala, 85, 85, 100)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/models/BuySaleRequest.scala in Array[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/models/BuySaleRequest.scala, 85, 85, 93)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/models/BuySaleRequest.scala in Array[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/models/BuySaleRequest.scala, 85, 85, 95)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/models/BuySaleRequest.scala in Array[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/models/BuySaleRequest.scala, 85, 85, 97)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/models/BuySaleRequest.scala in Array[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/models/BuySaleRequest.scala, 85, 85, 96)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/models/BuySaleRequest.scala in Array[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/models/BuySaleRequest.scala, 85, 85, 95)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/models/BuySaleRequest.scala in Array[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/models/BuySaleRequest.scala, 85, 85, 96)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/models/BuySaleRequest.scala in Array[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/models/BuySaleRequest.scala, 85, 85, 97)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/models/BuySaleRequest.scala in Array[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/models/BuySaleRequest.scala, 85, 85, 99)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/models/BuySaleRequest.scala in Array[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/models/BuySaleRequest.scala, 85, 85, 100)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/models/BuySaleRequest.scala in Array[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/models/BuySaleRequest.scala, 85, 85, 101)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/models/BuySaleRequest.scala in Array[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/models/BuySaleRequest.scala, 85, 85, 102)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/models/BuySaleRequest.scala in Array[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/models/BuySaleRequest.scala, 85, 85, 104)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/models/BuySaleRequest.scala in Array[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/models/BuySaleRequest.scala, 85, 85, 106)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/models/BuySaleRequest.scala in Array[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/models/BuySaleRequest.scala, 85, 85, 106)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/models/BuySaleRequest.scala in Array[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/models/BuySaleRequest.scala, 85, 85, 106)
+2023.01.11 08:15:20 INFO  compiling root (1 scala source)
+2023.01.11 08:15:20 INFO  time: compiled root in 85ms
+2023.01.11 08:15:26 INFO  compiling root (2 scala sources)
+2023.01.11 08:15:26 INFO  time: compiled root in 0.17s
+2023.01.11 08:15:26 INFO  compiling root (2 scala sources)
+2023.01.11 08:15:26 INFO  time: compiled root in 98ms
+2023.01.11 08:15:44 INFO  compiling root (2 scala sources)
+2023.01.11 08:15:44 INFO  time: compiled root in 87ms
+2023.01.11 08:15:49 INFO  compiling root (2 scala sources)
+2023.01.11 08:15:49 INFO  time: compiled root in 0.15s
+2023.01.11 08:16:04 INFO  compiling root (2 scala sources)
+2023.01.11 08:16:04 INFO  time: compiled root in 0.72s
+2023.01.11 08:16:04 INFO  compiling root (1 scala source)
+2023.01.11 08:16:04 INFO  time: compiled root in 0.19s
+2023.01.11 08:17:32 INFO  compiling root (1 scala source)
+2023.01.11 08:17:32 INFO  time: compiled root in 0.47s
+Jan 11, 2023 8:17:38 AM scala.meta.internal.pc.CompilerAccess retryWithCleanCompiler
+INFO: compiler crashed due to an error in the Scala compiler, retrying with new compiler instance.
+Jan 11, 2023 8:17:38 AM scala.meta.internal.pc.CompilerAccess handleError
+SEVERE: implicit class <error> extends  (of class scala.reflect.internal.Trees$ClassDef)
+scala.MatchError: implicit class <error> extends  (of class scala.reflect.internal.Trees$ClassDef)
+	at scala.tools.nsc.typechecker.Unapplies.constrParamss(Unapplies.scala:64)
+	at scala.tools.nsc.typechecker.Unapplies.factoryMeth(Unapplies.scala:141)
+	at scala.tools.nsc.typechecker.Unapplies.factoryMeth$(Unapplies.scala:138)
+	at scala.meta.internal.pc.MetalsGlobal$MetalsInteractiveAnalyzer.factoryMeth(MetalsGlobal.scala:66)
+	at scala.tools.nsc.typechecker.MethodSynthesis$MethodSynth.enterImplicitWrapper(MethodSynthesis.scala:229)
+	at scala.tools.nsc.typechecker.MethodSynthesis$MethodSynth.enterImplicitWrapper$(MethodSynthesis.scala:228)
+	at scala.tools.nsc.typechecker.Namers$Namer.enterImplicitWrapper(Namers.scala:59)
+	at scala.tools.nsc.interactive.InteractiveAnalyzer$InteractiveNamer.enterExistingSym(Global.scala:94)
+	at scala.tools.nsc.interactive.InteractiveAnalyzer$InteractiveNamer.enterExistingSym$(Global.scala:80)
+	at scala.tools.nsc.interactive.InteractiveAnalyzer$$anon$2.enterExistingSym(Global.scala:51)
+	at scala.tools.nsc.typechecker.Namers$Namer.standardEnterSym(Namers.scala:306)
+	at scala.tools.nsc.typechecker.AnalyzerPlugins.pluginsEnterSym(AnalyzerPlugins.scala:479)
+	at scala.tools.nsc.typechecker.AnalyzerPlugins.pluginsEnterSym$(AnalyzerPlugins.scala:478)
+	at scala.meta.internal.pc.MetalsGlobal$MetalsInteractiveAnalyzer.pluginsEnterSym(MetalsGlobal.scala:66)
+	at scala.tools.nsc.typechecker.Namers$Namer.enterSym(Namers.scala:280)
+	at scala.tools.nsc.typechecker.Typers$Typer.enterSym(Typers.scala:1939)
+	at scala.tools.nsc.typechecker.Typers$Typer.$anonfun$enterSyms$1(Typers.scala:1934)
+	at scala.tools.nsc.typechecker.Typers$Typer.enterSyms(Typers.scala:1934)
+	at scala.tools.nsc.typechecker.Typers$Typer.typedTemplate(Typers.scala:1996)
+	at scala.tools.nsc.typechecker.Typers$Typer.typedClassDef(Typers.scala:1836)
+	at scala.tools.nsc.typechecker.Typers$Typer.typed1(Typers.scala:5706)
+	at scala.tools.nsc.typechecker.Typers$Typer.typed(Typers.scala:5785)
+	at scala.tools.nsc.typechecker.Typers$Typer.typedStat$1(Typers.scala:5849)
+	at scala.tools.nsc.typechecker.Typers$Typer.$anonfun$typedStats$10(Typers.scala:3341)
+	at scala.tools.nsc.typechecker.Typers$Typer.typedStats(Typers.scala:3341)
+	at scala.tools.nsc.typechecker.Typers$Typer.typedPackageDef$1(Typers.scala:5417)
+	at scala.tools.nsc.typechecker.Typers$Typer.typed1(Typers.scala:5709)
+	at scala.tools.nsc.typechecker.Typers$Typer.typed(Typers.scala:5785)
+	at scala.tools.nsc.typechecker.Analyzer$typerFactory$TyperPhase.apply(Analyzer.scala:114)
+	at scala.tools.nsc.Global$GlobalPhase.applyPhase(Global.scala:454)
+	at scala.tools.nsc.interactive.Global$TyperRun.$anonfun$applyPhase$1(Global.scala:1341)
+	at scala.tools.nsc.interactive.Global$TyperRun.applyPhase(Global.scala:1341)
+	at scala.tools.nsc.interactive.Global$TyperRun.typeCheck(Global.scala:1334)
+	at scala.tools.nsc.interactive.Global.typeCheck(Global.scala:666)
+	at scala.tools.nsc.interactive.Global.typedTreeAt(Global.scala:815)
+	at scala.tools.nsc.interactive.Global.completionsAt(Global.scala:1226)
+	at scala.meta.internal.pc.CompletionProvider.safeCompletionsAt(CompletionProvider.scala:439)
+	at scala.meta.internal.pc.CompletionProvider.completions(CompletionProvider.scala:58)
+
+2023.01.11 08:17:50 INFO  compiling root (1 scala source)
+2023.01.11 08:17:50 INFO  time: compiled root in 0.1s
+2023.01.11 08:17:58 INFO  compiling root (1 scala source)
+2023.01.11 08:17:58 INFO  time: compiled root in 0.42s
+Jan 11, 2023 8:18:05 AM scala.meta.internal.pc.CompilerAccess retryWithCleanCompiler
+INFO: compiler crashed due to an error in the Scala compiler, retrying with new compiler instance.
+Jan 11, 2023 8:18:05 AM scala.meta.internal.pc.CompilerAccess handleError
+SEVERE: implicit class <error> extends  (of class scala.reflect.internal.Trees$ClassDef)
+scala.MatchError: implicit class <error> extends  (of class scala.reflect.internal.Trees$ClassDef)
+	at scala.tools.nsc.typechecker.Unapplies.constrParamss(Unapplies.scala:64)
+	at scala.tools.nsc.typechecker.Unapplies.factoryMeth(Unapplies.scala:141)
+	at scala.tools.nsc.typechecker.Unapplies.factoryMeth$(Unapplies.scala:138)
+	at scala.meta.internal.pc.MetalsGlobal$MetalsInteractiveAnalyzer.factoryMeth(MetalsGlobal.scala:66)
+	at scala.tools.nsc.typechecker.MethodSynthesis$MethodSynth.enterImplicitWrapper(MethodSynthesis.scala:229)
+	at scala.tools.nsc.typechecker.MethodSynthesis$MethodSynth.enterImplicitWrapper$(MethodSynthesis.scala:228)
+	at scala.tools.nsc.typechecker.Namers$Namer.enterImplicitWrapper(Namers.scala:59)
+	at scala.tools.nsc.interactive.InteractiveAnalyzer$InteractiveNamer.enterExistingSym(Global.scala:94)
+	at scala.tools.nsc.interactive.InteractiveAnalyzer$InteractiveNamer.enterExistingSym$(Global.scala:80)
+	at scala.tools.nsc.interactive.InteractiveAnalyzer$$anon$2.enterExistingSym(Global.scala:51)
+	at scala.tools.nsc.typechecker.Namers$Namer.standardEnterSym(Namers.scala:306)
+	at scala.tools.nsc.typechecker.AnalyzerPlugins.pluginsEnterSym(AnalyzerPlugins.scala:479)
+	at scala.tools.nsc.typechecker.AnalyzerPlugins.pluginsEnterSym$(AnalyzerPlugins.scala:478)
+	at scala.meta.internal.pc.MetalsGlobal$MetalsInteractiveAnalyzer.pluginsEnterSym(MetalsGlobal.scala:66)
+	at scala.tools.nsc.typechecker.Namers$Namer.enterSym(Namers.scala:280)
+	at scala.tools.nsc.typechecker.Typers$Typer.enterSym(Typers.scala:1939)
+	at scala.tools.nsc.typechecker.Typers$Typer.$anonfun$enterSyms$1(Typers.scala:1934)
+	at scala.tools.nsc.typechecker.Typers$Typer.enterSyms(Typers.scala:1934)
+	at scala.tools.nsc.typechecker.Typers$Typer.typedTemplate(Typers.scala:1996)
+	at scala.tools.nsc.typechecker.Typers$Typer.typedClassDef(Typers.scala:1836)
+	at scala.tools.nsc.typechecker.Typers$Typer.typed1(Typers.scala:5706)
+	at scala.tools.nsc.typechecker.Typers$Typer.typed(Typers.scala:5785)
+	at scala.tools.nsc.typechecker.Typers$Typer.typedStat$1(Typers.scala:5849)
+	at scala.tools.nsc.typechecker.Typers$Typer.$anonfun$typedStats$10(Typers.scala:3341)
+	at scala.tools.nsc.typechecker.Typers$Typer.typedStats(Typers.scala:3341)
+	at scala.tools.nsc.typechecker.Typers$Typer.typedPackageDef$1(Typers.scala:5417)
+	at scala.tools.nsc.typechecker.Typers$Typer.typed1(Typers.scala:5709)
+	at scala.tools.nsc.typechecker.Typers$Typer.typed(Typers.scala:5785)
+	at scala.tools.nsc.typechecker.Analyzer$typerFactory$TyperPhase.apply(Analyzer.scala:114)
+	at scala.tools.nsc.Global$GlobalPhase.applyPhase(Global.scala:454)
+	at scala.tools.nsc.interactive.Global$TyperRun.$anonfun$applyPhase$1(Global.scala:1341)
+	at scala.tools.nsc.interactive.Global$TyperRun.applyPhase(Global.scala:1341)
+	at scala.tools.nsc.interactive.Global$TyperRun.typeCheck(Global.scala:1334)
+	at scala.tools.nsc.interactive.Global.typeCheck(Global.scala:666)
+	at scala.tools.nsc.interactive.Global.typedTreeAt(Global.scala:815)
+	at scala.tools.nsc.interactive.Global.completionsAt(Global.scala:1226)
+	at scala.meta.internal.pc.CompletionProvider.safeCompletionsAt(CompletionProvider.scala:439)
+	at scala.meta.internal.pc.CompletionProvider.completions(CompletionProvider.scala:58)
+
+Jan 11, 2023 8:18:20 AM scala.meta.internal.pc.CompilerAccess retryWithCleanCompiler
+INFO: compiler crashed due to an error in the Scala compiler, retrying with new compiler instance.
+Jan 11, 2023 8:18:20 AM scala.meta.internal.pc.CompilerAccess handleError
+SEVERE: implicit class <error> extends  (of class scala.reflect.internal.Trees$ClassDef)
+scala.MatchError: implicit class <error> extends  (of class scala.reflect.internal.Trees$ClassDef)
+	at scala.tools.nsc.typechecker.Unapplies.constrParamss(Unapplies.scala:64)
+	at scala.tools.nsc.typechecker.Unapplies.factoryMeth(Unapplies.scala:141)
+	at scala.tools.nsc.typechecker.Unapplies.factoryMeth$(Unapplies.scala:138)
+	at scala.meta.internal.pc.MetalsGlobal$MetalsInteractiveAnalyzer.factoryMeth(MetalsGlobal.scala:66)
+	at scala.tools.nsc.typechecker.MethodSynthesis$MethodSynth.enterImplicitWrapper(MethodSynthesis.scala:229)
+	at scala.tools.nsc.typechecker.MethodSynthesis$MethodSynth.enterImplicitWrapper$(MethodSynthesis.scala:228)
+	at scala.tools.nsc.typechecker.Namers$Namer.enterImplicitWrapper(Namers.scala:59)
+	at scala.tools.nsc.interactive.InteractiveAnalyzer$InteractiveNamer.enterExistingSym(Global.scala:94)
+	at scala.tools.nsc.interactive.InteractiveAnalyzer$InteractiveNamer.enterExistingSym$(Global.scala:80)
+	at scala.tools.nsc.interactive.InteractiveAnalyzer$$anon$2.enterExistingSym(Global.scala:51)
+	at scala.tools.nsc.typechecker.Namers$Namer.standardEnterSym(Namers.scala:306)
+	at scala.tools.nsc.typechecker.AnalyzerPlugins.pluginsEnterSym(AnalyzerPlugins.scala:479)
+	at scala.tools.nsc.typechecker.AnalyzerPlugins.pluginsEnterSym$(AnalyzerPlugins.scala:478)
+	at scala.meta.internal.pc.MetalsGlobal$MetalsInteractiveAnalyzer.pluginsEnterSym(MetalsGlobal.scala:66)
+	at scala.tools.nsc.typechecker.Namers$Namer.enterSym(Namers.scala:280)
+	at scala.tools.nsc.typechecker.Typers$Typer.enterSym(Typers.scala:1939)
+	at scala.tools.nsc.typechecker.Typers$Typer.$anonfun$enterSyms$1(Typers.scala:1934)
+	at scala.tools.nsc.typechecker.Typers$Typer.enterSyms(Typers.scala:1934)
+	at scala.tools.nsc.typechecker.Typers$Typer.typedTemplate(Typers.scala:1996)
+	at scala.tools.nsc.typechecker.Typers$Typer.typedClassDef(Typers.scala:1836)
+	at scala.tools.nsc.typechecker.Typers$Typer.typed1(Typers.scala:5706)
+	at scala.tools.nsc.typechecker.Typers$Typer.typed(Typers.scala:5785)
+	at scala.tools.nsc.typechecker.Typers$Typer.typedStat$1(Typers.scala:5849)
+	at scala.tools.nsc.typechecker.Typers$Typer.$anonfun$typedStats$10(Typers.scala:3341)
+	at scala.tools.nsc.typechecker.Typers$Typer.typedStats(Typers.scala:3341)
+	at scala.tools.nsc.typechecker.Typers$Typer.typedPackageDef$1(Typers.scala:5417)
+	at scala.tools.nsc.typechecker.Typers$Typer.typed1(Typers.scala:5709)
+	at scala.tools.nsc.typechecker.Typers$Typer.typed(Typers.scala:5785)
+	at scala.tools.nsc.typechecker.Analyzer$typerFactory$TyperPhase.apply(Analyzer.scala:114)
+	at scala.tools.nsc.Global$GlobalPhase.applyPhase(Global.scala:454)
+	at scala.tools.nsc.interactive.Global$TyperRun.$anonfun$applyPhase$1(Global.scala:1341)
+	at scala.tools.nsc.interactive.Global$TyperRun.applyPhase(Global.scala:1341)
+	at scala.tools.nsc.interactive.Global$TyperRun.typeCheck(Global.scala:1334)
+	at scala.tools.nsc.interactive.Global.typeCheck(Global.scala:666)
+	at scala.tools.nsc.interactive.Global.typedTreeAt(Global.scala:815)
+	at scala.tools.nsc.interactive.Global.completionsAt(Global.scala:1226)
+	at scala.meta.internal.pc.CompletionProvider.safeCompletionsAt(CompletionProvider.scala:439)
+	at scala.meta.internal.pc.CompletionProvider.completions(CompletionProvider.scala:58)
+
+2023.01.11 08:18:33 INFO  compiling root (1 scala source)
+2023.01.11 08:18:33 INFO  time: compiled root in 0.42s
+2023.01.11 08:18:40 INFO  compiling root (1 scala source)
+Jan 11, 2023 8:18:40 AM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 14533
+2023.01.11 08:18:40 INFO  time: compiled root in 0.67s
+Jan 11, 2023 8:19:38 AM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 14644
+2023.01.11 08:19:41 INFO  compiling root (2 scala sources)
+2023.01.11 08:19:41 INFO  time: compiled root in 0.64s
+2023.01.11 08:19:42 WARN  Could not load snapshot text for /home/luivatra/develop/ergo/pratir-backend/app/models/BuyRequest.scala
+2023.01.11 08:20:48 INFO  compiling root (2 scala sources)
+2023.01.11 08:20:48 INFO  time: compiled root in 0.52s
+2023.01.11 08:20:59 INFO  compiling root (2 scala sources)
+2023.01.11 08:20:59 INFO  time: compiled root in 0.58s
+2023.01.11 08:24:42 INFO  compiling root (3 scala sources)
+2023.01.11 08:24:42 INFO  time: compiled root in 0.54s
+2023.01.11 08:24:42 INFO  compiling root (3 scala sources)
+2023.01.11 08:24:43 INFO  time: compiled root in 0.53s
+2023.01.11 08:26:41 INFO  compiling root (3 scala sources)
+2023.01.11 08:26:41 INFO  time: compiled root in 0.65s
+2023.01.11 08:26:41 INFO  compiling root (3 scala sources)
+2023.01.11 08:26:44 INFO  time: compiled root in 2.21s
+2023.01.11 08:28:40 INFO  compiling root (3 scala sources)
+2023.01.11 08:28:40 INFO  time: compiled root in 0.59s
+2023.01.11 08:28:44 INFO  compiling root (3 scala sources)
+2023.01.11 08:28:44 INFO  time: compiled root in 0.45s
+2023.01.11 08:29:09 INFO  compiling root (3 scala sources)
+2023.01.11 08:29:09 INFO  time: compiled root in 0.54s
+2023.01.11 08:29:09 INFO  compiling root (3 scala sources)
+2023.01.11 08:29:10 INFO  time: compiled root in 0.55s
+2023.01.11 08:29:12 INFO  compiling root (3 scala sources)
+2023.01.11 08:29:12 INFO  time: compiled root in 0.43s
+2023.01.11 08:29:17 INFO  compiling root (3 scala sources)
+2023.01.11 08:29:17 INFO  time: compiled root in 0.49s
+2023.01.11 08:29:20 INFO  compiling root (3 scala sources)
+2023.01.11 08:29:20 INFO  time: compiled root in 0.41s
+2023.01.11 08:29:32 INFO  compiling root (3 scala sources)
+2023.01.11 08:29:32 INFO  time: compiled root in 0.47s
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/database/SalesDAO.scala in slick.jdbc.PostgresProfile.api.Table[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/database/SalesDAO.scala, 2061, 2061, 2076)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/database/SalesDAO.scala in slick.jdbc.PostgresProfile.api.Table[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/database/SalesDAO.scala, 2061, 2061, 2069)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/database/SalesDAO.scala in slick.jdbc.PostgresProfile.api.Table[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/database/SalesDAO.scala, 2061, 2061, 2070)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/database/SalesDAO.scala in slick.jdbc.PostgresProfile.api.Table[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/database/SalesDAO.scala, 2061, 2061, 2070)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/database/SalesDAO.scala in slick.jdbc.PostgresProfile.api.Table[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/database/SalesDAO.scala, 2061, 2061, 2071)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/database/SalesDAO.scala in slick.jdbc.PostgresProfile.api.Table[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/database/SalesDAO.scala, 2061, 2061, 2073)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/database/SalesDAO.scala in slick.jdbc.PostgresProfile.api.Table[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/database/SalesDAO.scala, 2061, 2061, 2074)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/database/SalesDAO.scala in slick.jdbc.PostgresProfile.api.Table[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/database/SalesDAO.scala, 2061, 2061, 2075)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/database/SalesDAO.scala in slick.jdbc.PostgresProfile.api.Table[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/database/SalesDAO.scala, 2061, 2061, 2076)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/database/SalesDAO.scala in slick.jdbc.PostgresProfile.api.Table[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/database/SalesDAO.scala, 2061, 2061, 2078)
+2023.01.11 08:30:45 INFO  compiling root (4 scala sources)
+2023.01.11 08:30:45 INFO  time: compiled root in 0.7s
+Jan 11, 2023 8:30:52 AM scala.meta.internal.pc.CompilerAccess handleError
+SEVERE: offset 2063, count -2, length 5034
+java.lang.StringIndexOutOfBoundsException: offset 2063, count -2, length 5034
+	at java.base/java.lang.String.checkBoundsOffCount(String.java:3304)
+	at java.base/java.lang.String.rangeCheck(String.java:280)
+	at java.base/java.lang.String.<init>(String.java:276)
+	at scala.tools.nsc.interactive.Global.typeCompletions$1(Global.scala:1231)
+	at scala.tools.nsc.interactive.Global.completionsAt(Global.scala:1254)
+	at scala.meta.internal.pc.SignatureHelpProvider.$anonfun$treeSymbol$1(SignatureHelpProvider.scala:382)
+	at scala.Option.map(Option.scala:230)
+	at scala.meta.internal.pc.SignatureHelpProvider.treeSymbol(SignatureHelpProvider.scala:380)
+	at scala.meta.internal.pc.SignatureHelpProvider$MethodCall$.unapply(SignatureHelpProvider.scala:205)
+	at scala.meta.internal.pc.SignatureHelpProvider$MethodCallTraverser.visit(SignatureHelpProvider.scala:316)
+	at scala.meta.internal.pc.SignatureHelpProvider$MethodCallTraverser.traverse(SignatureHelpProvider.scala:310)
+	at scala.meta.internal.pc.SignatureHelpProvider$MethodCallTraverser.traverse(SignatureHelpProvider.scala:275)
+	at scala.reflect.api.Trees$Traverser.$anonfun$traverseTrees$1(Trees.scala:2492)
+	at scala.reflect.api.Trees$Traverser.traverseTrees(Trees.scala:2492)
+	at scala.reflect.internal.Trees.traverseComponents$1(Trees.scala:1298)
+	at scala.reflect.internal.Trees.itraverse(Trees.scala:1394)
+	at scala.reflect.internal.Trees.itraverse$(Trees.scala:1264)
+	at scala.reflect.internal.SymbolTable.itraverse(SymbolTable.scala:28)
+	at scala.reflect.internal.SymbolTable.itraverse(SymbolTable.scala:28)
+	at scala.reflect.api.Trees$Traverser.traverse(Trees.scala:2483)
+	at scala.meta.internal.pc.SignatureHelpProvider$MethodCallTraverser.visit(SignatureHelpProvider.scala:350)
+	at scala.meta.internal.pc.SignatureHelpProvider$MethodCallTraverser.traverse(SignatureHelpProvider.scala:310)
+	at scala.meta.internal.pc.SignatureHelpProvider$MethodCallTraverser.traverse(SignatureHelpProvider.scala:275)
+	at scala.reflect.internal.Trees.$anonfun$itraverse$1(Trees.scala:1279)
+	at scala.reflect.api.Trees$Traverser.atOwner(Trees.scala:2515)
+	at scala.reflect.internal.Trees.traverseMemberDef$1(Trees.scala:1267)
+	at scala.reflect.internal.Trees.itraverse(Trees.scala:1392)
+	at scala.reflect.internal.Trees.itraverse$(Trees.scala:1264)
+	at scala.reflect.internal.SymbolTable.itraverse(SymbolTable.scala:28)
+	at scala.reflect.internal.SymbolTable.itraverse(SymbolTable.scala:28)
+	at scala.reflect.api.Trees$Traverser.traverse(Trees.scala:2483)
+	at scala.meta.internal.pc.SignatureHelpProvider$MethodCallTraverser.visit(SignatureHelpProvider.scala:350)
+	at scala.meta.internal.pc.SignatureHelpProvider$MethodCallTraverser.traverse(SignatureHelpProvider.scala:310)
+	at scala.meta.internal.pc.SignatureHelpProvider$MethodCallTraverser.traverse(SignatureHelpProvider.scala:275)
+	at scala.reflect.api.Trees$Traverser.$anonfun$traverseStats$2(Trees.scala:2506)
+	at scala.reflect.api.Trees$Traverser.atOwner(Trees.scala:2515)
+	at scala.reflect.api.Trees$Traverser.$anonfun$traverseStats$1(Trees.scala:2506)
+	at scala.reflect.api.Trees$Traverser.traverseStats(Trees.scala:2505)
+	at scala.reflect.internal.Trees.traverseComponents$1(Trees.scala:1296)
+	at scala.reflect.internal.Trees.itraverse(Trees.scala:1394)
+	at scala.reflect.internal.Trees.itraverse$(Trees.scala:1264)
+	at scala.reflect.internal.SymbolTable.itraverse(SymbolTable.scala:28)
+	at scala.reflect.internal.SymbolTable.itraverse(SymbolTable.scala:28)
+	at scala.reflect.api.Trees$Traverser.traverse(Trees.scala:2483)
+	at scala.meta.internal.pc.SignatureHelpProvider$MethodCallTraverser.visit(SignatureHelpProvider.scala:350)
+	at scala.meta.internal.pc.SignatureHelpProvider$MethodCallTraverser.traverse(SignatureHelpProvider.scala:310)
+	at scala.meta.internal.pc.SignatureHelpProvider$MethodCallTraverser.fromTree(SignatureHelpProvider.scala:279)
+	at scala.meta.internal.pc.SignatureHelpProvider.signatureHelp(SignatureHelpProvider.scala:27)
+
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/database/SalesDAO.scala in slick.jdbc.PostgresProfile.api.Table[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/database/SalesDAO.scala, 2061, 2061, 2078)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/database/SalesDAO.scala in slick.jdbc.PostgresProfile.api.Table[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/database/SalesDAO.scala, 2061, 2061, 2078)
+2023.01.11 08:31:03 INFO  compiling root (4 scala sources)
+2023.01.11 08:31:03 INFO  time: compiled root in 0.67s
+2023.01.11 08:31:52 INFO  compiling root (4 scala sources)
+2023.01.11 08:31:52 INFO  time: compiled root in 0.77s
+2023.01.11 08:31:52 INFO  compiling root (4 scala sources)
+2023.01.11 08:31:53 WARN  Could not load snapshot text for /home/luivatra/develop/ergo/pratir-backend/app/models/Sale.scala
+2023.01.11 08:31:53 WARN  Could not load snapshot text for /home/luivatra/develop/ergo/pratir-backend/app/models/Sale.scala
+2023.01.11 08:31:53 WARN  Could not load snapshot text for /home/luivatra/develop/ergo/pratir-backend/app/models/Sale.scala
+2023.01.11 08:31:53 WARN  Could not load snapshot text for /home/luivatra/develop/ergo/pratir-backend/app/models/Sale.scala
+2023.01.11 08:31:53 WARN  Could not load snapshot text for /home/luivatra/develop/ergo/pratir-backend/app/models/Sale.scala
+2023.01.11 08:31:53 WARN  Could not load snapshot text for /home/luivatra/develop/ergo/pratir-backend/app/models/Sale.scala
+2023.01.11 08:31:54 INFO  time: compiled root in 1.05s
+2023.01.11 08:31:54 INFO  compiling root (5 scala sources)
+2023.01.11 08:31:54 WARN  Could not load snapshot text for /home/luivatra/develop/ergo/pratir-backend/app/models/Sale.scala
+2023.01.11 08:31:54 INFO  time: compiled root in 0.64s
+2023.01.11 08:31:55 WARN  Could not load snapshot text for /home/luivatra/develop/ergo/pratir-backend/app/models/Sale.scala
+2023.01.11 08:31:58 WARN  Could not load snapshot text for /home/luivatra/develop/ergo/pratir-backend/app/models/BuyRequest.scala
+Jan 11, 2023 8:32:54 AM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 16255
+2023.01.11 08:34:07 INFO  compiling root (5 scala sources)
+2023.01.11 08:34:07 INFO  time: compiled root in 0.62s
+2023.01.11 08:34:34 INFO  compiling root (5 scala sources)
+2023.01.11 08:34:34 INFO  time: compiled root in 0.72s
+2023.01.11 08:35:16 INFO  compiling root (5 scala sources)
+2023.01.11 08:35:16 INFO  time: compiled root in 0.59s
+2023.01.11 08:35:55 INFO  compiling root (5 scala sources)
+2023.01.11 08:35:55 INFO  time: compiled root in 0.65s
+2023.01.11 08:36:17 INFO  compiling root (5 scala sources)
+2023.01.11 08:36:17 INFO  time: compiled root in 0.79s
+2023.01.11 08:36:35 INFO  compiling root (5 scala sources)
+2023.01.11 08:36:35 INFO  time: compiled root in 0.76s
+2023.01.11 08:43:46 INFO  compiling root (5 scala sources)
+2023.01.11 08:43:46 INFO  time: compiled root in 94ms
+2023.01.11 08:43:54 INFO  compiling root (5 scala sources)
+2023.01.11 08:43:54 INFO  time: compiled root in 0.79s
+2023.01.11 08:44:06 INFO  compiling root (5 scala sources)
+2023.01.11 08:44:06 INFO  time: compiled root in 0.7s
+2023.01.11 08:44:10 INFO  compiling root (5 scala sources)
+2023.01.11 08:44:10 INFO  time: compiled root in 0.72s
+Jan 11, 2023 8:47:00 AM scala.meta.internal.pc.CompilerAccess retryWithCleanCompiler
+INFO: compiler crashed due to an error in the Scala compiler, retrying with new compiler instance.
+Jan 11, 2023 8:47:01 AM scala.meta.internal.pc.CompilerAccess handleError
+SEVERE: Position.point on NoPosition
+java.lang.UnsupportedOperationException: Position.point on NoPosition
+	at scala.reflect.internal.util.Position.fail(Position.scala:24)
+	at scala.reflect.internal.util.UndefinedPosition.point(Position.scala:102)
+	at scala.reflect.internal.util.UndefinedPosition.point(Position.scala:97)
+	at scala.meta.internal.pc.PcCollector.$anonfun$result$5(PcCollector.scala:218)
+	at scala.meta.internal.pc.PcCollector.$anonfun$result$5$adapted(PcCollector.scala:218)
+	at scala.collection.immutable.Set$Set3.exists(Set.scala:236)
+	at scala.meta.internal.pc.PcCollector.isForComprehensionOwner$1(PcCollector.scala:218)
+	at scala.meta.internal.pc.PcCollector.traverse$1(PcCollector.scala:271)
+	at scala.meta.internal.pc.PcCollector.$anonfun$result$18(PcCollector.scala:370)
+	at scala.collection.LinearSeqOptimized.foldLeft(LinearSeqOptimized.scala:126)
+	at scala.collection.LinearSeqOptimized.foldLeft$(LinearSeqOptimized.scala:122)
+	at scala.collection.immutable.List.foldLeft(List.scala:91)
+	at scala.meta.internal.pc.PcCollector.traverse$1(PcCollector.scala:370)
+	at scala.meta.internal.pc.PcCollector.$anonfun$result$18(PcCollector.scala:370)
+	at scala.collection.LinearSeqOptimized.foldLeft(LinearSeqOptimized.scala:126)
+	at scala.collection.LinearSeqOptimized.foldLeft$(LinearSeqOptimized.scala:122)
+	at scala.collection.immutable.List.foldLeft(List.scala:91)
+	at scala.meta.internal.pc.PcCollector.traverse$1(PcCollector.scala:370)
+	at scala.meta.internal.pc.PcCollector.$anonfun$result$18(PcCollector.scala:370)
+	at scala.collection.LinearSeqOptimized.foldLeft(LinearSeqOptimized.scala:126)
+	at scala.collection.LinearSeqOptimized.foldLeft$(LinearSeqOptimized.scala:122)
+	at scala.collection.immutable.List.foldLeft(List.scala:91)
+	at scala.meta.internal.pc.PcCollector.traverse$1(PcCollector.scala:370)
+	at scala.meta.internal.pc.PcCollector.$anonfun$result$18(PcCollector.scala:370)
+	at scala.collection.LinearSeqOptimized.foldLeft(LinearSeqOptimized.scala:126)
+	at scala.collection.LinearSeqOptimized.foldLeft$(LinearSeqOptimized.scala:122)
+	at scala.collection.immutable.List.foldLeft(List.scala:91)
+	at scala.meta.internal.pc.PcCollector.traverse$1(PcCollector.scala:370)
+	at scala.meta.internal.pc.PcCollector.$anonfun$result$18(PcCollector.scala:370)
+	at scala.collection.LinearSeqOptimized.foldLeft(LinearSeqOptimized.scala:126)
+	at scala.collection.LinearSeqOptimized.foldLeft$(LinearSeqOptimized.scala:122)
+	at scala.collection.immutable.List.foldLeft(List.scala:91)
+	at scala.meta.internal.pc.PcCollector.traverse$1(PcCollector.scala:370)
+	at scala.meta.internal.pc.PcCollector.$anonfun$result$18(PcCollector.scala:370)
+	at scala.collection.LinearSeqOptimized.foldLeft(LinearSeqOptimized.scala:126)
+	at scala.collection.LinearSeqOptimized.foldLeft$(LinearSeqOptimized.scala:122)
+	at scala.collection.immutable.List.foldLeft(List.scala:91)
+	at scala.meta.internal.pc.PcCollector.traverse$1(PcCollector.scala:370)
+	at scala.meta.internal.pc.PcCollector.$anonfun$result$13(PcCollector.scala:328)
+	at scala.collection.LinearSeqOptimized.foldLeft(LinearSeqOptimized.scala:126)
+	at scala.collection.LinearSeqOptimized.foldLeft$(LinearSeqOptimized.scala:122)
+	at scala.collection.immutable.List.foldLeft(List.scala:91)
+	at scala.meta.internal.pc.PcCollector.traverse$1(PcCollector.scala:328)
+	at scala.meta.internal.pc.PcCollector.$anonfun$result$18(PcCollector.scala:370)
+	at scala.collection.LinearSeqOptimized.foldLeft(LinearSeqOptimized.scala:126)
+	at scala.collection.LinearSeqOptimized.foldLeft$(LinearSeqOptimized.scala:122)
+	at scala.collection.immutable.List.foldLeft(List.scala:91)
+	at scala.meta.internal.pc.PcCollector.traverse$1(PcCollector.scala:370)
+	at scala.meta.internal.pc.PcCollector.$anonfun$result$18(PcCollector.scala:370)
+	at scala.collection.LinearSeqOptimized.foldLeft(LinearSeqOptimized.scala:126)
+	at scala.collection.LinearSeqOptimized.foldLeft$(LinearSeqOptimized.scala:122)
+	at scala.collection.immutable.List.foldLeft(List.scala:91)
+	at scala.meta.internal.pc.PcCollector.traverse$1(PcCollector.scala:370)
+	at scala.meta.internal.pc.PcCollector.$anonfun$result$18(PcCollector.scala:370)
+	at scala.collection.LinearSeqOptimized.foldLeft(LinearSeqOptimized.scala:126)
+	at scala.collection.LinearSeqOptimized.foldLeft$(LinearSeqOptimized.scala:122)
+	at scala.collection.immutable.List.foldLeft(List.scala:91)
+	at scala.meta.internal.pc.PcCollector.traverse$1(PcCollector.scala:370)
+	at scala.meta.internal.pc.PcCollector.$anonfun$result$18(PcCollector.scala:370)
+	at scala.collection.LinearSeqOptimized.foldLeft(LinearSeqOptimized.scala:126)
+	at scala.collection.LinearSeqOptimized.foldLeft$(LinearSeqOptimized.scala:122)
+	at scala.collection.immutable.List.foldLeft(List.scala:91)
+	at scala.meta.internal.pc.PcCollector.traverse$1(PcCollector.scala:370)
+	at scala.meta.internal.pc.PcCollector.$anonfun$result$18(PcCollector.scala:370)
+	at scala.collection.LinearSeqOptimized.foldLeft(LinearSeqOptimized.scala:126)
+	at scala.collection.LinearSeqOptimized.foldLeft$(LinearSeqOptimized.scala:122)
+	at scala.collection.immutable.List.foldLeft(List.scala:91)
+	at scala.meta.internal.pc.PcCollector.traverse$1(PcCollector.scala:370)
+	at scala.meta.internal.pc.PcCollector.$anonfun$result$18(PcCollector.scala:370)
+	at scala.collection.LinearSeqOptimized.foldLeft(LinearSeqOptimized.scala:126)
+	at scala.collection.LinearSeqOptimized.foldLeft$(LinearSeqOptimized.scala:122)
+	at scala.collection.immutable.List.foldLeft(List.scala:91)
+	at scala.meta.internal.pc.PcCollector.traverse$1(PcCollector.scala:370)
+	at scala.meta.internal.pc.PcCollector.$anonfun$result$13(PcCollector.scala:328)
+	at scala.collection.LinearSeqOptimized.foldLeft(LinearSeqOptimized.scala:126)
+	at scala.collection.LinearSeqOptimized.foldLeft$(LinearSeqOptimized.scala:122)
+	at scala.collection.immutable.List.foldLeft(List.scala:91)
+	at scala.meta.internal.pc.PcCollector.traverse$1(PcCollector.scala:328)
+	at scala.meta.internal.pc.PcCollector.$anonfun$result$18(PcCollector.scala:370)
+	at scala.collection.LinearSeqOptimized.foldLeft(LinearSeqOptimized.scala:126)
+	at scala.collection.LinearSeqOptimized.foldLeft$(LinearSeqOptimized.scala:122)
+	at scala.collection.immutable.List.foldLeft(List.scala:91)
+	at scala.meta.internal.pc.PcCollector.traverse$1(PcCollector.scala:370)
+	at scala.meta.internal.pc.PcCollector.$anonfun$result$13(PcCollector.scala:328)
+	at scala.collection.LinearSeqOptimized.foldLeft(LinearSeqOptimized.scala:126)
+	at scala.collection.LinearSeqOptimized.foldLeft$(LinearSeqOptimized.scala:122)
+	at scala.collection.immutable.List.foldLeft(List.scala:91)
+	at scala.meta.internal.pc.PcCollector.traverse$1(PcCollector.scala:328)
+	at scala.meta.internal.pc.PcCollector.$anonfun$result$13(PcCollector.scala:328)
+	at scala.collection.LinearSeqOptimized.foldLeft(LinearSeqOptimized.scala:126)
+	at scala.collection.LinearSeqOptimized.foldLeft$(LinearSeqOptimized.scala:122)
+	at scala.collection.immutable.List.foldLeft(List.scala:91)
+	at scala.meta.internal.pc.PcCollector.traverse$1(PcCollector.scala:328)
+	at scala.meta.internal.pc.PcCollector.result(PcCollector.scala:373)
+	at scala.meta.internal.pc.PcDocumentHighlightProvider.highlights(PcDocumentHighlightProvider.scala:25)
+
+2023.01.11 08:47:13 INFO  compiling root (5 scala sources)
+2023.01.11 08:47:13 INFO  time: compiled root in 84ms
+2023.01.11 08:48:00 INFO  compiling root (6 scala sources)
+2023.01.11 08:48:00 INFO  time: compiled root in 0.14s
+2023.01.11 08:48:11 INFO  compiling root (6 scala sources)
+2023.01.11 08:48:11 INFO  time: compiled root in 0.71s
+2023.01.11 08:48:58 WARN  Could not load snapshot text for /home/luivatra/develop/ergo/pratir-backend/app/models/BuyRequest.scala
+2023.01.11 08:49:01 WARN  Could not load snapshot text for /home/luivatra/develop/ergo/pratir-backend/app/models/BuyRequest.scala
+2023.01.11 08:49:01 WARN  Could not load snapshot text for /home/luivatra/develop/ergo/pratir-backend/app/models/BuyRequest.scala
+2023.01.11 08:49:03 WARN  Could not load snapshot text for /home/luivatra/develop/ergo/pratir-backend/app/models/BuyRequest.scala
+2023.01.11 08:49:03 WARN  Could not load snapshot text for /home/luivatra/develop/ergo/pratir-backend/app/models/BuyRequest.scala
+2023.01.11 08:49:04 WARN  Could not load snapshot text for /home/luivatra/develop/ergo/pratir-backend/app/models/BuyRequest.scala
+2023.01.11 08:49:05 WARN  Could not load snapshot text for /home/luivatra/develop/ergo/pratir-backend/app/models/BuyRequest.scala
+2023.01.11 08:49:06 WARN  Could not load snapshot text for /home/luivatra/develop/ergo/pratir-backend/app/models/BuyRequest.scala
+2023.01.11 08:49:06 INFO  compiling root (6 scala sources)
+2023.01.11 08:49:06 INFO  time: compiled root in 0.58s
+2023.01.11 08:49:07 WARN  Could not load snapshot text for /home/luivatra/develop/ergo/pratir-backend/app/models/BuyRequest.scala
+2023.01.11 08:49:25 WARN  Could not load snapshot text for /home/luivatra/develop/ergo/pratir-backend/app/models/BuyRequest.scala
+2023.01.11 08:49:58 INFO  compiling root (6 scala sources)
+2023.01.11 08:49:58 INFO  time: compiled root in 0.74s
+2023.01.11 08:50:21 INFO  compiling root (6 scala sources)
+2023.01.11 08:50:21 INFO  time: compiled root in 0.74s
+2023.01.11 08:50:53 INFO  compiling root (6 scala sources)
+2023.01.11 08:50:53 INFO  time: compiled root in 0.74s
+2023.01.11 08:50:58 INFO  compiling root (6 scala sources)
+2023.01.11 08:50:58 INFO  time: compiled root in 0.66s
+2023.01.11 08:51:14 INFO  compiling root (6 scala sources)
+2023.01.11 08:51:14 INFO  time: compiled root in 0.73s
+2023.01.11 08:51:49 INFO  compiling root (6 scala sources)
+2023.01.11 08:51:49 INFO  time: compiled root in 0.73s
+2023.01.11 08:52:09 INFO  compiling root (6 scala sources)
+2023.01.11 08:52:09 INFO  time: compiled root in 0.69s
+2023.01.11 08:52:23 INFO  compiling root (6 scala sources)
+2023.01.11 08:52:23 INFO  time: compiled root in 0.88s
+2023.01.11 08:52:36 INFO  file:///home/luivatra/develop/ergo/pratir-backend/app/controllers/SaleController.scala:120:37: stale bloop error: overloaded method value apply with alternatives:
+  (start: Int,end: Int)scala.collection.immutable.Range <and>
+  (start: Int,end: Int,step: Int)scala.collection.immutable.Range
+ cannot be applied to (Int)
+                                    scala.collection.immutable.Range(bpr.count).map(i =>
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2023.01.11 08:52:36 INFO  file:///home/luivatra/develop/ergo/pratir-backend/app/controllers/SaleController.scala:126:51: stale bloop error: not found: type ExplorerAndPoolUnspentBoxesLoader
+                            val boxesLoader = new ExplorerAndPoolUnspentBoxesLoader().withAllowChainedTx(true)
+                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2023.01.11 08:52:36 INFO  file:///home/luivatra/develop/ergo/pratir-backend/app/controllers/SaleController.scala:127:101: stale bloop error: not found: value as
+                            val boxOperations = BoxOperations.createForSender(Pratir.getSaleAddress(as),ctx).withInputBoxesLoader(boxesLoader)
+                                                                                                    ^^
+2023.01.11 08:52:36 INFO  file:///home/luivatra/develop/ergo/pratir-backend/app/controllers/SaleController.scala:132:68: stale bloop error: not found: value as
+                            Await.result(salesdao.updateSaleStatus(as.id,SaleStatus.LIVE),Duration.Inf)
+                                                                   ^^
+2023.01.11 08:52:36 INFO  file:///home/luivatra/develop/ergo/pratir-backend/app/controllers/SaleController.scala:135:17: stale bloop warning: Adaptation of argument list by inserting () is deprecated: this is unlikely to be what you want.
+        signature: Status.apply[C](content: C)(implicit writeable: play.api.http.Writeable[C]): play.api.mvc.Result
+  given arguments: <none>
+ after adaptation: Status((): Unit)
+                Ok()
+                ^^^^
+2023.01.11 08:52:36 INFO  file:///home/luivatra/develop/ergo/pratir-backend/app/controllers/SaleController.scala:120:37: stale bloop error: overloaded method value apply with alternatives:
+  (start: Int,end: Int)scala.collection.immutable.Range <and>
+  (start: Int,end: Int,step: Int)scala.collection.immutable.Range
+ cannot be applied to (Int)
+                                    scala.collection.immutable.Range(bpr.count).map(i =>
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2023.01.11 08:52:36 INFO  file:///home/luivatra/develop/ergo/pratir-backend/app/controllers/SaleController.scala:126:51: stale bloop error: not found: type ExplorerAndPoolUnspentBoxesLoader
+                            val boxesLoader = new ExplorerAndPoolUnspentBoxesLoader().withAllowChainedTx(true)
+                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2023.01.11 08:52:36 INFO  file:///home/luivatra/develop/ergo/pratir-backend/app/controllers/SaleController.scala:127:101: stale bloop error: not found: value as
+                            val boxOperations = BoxOperations.createForSender(Pratir.getSaleAddress(as),ctx).withInputBoxesLoader(boxesLoader)
+                                                                                                    ^^
+2023.01.11 08:52:36 INFO  file:///home/luivatra/develop/ergo/pratir-backend/app/controllers/SaleController.scala:132:68: stale bloop error: not found: value as
+                            Await.result(salesdao.updateSaleStatus(as.id,SaleStatus.LIVE),Duration.Inf)
+                                                                   ^^
+2023.01.11 08:52:36 INFO  file:///home/luivatra/develop/ergo/pratir-backend/app/controllers/SaleController.scala:135:17: stale bloop warning: Adaptation of argument list by inserting () is deprecated: this is unlikely to be what you want.
+        signature: Status.apply[C](content: C)(implicit writeable: play.api.http.Writeable[C]): play.api.mvc.Result
+  given arguments: <none>
+ after adaptation: Status((): Unit)
+                Ok()
+                ^^^^
+2023.01.11 08:52:41 INFO  compiling root (6 scala sources)
+2023.01.11 08:52:41 INFO  time: compiled root in 0.78s
+2023.01.11 08:53:22 INFO  compiling root (6 scala sources)
+2023.01.11 08:53:22 INFO  time: compiled root in 0.74s
+2023.01.11 08:53:30 INFO  compiling root (6 scala sources)
+2023.01.11 08:53:30 INFO  time: compiled root in 0.78s
+2023.01.11 08:54:23 INFO  compiling root (6 scala sources)
+2023.01.11 08:54:23 INFO  time: compiled root in 0.66s
+2023.01.11 08:55:03 INFO  compiling root (6 scala sources)
+2023.01.11 08:55:03 INFO  time: compiled root in 0.63s
+2023.01.11 08:55:25 INFO  compiling root (6 scala sources)
+2023.01.11 08:55:25 INFO  time: compiled root in 0.67s
+2023.01.11 08:55:35 INFO  compiling root (6 scala sources)
+2023.01.11 08:55:35 INFO  time: compiled root in 0.68s
+2023.01.11 09:04:13 INFO  compiling root (6 scala sources)
+2023.01.11 09:04:13 INFO  time: compiled root in 0.7s
+Jan 11, 2023 9:04:41 AM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 19468
+Jan 11, 2023 9:04:47 AM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 19519
+Jan 11, 2023 9:07:19 AM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint fallbackResponseError
+SEVERE: Internal error: scala.reflect.internal.Symbols$CyclicReference: illegal cyclic reference involving class SaleController
+java.util.concurrent.CompletionException: scala.reflect.internal.Symbols$CyclicReference: illegal cyclic reference involving class SaleController
+	at java.base/java.util.concurrent.CompletableFuture.encodeThrowable(CompletableFuture.java:314)
+	at java.base/java.util.concurrent.CompletableFuture.completeThrowable(CompletableFuture.java:319)
+	at java.base/java.util.concurrent.CompletableFuture$UniAccept.tryFire(CompletableFuture.java:718)
+	at java.base/java.util.concurrent.CompletableFuture.postComplete(CompletableFuture.java:506)
+	at java.base/java.util.concurrent.CompletableFuture.complete(CompletableFuture.java:2073)
+	at scala.meta.internal.metals.CancelTokens$.$anonfun$future$1(CancelTokens.scala:42)
+	at scala.meta.internal.metals.CancelTokens$.$anonfun$future$1$adapted(CancelTokens.scala:38)
+	at scala.concurrent.impl.Promise$Transformation.run(Promise.scala:484)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+Caused by: scala.reflect.internal.Symbols$CyclicReference: illegal cyclic reference involving class SaleController
+
+Jan 11, 2023 9:09:00 AM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint fallbackResponseError
+SEVERE: Internal error: scala.reflect.internal.Symbols$CyclicReference: illegal cyclic reference involving value <import>
+java.util.concurrent.CompletionException: scala.reflect.internal.Symbols$CyclicReference: illegal cyclic reference involving value <import>
+	at java.base/java.util.concurrent.CompletableFuture.encodeThrowable(CompletableFuture.java:314)
+	at java.base/java.util.concurrent.CompletableFuture.completeThrowable(CompletableFuture.java:319)
+	at java.base/java.util.concurrent.CompletableFuture$UniAccept.tryFire(CompletableFuture.java:718)
+	at java.base/java.util.concurrent.CompletableFuture.postComplete(CompletableFuture.java:506)
+	at java.base/java.util.concurrent.CompletableFuture.complete(CompletableFuture.java:2073)
+	at scala.meta.internal.metals.CancelTokens$.$anonfun$future$1(CancelTokens.scala:42)
+	at scala.meta.internal.metals.CancelTokens$.$anonfun$future$1$adapted(CancelTokens.scala:38)
+	at scala.concurrent.impl.Promise$Transformation.run(Promise.scala:484)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+Caused by: scala.reflect.internal.Symbols$CyclicReference: illegal cyclic reference involving value <import>
+
+Jan 11, 2023 9:09:00 AM scala.meta.internal.pc.CompilerAccess retryWithCleanCompiler
+INFO: compiler crashed due to an error in the Scala compiler, retrying with new compiler instance.
+Jan 11, 2023 9:09:00 AM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 20233
+2023.01.11 09:10:44 INFO  compiling root (6 scala sources)
+2023.01.11 09:10:45 INFO  time: compiled root in 1.17s
+Jan 11, 2023 9:12:32 AM scala.meta.internal.pc.CompilerAccess retryWithCleanCompiler
+INFO: compiler crashed due to an error in the Scala compiler, retrying with new compiler instance.
+Jan 11, 2023 9:12:32 AM scala.meta.internal.pc.CompilerAccess handleError
+SEVERE: Position.point on NoPosition
+java.lang.UnsupportedOperationException: Position.point on NoPosition
+	at scala.reflect.internal.util.Position.fail(Position.scala:24)
+	at scala.reflect.internal.util.UndefinedPosition.point(Position.scala:102)
+	at scala.reflect.internal.util.UndefinedPosition.point(Position.scala:97)
+	at scala.meta.internal.pc.PcCollector.$anonfun$result$5(PcCollector.scala:218)
+	at scala.meta.internal.pc.PcCollector.$anonfun$result$5$adapted(PcCollector.scala:218)
+	at scala.collection.immutable.Set$Set3.exists(Set.scala:236)
+	at scala.meta.internal.pc.PcCollector.isForComprehensionOwner$1(PcCollector.scala:218)
+	at scala.meta.internal.pc.PcCollector.traverse$1(PcCollector.scala:271)
+	at scala.meta.internal.pc.PcCollector.$anonfun$result$18(PcCollector.scala:370)
+	at scala.collection.LinearSeqOptimized.foldLeft(LinearSeqOptimized.scala:126)
+	at scala.collection.LinearSeqOptimized.foldLeft$(LinearSeqOptimized.scala:122)
+	at scala.collection.immutable.List.foldLeft(List.scala:91)
+	at scala.meta.internal.pc.PcCollector.traverse$1(PcCollector.scala:370)
+	at scala.meta.internal.pc.PcCollector.$anonfun$result$18(PcCollector.scala:370)
+	at scala.collection.LinearSeqOptimized.foldLeft(LinearSeqOptimized.scala:126)
+	at scala.collection.LinearSeqOptimized.foldLeft$(LinearSeqOptimized.scala:122)
+	at scala.collection.immutable.List.foldLeft(List.scala:91)
+	at scala.meta.internal.pc.PcCollector.traverse$1(PcCollector.scala:370)
+	at scala.meta.internal.pc.PcCollector.$anonfun$result$18(PcCollector.scala:370)
+	at scala.collection.LinearSeqOptimized.foldLeft(LinearSeqOptimized.scala:126)
+	at scala.collection.LinearSeqOptimized.foldLeft$(LinearSeqOptimized.scala:122)
+	at scala.collection.immutable.List.foldLeft(List.scala:91)
+	at scala.meta.internal.pc.PcCollector.traverse$1(PcCollector.scala:370)
+	at scala.meta.internal.pc.PcCollector.$anonfun$result$13(PcCollector.scala:328)
+	at scala.collection.LinearSeqOptimized.foldLeft(LinearSeqOptimized.scala:126)
+	at scala.collection.LinearSeqOptimized.foldLeft$(LinearSeqOptimized.scala:122)
+	at scala.collection.immutable.List.foldLeft(List.scala:91)
+	at scala.meta.internal.pc.PcCollector.traverse$1(PcCollector.scala:328)
+	at scala.meta.internal.pc.PcCollector.$anonfun$result$18(PcCollector.scala:370)
+	at scala.collection.LinearSeqOptimized.foldLeft(LinearSeqOptimized.scala:126)
+	at scala.collection.LinearSeqOptimized.foldLeft$(LinearSeqOptimized.scala:122)
+	at scala.collection.immutable.List.foldLeft(List.scala:91)
+	at scala.meta.internal.pc.PcCollector.traverse$1(PcCollector.scala:370)
+	at scala.meta.internal.pc.PcCollector.$anonfun$result$13(PcCollector.scala:328)
+	at scala.collection.LinearSeqOptimized.foldLeft(LinearSeqOptimized.scala:126)
+	at scala.collection.LinearSeqOptimized.foldLeft$(LinearSeqOptimized.scala:122)
+	at scala.collection.immutable.List.foldLeft(List.scala:91)
+	at scala.meta.internal.pc.PcCollector.traverse$1(PcCollector.scala:328)
+	at scala.meta.internal.pc.PcCollector.$anonfun$result$13(PcCollector.scala:328)
+	at scala.collection.LinearSeqOptimized.foldLeft(LinearSeqOptimized.scala:126)
+	at scala.collection.LinearSeqOptimized.foldLeft$(LinearSeqOptimized.scala:122)
+	at scala.collection.immutable.List.foldLeft(List.scala:91)
+	at scala.meta.internal.pc.PcCollector.traverse$1(PcCollector.scala:328)
+	at scala.meta.internal.pc.PcCollector.result(PcCollector.scala:373)
+	at scala.meta.internal.pc.PcDocumentHighlightProvider.highlights(PcDocumentHighlightProvider.scala:25)
+
+2023.01.11 09:13:03 INFO  compiling root (6 scala sources)
+2023.01.11 09:13:04 INFO  time: compiled root in 1.07s
+2023.01.11 09:14:24 INFO  compiling root (6 scala sources)
+2023.01.11 09:14:24 INFO  time: compiled root in 0.81s
+Jan 11, 2023 9:14:38 AM scala.meta.internal.pc.CompilerAccess retryWithCleanCompiler
+INFO: compiler crashed due to an error in the Scala compiler, retrying with new compiler instance.
+Jan 11, 2023 9:14:38 AM scala.meta.internal.pc.CompilerAccess handleError
+SEVERE: Position.point on NoPosition
+java.lang.UnsupportedOperationException: Position.point on NoPosition
+	at scala.reflect.internal.util.Position.fail(Position.scala:24)
+	at scala.reflect.internal.util.UndefinedPosition.point(Position.scala:102)
+	at scala.reflect.internal.util.UndefinedPosition.point(Position.scala:97)
+	at scala.meta.internal.pc.PcCollector.$anonfun$result$5(PcCollector.scala:218)
+	at scala.meta.internal.pc.PcCollector.$anonfun$result$5$adapted(PcCollector.scala:218)
+	at scala.collection.immutable.Set$Set3.exists(Set.scala:236)
+	at scala.meta.internal.pc.PcCollector.isForComprehensionOwner$1(PcCollector.scala:218)
+	at scala.meta.internal.pc.PcCollector.traverse$1(PcCollector.scala:271)
+	at scala.meta.internal.pc.PcCollector.$anonfun$result$18(PcCollector.scala:370)
+	at scala.collection.LinearSeqOptimized.foldLeft(LinearSeqOptimized.scala:126)
+	at scala.collection.LinearSeqOptimized.foldLeft$(LinearSeqOptimized.scala:122)
+	at scala.collection.immutable.List.foldLeft(List.scala:91)
+	at scala.meta.internal.pc.PcCollector.traverse$1(PcCollector.scala:370)
+	at scala.meta.internal.pc.PcCollector.$anonfun$result$18(PcCollector.scala:370)
+	at scala.collection.LinearSeqOptimized.foldLeft(LinearSeqOptimized.scala:126)
+	at scala.collection.LinearSeqOptimized.foldLeft$(LinearSeqOptimized.scala:122)
+	at scala.collection.immutable.List.foldLeft(List.scala:91)
+	at scala.meta.internal.pc.PcCollector.traverse$1(PcCollector.scala:370)
+	at scala.meta.internal.pc.PcCollector.$anonfun$result$18(PcCollector.scala:370)
+	at scala.collection.LinearSeqOptimized.foldLeft(LinearSeqOptimized.scala:126)
+	at scala.collection.LinearSeqOptimized.foldLeft$(LinearSeqOptimized.scala:122)
+	at scala.collection.immutable.List.foldLeft(List.scala:91)
+	at scala.meta.internal.pc.PcCollector.traverse$1(PcCollector.scala:370)
+	at scala.meta.internal.pc.PcCollector.$anonfun$result$13(PcCollector.scala:328)
+	at scala.collection.LinearSeqOptimized.foldLeft(LinearSeqOptimized.scala:126)
+	at scala.collection.LinearSeqOptimized.foldLeft$(LinearSeqOptimized.scala:122)
+	at scala.collection.immutable.List.foldLeft(List.scala:91)
+	at scala.meta.internal.pc.PcCollector.traverse$1(PcCollector.scala:328)
+	at scala.meta.internal.pc.PcCollector.$anonfun$result$18(PcCollector.scala:370)
+	at scala.collection.LinearSeqOptimized.foldLeft(LinearSeqOptimized.scala:126)
+	at scala.collection.LinearSeqOptimized.foldLeft$(LinearSeqOptimized.scala:122)
+	at scala.collection.immutable.List.foldLeft(List.scala:91)
+	at scala.meta.internal.pc.PcCollector.traverse$1(PcCollector.scala:370)
+	at scala.meta.internal.pc.PcCollector.$anonfun$result$13(PcCollector.scala:328)
+	at scala.collection.LinearSeqOptimized.foldLeft(LinearSeqOptimized.scala:126)
+	at scala.collection.LinearSeqOptimized.foldLeft$(LinearSeqOptimized.scala:122)
+	at scala.collection.immutable.List.foldLeft(List.scala:91)
+	at scala.meta.internal.pc.PcCollector.traverse$1(PcCollector.scala:328)
+	at scala.meta.internal.pc.PcCollector.$anonfun$result$13(PcCollector.scala:328)
+	at scala.collection.LinearSeqOptimized.foldLeft(LinearSeqOptimized.scala:126)
+	at scala.collection.LinearSeqOptimized.foldLeft$(LinearSeqOptimized.scala:122)
+	at scala.collection.immutable.List.foldLeft(List.scala:91)
+	at scala.meta.internal.pc.PcCollector.traverse$1(PcCollector.scala:328)
+	at scala.meta.internal.pc.PcCollector.result(PcCollector.scala:373)
+	at scala.meta.internal.pc.PcDocumentHighlightProvider.highlights(PcDocumentHighlightProvider.scala:25)
+
+2023.01.11 09:14:45 INFO  compiling root (6 scala sources)
+2023.01.11 09:14:45 INFO  time: compiled root in 0.76s
+2023.01.11 09:14:52 INFO  compiling root (6 scala sources)
+2023.01.11 09:14:52 INFO  time: compiled root in 0.73s
+2023.01.11 09:15:57 INFO  compiling root (6 scala sources)
+2023.01.11 09:15:57 INFO  time: compiled root in 0.7s
+2023.01.11 09:16:29 INFO  compiling root (6 scala sources)
+2023.01.11 09:16:29 INFO  time: compiled root in 0.89s
+2023.01.11 09:17:16 INFO  compiling root (6 scala sources)
+2023.01.11 09:17:17 INFO  time: compiled root in 1.27s
+2023.01.11 09:17:37 INFO  compiling root (6 scala sources)
+2023.01.11 09:17:37 INFO  time: compiled root in 0.75s
+Jan 11, 2023 2:26:44 PM scala.meta.internal.pc.CompilerAccess retryWithCleanCompiler
+INFO: compiler crashed due to an error in the Scala compiler, retrying with new compiler instance.
+2023.01.11 14:27:40 INFO  compiling root (29 scala sources and 1 java source)
+2023.01.11 14:27:40 INFO  time: compiled root in 0.23s
+2023.01.11 14:28:48 INFO  compiling root (29 scala sources and 1 java source)
+2023.01.11 14:28:48 INFO  time: compiled root in 0.9s
+2023.01.11 14:29:07 INFO  compiling root (29 scala sources and 1 java source)
+2023.01.11 14:29:07 INFO  time: compiled root in 0.87s
+2023.01.11 14:29:31 INFO  compiling root (29 scala sources and 1 java source)
+2023.01.11 14:29:31 INFO  time: compiled root in 0.88s
+2023.01.11 14:30:01 INFO  compiling root (29 scala sources and 1 java source)
+2023.01.11 14:30:03 INFO  time: compiled root in 1.99s
+2023.01.11 14:30:17 INFO  shutting down Metals
+2023.01.11 14:30:17 INFO  Shut down connection with build server.
+2023.01.11 14:30:17 INFO  Shut down connection with build server.
+2023.01.11 14:30:17 INFO  Shut down connection with build server.
+2023.01.11 14:30:34 INFO  tracing is disabled for protocol LSP, to enable tracing of incoming and outgoing JSON messages create an empty file at /home/luivatra/develop/ergo/pratir-backend/.metals/lsp.trace.json or /home/luivatra/.cache/metals/lsp.trace.json
+2023.01.11 14:30:35 INFO  logging to file /home/luivatra/develop/ergo/pratir-backend/.metals/metals.log
+2023.01.11 14:30:35 INFO  Started: Metals version 0.11.10 in workspace '/home/luivatra/develop/ergo/pratir-backend' for client Visual Studio Code 1.74.2.
+SLF4J: No SLF4J providers were found.
+SLF4J: Defaulting to no-operation (NOP) logger implementation
+SLF4J: See https://www.slf4j.org/codes.html#noProviders for further details.
+SLF4J: Class path contains SLF4J bindings targeting slf4j-api versions 1.7.x or earlier.
+SLF4J: Ignoring binding found at [jar:file:/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/outr/scribe-slf4j_2.13/3.10.5/scribe-slf4j_2.13-3.10.5.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: See https://www.slf4j.org/codes.html#ignoredBindings for an explanation.
+2023.01.11 14:30:37 INFO  time: initialize in 2.01s
+2023.01.11 14:30:39 INFO  Attempting to connect to the build server...
+2023.01.11 14:30:39 INFO  Bloop uses /usr/lib/jvm/java-11-openjdk-amd64 defined at /home/luivatra/.bloop/bloop.json
+2023.01.11 14:30:40 INFO  skipping build import with status 'Installed'
+2023.01.11 14:30:40 INFO  tracing is disabled for protocol BSP, to enable tracing of incoming and outgoing JSON messages create an empty file at /home/luivatra/develop/ergo/pratir-backend/.metals/bsp.trace.json or /home/luivatra/.cache/metals/bsp.trace.json
+2023.01.11 14:30:40 INFO  Attempting to connect to the build server...
+2023.01.11 14:30:40 INFO  Bloop uses /usr/lib/jvm/java-11-openjdk-amd64 defined at /home/luivatra/.bloop/bloop.json
+2023.01.11 14:30:40 INFO  Attempting to connect to the build server...
+2023.01.11 14:30:40 INFO  Bloop uses /usr/lib/jvm/java-11-openjdk-amd64 defined at /home/luivatra/.bloop/bloop.json
+2023.01.11 14:30:40 INFO  tracing is disabled for protocol BSP, to enable tracing of incoming and outgoing JSON messages create an empty file at /home/luivatra/develop/ergo/pratir-backend/project/project/.metals/bsp.trace.json or /home/luivatra/.cache/metals/bsp.trace.json
+2023.01.11 14:30:40 INFO  tracing is disabled for protocol BSP, to enable tracing of incoming and outgoing JSON messages create an empty file at /home/luivatra/develop/ergo/pratir-backend/project/.metals/bsp.trace.json or /home/luivatra/.cache/metals/bsp.trace.json
+2023.01.11 14:30:40 INFO  time: Connected to build server in 1.06s
+2023.01.11 14:30:40 INFO  Connected to Build server: Bloop v1.5.6
+2023.01.11 14:30:40 INFO  time: Imported build in 0.36s
+2023.01.11 14:30:49 INFO  time: indexed workspace in 8.24s
+2023.01.11 14:30:49 INFO  compiling root (29 scala sources and 1 java source)
+2023.01.11 14:30:54 INFO  time: compiled root in 4.36s
+2023.01.11 14:30:54 INFO  compiling root (29 scala sources and 1 java source)
+2023.01.11 14:30:56 INFO  time: compiled root in 1.9s
+2023.01.11 14:31:26 INFO  compiling root (29 scala sources and 1 java source)
+2023.01.11 14:31:27 INFO  time: compiled root in 1.01s
+2023.01.11 14:32:23 INFO  compiling root (29 scala sources and 1 java source)
+2023.01.11 14:32:24 INFO  time: compiled root in 1.21s
+2023.01.11 14:32:32 INFO  compiling root (29 scala sources and 1 java source)
+2023.01.11 14:32:33 INFO  time: compiled root in 1.17s
+2023.01.11 14:34:21 INFO  compiling root (29 scala sources and 1 java source)
+2023.01.11 14:34:21 INFO  time: compiled root in 0.76s
+2023.01.11 14:36:45 INFO  compiling root (29 scala sources and 1 java source)
+2023.01.11 14:36:45 INFO  time: compiled root in 0.83s
+2023.01.11 14:36:54 INFO  compiling root (29 scala sources and 1 java source)
+2023.01.11 14:36:54 INFO  time: compiled root in 0.92s
+Jan 11, 2023 2:37:45 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 736
+Jan 11, 2023 2:37:45 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 737
+2023.01.11 14:37:48 INFO  compiling root (29 scala sources and 1 java source)
+2023.01.11 14:37:48 INFO  time: compiled root in 0.75s
+Jan 11, 2023 2:38:07 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 775
+Jan 11, 2023 2:38:07 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 778
+2023.01.11 14:38:14 INFO  compiling root (29 scala sources and 1 java source)
+2023.01.11 14:38:14 INFO  time: compiled root in 0.8s
+2023.01.11 14:38:47 INFO  compiling root (29 scala sources and 1 java source)
+2023.01.11 14:38:47 INFO  time: compiled root in 0.79s
+2023.01.11 14:39:05 INFO  compiling root (29 scala sources and 1 java source)
+2023.01.11 14:39:05 INFO  time: compiled root in 0.76s
+2023.01.11 14:39:19 INFO  compiling root (29 scala sources and 1 java source)
+2023.01.11 14:39:19 INFO  time: compiled root in 0.92s
+2023.01.11 14:39:29 INFO  compiling root (29 scala sources and 1 java source)
+2023.01.11 14:39:31 INFO  time: compiled root in 1.11s
+2023.01.11 14:39:35 INFO  compiling root (29 scala sources and 1 java source)
+2023.01.11 14:39:36 INFO  time: compiled root in 1s
+2023.01.11 14:40:07 INFO  compiling root (29 scala sources and 1 java source)
+2023.01.11 14:40:09 INFO  time: compiled root in 1.26s
+2023.01.11 14:41:18 INFO  compiling root (29 scala sources and 1 java source)
+2023.01.11 14:41:18 INFO  time: compiled root in 0.84s
+2023.01.11 14:41:46 INFO  compiling root (29 scala sources and 1 java source)
+2023.01.11 14:41:46 INFO  time: compiled root in 0.86s
+2023.01.11 14:42:27 INFO  compiling root (29 scala sources and 1 java source)
+2023.01.11 14:42:27 INFO  time: compiled root in 0.87s
+2023.01.11 14:43:05 INFO  compiling root (29 scala sources and 1 java source)
+2023.01.11 14:43:05 INFO  time: compiled root in 0.11s
+Jan 11, 2023 2:43:07 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 1364
+2023.01.11 14:43:13 INFO  compiling root (29 scala sources and 1 java source)
+2023.01.11 14:43:13 INFO  time: compiled root in 0.88s
+2023.01.11 14:44:44 INFO  compiling root (29 scala sources and 1 java source)
+2023.01.11 14:44:45 INFO  time: compiled root in 1.13s
+2023.01.11 14:44:52 INFO  compiling root (29 scala sources and 1 java source)
+2023.01.11 14:44:54 INFO  time: compiled root in 1.35s
+2023.01.11 14:45:18 INFO  compiling root (29 scala sources and 1 java source)
+2023.01.11 14:45:18 INFO  time: compiled root in 0.7s
+2023.01.11 14:45:47 INFO  compiling root (29 scala sources and 1 java source)
+2023.01.11 14:45:47 INFO  time: compiled root in 0.11s
+2023.01.11 14:46:04 INFO  compiling root (29 scala sources and 1 java source)
+2023.01.11 14:46:04 INFO  time: compiled root in 0.15s
+2023.01.11 14:46:08 INFO  running '/usr/lib/jvm/java-11-openjdk-amd64/bin/java -Djline.terminal=jline.UnsupportedTerminal -Dsbt.log.noformat=true -Dfile.encoding=UTF-8 -jar /tmp/metals15945345741056032925/sbt-launch.jar -Dbloop.export-jar-classifiers=sources bloopInstall'
+2023.01.11 14:46:11 INFO  [info] welcome to sbt 1.7.2 (Ubuntu Java 11.0.17)
+2023.01.11 14:46:13 INFO  [info] loading global plugins from /home/luivatra/.sbt/1.0/plugins
+2023.01.11 14:46:15 INFO  [info] loading settings for project pratir-backend-build-build-build from metals.sbt ...
+2023.01.11 14:46:15 INFO  [info] loading project definition from /home/luivatra/develop/ergo/pratir-backend/project/project/project
+2023.01.11 14:46:15 INFO  [info] loading settings for project pratir-backend-build-build from metals.sbt ...
+2023.01.11 14:46:16 INFO  [info] loading project definition from /home/luivatra/develop/ergo/pratir-backend/project/project
+2023.01.11 14:46:19 INFO  [success] Generated .bloop/pratir-backend-build-build.json
+2023.01.11 14:46:19 INFO  [success] Total time: 3 s, completed 11 Jan 2023, 2:46:19 PM
+2023.01.11 14:46:19 INFO  [info] loading settings for project pratir-backend-build from metals.sbt,plugins.sbt ...
+2023.01.11 14:46:19 INFO  [info] loading project definition from /home/luivatra/develop/ergo/pratir-backend/project
+2023.01.11 14:46:21 INFO  [success] Generated .bloop/pratir-backend-build.json
+2023.01.11 14:46:21 INFO  [success] Total time: 2 s, completed 11 Jan 2023, 2:46:21 PM
+2023.01.11 14:46:22 INFO  [info] loading settings for project root from build.sbt ...
+2023.01.11 14:46:22 INFO  [info]   __              __
+2023.01.11 14:46:22 INFO  [info]   \ \     ____   / /____ _ __  __
+2023.01.11 14:46:22 INFO  [info]    \ \   / __ \ / // __ `// / / /
+2023.01.11 14:46:22 INFO  [info]    / /  / /_/ // // /_/ // /_/ /
+2023.01.11 14:46:22 INFO  [info]   /_/  / .___//_/ \__,_/ \__, /
+2023.01.11 14:46:22 INFO  [info]       /_/               /____/
+2023.01.11 14:46:22 INFO  [info] 
+2023.01.11 14:46:22 INFO  [info] Version 2.8.18 running Java 11.0.17
+2023.01.11 14:46:22 INFO  [info] 
+2023.01.11 14:46:22 INFO  [info] Play is run entirely by the community. Please consider contributing and/or donating:
+2023.01.11 14:46:22 INFO  [info] https://www.playframework.com/sponsors
+2023.01.11 14:46:22 INFO  [info] 
+2023.01.11 14:46:23 INFO  [info] .env detected (fileName=.env). About to configure JVM System Environment with new map
+2023.01.11 14:46:23 ERROR WARNING: An illegal reflective access operation has occurred
+2023.01.11 14:46:23 ERROR WARNING: Illegal reflective access by au.com.onegeek.sbtdotenv.DirtyEnvironmentHack$ (file:/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/nl/gn0s1s/sbt-dotenv_2.12_1.0/3.0.0/sbt-dotenv-3.0.0.jar) to field java.lang.ProcessEnvironment.theEnvironment
+2023.01.11 14:46:23 ERROR WARNING: Please consider reporting this to the maintainers of au.com.onegeek.sbtdotenv.DirtyEnvironmentHack$
+2023.01.11 14:46:23 ERROR WARNING: Use --illegal-access=warn to enable warnings of further illegal reflective access operations
+2023.01.11 14:46:23 ERROR WARNING: All illegal access operations will be denied in a future release
+2023.01.11 14:46:23 INFO  [info] Configured .env environment
+2023.01.11 14:46:25 INFO  [success] Generated .bloop/root.json
+2023.01.11 14:46:25 INFO  [success] Generated .bloop/root-test.json
+2023.01.11 14:46:25 INFO  [success] Total time: 1 s, completed 11 Jan 2023, 2:46:25 PM
+2023.01.11 14:46:25 INFO  time: ran 'sbt bloopInstall' in 17s
+2023.01.11 14:46:25 INFO  Disconnecting from Bloop session...
+2023.01.11 14:46:25 INFO  Shut down connection with build server.
+2023.01.11 14:46:25 INFO  Shut down connection with build server.
+2023.01.11 14:46:25 INFO  Shut down connection with build server.
+2023.01.11 14:46:25 INFO  Attempting to connect to the build server...
+2023.01.11 14:46:25 INFO  Bloop uses /usr/lib/jvm/java-11-openjdk-amd64 defined at /home/luivatra/.bloop/bloop.json
+2023.01.11 14:46:25 INFO  tracing is disabled for protocol BSP, to enable tracing of incoming and outgoing JSON messages create an empty file at /home/luivatra/develop/ergo/pratir-backend/.metals/bsp.trace.json or /home/luivatra/.cache/metals/bsp.trace.json
+2023.01.11 14:46:25 INFO  Attempting to connect to the build server...
+2023.01.11 14:46:25 INFO  Bloop uses /usr/lib/jvm/java-11-openjdk-amd64 defined at /home/luivatra/.bloop/bloop.json
+2023.01.11 14:46:25 INFO  Attempting to connect to the build server...
+2023.01.11 14:46:25 INFO  Bloop uses /usr/lib/jvm/java-11-openjdk-amd64 defined at /home/luivatra/.bloop/bloop.json
+2023.01.11 14:46:25 INFO  tracing is disabled for protocol BSP, to enable tracing of incoming and outgoing JSON messages create an empty file at /home/luivatra/develop/ergo/pratir-backend/project/.metals/bsp.trace.json or /home/luivatra/.cache/metals/bsp.trace.json
+2023.01.11 14:46:25 INFO  tracing is disabled for protocol BSP, to enable tracing of incoming and outgoing JSON messages create an empty file at /home/luivatra/develop/ergo/pratir-backend/project/project/.metals/bsp.trace.json or /home/luivatra/.cache/metals/bsp.trace.json
+2023.01.11 14:46:25 INFO  time: Connected to build server in 0.2s
+2023.01.11 14:46:25 INFO  Connected to Build server: Bloop v1.5.6
+2023.01.11 14:46:27 INFO  time: indexed workspace in 2.04s
+2023.01.11 14:46:27 INFO  compiling root (29 scala sources and 1 java source)
+2023.01.11 14:46:29 INFO  time: compiled root in 1.58s
+2023.01.11 14:48:27 INFO  compiling root (29 scala sources and 1 java source)
+2023.01.11 14:48:27 INFO  time: compiled root in 0.11s
+2023.01.11 14:48:33 INFO  compiling root (29 scala sources and 1 java source)
+2023.01.11 14:48:33 INFO  time: compiled root in 0.79s
+2023.01.11 14:48:40 INFO  shutting down Metals
+2023.01.11 14:48:40 INFO  Shut down connection with build server.
+2023.01.11 14:48:40 INFO  Shut down connection with build server.
+2023.01.11 14:48:40 INFO  Shut down connection with build server.
+2023.01.11 14:48:52 INFO  tracing is disabled for protocol LSP, to enable tracing of incoming and outgoing JSON messages create an empty file at /home/luivatra/develop/ergo/pratir-backend/.metals/lsp.trace.json or /home/luivatra/.cache/metals/lsp.trace.json
+2023.01.11 14:48:53 INFO  logging to file /home/luivatra/develop/ergo/pratir-backend/.metals/metals.log
+2023.01.11 14:48:53 INFO  Started: Metals version 0.11.10 in workspace '/home/luivatra/develop/ergo/pratir-backend' for client Visual Studio Code 1.74.2.
+SLF4J: No SLF4J providers were found.
+SLF4J: Defaulting to no-operation (NOP) logger implementation
+SLF4J: See https://www.slf4j.org/codes.html#noProviders for further details.
+SLF4J: Class path contains SLF4J bindings targeting slf4j-api versions 1.7.x or earlier.
+SLF4J: Ignoring binding found at [jar:file:/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/outr/scribe-slf4j_2.13/3.10.5/scribe-slf4j_2.13-3.10.5.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: See https://www.slf4j.org/codes.html#ignoredBindings for an explanation.
+2023.01.11 14:48:55 INFO  time: initialize in 2.23s
+2023.01.11 14:48:56 INFO  Attempting to connect to the build server...
+2023.01.11 14:48:56 INFO  Bloop uses /usr/lib/jvm/java-11-openjdk-amd64 defined at /home/luivatra/.bloop/bloop.json
+2023.01.11 14:48:56 INFO  skipping build import with status 'Installed'
+2023.01.11 14:48:57 INFO  tracing is disabled for protocol BSP, to enable tracing of incoming and outgoing JSON messages create an empty file at /home/luivatra/develop/ergo/pratir-backend/.metals/bsp.trace.json or /home/luivatra/.cache/metals/bsp.trace.json
+2023.01.11 14:48:57 INFO  Attempting to connect to the build server...
+2023.01.11 14:48:57 INFO  Bloop uses /usr/lib/jvm/java-11-openjdk-amd64 defined at /home/luivatra/.bloop/bloop.json
+2023.01.11 14:48:57 INFO  Attempting to connect to the build server...
+2023.01.11 14:48:57 INFO  Bloop uses /usr/lib/jvm/java-11-openjdk-amd64 defined at /home/luivatra/.bloop/bloop.json
+2023.01.11 14:48:57 INFO  tracing is disabled for protocol BSP, to enable tracing of incoming and outgoing JSON messages create an empty file at /home/luivatra/develop/ergo/pratir-backend/project/project/.metals/bsp.trace.json or /home/luivatra/.cache/metals/bsp.trace.json
+2023.01.11 14:48:57 INFO  tracing is disabled for protocol BSP, to enable tracing of incoming and outgoing JSON messages create an empty file at /home/luivatra/develop/ergo/pratir-backend/project/.metals/bsp.trace.json or /home/luivatra/.cache/metals/bsp.trace.json
+2023.01.11 14:48:57 INFO  time: Connected to build server in 1.08s
+2023.01.11 14:48:57 INFO  Connected to Build server: Bloop v1.5.6
+2023.01.11 14:48:58 INFO  time: Imported build in 0.36s
+Jan 11, 2023 2:48:58 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 1
+Jan 11, 2023 2:48:59 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 4
+2023.01.11 14:49:05 INFO  time: indexed workspace in 7.15s
+2023.01.11 14:49:05 INFO  compiling root (29 scala sources and 1 java source)
+2023.01.11 14:49:07 INFO  time: compiled root in 2.19s
+2023.01.11 14:49:07 INFO  compiling root (29 scala sources and 1 java source)
+2023.01.11 14:49:09 INFO  time: compiled root in 1.95s
+2023.01.11 14:49:43 INFO  compiling root (29 scala sources and 1 java source)
+2023.01.11 14:49:48 WARN  one feature warning; re-run with -feature for details
+2023.01.11 14:49:48 INFO  time: compiled root in 5.14s
+2023.01.11 14:50:38 INFO  compiling root (1 scala source)
+2023.01.11 14:50:38 INFO  time: compiled root in 92ms
+Jan 11, 2023 2:51:55 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint fallbackResponseError
+SEVERE: Internal error: java.lang.InterruptedException
+java.util.concurrent.CompletionException: java.lang.InterruptedException
+	at java.base/java.util.concurrent.CompletableFuture.encodeThrowable(CompletableFuture.java:314)
+	at java.base/java.util.concurrent.CompletableFuture.completeThrowable(CompletableFuture.java:319)
+	at java.base/java.util.concurrent.CompletableFuture$UniAccept.tryFire(CompletableFuture.java:718)
+	at java.base/java.util.concurrent.CompletableFuture.postComplete(CompletableFuture.java:506)
+	at java.base/java.util.concurrent.CompletableFuture.complete(CompletableFuture.java:2073)
+	at scala.meta.internal.metals.CancelTokens$.$anonfun$future$1(CancelTokens.scala:42)
+	at scala.meta.internal.metals.CancelTokens$.$anonfun$future$1$adapted(CancelTokens.scala:38)
+	at scala.concurrent.impl.Promise$Transformation.run(Promise.scala:484)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+Caused by: java.lang.InterruptedException
+	at scala.meta.internal.metals.FutureCancelToken.checkCanceled(FutureCancelToken.scala:29)
+	at scala.meta.pc.VirtualFileParams.checkCanceled(VirtualFileParams.java:25)
+	at scala.meta.internal.pc.CompletionProvider.$anonfun$completions$1(CompletionProvider.scala:77)
+	at scala.collection.Iterator$$anon$10.next(Iterator.scala:461)
+	at scala.collection.Iterator.toStream(Iterator.scala:1417)
+	at scala.collection.Iterator.toStream$(Iterator.scala:1416)
+	at scala.collection.AbstractIterator.toStream(Iterator.scala:1431)
+	at scala.collection.Iterator.$anonfun$toStream$1(Iterator.scala:1417)
+	at scala.collection.immutable.Stream$Cons.tail(Stream.scala:1173)
+	at scala.collection.immutable.Stream$Cons.tail(Stream.scala:1163)
+	at scala.collection.immutable.StreamIterator.$anonfun$next$1(Stream.scala:1061)
+	at scala.collection.immutable.StreamIterator$LazyCell.v$lzycompute(Stream.scala:1050)
+	at scala.collection.immutable.StreamIterator$LazyCell.v(Stream.scala:1050)
+	at scala.collection.immutable.StreamIterator.hasNext(Stream.scala:1055)
+	at scala.collection.convert.Wrappers$IteratorWrapper.hasNext(Wrappers.scala:32)
+	at org.eclipse.lsp4j.jsonrpc.json.adapters.CollectionTypeAdapter.write(CollectionTypeAdapter.java:134)
+	at org.eclipse.lsp4j.jsonrpc.json.adapters.CollectionTypeAdapter.write(CollectionTypeAdapter.java:40)
+	at com.google.gson.internal.bind.TypeAdapterRuntimeTypeWrapper.write(TypeAdapterRuntimeTypeWrapper.java:69)
+	at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory$1.write(ReflectiveTypeAdapterFactory.java:157)
+	at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory$Adapter.write(ReflectiveTypeAdapterFactory.java:287)
+	at com.google.gson.Gson.toJson(Gson.java:786)
+	at org.eclipse.lsp4j.jsonrpc.json.adapters.MessageTypeAdapter.write(MessageTypeAdapter.java:423)
+	at org.eclipse.lsp4j.jsonrpc.json.adapters.MessageTypeAdapter.write(MessageTypeAdapter.java:55)
+	at com.google.gson.Gson.toJson(Gson.java:786)
+	at com.google.gson.Gson.toJson(Gson.java:756)
+	at org.eclipse.lsp4j.jsonrpc.json.MessageJsonHandler.serialize(MessageJsonHandler.java:145)
+	at org.eclipse.lsp4j.jsonrpc.json.MessageJsonHandler.serialize(MessageJsonHandler.java:140)
+	at org.eclipse.lsp4j.jsonrpc.json.StreamMessageConsumer.consume(StreamMessageConsumer.java:59)
+	at org.eclipse.lsp4j.jsonrpc.RemoteEndpoint.lambda$handleRequest$1(RemoteEndpoint.java:281)
+	at java.base/java.util.concurrent.CompletableFuture$UniAccept.tryFire(CompletableFuture.java:714)
+	... 8 more
+
+2023.01.11 14:53:09 INFO  compiling root (1 scala source)
+2023.01.11 14:53:10 INFO  time: compiled root in 1.04s
+2023.01.11 14:57:28 INFO  compiling root (1 scala source)
+2023.01.11 14:57:28 INFO  time: compiled root in 0.49s
+Jan 11, 2023 2:57:30 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 838
+2023.01.11 14:57:55 INFO  compiling root (1 scala source)
+2023.01.11 14:57:55 INFO  time: compiled root in 0.46s
+2023.01.11 14:58:15 INFO  compiling root (1 scala source)
+2023.01.11 14:58:17 WARN  one feature warning; re-run with -feature for details
+2023.01.11 14:58:17 INFO  time: compiled root in 2.04s
+Jan 11, 2023 2:59:08 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 929
+Jan 11, 2023 2:59:11 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 936
+2023.01.11 14:59:16 INFO  compiling root (1 scala source)
+2023.01.11 14:59:16 INFO  time: compiled root in 0.47s
+2023.01.11 14:59:30 INFO  compiling root (1 scala source)
+2023.01.11 14:59:30 INFO  time: compiled root in 0.78s
+Jan 11, 2023 2:59:40 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 1010
+2023.01.11 14:59:43 INFO  compiling root (1 scala source)
+2023.01.11 14:59:43 INFO  time: compiled root in 0.47s
+2023.01.11 14:59:50 INFO  compiling root (1 scala source)
+2023.01.11 14:59:50 INFO  time: compiled root in 0.43s
+Jan 11, 2023 2:59:51 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 1047
+2023.01.11 15:18:06 INFO  compiling root (1 scala source)
+2023.01.11 15:18:07 INFO  time: compiled root in 1.04s
+2023.01.11 15:19:47 INFO  compiling root (2 scala sources)
+2023.01.11 15:19:47 INFO  time: compiled root in 0.72s
+2023.01.11 15:19:47 INFO  compiling root (2 scala sources)
+2023.01.11 15:19:49 INFO  time: compiled root in 0.61s
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/models/MUnsignedTransaction.scala in Array[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/models/MUnsignedTransaction.scala, 67, 67, 82)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/models/MUnsignedTransaction.scala in Array[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/models/MUnsignedTransaction.scala, 67, 67, 75)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/models/MUnsignedTransaction.scala in Array[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/models/MUnsignedTransaction.scala, 67, 67, 76)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/models/MUnsignedTransaction.scala in Array[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/models/MUnsignedTransaction.scala, 67, 67, 75)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/models/MUnsignedTransaction.scala in Array[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/models/MUnsignedTransaction.scala, 67, 67, 76)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/models/MUnsignedTransaction.scala in Array[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/models/MUnsignedTransaction.scala, 67, 67, 77)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/models/MUnsignedTransaction.scala in Array[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/models/MUnsignedTransaction.scala, 67, 67, 78)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/models/MUnsignedTransaction.scala in Array[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/models/MUnsignedTransaction.scala, 67, 67, 80)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/models/MUnsignedTransaction.scala in Array[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/models/MUnsignedTransaction.scala, 67, 67, 80)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/models/MUnsignedTransaction.scala in Array[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/models/MUnsignedTransaction.scala, 67, 67, 80)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/models/MUnsignedTransaction.scala in Array[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/models/MUnsignedTransaction.scala, 98, 98, 113)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/models/MUnsignedTransaction.scala in Array[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/models/MUnsignedTransaction.scala, 98, 98, 106)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/models/MUnsignedTransaction.scala in Array[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/models/MUnsignedTransaction.scala, 98, 98, 107)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/models/MUnsignedTransaction.scala in Array[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/models/MUnsignedTransaction.scala, 98, 98, 108)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/models/MUnsignedTransaction.scala in Array[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/models/MUnsignedTransaction.scala, 98, 98, 109)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/models/MUnsignedTransaction.scala in Array[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/models/MUnsignedTransaction.scala, 98, 98, 111)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/models/MUnsignedTransaction.scala in Array[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/models/MUnsignedTransaction.scala, 98, 98, 111)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/models/MUnsignedTransaction.scala in Array[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/models/MUnsignedTransaction.scala, 98, 98, 111)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/models/MUnsignedTransaction.scala in Array[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/models/MUnsignedTransaction.scala, 126, 126, 141)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/models/MUnsignedTransaction.scala in Array[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/models/MUnsignedTransaction.scala, 126, 126, 134)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/models/MUnsignedTransaction.scala in Array[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/models/MUnsignedTransaction.scala, 126, 126, 135)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/models/MUnsignedTransaction.scala in Array[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/models/MUnsignedTransaction.scala, 126, 126, 136)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/models/MUnsignedTransaction.scala in Array[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/models/MUnsignedTransaction.scala, 126, 126, 138)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/models/MUnsignedTransaction.scala in Array[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/models/MUnsignedTransaction.scala, 126, 126, 140)
+2023.01.11 15:21:30 INFO  compiling root (2 scala sources)
+2023.01.11 15:21:30 INFO  time: compiled root in 0.51s
+2023.01.11 15:21:43 INFO  compiling root (3 scala sources)
+2023.01.11 15:21:43 INFO  time: compiled root in 0.72s
+2023.01.11 15:21:43 INFO  compiling root (3 scala sources)
+2023.01.11 15:21:45 INFO  time: compiled root in 0.69s
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/models/MInput.scala in Array[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/models/MInput.scala, 135, 135, 150)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/models/MInput.scala in Array[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/models/MInput.scala, 135, 135, 143)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/models/MInput.scala in Array[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/models/MInput.scala, 135, 135, 144)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/models/MInput.scala in Array[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/models/MInput.scala, 135, 135, 148)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/models/MInput.scala in scala.collection.mutable.HashMap[String,<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/models/MInput.scala, 214, 214, 238)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/models/MInput.scala in scala.collection.mutable.HashMap[String,<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/models/MInput.scala, 214, 214, 239)
+Jan 11, 2023 3:26:55 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 1794
+2023.01.11 15:27:11 INFO  compiling root (3 scala sources)
+2023.01.11 15:27:11 INFO  time: compiled root in 0.47s
+2023.01.11 15:27:16 INFO  compiling root (4 scala sources)
+2023.01.11 15:27:16 INFO  time: compiled root in 0.59s
+2023.01.11 15:27:16 INFO  compiling root (4 scala sources)
+2023.01.11 15:27:17 INFO  time: compiled root in 0.45s
+2023.01.11 15:27:33 INFO  compiling root (4 scala sources)
+2023.01.11 15:27:33 INFO  time: compiled root in 0.52s
+2023.01.11 15:28:15 INFO  compiling root (4 scala sources)
+2023.01.11 15:28:15 INFO  time: compiled root in 0.44s
+2023.01.11 15:29:15 INFO  compiling root (5 scala sources)
+2023.01.11 15:29:15 INFO  time: compiled root in 0.64s
+2023.01.11 15:29:15 INFO  compiling root (5 scala sources)
+2023.01.11 15:29:17 INFO  time: compiled root in 0.58s
+Jan 11, 2023 3:29:56 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 2044
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/models/MOutput.scala in Array[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/models/MOutput.scala, 95, 95, 110)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/models/MOutput.scala in Array[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/models/MOutput.scala, 95, 95, 103)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/models/MOutput.scala in Array[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/models/MOutput.scala, 95, 95, 104)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/models/MOutput.scala in Array[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/models/MOutput.scala, 95, 95, 103)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/models/MOutput.scala in Array[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/models/MOutput.scala, 95, 95, 104)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/models/MOutput.scala in Array[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/models/MOutput.scala, 95, 95, 108)
+Jan 11, 2023 3:30:33 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 2231
+2023.01.11 15:30:39 INFO  compiling root (5 scala sources)
+2023.01.11 15:30:39 INFO  time: compiled root in 0.49s
+2023.01.11 15:30:44 INFO  compiling root (5 scala sources)
+2023.01.11 15:30:44 INFO  time: compiled root in 0.49s
+2023.01.11 15:32:36 INFO  compiling root (5 scala sources)
+2023.01.11 15:32:36 INFO  time: compiled root in 0.48s
+2023.01.11 15:32:49 INFO  compiling root (5 scala sources)
+2023.01.11 15:32:49 INFO  time: compiled root in 0.52s
+2023.01.11 15:32:53 INFO  compiling root (5 scala sources)
+2023.01.11 15:32:53 INFO  time: compiled root in 0.52s
+2023.01.11 15:33:02 INFO  compiling root (5 scala sources)
+2023.01.11 15:33:02 INFO  time: compiled root in 0.52s
+2023.01.11 15:39:19 INFO  compiling root (5 scala sources)
+2023.01.11 15:39:19 INFO  time: compiled root in 84ms
+2023.01.11 15:39:42 INFO  compiling root (5 scala sources)
+2023.01.11 15:39:42 INFO  time: compiled root in 0.58s
+2023.01.11 15:44:29 INFO  file:///home/luivatra/develop/ergo/pratir-backend/app/models/MUnsignedTransaction.scala:17:13: stale bloop error: not enough arguments for method apply: (extension: scala.collection.mutable.HashMap[String,String], boxId: String, value: String, ergoTree: String, assets: Array[models.MToken], additionalRegisters: scala.collection.mutable.HashMap[String,String], creationHeight: Long, transactionId: String, index: Short)models.MInput in object MInput.
+Unspecified value parameters boxId, value, ergoTree...
+> MInput(
+>                 inp.asInstanceOf[InputBoxImpl].getExtension().values.map(kv => (kv._1.toString(),kv._2.toString())),
+>             )
+2023.01.11 15:44:29 INFO  file:///home/luivatra/develop/ergo/pratir-backend/app/models/MUnsignedTransaction.scala:21:5: stale bloop error: type mismatch;
+ found   : Unit
+ required: String
+    }
+    ^
+2023.01.11 15:44:29 INFO  file:///home/luivatra/develop/ergo/pratir-backend/app/models/MUnsignedTransaction.scala:17:13: stale bloop error: not enough arguments for method apply: (extension: scala.collection.mutable.HashMap[String,String], boxId: String, value: String, ergoTree: String, assets: Array[models.MToken], additionalRegisters: scala.collection.mutable.HashMap[String,String], creationHeight: Long, transactionId: String, index: Short)models.MInput in object MInput.
+Unspecified value parameters boxId, value, ergoTree...
+> MInput(
+>                 inp.asInstanceOf[InputBoxImpl].getExtension().values.map(kv => (kv._1.toString(),kv._2.toString())),
+>             )
+2023.01.11 15:44:29 INFO  file:///home/luivatra/develop/ergo/pratir-backend/app/models/MUnsignedTransaction.scala:21:5: stale bloop error: type mismatch;
+ found   : Unit
+ required: String
+    }
+    ^
+2023.01.11 15:44:29 INFO  file:///home/luivatra/develop/ergo/pratir-backend/app/models/MUnsignedTransaction.scala:17:13: stale bloop error: not enough arguments for method apply: (extension: scala.collection.mutable.HashMap[String,String], boxId: String, value: String, ergoTree: String, assets: Array[models.MToken], additionalRegisters: scala.collection.mutable.HashMap[String,String], creationHeight: Long, transactionId: String, index: Short)models.MInput in object MInput.
+Unspecified value parameters boxId, value, ergoTree...
+> MInput(
+>                 inp.asInstanceOf[InputBoxImpl].getExtension().values.map(kv => (kv._1.toString(),kv._2.toString())),
+>             )
+2023.01.11 15:44:29 INFO  file:///home/luivatra/develop/ergo/pratir-backend/app/models/MUnsignedTransaction.scala:21:5: stale bloop error: type mismatch;
+ found   : Unit
+ required: String
+    }
+    ^
+2023.01.11 15:44:29 INFO  file:///home/luivatra/develop/ergo/pratir-backend/app/models/MUnsignedTransaction.scala:17:13: stale bloop error: not enough arguments for method apply: (extension: scala.collection.mutable.HashMap[String,String], boxId: String, value: String, ergoTree: String, assets: Array[models.MToken], additionalRegisters: scala.collection.mutable.HashMap[String,String], creationHeight: Long, transactionId: String, index: Short)models.MInput in object MInput.
+Unspecified value parameters boxId, value, ergoTree...
+> MInput(
+>                 inp.asInstanceOf[InputBoxImpl].getExtension().values.map(kv => (kv._1.toString(),kv._2.toString())),
+>             )
+2023.01.11 15:44:29 INFO  file:///home/luivatra/develop/ergo/pratir-backend/app/models/MUnsignedTransaction.scala:21:5: stale bloop error: type mismatch;
+ found   : Unit
+ required: String
+    }
+    ^
+2023.01.11 15:45:16 INFO  compiling root (5 scala sources)
+2023.01.11 15:45:16 INFO  time: compiled root in 0.27s
+2023.01.11 15:45:40 INFO  compiling root (5 scala sources)
+2023.01.11 15:45:40 INFO  time: compiled root in 0.55s
+2023.01.11 15:46:58 INFO  compiling root (5 scala sources)
+2023.01.11 15:46:58 INFO  time: compiled root in 0.55s
+2023.01.11 15:47:14 INFO  compiling root (5 scala sources)
+2023.01.11 15:47:14 INFO  time: compiled root in 0.65s
+2023.01.11 15:47:44 INFO  compiling root (5 scala sources)
+2023.01.11 15:47:44 INFO  time: compiled root in 0.62s
+2023.01.11 15:48:14 INFO  compiling root (5 scala sources)
+2023.01.11 15:48:14 INFO  time: compiled root in 0.5s
+2023.01.11 15:49:54 INFO  compiling root (5 scala sources)
+2023.01.11 15:49:54 INFO  time: compiled root in 0.55s
+2023.01.11 15:50:53 INFO  compiling root (5 scala sources)
+2023.01.11 15:50:53 INFO  time: compiled root in 0.64s
+2023.01.11 15:51:04 INFO  compiling root (5 scala sources)
+2023.01.11 15:51:04 INFO  time: compiled root in 0.81s
+2023.01.11 15:51:12 INFO  compiling root (5 scala sources)
+2023.01.11 15:51:13 INFO  time: compiled root in 1.19s
+2023.01.11 15:51:53 INFO  compiling root (5 scala sources)
+2023.01.11 15:51:53 INFO  time: compiled root in 0.56s
+Jan 11, 2023 3:52:00 PM scala.meta.internal.pc.CompilerAccess handleError
+SEVERE: 1
+java.lang.IndexOutOfBoundsException: 1
+	at scala.collection.LinearSeqOptimized.apply(LinearSeqOptimized.scala:67)
+	at scala.collection.LinearSeqOptimized.apply$(LinearSeqOptimized.scala:65)
+	at scala.collection.immutable.List.apply(List.scala:91)
+	at scala.meta.internal.pc.SignatureHelpProvider.toSignatureHelp(SignatureHelpProvider.scala:470)
+	at scala.meta.internal.pc.SignatureHelpProvider.$anonfun$signatureHelp$1(SignatureHelpProvider.scala:28)
+	at scala.Option.map(Option.scala:230)
+	at scala.meta.internal.pc.SignatureHelpProvider.signatureHelp(SignatureHelpProvider.scala:28)
+
+2023.01.11 15:52:08 INFO  compiling root (5 scala sources)
+2023.01.11 15:52:08 INFO  time: compiled root in 0.63s
+2023.01.11 15:52:50 INFO  compiling root (5 scala sources)
+2023.01.11 15:52:50 INFO  time: compiled root in 0.58s
+2023.01.11 15:53:22 INFO  compiling root (5 scala sources)
+2023.01.11 15:53:22 INFO  time: compiled root in 0.59s
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/models/MUnsignedTransaction.scala in Array[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/models/MUnsignedTransaction.scala, 1136, 1136, 1151)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/models/MUnsignedTransaction.scala in Array[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/models/MUnsignedTransaction.scala, 1136, 1136, 1144)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/models/MUnsignedTransaction.scala in Array[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/models/MUnsignedTransaction.scala, 1136, 1136, 1145)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/models/MUnsignedTransaction.scala in Array[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/models/MUnsignedTransaction.scala, 1136, 1136, 1146)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/models/MUnsignedTransaction.scala in Array[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/models/MUnsignedTransaction.scala, 1136, 1136, 1147)
+something's wrong: no file:///home/luivatra/develop/ergo/pratir-backend/app/models/MUnsignedTransaction.scala in Array[<error>]RangePosition(file:///home/luivatra/develop/ergo/pratir-backend/app/models/MUnsignedTransaction.scala, 1136, 1136, 1149)
+2023.01.11 15:53:34 INFO  compiling root (5 scala sources)
+2023.01.11 15:53:34 INFO  time: compiled root in 0.65s
+2023.01.11 15:53:52 INFO  compiling root (5 scala sources)
+2023.01.11 15:53:52 INFO  time: compiled root in 0.71s
+2023.01.11 15:54:33 INFO  compiling root (5 scala sources)
+2023.01.11 15:54:33 INFO  time: compiled root in 0.58s
+2023.01.11 15:54:56 INFO  compiling root (5 scala sources)
+2023.01.11 15:54:56 INFO  time: compiled root in 0.59s
+2023.01.11 15:55:01 INFO  compiling root (5 scala sources)
+2023.01.11 15:55:01 INFO  time: compiled root in 0.58s
+2023.01.11 15:55:05 INFO  compiling root (5 scala sources)
+2023.01.11 15:55:05 INFO  time: compiled root in 0.52s
+Jan 11, 2023 3:55:20 PM scala.meta.internal.pc.CompilerAccess retryWithCleanCompiler
+INFO: compiler crashed due to an error in the Scala compiler, retrying with new compiler instance.
+Jan 11, 2023 3:55:20 PM scala.meta.internal.pc.CompilerAccess handleError
+SEVERE: implicit class <error> extends  (of class scala.reflect.internal.Trees$ClassDef)
+scala.MatchError: implicit class <error> extends  (of class scala.reflect.internal.Trees$ClassDef)
+	at scala.tools.nsc.typechecker.Unapplies.constrParamss(Unapplies.scala:64)
+	at scala.tools.nsc.typechecker.Unapplies.factoryMeth(Unapplies.scala:141)
+	at scala.tools.nsc.typechecker.Unapplies.factoryMeth$(Unapplies.scala:138)
+	at scala.meta.internal.pc.MetalsGlobal$MetalsInteractiveAnalyzer.factoryMeth(MetalsGlobal.scala:66)
+	at scala.tools.nsc.typechecker.MethodSynthesis$MethodSynth.enterImplicitWrapper(MethodSynthesis.scala:229)
+	at scala.tools.nsc.typechecker.MethodSynthesis$MethodSynth.enterImplicitWrapper$(MethodSynthesis.scala:228)
+	at scala.tools.nsc.typechecker.Namers$Namer.enterImplicitWrapper(Namers.scala:59)
+	at scala.tools.nsc.interactive.InteractiveAnalyzer$InteractiveNamer.enterExistingSym(Global.scala:94)
+	at scala.tools.nsc.interactive.InteractiveAnalyzer$InteractiveNamer.enterExistingSym$(Global.scala:80)
+	at scala.tools.nsc.interactive.InteractiveAnalyzer$$anon$2.enterExistingSym(Global.scala:51)
+	at scala.tools.nsc.typechecker.Namers$Namer.standardEnterSym(Namers.scala:306)
+	at scala.tools.nsc.typechecker.AnalyzerPlugins.pluginsEnterSym(AnalyzerPlugins.scala:479)
+	at scala.tools.nsc.typechecker.AnalyzerPlugins.pluginsEnterSym$(AnalyzerPlugins.scala:478)
+	at scala.meta.internal.pc.MetalsGlobal$MetalsInteractiveAnalyzer.pluginsEnterSym(MetalsGlobal.scala:66)
+	at scala.tools.nsc.typechecker.Namers$Namer.enterSym(Namers.scala:280)
+	at scala.tools.nsc.typechecker.Typers$Typer.enterSym(Typers.scala:1939)
+	at scala.tools.nsc.typechecker.Typers$Typer.$anonfun$enterSyms$1(Typers.scala:1934)
+	at scala.tools.nsc.typechecker.Typers$Typer.enterSyms(Typers.scala:1934)
+	at scala.tools.nsc.typechecker.Typers$Typer.typedTemplate(Typers.scala:1996)
+	at scala.tools.nsc.typechecker.Typers$Typer.typedClassDef(Typers.scala:1836)
+	at scala.tools.nsc.typechecker.Typers$Typer.typed1(Typers.scala:5706)
+	at scala.tools.nsc.typechecker.Typers$Typer.typed(Typers.scala:5785)
+	at scala.tools.nsc.typechecker.Typers$Typer.typedStat$1(Typers.scala:5849)
+	at scala.tools.nsc.typechecker.Typers$Typer.$anonfun$typedStats$10(Typers.scala:3341)
+	at scala.tools.nsc.typechecker.Typers$Typer.typedStats(Typers.scala:3341)
+	at scala.tools.nsc.typechecker.Typers$Typer.typedPackageDef$1(Typers.scala:5417)
+	at scala.tools.nsc.typechecker.Typers$Typer.typed1(Typers.scala:5709)
+	at scala.tools.nsc.typechecker.Typers$Typer.typed(Typers.scala:5785)
+	at scala.tools.nsc.typechecker.Analyzer$typerFactory$TyperPhase.apply(Analyzer.scala:114)
+	at scala.tools.nsc.Global$GlobalPhase.applyPhase(Global.scala:454)
+	at scala.tools.nsc.interactive.Global$TyperRun.$anonfun$applyPhase$1(Global.scala:1341)
+	at scala.tools.nsc.interactive.Global$TyperRun.applyPhase(Global.scala:1341)
+	at scala.tools.nsc.interactive.Global$TyperRun.typeCheck(Global.scala:1334)
+	at scala.tools.nsc.interactive.Global.typeCheck(Global.scala:666)
+	at scala.tools.nsc.interactive.Global.typedTreeAt(Global.scala:815)
+	at scala.tools.nsc.interactive.Global.completionsAt(Global.scala:1226)
+	at scala.meta.internal.pc.CompletionProvider.safeCompletionsAt(CompletionProvider.scala:439)
+	at scala.meta.internal.pc.CompletionProvider.completions(CompletionProvider.scala:58)
+
+2023.01.11 15:55:40 INFO  compiling root (5 scala sources)
+2023.01.11 15:55:40 INFO  time: compiled root in 93ms
+Jan 11, 2023 3:56:00 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 5335
+2023.01.11 15:56:04 INFO  compiling root (5 scala sources)
+2023.01.11 15:56:04 INFO  time: compiled root in 0.62s
+2023.01.11 15:57:03 INFO  compiling root (5 scala sources)
+2023.01.11 15:57:03 INFO  time: compiled root in 0.13s
+2023.01.11 15:57:42 INFO  compiling root (5 scala sources)
+2023.01.11 15:57:42 INFO  time: compiled root in 67ms
+2023.01.11 15:57:42 INFO  compiling root (5 scala sources)
+2023.01.11 15:57:42 INFO  Deduplicating compilation of root from bsp client 'Metals 0.11.10' (since 1h 8m 45.566s)
+2023.01.11 15:57:42 INFO  time: compiled root in 0.12s
+2023.01.11 15:57:43 INFO  compiling root (5 scala sources)
+2023.01.11 15:57:43 INFO  time: compiled root in 19ms
+2023.01.11 15:57:43 INFO  compiling root (5 scala sources)
+2023.01.11 15:57:43 INFO  time: compiled root in 60ms
+2023.01.11 15:58:04 INFO  compiling root (5 scala sources)
+2023.01.11 15:58:04 INFO  time: compiled root in 0.13s
+2023.01.11 15:58:38 INFO  compiling root (5 scala sources)
+2023.01.11 15:58:38 INFO  time: compiled root in 0.12s
+2023.01.11 15:58:50 INFO  compiling root (5 scala sources)
+2023.01.11 15:58:50 INFO  time: compiled root in 0.6s
+2023.01.11 15:59:08 INFO  compiling root (5 scala sources)
+2023.01.11 15:59:08 INFO  time: compiled root in 0.47s
+Jan 11, 2023 3:59:26 PM scala.meta.internal.pc.CompilerAccess retryWithCleanCompiler
+INFO: compiler crashed due to an error in the Scala compiler, retrying with new compiler instance.
+Jan 11, 2023 3:59:26 PM scala.meta.internal.pc.CompilerAccess handleError
+SEVERE: implicit class <error> extends  (of class scala.reflect.internal.Trees$ClassDef)
+scala.MatchError: implicit class <error> extends  (of class scala.reflect.internal.Trees$ClassDef)
+	at scala.tools.nsc.typechecker.Unapplies.constrParamss(Unapplies.scala:64)
+	at scala.tools.nsc.typechecker.Unapplies.factoryMeth(Unapplies.scala:141)
+	at scala.tools.nsc.typechecker.Unapplies.factoryMeth$(Unapplies.scala:138)
+	at scala.meta.internal.pc.MetalsGlobal$MetalsInteractiveAnalyzer.factoryMeth(MetalsGlobal.scala:66)
+	at scala.tools.nsc.typechecker.MethodSynthesis$MethodSynth.enterImplicitWrapper(MethodSynthesis.scala:229)
+	at scala.tools.nsc.typechecker.MethodSynthesis$MethodSynth.enterImplicitWrapper$(MethodSynthesis.scala:228)
+	at scala.tools.nsc.typechecker.Namers$Namer.enterImplicitWrapper(Namers.scala:59)
+	at scala.tools.nsc.interactive.InteractiveAnalyzer$InteractiveNamer.enterExistingSym(Global.scala:94)
+	at scala.tools.nsc.interactive.InteractiveAnalyzer$InteractiveNamer.enterExistingSym$(Global.scala:80)
+	at scala.tools.nsc.interactive.InteractiveAnalyzer$$anon$2.enterExistingSym(Global.scala:51)
+	at scala.tools.nsc.typechecker.Namers$Namer.standardEnterSym(Namers.scala:306)
+	at scala.tools.nsc.typechecker.AnalyzerPlugins.pluginsEnterSym(AnalyzerPlugins.scala:479)
+	at scala.tools.nsc.typechecker.AnalyzerPlugins.pluginsEnterSym$(AnalyzerPlugins.scala:478)
+	at scala.meta.internal.pc.MetalsGlobal$MetalsInteractiveAnalyzer.pluginsEnterSym(MetalsGlobal.scala:66)
+	at scala.tools.nsc.typechecker.Namers$Namer.enterSym(Namers.scala:280)
+	at scala.tools.nsc.typechecker.Typers$Typer.enterSym(Typers.scala:1939)
+	at scala.tools.nsc.typechecker.Typers$Typer.$anonfun$enterSyms$1(Typers.scala:1934)
+	at scala.tools.nsc.typechecker.Typers$Typer.enterSyms(Typers.scala:1934)
+	at scala.tools.nsc.typechecker.Typers$Typer.typedTemplate(Typers.scala:1996)
+	at scala.tools.nsc.typechecker.Typers$Typer.typedClassDef(Typers.scala:1836)
+	at scala.tools.nsc.typechecker.Typers$Typer.typed1(Typers.scala:5706)
+	at scala.tools.nsc.typechecker.Typers$Typer.typed(Typers.scala:5785)
+	at scala.tools.nsc.typechecker.Typers$Typer.typedStat$1(Typers.scala:5849)
+	at scala.tools.nsc.typechecker.Typers$Typer.$anonfun$typedStats$10(Typers.scala:3341)
+	at scala.tools.nsc.typechecker.Typers$Typer.typedStats(Typers.scala:3341)
+	at scala.tools.nsc.typechecker.Typers$Typer.typedPackageDef$1(Typers.scala:5417)
+	at scala.tools.nsc.typechecker.Typers$Typer.typed1(Typers.scala:5709)
+	at scala.tools.nsc.typechecker.Typers$Typer.typed(Typers.scala:5785)
+	at scala.tools.nsc.typechecker.Analyzer$typerFactory$TyperPhase.apply(Analyzer.scala:114)
+	at scala.tools.nsc.Global$GlobalPhase.applyPhase(Global.scala:454)
+	at scala.tools.nsc.interactive.Global$TyperRun.$anonfun$applyPhase$1(Global.scala:1341)
+	at scala.tools.nsc.interactive.Global$TyperRun.applyPhase(Global.scala:1341)
+	at scala.tools.nsc.interactive.Global$TyperRun.typeCheck(Global.scala:1334)
+	at scala.tools.nsc.interactive.Global.typeCheck(Global.scala:666)
+	at scala.tools.nsc.interactive.Global.typedTreeAt(Global.scala:815)
+	at scala.tools.nsc.interactive.Global.completionsAt(Global.scala:1226)
+	at scala.meta.internal.pc.CompletionProvider.safeCompletionsAt(CompletionProvider.scala:439)
+	at scala.meta.internal.pc.CompletionProvider.completions(CompletionProvider.scala:58)
+
+2023.01.11 16:00:03 INFO  compiling root (5 scala sources)
+2023.01.11 16:00:06 WARN  one feature warning; re-run with -feature for details
+2023.01.11 16:00:06 INFO  time: compiled root in 4.29s
+2023.01.11 16:00:06 INFO  compiling root (1 scala source)
+2023.01.11 16:00:07 INFO  time: compiled root in 0.6s
+2023.01.11 20:22:54 INFO  compiling root (1 scala source)
+2023.01.11 20:22:55 INFO  time: compiled root in 1.12s
+2023.01.11 20:30:41 INFO  compiling root (1 scala source)
+2023.01.11 20:30:42 INFO  time: compiled root in 1.02s
+Jan 11, 2023 8:33:07 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 6052
+Jan 11, 2023 8:33:19 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 6112
+Jan 11, 2023 8:33:29 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 6154
+Jan 11, 2023 8:34:48 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 6349
+2023.01.11 20:34:51 INFO  compiling root (1 scala source)
+2023.01.11 20:34:51 INFO  time: compiled root in 0.52s
+2023.01.11 20:35:14 INFO  compiling root (2 scala sources)
+2023.01.11 20:35:14 INFO  time: compiled root in 0.49s
+2023.01.11 20:36:50 INFO  compiling root (2 scala sources)
+2023.01.11 20:36:50 INFO  time: compiled root in 76ms
+2023.01.11 20:41:46 INFO  compiling root (2 scala sources)
+2023.01.11 20:41:46 INFO  time: compiled root in 78ms
+Jan 11, 2023 8:41:51 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 6712
+2023.01.11 20:42:11 INFO  compiling root (2 scala sources)
+2023.01.11 20:42:11 INFO  time: compiled root in 0.21s
+2023.01.11 20:42:25 INFO  compiling root (3 scala sources)
+2023.01.11 20:42:25 INFO  time: compiled root in 77ms
+2023.01.11 20:42:51 INFO  compiling root (3 scala sources)
+2023.01.11 20:42:51 INFO  time: compiled root in 82ms
+2023.01.11 20:43:13 INFO  compiling root (3 scala sources)
+2023.01.11 20:43:13 INFO  time: compiled root in 84ms
+Jan 11, 2023 8:43:14 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 6867
+Jan 11, 2023 8:44:49 PM scala.meta.internal.pc.MetalsGlobal inverseSemanticdbSymbols
+SEVERE: invalid SemanticDB symbol: database/SalesDAO#updateTokenOrderStatus().(followUpTxId)
+illegal cyclic reference involving method updateTokenOrderStatus
+2023.01.11 20:44:52 INFO  compiling root (3 scala sources)
+2023.01.11 20:44:52 INFO  time: compiled root in 0.11s
+2023.01.11 20:45:51 INFO  compiling root (3 scala sources)
+2023.01.11 20:45:51 INFO  time: compiled root in 0.41s
+2023.01.11 20:46:54 INFO  compiling root (3 scala sources)
+2023.01.11 20:46:54 INFO  time: compiled root in 0.11s
+2023.01.11 20:47:09 INFO  compiling root (33 scala sources and 1 java source)
+2023.01.11 20:47:09 INFO  time: compiled root in 86ms
+Jan 11, 2023 8:47:13 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 7287
+2023.01.11 20:49:15 INFO  shutting down Metals
+2023.01.11 20:49:15 INFO  Shut down connection with build server.
+2023.01.11 20:49:15 INFO  Shut down connection with build server.
+2023.01.11 20:49:15 INFO  Shut down connection with build server.
+2023.01.11 20:49:41 INFO  tracing is disabled for protocol LSP, to enable tracing of incoming and outgoing JSON messages create an empty file at /home/luivatra/develop/ergo/pratir-backend/.metals/lsp.trace.json or /home/luivatra/.cache/metals/lsp.trace.json
+2023.01.11 20:49:42 INFO  logging to file /home/luivatra/develop/ergo/pratir-backend/.metals/metals.log
+2023.01.11 20:49:42 INFO  Started: Metals version 0.11.10 in workspace '/home/luivatra/develop/ergo/pratir-backend' for client Visual Studio Code 1.74.2.
+SLF4J: No SLF4J providers were found.
+SLF4J: Defaulting to no-operation (NOP) logger implementation
+SLF4J: See https://www.slf4j.org/codes.html#noProviders for further details.
+SLF4J: Class path contains SLF4J bindings targeting slf4j-api versions 1.7.x or earlier.
+SLF4J: Ignoring binding found at [jar:file:/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/outr/scribe-slf4j_2.13/3.10.5/scribe-slf4j_2.13-3.10.5.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: See https://www.slf4j.org/codes.html#ignoredBindings for an explanation.
+2023.01.11 20:49:44 INFO  time: initialize in 2.04s
+2023.01.11 20:49:46 INFO  Attempting to connect to the build server...
+2023.01.11 20:49:46 INFO  Bloop uses /usr/lib/jvm/java-11-openjdk-amd64 defined at /home/luivatra/.bloop/bloop.json
+2023.01.11 20:49:46 INFO  skipping build import with status 'Installed'
+2023.01.11 20:49:47 INFO  tracing is disabled for protocol BSP, to enable tracing of incoming and outgoing JSON messages create an empty file at /home/luivatra/develop/ergo/pratir-backend/.metals/bsp.trace.json or /home/luivatra/.cache/metals/bsp.trace.json
+2023.01.11 20:49:47 INFO  Attempting to connect to the build server...
+2023.01.11 20:49:47 INFO  Bloop uses /usr/lib/jvm/java-11-openjdk-amd64 defined at /home/luivatra/.bloop/bloop.json
+2023.01.11 20:49:47 INFO  Attempting to connect to the build server...
+2023.01.11 20:49:47 INFO  Bloop uses /usr/lib/jvm/java-11-openjdk-amd64 defined at /home/luivatra/.bloop/bloop.json
+2023.01.11 20:49:47 INFO  tracing is disabled for protocol BSP, to enable tracing of incoming and outgoing JSON messages create an empty file at /home/luivatra/develop/ergo/pratir-backend/project/.metals/bsp.trace.json or /home/luivatra/.cache/metals/bsp.trace.json
+2023.01.11 20:49:47 INFO  tracing is disabled for protocol BSP, to enable tracing of incoming and outgoing JSON messages create an empty file at /home/luivatra/develop/ergo/pratir-backend/project/project/.metals/bsp.trace.json or /home/luivatra/.cache/metals/bsp.trace.json
+2023.01.11 20:49:47 INFO  time: Connected to build server in 1.13s
+2023.01.11 20:49:47 INFO  Connected to Build server: Bloop v1.5.6
+2023.01.11 20:49:50 INFO  no build target found for /home/luivatra/develop/ergo/pratir-backend/app/tasks/UpdateStatusTask.scala. Using presentation compiler with project's scala-library version: 3.2.1
+2023.01.11 20:49:51 INFO  time: code lens generation in 3.66s
+2023.01.11 20:49:51 INFO  time: Imported build in 0.23s
+2023.01.11 20:49:53 INFO  no build target found for /home/luivatra/develop/ergo/pratir-backend/app/tasks/UpdateStatusTask.scala. Using presentation compiler with project's scala-library version: 3.2.1
+2023.01.11 20:49:56 INFO  time: indexed workspace in 4.84s
+2023.01.11 20:49:56 INFO  compiling root (33 scala sources and 1 java source)
+2023.01.11 20:49:58 INFO  time: compiled root in 1.83s
+2023.01.11 20:49:58 INFO  compiling root (33 scala sources and 1 java source)
+2023.01.11 20:49:58 INFO  time: compiled root in 0.21s
+2023.01.11 20:49:58 INFO  compiling root (33 scala sources and 1 java source)
+2023.01.11 20:49:58 INFO  time: compiled root in 0.1s
+2023.01.11 20:51:10 INFO  compiling root (33 scala sources and 1 java source)
+2023.01.11 20:51:12 INFO  time: compiled root in 1.24s
+2023.01.11 20:51:24 INFO  compiling root (33 scala sources and 1 java source)
+2023.01.11 20:51:24 INFO  time: compiled root in 1s
+2023.01.11 20:51:30 INFO  compiling root (33 scala sources and 1 java source)
+2023.01.11 20:51:31 INFO  time: compiled root in 1.54s
+2023.01.11 20:51:36 INFO  compiling root (33 scala sources and 1 java source)
+2023.01.11 20:51:38 INFO  time: compiled root in 1.3s
+2023.01.11 20:52:25 INFO  compiling root (33 scala sources and 1 java source)
+2023.01.11 20:52:25 INFO  time: compiled root in 0.93s
+2023.01.11 20:53:53 INFO  compiling root (33 scala sources and 1 java source)
+2023.01.11 20:53:53 INFO  time: compiled root in 0.86s
+2023.01.11 20:56:14 INFO  compiling root (33 scala sources and 1 java source)
+2023.01.11 20:56:14 INFO  time: compiled root in 0.8s
+2023.01.11 20:56:19 INFO  compiling root (33 scala sources and 1 java source)
+2023.01.11 20:56:24 WARN  one feature warning; re-run with -feature for details
+2023.01.11 20:56:24 INFO  time: compiled root in 5.35s
+2023.01.11 20:56:57 INFO  compiling root (1 scala source)
+2023.01.11 20:56:57 INFO  time: compiled root in 0.95s
+2023.01.11 20:57:21 INFO  compiling root (1 scala source)
+2023.01.11 20:57:22 INFO  time: compiled root in 1.04s
+2023.01.11 20:57:43 INFO  compiling root (1 scala source)
+2023.01.11 20:57:44 INFO  time: compiled root in 1.19s
+2023.01.11 21:07:35 INFO  compiling root (4 scala sources and 1 java source)
+2023.01.11 21:07:36 INFO  time: compiled root in 1.19s
+Exception in thread "pool-4-thread-1" java.lang.InterruptedException
+	at scala.meta.internal.metals.FutureCancelToken.checkCanceled(FutureCancelToken.scala:29)
+	at scala.meta.internal.pc.CompilerAccess.$anonfun$onCompilerJobQueue$1(CompilerAccess.scala:195)
+	at scala.meta.internal.pc.CompilerJobQueue$Job.run(CompilerJobQueue.scala:152)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+Jan 11, 2023 9:12:15 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 663
+2023.01.11 21:12:38 INFO  compiling root (1 scala source)
+2023.01.11 21:12:41 WARN  one feature warning; re-run with -feature for details
+2023.01.11 21:12:41 INFO  time: compiled root in 2.66s
+2023.01.11 21:17:38 INFO  compiling root (1 scala source)
+2023.01.11 21:17:41 WARN  one feature warning; re-run with -feature for details
+2023.01.11 21:17:41 INFO  time: compiled root in 3.05s
+Jan 11, 2023 9:17:45 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 816
+Jan 11, 2023 9:17:51 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 838
+2023.01.11 21:18:02 INFO  compiling root (1 scala source)
+2023.01.11 21:18:04 WARN  one feature warning; re-run with -feature for details
+2023.01.11 21:18:04 INFO  time: compiled root in 2.42s
+2023.01.11 21:21:14 INFO  compiling root (1 scala source)
+2023.01.11 21:21:17 WARN  one feature warning; re-run with -feature for details
+2023.01.11 21:21:17 INFO  time: compiled root in 3.03s
+2023.01.11 21:22:48 INFO  compiling root (1 scala source)
+2023.01.11 21:22:48 INFO  time: compiled root in 0.75s
+Jan 11, 2023 9:22:49 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 1014
+Jan 11, 2023 9:22:52 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 1021
+Jan 11, 2023 9:23:00 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 1045
+2023.01.11 21:23:09 INFO  compiling root (2 scala sources)
+2023.01.11 21:23:09 INFO  time: compiled root in 0.79s
+2023.01.11 21:23:18 INFO  compiling root (2 scala sources)
+2023.01.11 21:23:19 INFO  time: compiled root in 1.14s
+2023.01.11 21:23:24 INFO  compiling root (3 scala sources)
+2023.01.11 21:23:24 INFO  time: compiled root in 0.82s
+2023.01.11 21:23:42 INFO  compiling root (3 scala sources)
+2023.01.11 21:23:45 WARN  one feature warning; re-run with -feature for details
+2023.01.11 21:23:45 INFO  time: compiled root in 2.9s
+2023.01.11 21:23:45 INFO  compiling root (2 scala sources)
+2023.01.11 21:23:45 INFO  time: compiled root in 0.55s
+2023.01.11 21:25:17 INFO  compiling root (4 scala sources)
+2023.01.11 21:25:21 WARN  one feature warning; re-run with -feature for details
+2023.01.11 21:25:21 INFO  time: compiled root in 3.88s
+Jan 11, 2023 9:25:47 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 1222
+2023.01.11 21:26:55 INFO  compiling root (1 scala source)
+2023.01.11 21:26:57 WARN  one feature warning; re-run with -feature for details
+2023.01.11 21:26:57 INFO  time: compiled root in 2.25s
+Jan 11, 2023 9:27:17 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 1247
+2023.01.11 21:27:32 INFO  compiling root (1 scala source)
+2023.01.11 21:27:35 WARN  one feature warning; re-run with -feature for details
+2023.01.11 21:27:35 INFO  time: compiled root in 3.06s
+2023.01.11 21:33:01 INFO  compiling root (1 scala source)
+2023.01.11 21:33:06 WARN  one feature warning; re-run with -feature for details
+2023.01.11 21:33:06 INFO  time: compiled root in 5.41s
+Jan 11, 2023 9:36:45 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint fallbackResponseError
+SEVERE: Internal error: scala.reflect.internal.Symbols$CyclicReference: illegal cyclic reference involving object MUnsignedTransaction
+java.util.concurrent.CompletionException: scala.reflect.internal.Symbols$CyclicReference: illegal cyclic reference involving object MUnsignedTransaction
+	at java.base/java.util.concurrent.CompletableFuture.encodeThrowable(CompletableFuture.java:314)
+	at java.base/java.util.concurrent.CompletableFuture.completeThrowable(CompletableFuture.java:319)
+	at java.base/java.util.concurrent.CompletableFuture$UniAccept.tryFire(CompletableFuture.java:718)
+	at java.base/java.util.concurrent.CompletableFuture.postComplete(CompletableFuture.java:506)
+	at java.base/java.util.concurrent.CompletableFuture.complete(CompletableFuture.java:2073)
+	at scala.meta.internal.metals.CancelTokens$.$anonfun$future$1(CancelTokens.scala:42)
+	at scala.meta.internal.metals.CancelTokens$.$anonfun$future$1$adapted(CancelTokens.scala:38)
+	at scala.concurrent.impl.Promise$Transformation.run(Promise.scala:484)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+Caused by: scala.reflect.internal.Symbols$CyclicReference: illegal cyclic reference involving object MUnsignedTransaction
+
+Jan 11, 2023 9:37:26 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 1502
+2023.01.11 21:38:15 INFO  compiling root (1 scala source)
+2023.01.11 21:38:15 INFO  time: compiled root in 0.17s
+2023.01.11 21:38:20 INFO  compiling root (1 scala source)
+2023.01.11 21:38:20 INFO  time: compiled root in 0.2s
+2023.01.11 21:38:31 INFO  compiling root (2 scala sources)
+2023.01.11 21:38:32 INFO  time: compiled root in 1.12s
+2023.01.11 21:38:32 INFO  compiling root (2 scala sources)
+2023.01.11 21:38:35 WARN  one feature warning; re-run with -feature for details
+2023.01.11 21:38:35 INFO  time: compiled root in 2.33s
+2023.01.11 21:52:22 INFO  compiling root (1 scala source)
+2023.01.11 21:52:22 INFO  time: compiled root in 99ms
+2023.01.11 21:52:48 INFO  compiling root (1 scala source)
+2023.01.11 21:52:48 INFO  time: compiled root in 93ms
+2023.01.11 21:53:10 INFO  compiling root (1 scala source)
+2023.01.11 21:53:10 INFO  time: compiled root in 83ms
+2023.01.11 21:53:21 INFO  compiling root (1 scala source)
+2023.01.11 21:53:21 INFO  time: compiled root in 0.25s
+2023.01.11 21:53:26 INFO  compiling root (1 scala source)
+2023.01.11 21:53:26 INFO  time: compiled root in 0.17s
+2023.01.11 21:53:36 INFO  compiling root (1 scala source)
+2023.01.11 21:53:37 INFO  time: compiled root in 1.07s
+2023.01.11 21:53:44 INFO  compiling root (1 scala source)
+2023.01.11 21:53:44 INFO  time: compiled root in 0.98s
+2023.01.11 21:55:18 INFO  compiling root (1 scala source)
+2023.01.11 21:55:18 INFO  time: compiled root in 91ms
+Jan 11, 2023 9:56:34 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint fallbackResponseError
+SEVERE: Internal error: org.scalameta.invariants.InvariantFailedException: invariant failed:
+when verifying scala.meta.internal.trees.`package`.XtensionTreesType(tpe).isConstructable
+found that scala.meta.internal.trees.`package`.XtensionTreesType(tpe).isConstructable is false
+where tpe = _
+java.util.concurrent.CompletionException: org.scalameta.invariants.InvariantFailedException: invariant failed:
+when verifying scala.meta.internal.trees.`package`.XtensionTreesType(tpe).isConstructable
+found that scala.meta.internal.trees.`package`.XtensionTreesType(tpe).isConstructable is false
+where tpe = _
+	at java.base/java.util.concurrent.CompletableFuture.encodeThrowable(CompletableFuture.java:331)
+	at java.base/java.util.concurrent.CompletableFuture.completeThrowable(CompletableFuture.java:346)
+	at java.base/java.util.concurrent.CompletableFuture$UniAccept.tryFire(CompletableFuture.java:704)
+	at java.base/java.util.concurrent.CompletableFuture.postComplete(CompletableFuture.java:506)
+	at java.base/java.util.concurrent.CompletableFuture.completeExceptionally(CompletableFuture.java:2088)
+	at scala.meta.internal.metals.CancelTokens$.$anonfun$future$1(CancelTokens.scala:40)
+	at scala.meta.internal.metals.CancelTokens$.$anonfun$future$1$adapted(CancelTokens.scala:38)
+	at scala.concurrent.impl.Promise$Transformation.run(Promise.scala:484)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+Caused by: org.scalameta.invariants.InvariantFailedException: invariant failed:
+when verifying scala.meta.internal.trees.`package`.XtensionTreesType(tpe).isConstructable
+found that scala.meta.internal.trees.`package`.XtensionTreesType(tpe).isConstructable is false
+where tpe = _
+	at org.scalameta.invariants.InvariantFailedException$.raise(Exceptions.scala:19)
+	at scala.meta.Init$.apply(Trees.scala:789)
+	at scala.meta.internal.parsers.ScalametaParser.$anonfun$initRest$1(ScalametaParser.scala:3979)
+	at scala.meta.internal.parsers.ScalametaParser.atPosOpt(ScalametaParser.scala:330)
+	at scala.meta.internal.parsers.ScalametaParser.autoPosOpt(ScalametaParser.scala:380)
+	at scala.meta.internal.parsers.ScalametaParser.initRest(ScalametaParser.scala:3954)
+	at scala.meta.internal.parsers.ScalametaParser.initInsideTemplate(ScalametaParser.scala:3937)
+	at scala.meta.internal.parsers.ScalametaParser.init(ScalametaParser.scala:4036)
+	at scala.meta.internal.parsers.ScalametaParser.templateParents(ScalametaParser.scala:4046)
+	at scala.meta.internal.parsers.ScalametaParser.$anonfun$template$1(ScalametaParser.scala:4094)
+	at scala.meta.internal.parsers.ScalametaParser.atPos(ScalametaParser.scala:327)
+	at scala.meta.internal.parsers.ScalametaParser.autoPos(ScalametaParser.scala:379)
+	at scala.meta.internal.parsers.ScalametaParser.template(ScalametaParser.scala:4082)
+	at scala.meta.internal.parsers.ScalametaParser.$anonfun$simpleExpr0$2(ScalametaParser.scala:2137)
+	at scala.meta.internal.parsers.ScalametaParser.atPos(ScalametaParser.scala:327)
+	at scala.meta.internal.parsers.ScalametaParser.autoPos(ScalametaParser.scala:379)
+	at scala.meta.internal.parsers.ScalametaParser.simpleExpr0(ScalametaParser.scala:2135)
+	at scala.meta.internal.parsers.ScalametaParser.simpleExpr(ScalametaParser.scala:2103)
+	at scala.meta.internal.parsers.ScalametaParser.prefixExpr(ScalametaParser.scala:2086)
+	at scala.meta.internal.parsers.ScalametaParser.postfixExpr(ScalametaParser.scala:2005)
+	at scala.meta.internal.parsers.ScalametaParser.$anonfun$expr$2(ScalametaParser.scala:1631)
+	at scala.meta.internal.parsers.ScalametaParser.atPosOpt(ScalametaParser.scala:330)
+	at scala.meta.internal.parsers.ScalametaParser.autoPosOpt(ScalametaParser.scala:380)
+	at scala.meta.internal.parsers.ScalametaParser.expr(ScalametaParser.scala:1532)
+	at scala.meta.internal.parsers.ScalametaParser.argumentExpr(ScalametaParser.scala:2348)
+	at scala.meta.internal.parsers.ScalametaParser.$anonfun$argumentExprsInParens$1(ScalametaParser.scala:2375)
+	at scala.meta.internal.parsers.ScalametaParser.iter$1(ScalametaParser.scala:613)
+	at scala.meta.internal.parsers.ScalametaParser.$anonfun$tokenSeparated$1(ScalametaParser.scala:619)
+	at scala.meta.internal.parsers.ScalametaParser.$anonfun$tokenSeparated$1$adapted(ScalametaParser.scala:606)
+	at scala.meta.internal.parsers.ScalametaParser.scala$meta$internal$parsers$ScalametaParser$$listBy(ScalametaParser.scala:541)
+	at scala.meta.internal.parsers.ScalametaParser.tokenSeparated(ScalametaParser.scala:606)
+	at scala.meta.internal.parsers.ScalametaParser.commaSeparated(ScalametaParser.scala:623)
+	at scala.meta.internal.parsers.ScalametaParser.argumentExprsInParens(ScalametaParser.scala:2375)
+	at scala.meta.internal.parsers.ScalametaParser.$anonfun$scala$meta$internal$parsers$ScalametaParser$$getArgClause$2(ScalametaParser.scala:2361)
+	at scala.meta.internal.parsers.ScalametaParser.scala$meta$internal$parsers$ScalametaParser$$inParensAfterOpenOr(ScalametaParser.scala:255)
+	at scala.meta.internal.parsers.ScalametaParser.scala$meta$internal$parsers$ScalametaParser$$inParensOnOpenOr(ScalametaParser.scala:246)
+	at scala.meta.internal.parsers.ScalametaParser.$anonfun$scala$meta$internal$parsers$ScalametaParser$$getArgClause$1(ScalametaParser.scala:2362)
+	at scala.meta.internal.parsers.ScalametaParser.atPos(ScalametaParser.scala:327)
+	at scala.meta.internal.parsers.ScalametaParser.autoPos(ScalametaParser.scala:379)
+	at scala.meta.internal.parsers.ScalametaParser.scala$meta$internal$parsers$ScalametaParser$$getArgClause(ScalametaParser.scala:2351)
+	at scala.meta.internal.parsers.ScalametaParser.simpleExprRest(ScalametaParser.scala:2233)
+	at scala.meta.internal.parsers.ScalametaParser.$anonfun$simpleExpr0$3(ScalametaParser.scala:2153)
+	at scala.util.Success.map(Try.scala:262)
+	at scala.meta.internal.parsers.ScalametaParser.simpleExpr0(ScalametaParser.scala:2153)
+	at scala.meta.internal.parsers.ScalametaParser.simpleExpr(ScalametaParser.scala:2103)
+	at scala.meta.internal.parsers.ScalametaParser.prefixExpr(ScalametaParser.scala:2086)
+	at scala.meta.internal.parsers.ScalametaParser.argumentExprsOrPrefixExpr(ScalametaParser.scala:2323)
+	at scala.meta.internal.parsers.ScalametaParser.loop$6(ScalametaParser.scala:2052)
+	at scala.meta.internal.parsers.ScalametaParser.postfixExpr(ScalametaParser.scala:2070)
+	at scala.meta.internal.parsers.ScalametaParser.postfixExpr(ScalametaParser.scala:2007)
+	at scala.meta.internal.parsers.ScalametaParser.$anonfun$expr$2(ScalametaParser.scala:1631)
+	at scala.meta.internal.parsers.ScalametaParser.atPosOpt(ScalametaParser.scala:330)
+	at scala.meta.internal.parsers.ScalametaParser.autoPosOpt(ScalametaParser.scala:380)
+	at scala.meta.internal.parsers.ScalametaParser.expr(ScalametaParser.scala:1532)
+	at scala.meta.internal.parsers.ScalametaParser.argumentExpr(ScalametaParser.scala:2348)
+	at scala.meta.internal.parsers.ScalametaParser.$anonfun$argumentExprsInParens$1(ScalametaParser.scala:2375)
+	at scala.meta.internal.parsers.ScalametaParser.iter$1(ScalametaParser.scala:613)
+	at scala.meta.internal.parsers.ScalametaParser.$anonfun$tokenSeparated$1(ScalametaParser.scala:619)
+	at scala.meta.internal.parsers.ScalametaParser.$anonfun$tokenSeparated$1$adapted(ScalametaParser.scala:606)
+	at scala.meta.internal.parsers.ScalametaParser.scala$meta$internal$parsers$ScalametaParser$$listBy(ScalametaParser.scala:541)
+	at scala.meta.internal.parsers.ScalametaParser.tokenSeparated(ScalametaParser.scala:606)
+	at scala.meta.internal.parsers.ScalametaParser.commaSeparated(ScalametaParser.scala:623)
+	at scala.meta.internal.parsers.ScalametaParser.argumentExprsInParens(ScalametaParser.scala:2375)
+	at scala.meta.internal.parsers.ScalametaParser.$anonfun$scala$meta$internal$parsers$ScalametaParser$$getArgClause$2(ScalametaParser.scala:2361)
+	at scala.meta.internal.parsers.ScalametaParser.scala$meta$internal$parsers$ScalametaParser$$inParensAfterOpenOr(ScalametaParser.scala:255)
+	at scala.meta.internal.parsers.ScalametaParser.scala$meta$internal$parsers$ScalametaParser$$inParensOnOpenOr(ScalametaParser.scala:246)
+	at scala.meta.internal.parsers.ScalametaParser.$anonfun$scala$meta$internal$parsers$ScalametaParser$$getArgClause$1(ScalametaParser.scala:2362)
+	at scala.meta.internal.parsers.ScalametaParser.atPos(ScalametaParser.scala:327)
+	at scala.meta.internal.parsers.ScalametaParser.autoPos(ScalametaParser.scala:379)
+	at scala.meta.internal.parsers.ScalametaParser.scala$meta$internal$parsers$ScalametaParser$$getArgClause(ScalametaParser.scala:2351)
+	at scala.meta.internal.parsers.ScalametaParser.simpleExprRest(ScalametaParser.scala:2233)
+	at scala.meta.internal.parsers.ScalametaParser.$anonfun$simpleExpr0$3(ScalametaParser.scala:2153)
+	at scala.util.Success.map(Try.scala:262)
+	at scala.meta.internal.parsers.ScalametaParser.simpleExpr0(ScalametaParser.scala:2153)
+	at scala.meta.internal.parsers.ScalametaParser.simpleExpr(ScalametaParser.scala:2103)
+	at scala.meta.internal.parsers.ScalametaParser.prefixExpr(ScalametaParser.scala:2086)
+	at scala.meta.internal.parsers.ScalametaParser.postfixExpr(ScalametaParser.scala:2005)
+	at scala.meta.internal.parsers.ScalametaParser.$anonfun$expr$2(ScalametaParser.scala:1631)
+	at scala.meta.internal.parsers.ScalametaParser.atPosOpt(ScalametaParser.scala:330)
+	at scala.meta.internal.parsers.ScalametaParser.autoPosOpt(ScalametaParser.scala:380)
+	at scala.meta.internal.parsers.ScalametaParser.expr(ScalametaParser.scala:1532)
+	at scala.meta.internal.parsers.ScalametaParser.expr(ScalametaParser.scala:1419)
+	at scala.meta.internal.parsers.ScalametaParser.$anonfun$condExpr$1(ScalametaParser.scala:1417)
+	at scala.meta.internal.parsers.ScalametaParser.inParens(ScalametaParser.scala:234)
+	at scala.meta.internal.parsers.ScalametaParser.condExpr(ScalametaParser.scala:1417)
+	at scala.meta.internal.parsers.ScalametaParser.condExprInParens(ScalametaParser.scala:1519)
+	at scala.meta.internal.parsers.ScalametaParser.$anonfun$ifClause$1(ScalametaParser.scala:1483)
+	at scala.meta.internal.parsers.ScalametaParser.autoEndPos(ScalametaParser.scala:382)
+	at scala.meta.internal.parsers.ScalametaParser.autoEndPos(ScalametaParser.scala:387)
+	at scala.meta.internal.parsers.ScalametaParser.ifClause(ScalametaParser.scala:1479)
+	at scala.meta.internal.parsers.ScalametaParser.$anonfun$expr$2(ScalametaParser.scala:1538)
+	at scala.meta.internal.parsers.ScalametaParser.atPosOpt(ScalametaParser.scala:330)
+	at scala.meta.internal.parsers.ScalametaParser.autoPosOpt(ScalametaParser.scala:380)
+	at scala.meta.internal.parsers.ScalametaParser.expr(ScalametaParser.scala:1532)
+	at scala.meta.internal.parsers.ScalametaParser.$anonfun$blockStatSeq$3(ScalametaParser.scala:4388)
+	at scala.meta.internal.parsers.ScalametaParser.stat(ScalametaParser.scala:4244)
+	at scala.meta.internal.parsers.ScalametaParser.$anonfun$blockStatSeq$1(ScalametaParser.scala:4388)
+	at scala.meta.internal.parsers.ScalametaParser.$anonfun$blockStatSeq$1$adapted(ScalametaParser.scala:4370)
+	at scala.meta.internal.parsers.ScalametaParser.scala$meta$internal$parsers$ScalametaParser$$listBy(ScalametaParser.scala:541)
+	at scala.meta.internal.parsers.ScalametaParser.blockStatSeq(ScalametaParser.scala:4370)
+	at scala.meta.internal.parsers.ScalametaParser.blockWithStats$1(ScalametaParser.scala:2394)
+	at scala.meta.internal.parsers.ScalametaParser.$anonfun$block$1(ScalametaParser.scala:2396)
+	at scala.meta.internal.parsers.ScalametaParser.atPos(ScalametaParser.scala:327)
+	at scala.meta.internal.parsers.ScalametaParser.autoPos(ScalametaParser.scala:379)
+	at scala.meta.internal.parsers.ScalametaParser.block(ScalametaParser.scala:2393)
+	at scala.meta.internal.parsers.ScalametaParser.blockExpr(ScalametaParser.scala:2390)
+	at scala.meta.internal.parsers.ScalametaParser.simpleExpr0(ScalametaParser.scala:2132)
+	at scala.meta.internal.parsers.ScalametaParser.simpleExpr(ScalametaParser.scala:2103)
+	at scala.meta.internal.parsers.ScalametaParser.prefixExpr(ScalametaParser.scala:2086)
+	at scala.meta.internal.parsers.ScalametaParser.postfixExpr(ScalametaParser.scala:2005)
+	at scala.meta.internal.parsers.ScalametaParser.$anonfun$expr$2(ScalametaParser.scala:1631)
+	at scala.meta.internal.parsers.ScalametaParser.atPosOpt(ScalametaParser.scala:330)
+	at scala.meta.internal.parsers.ScalametaParser.autoPosOpt(ScalametaParser.scala:380)
+	at scala.meta.internal.parsers.ScalametaParser.expr(ScalametaParser.scala:1532)
+	at scala.meta.internal.parsers.ScalametaParser.expr(ScalametaParser.scala:1419)
+	at scala.meta.internal.parsers.ScalametaParser.exprMaybeIndented(ScalametaParser.scala:1443)
+	at scala.meta.internal.parsers.ScalametaParser.$anonfun$ifClause$1(ScalametaParser.scala:1488)
+	at scala.meta.internal.parsers.ScalametaParser.autoEndPos(ScalametaParser.scala:382)
+	at scala.meta.internal.parsers.ScalametaParser.autoEndPos(ScalametaParser.scala:387)
+	at scala.meta.internal.parsers.ScalametaParser.ifClause(ScalametaParser.scala:1479)
+	at scala.meta.internal.parsers.ScalametaParser.$anonfun$expr$2(ScalametaParser.scala:1538)
+	at scala.meta.internal.parsers.ScalametaParser.atPosOpt(ScalametaParser.scala:330)
+	at scala.meta.internal.parsers.ScalametaParser.autoPosOpt(ScalametaParser.scala:380)
+	at scala.meta.internal.parsers.ScalametaParser.expr(ScalametaParser.scala:1532)
+	at scala.meta.internal.parsers.ScalametaParser.$anonfun$blockStatSeq$3(ScalametaParser.scala:4388)
+	at scala.meta.internal.parsers.ScalametaParser.stat(ScalametaParser.scala:4244)
+	at scala.meta.internal.parsers.ScalametaParser.$anonfun$blockStatSeq$1(ScalametaParser.scala:4388)
+	at scala.meta.internal.parsers.ScalametaParser.$anonfun$blockStatSeq$1$adapted(ScalametaParser.scala:4370)
+	at scala.meta.internal.parsers.ScalametaParser.scala$meta$internal$parsers$ScalametaParser$$listBy(ScalametaParser.scala:541)
+	at scala.meta.internal.parsers.ScalametaParser.blockStatSeq(ScalametaParser.scala:4370)
+	at scala.meta.internal.parsers.ScalametaParser.blockWithStats$1(ScalametaParser.scala:2394)
+	at scala.meta.internal.parsers.ScalametaParser.$anonfun$block$1(ScalametaParser.scala:2396)
+	at scala.meta.internal.parsers.ScalametaParser.atPos(ScalametaParser.scala:327)
+	at scala.meta.internal.parsers.ScalametaParser.autoPos(ScalametaParser.scala:379)
+	at scala.meta.internal.parsers.ScalametaParser.block(ScalametaParser.scala:2393)
+	at scala.meta.internal.parsers.ScalametaParser.blockExpr(ScalametaParser.scala:2390)
+	at scala.meta.internal.parsers.ScalametaParser.simpleExpr0(ScalametaParser.scala:2132)
+	at scala.meta.internal.parsers.ScalametaParser.simpleExpr(ScalametaParser.scala:2103)
+	at scala.meta.internal.parsers.ScalametaParser.prefixExpr(ScalametaParser.scala:2086)
+	at scala.meta.internal.parsers.ScalametaParser.postfixExpr(ScalametaParser.scala:2005)
+	at scala.meta.internal.parsers.ScalametaParser.$anonfun$expr$2(ScalametaParser.scala:1631)
+	at scala.meta.internal.parsers.ScalametaParser.atPosOpt(ScalametaParser.scala:330)
+	at scala.meta.internal.parsers.ScalametaParser.autoPosOpt(ScalametaParser.scala:380)
+	at scala.meta.internal.parsers.ScalametaParser.expr(ScalametaParser.scala:1532)
+	at scala.meta.internal.parsers.ScalametaParser.expr(ScalametaParser.scala:1419)
+	at scala.meta.internal.parsers.ScalametaParser.termFunctionBody(ScalametaParser.scala:1765)
+	at scala.meta.internal.parsers.ScalametaParser.exprOtherRest(ScalametaParser.scala:1749)
+	at scala.meta.internal.parsers.ScalametaParser.$anonfun$expr$2(ScalametaParser.scala:1632)
+	at scala.meta.internal.parsers.ScalametaParser.atPosOpt(ScalametaParser.scala:330)
+	at scala.meta.internal.parsers.ScalametaParser.autoPosOpt(ScalametaParser.scala:380)
+	at scala.meta.internal.parsers.ScalametaParser.expr(ScalametaParser.scala:1532)
+	at scala.meta.internal.parsers.ScalametaParser.argumentExpr(ScalametaParser.scala:2348)
+	at scala.meta.internal.parsers.ScalametaParser.$anonfun$argumentExprsInParens$1(ScalametaParser.scala:2375)
+	at scala.meta.internal.parsers.ScalametaParser.iter$1(ScalametaParser.scala:613)
+	at scala.meta.internal.parsers.ScalametaParser.$anonfun$tokenSeparated$1(ScalametaParser.scala:619)
+	at scala.meta.internal.parsers.ScalametaParser.$anonfun$tokenSeparated$1$adapted(ScalametaParser.scala:606)
+	at scala.meta.internal.parsers.ScalametaParser.scala$meta$internal$parsers$ScalametaParser$$listBy(ScalametaParser.scala:541)
+	at scala.meta.internal.parsers.ScalametaParser.tokenSeparated(ScalametaParser.scala:606)
+	at scala.meta.internal.parsers.ScalametaParser.commaSeparated(ScalametaParser.scala:623)
+	at scala.meta.internal.parsers.ScalametaParser.argumentExprsInParens(ScalametaParser.scala:2375)
+	at scala.meta.internal.parsers.ScalametaParser.$anonfun$scala$meta$internal$parsers$ScalametaParser$$getArgClause$2(ScalametaParser.scala:2361)
+	at scala.meta.internal.parsers.ScalametaParser.scala$meta$internal$parsers$ScalametaParser$$inParensAfterOpenOr(ScalametaParser.scala:255)
+	at scala.meta.internal.parsers.ScalametaParser.scala$meta$internal$parsers$ScalametaParser$$inParensOnOpenOr(ScalametaParser.scala:246)
+	at scala.meta.internal.parsers.ScalametaParser.$anonfun$scala$meta$internal$parsers$ScalametaParser$$getArgClause$1(ScalametaParser.scala:2362)
+	at scala.meta.internal.parsers.ScalametaParser.atPos(ScalametaParser.scala:327)
+	at scala.meta.internal.parsers.ScalametaParser.autoPos(ScalametaParser.scala:379)
+	at scala.meta.internal.parsers.ScalametaParser.scala$meta$internal$parsers$ScalametaParser$$getArgClause(ScalametaParser.scala:2351)
+	at scala.meta.internal.parsers.ScalametaParser.simpleExprRest(ScalametaParser.scala:2233)
+	at scala.meta.internal.parsers.ScalametaParser.$anonfun$simpleExpr0$3(ScalametaParser.scala:2153)
+	at scala.util.Success.map(Try.scala:262)
+	at scala.meta.internal.parsers.ScalametaParser.simpleExpr0(ScalametaParser.scala:2153)
+	at scala.meta.internal.parsers.ScalametaParser.simpleExpr(ScalametaParser.scala:2103)
+	at scala.meta.internal.parsers.ScalametaParser.prefixExpr(ScalametaParser.scala:2086)
+	at scala.meta.internal.parsers.ScalametaParser.postfixExpr(ScalametaParser.scala:2005)
+	at scala.meta.internal.parsers.ScalametaParser.$anonfun$expr$2(ScalametaParser.scala:1631)
+	at scala.meta.internal.parsers.ScalametaParser.atPosOpt(ScalametaParser.scala:330)
+	at scala.meta.internal.parsers.ScalametaParser.autoPosOpt(ScalametaParser.scala:380)
+	at scala.meta.internal.parsers.ScalametaParser.expr(ScalametaParser.scala:1532)
+	at scala.meta.internal.parsers.ScalametaParser.$anonfun$blockStatSeq$3(ScalametaParser.scala:4388)
+	at scala.meta.internal.parsers.ScalametaParser.stat(ScalametaParser.scala:4244)
+	at scala.meta.internal.parsers.ScalametaParser.$anonfun$blockStatSeq$1(ScalametaParser.scala:4388)
+	at scala.meta.internal.parsers.ScalametaParser.$anonfun$blockStatSeq$1$adapted(ScalametaParser.scala:4370)
+	at scala.meta.internal.parsers.ScalametaParser.scala$meta$internal$parsers$ScalametaParser$$listBy(ScalametaParser.scala:541)
+	at scala.meta.internal.parsers.ScalametaParser.blockStatSeq(ScalametaParser.scala:4370)
+	at scala.meta.internal.parsers.ScalametaParser.blockWithStats$1(ScalametaParser.scala:2394)
+	at scala.meta.internal.parsers.ScalametaParser.$anonfun$block$1(ScalametaParser.scala:2396)
+	at scala.meta.internal.parsers.ScalametaParser.atPos(ScalametaParser.scala:327)
+	at scala.meta.internal.parsers.ScalametaParser.autoPos(ScalametaParser.scala:379)
+	at scala.meta.internal.parsers.ScalametaParser.block(ScalametaParser.scala:2393)
+	at scala.meta.internal.parsers.ScalametaParser.$anonfun$expr$2(ScalametaParser.scala:1544)
+	at scala.meta.internal.parsers.ScalametaParser.atPosOpt(ScalametaParser.scala:330)
+	at scala.meta.internal.parsers.ScalametaParser.autoPosOpt(ScalametaParser.scala:380)
+	at scala.meta.internal.parsers.ScalametaParser.expr(ScalametaParser.scala:1532)
+	at scala.meta.internal.parsers.ScalametaParser.expr(ScalametaParser.scala:1419)
+	at scala.meta.internal.parsers.ScalametaParser.termFunctionBody(ScalametaParser.scala:1765)
+	at scala.meta.internal.parsers.ScalametaParser.exprOtherRest(ScalametaParser.scala:1749)
+	at scala.meta.internal.parsers.ScalametaParser.$anonfun$expr$2(ScalametaParser.scala:1632)
+	at scala.meta.internal.parsers.ScalametaParser.atPosOpt(ScalametaParser.scala:330)
+	at scala.meta.internal.parsers.ScalametaParser.autoPosOpt(ScalametaParser.scala:380)
+	at scala.meta.internal.parsers.ScalametaParser.expr(ScalametaParser.scala:1532)
+	at scala.meta.internal.parsers.ScalametaParser.argumentExpr(ScalametaParser.scala:2348)
+	at scala.meta.internal.parsers.ScalametaParser.$anonfun$argumentExprsInParens$1(ScalametaParser.scala:2375)
+	at scala.meta.internal.parsers.ScalametaParser.iter$1(ScalametaParser.scala:613)
+	at scala.meta.internal.parsers.ScalametaParser.$anonfun$tokenSeparated$1(ScalametaParser.scala:619)
+	at scala.meta.internal.parsers.ScalametaParser.$anonfun$tokenSeparated$1$adapted(ScalametaParser.scala:606)
+	at scala.meta.internal.parsers.ScalametaParser.scala$meta$internal$parsers$ScalametaParser$$listBy(ScalametaParser.scala:541)
+	at scala.meta.internal.parsers.ScalametaParser.tokenSeparated(ScalametaParser.scala:606)
+	at scala.meta.internal.parsers.ScalametaParser.commaSeparated(ScalametaParser.scala:623)
+	at scala.meta.internal.parsers.ScalametaParser.argumentExprsInParens(ScalametaParser.scala:2375)
+	at scala.meta.internal.parsers.ScalametaParser.$anonfun$scala$meta$internal$parsers$ScalametaParser$$getArgClause$2(ScalametaParser.scala:2361)
+	at scala.meta.internal.parsers.ScalametaParser.scala$meta$internal$parsers$ScalametaParser$$inParensAfterOpenOr(ScalametaParser.scala:255)
+	at scala.meta.internal.parsers.ScalametaParser.scala$meta$internal$parsers$ScalametaParser$$inParensOnOpenOr(ScalametaParser.scala:246)
+	at scala.meta.internal.parsers.ScalametaParser.$anonfun$scala$meta$internal$parsers$ScalametaParser$$getArgClause$1(ScalametaParser.scala:2362)
+	at scala.meta.internal.parsers.ScalametaParser.atPos(ScalametaParser.scala:327)
+	at scala.meta.internal.parsers.ScalametaParser.autoPos(ScalametaParser.scala:379)
+	at scala.meta.internal.parsers.ScalametaParser.scala$meta$internal$parsers$ScalametaParser$$getArgClause(ScalametaParser.scala:2351)
+	at scala.meta.internal.parsers.ScalametaParser.simpleExprRest(ScalametaParser.scala:2233)
+	at scala.meta.internal.parsers.ScalametaParser.$anonfun$simpleExpr0$3(ScalametaParser.scala:2153)
+	at scala.util.Success.map(Try.scala:262)
+	at scala.meta.internal.parsers.ScalametaParser.simpleExpr0(ScalametaParser.scala:2153)
+	at scala.meta.internal.parsers.ScalametaParser.simpleExpr(ScalametaParser.scala:2103)
+	at scala.meta.internal.parsers.ScalametaParser.prefixExpr(ScalametaParser.scala:2086)
+	at scala.meta.internal.parsers.ScalametaParser.postfixExpr(ScalametaParser.scala:2005)
+	at scala.meta.internal.parsers.ScalametaParser.$anonfun$expr$2(ScalametaParser.scala:1631)
+	at scala.meta.internal.parsers.ScalametaParser.atPosOpt(ScalametaParser.scala:330)
+	at scala.meta.internal.parsers.ScalametaParser.autoPosOpt(ScalametaParser.scala:380)
+	at scala.meta.internal.parsers.ScalametaParser.expr(ScalametaParser.scala:1532)
+	at scala.meta.internal.parsers.ScalametaParser$$anonfun$templateStat$1.applyOrElse(ScalametaParser.scala:4325)
+	at scala.meta.internal.parsers.ScalametaParser$$anonfun$templateStat$1.applyOrElse(ScalametaParser.scala:4311)
+	at scala.PartialFunction.$anonfun$runWith$1(PartialFunction.scala:231)
+	at scala.PartialFunction.$anonfun$runWith$1$adapted(PartialFunction.scala:230)
+	at scala.meta.internal.parsers.ScalametaParser.statSeqBuf(ScalametaParser.scala:4263)
+	at scala.meta.internal.parsers.ScalametaParser.$anonfun$templateStatSeq$1(ScalametaParser.scala:4303)
+	at scala.meta.internal.parsers.ScalametaParser.$anonfun$templateStatSeq$1$adapted(ScalametaParser.scala:4302)
+	at scala.meta.internal.parsers.ScalametaParser.scala$meta$internal$parsers$ScalametaParser$$listBy(ScalametaParser.scala:541)
+	at scala.meta.internal.parsers.ScalametaParser.templateStatSeq(ScalametaParser.scala:4302)
+	at scala.meta.internal.parsers.ScalametaParser.$anonfun$templateBody$1(ScalametaParser.scala:4151)
+	at scala.meta.internal.parsers.ScalametaParser.inBracesOr(ScalametaParser.scala:262)
+	at scala.meta.internal.parsers.ScalametaParser.inBraces(ScalametaParser.scala:258)
+	at scala.meta.internal.parsers.ScalametaParser.templateBody(ScalametaParser.scala:4151)
+	at scala.meta.internal.parsers.ScalametaParser.templateBodyOpt(ScalametaParser.scala:4159)
+	at scala.meta.internal.parsers.ScalametaParser.template(ScalametaParser.scala:4073)
+	at scala.meta.internal.parsers.ScalametaParser.$anonfun$template$1(ScalametaParser.scala:4095)
+	at scala.meta.internal.parsers.ScalametaParser.atPos(ScalametaParser.scala:327)
+	at scala.meta.internal.parsers.ScalametaParser.autoPos(ScalametaParser.scala:379)
+	at scala.meta.internal.parsers.ScalametaParser.template(ScalametaParser.scala:4082)
+	at scala.meta.internal.parsers.ScalametaParser.$anonfun$templateOpt$1(ScalametaParser.scala:4125)
+	at scala.meta.internal.parsers.ScalametaParser.atPos(ScalametaParser.scala:327)
+	at scala.meta.internal.parsers.ScalametaParser.autoPos(ScalametaParser.scala:379)
+	at scala.meta.internal.parsers.ScalametaParser.templateOpt(ScalametaParser.scala:4114)
+	at scala.meta.internal.parsers.ScalametaParser.$anonfun$classDef$1(ScalametaParser.scala:3777)
+	at scala.meta.internal.parsers.ScalametaParser.autoEndPos(ScalametaParser.scala:382)
+	at scala.meta.internal.parsers.ScalametaParser.autoEndPos(ScalametaParser.scala:387)
+	at scala.meta.internal.parsers.ScalametaParser.classDef(ScalametaParser.scala:3752)
+	at scala.meta.internal.parsers.ScalametaParser.tmplDef(ScalametaParser.scala:3711)
+	at scala.meta.internal.parsers.ScalametaParser.topLevelTmplDef(ScalametaParser.scala:3696)
+	at scala.meta.internal.parsers.ScalametaParser$$anonfun$2.applyOrElse(ScalametaParser.scala:4282)
+	at scala.meta.internal.parsers.ScalametaParser$$anonfun$2.applyOrElse(ScalametaParser.scala:4270)
+	at scala.PartialFunction.$anonfun$runWith$1(PartialFunction.scala:231)
+	at scala.PartialFunction.$anonfun$runWith$1$adapted(PartialFunction.scala:230)
+	at scala.meta.internal.parsers.ScalametaParser.statSeqBuf(ScalametaParser.scala:4263)
+	at scala.meta.internal.parsers.ScalametaParser.bracelessPackageStats$1(ScalametaParser.scala:4461)
+	at scala.meta.internal.parsers.ScalametaParser.$anonfun$batchSource$12(ScalametaParser.scala:4474)
+	at scala.meta.internal.parsers.ScalametaParser.autoEndPos(ScalametaParser.scala:382)
+	at scala.meta.internal.parsers.ScalametaParser.$anonfun$batchSource$11(ScalametaParser.scala:4474)
+	at scala.Option.map(Option.scala:242)
+	at scala.meta.internal.parsers.ScalametaParser.$anonfun$batchSource$1(ScalametaParser.scala:4474)
+	at scala.meta.internal.parsers.ScalametaParser.atPos(ScalametaParser.scala:327)
+	at scala.meta.internal.parsers.ScalametaParser.autoPos(ScalametaParser.scala:379)
+	at scala.meta.internal.parsers.ScalametaParser.batchSource(ScalametaParser.scala:4431)
+	at scala.meta.internal.parsers.ScalametaParser.$anonfun$source$1(ScalametaParser.scala:4424)
+	at scala.meta.internal.parsers.ScalametaParser.atPos(ScalametaParser.scala:327)
+	at scala.meta.internal.parsers.ScalametaParser.autoPos(ScalametaParser.scala:379)
+	at scala.meta.internal.parsers.ScalametaParser.source(ScalametaParser.scala:4424)
+	at scala.meta.internal.parsers.ScalametaParser.entrypointSource(ScalametaParser.scala:4429)
+	at scala.meta.internal.parsers.ScalametaParser.parseSourceImpl(ScalametaParser.scala:129)
+	at scala.meta.internal.parsers.ScalametaParser.$anonfun$parseSource$1(ScalametaParser.scala:126)
+	at scala.meta.internal.parsers.ScalametaParser.parseRuleAfterBOF(ScalametaParser.scala:53)
+	at scala.meta.internal.parsers.ScalametaParser.parseRule(ScalametaParser.scala:48)
+	at scala.meta.internal.parsers.ScalametaParser.parseSource(ScalametaParser.scala:126)
+	at scala.meta.parsers.Parse$.$anonfun$parseSource$1(Parse.scala:29)
+	at scala.meta.parsers.Parse$$anon$1.apply(Parse.scala:36)
+	at scala.meta.parsers.Api$XtensionParseDialectInput.parse(Api.scala:25)
+	at scala.meta.internal.parsing.Trees.$anonfun$parse$2(Trees.scala:129)
+	at scala.Option.map(Option.scala:242)
+	at scala.meta.internal.parsing.Trees.parse(Trees.scala:122)
+	at scala.meta.internal.parsing.Trees.didChange(Trees.scala:92)
+	at scala.meta.internal.metals.MetalsLanguageServer.$anonfun$parseTreesAndPublishDiags$2(MetalsLanguageServer.scala:321)
+	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.scala:18)
+	at scala.concurrent.Future$.$anonfun$apply$1(Future.scala:678)
+	at scala.concurrent.impl.Promise$Transformation.run(Promise.scala:467)
+	... 3 more
+
+2023.01.11 21:57:01 INFO  compiling root (1 scala source)
+2023.01.11 21:57:01 INFO  time: compiled root in 0.18s
+2023.01.11 21:57:08 INFO  compiling root (1 scala source)
+2023.01.11 21:57:08 INFO  time: compiled root in 0.3s
+2023.01.11 21:57:22 INFO  compiling root (1 scala source)
+2023.01.11 21:57:22 INFO  time: compiled root in 0.13s
+2023.01.11 21:57:23 INFO  compiling root (1 scala source)
+2023.01.11 21:57:23 INFO  time: compiled root in 0.19s
+2023.01.11 21:57:50 INFO  compiling root (1 scala source)
+2023.01.11 21:57:50 INFO  time: compiled root in 0.12s
+2023.01.11 21:58:21 INFO  compiling root (1 scala source)
+2023.01.11 21:58:21 INFO  time: compiled root in 0.15s
+2023.01.11 21:58:25 INFO  compiling root (1 scala source)
+2023.01.11 21:58:26 INFO  time: compiled root in 1.21s
+2023.01.11 22:00:01 INFO  compiling root (1 scala source)
+2023.01.11 22:00:03 INFO  time: compiled root in 1.75s
+2023.01.11 22:02:38 INFO  compiling root (1 scala source)
+2023.01.11 22:02:39 INFO  time: compiled root in 1.01s
+Jan 11, 2023 10:13:22 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 3354
+Jan 11, 2023 10:14:59 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint fallbackResponseError
+SEVERE: Internal error: scala.reflect.internal.Symbols$CyclicReference: illegal cyclic reference involving class UpdateStatusTask
+java.util.concurrent.CompletionException: scala.reflect.internal.Symbols$CyclicReference: illegal cyclic reference involving class UpdateStatusTask
+	at java.base/java.util.concurrent.CompletableFuture.encodeThrowable(CompletableFuture.java:314)
+	at java.base/java.util.concurrent.CompletableFuture.completeThrowable(CompletableFuture.java:319)
+	at java.base/java.util.concurrent.CompletableFuture$UniAccept.tryFire(CompletableFuture.java:718)
+	at java.base/java.util.concurrent.CompletableFuture.postComplete(CompletableFuture.java:506)
+	at java.base/java.util.concurrent.CompletableFuture.complete(CompletableFuture.java:2073)
+	at scala.meta.internal.metals.CancelTokens$.$anonfun$future$1(CancelTokens.scala:42)
+	at scala.meta.internal.metals.CancelTokens$.$anonfun$future$1$adapted(CancelTokens.scala:38)
+	at scala.concurrent.impl.Promise$Transformation.run(Promise.scala:484)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+Caused by: scala.reflect.internal.Symbols$CyclicReference: illegal cyclic reference involving class UpdateStatusTask
+
+Jan 11, 2023 10:16:46 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 3719
+2023.01.11 22:19:15 INFO  compiling root (33 scala sources and 1 java source)
+2023.01.11 22:19:15 INFO  time: compiled root in 0.12s
+2023.01.11 22:19:50 INFO  compiling root (33 scala sources and 1 java source)
+2023.01.11 22:19:50 INFO  time: compiled root in 0.14s
+2023.01.11 22:20:06 INFO  compiling root (33 scala sources and 1 java source)
+2023.01.11 22:20:07 INFO  time: compiled root in 1.05s
+2023.01.11 22:20:29 INFO  compiling root (33 scala sources and 1 java source)
+2023.01.11 22:20:29 INFO  time: compiled root in 0.87s
+2023.01.11 22:20:41 INFO  running '/usr/lib/jvm/java-11-openjdk-amd64/bin/java -Djline.terminal=jline.UnsupportedTerminal -Dsbt.log.noformat=true -Dfile.encoding=UTF-8 -jar /tmp/metals8118746304388669220/sbt-launch.jar -Dbloop.export-jar-classifiers=sources bloopInstall'
+2023.01.11 22:20:44 INFO  [info] welcome to sbt 1.7.2 (Ubuntu Java 11.0.17)
+2023.01.11 22:20:46 INFO  [info] loading global plugins from /home/luivatra/.sbt/1.0/plugins
+2023.01.11 22:20:48 INFO  [info] loading settings for project pratir-backend-build-build-build from metals.sbt ...
+2023.01.11 22:20:48 INFO  [info] loading project definition from /home/luivatra/develop/ergo/pratir-backend/project/project/project
+2023.01.11 22:20:48 INFO  [info] loading settings for project pratir-backend-build-build from metals.sbt ...
+2023.01.11 22:20:49 INFO  [info] loading project definition from /home/luivatra/develop/ergo/pratir-backend/project/project
+2023.01.11 22:20:52 INFO  [success] Generated .bloop/pratir-backend-build-build.json
+2023.01.11 22:20:52 INFO  [success] Total time: 3 s, completed 11 Jan 2023, 10:20:52 PM
+2023.01.11 22:20:52 INFO  [info] loading settings for project pratir-backend-build from metals.sbt,plugins.sbt ...
+2023.01.11 22:20:52 INFO  [info] loading project definition from /home/luivatra/develop/ergo/pratir-backend/project
+2023.01.11 22:20:54 INFO  [success] Generated .bloop/pratir-backend-build.json
+2023.01.11 22:20:54 INFO  [success] Total time: 2 s, completed 11 Jan 2023, 10:20:55 PM
+2023.01.11 22:20:56 INFO  [info] loading settings for project root from build.sbt ...
+2023.01.11 22:20:56 INFO  [info]   __              __
+2023.01.11 22:20:56 INFO  [info]   \ \     ____   / /____ _ __  __
+2023.01.11 22:20:56 INFO  [info]    \ \   / __ \ / // __ `// / / /
+2023.01.11 22:20:56 INFO  [info]    / /  / /_/ // // /_/ // /_/ /
+2023.01.11 22:20:56 INFO  [info]   /_/  / .___//_/ \__,_/ \__, /
+2023.01.11 22:20:56 INFO  [info]       /_/               /____/
+2023.01.11 22:20:56 INFO  [info] 
+2023.01.11 22:20:56 INFO  [info] Version 2.8.18 running Java 11.0.17
+2023.01.11 22:20:56 INFO  [info] 
+2023.01.11 22:20:56 INFO  [info] Play is run entirely by the community. Please consider contributing and/or donating:
+2023.01.11 22:20:56 INFO  [info] https://www.playframework.com/sponsors
+2023.01.11 22:20:56 INFO  [info] 
+2023.01.11 22:20:57 INFO  [info] .env detected (fileName=.env). About to configure JVM System Environment with new map
+2023.01.11 22:20:57 ERROR WARNING: An illegal reflective access operation has occurred
+2023.01.11 22:20:57 ERROR WARNING: Illegal reflective access by au.com.onegeek.sbtdotenv.DirtyEnvironmentHack$ (file:/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/nl/gn0s1s/sbt-dotenv_2.12_1.0/3.0.0/sbt-dotenv-3.0.0.jar) to field java.lang.ProcessEnvironment.theEnvironment
+2023.01.11 22:20:57 ERROR WARNING: Please consider reporting this to the maintainers of au.com.onegeek.sbtdotenv.DirtyEnvironmentHack$
+2023.01.11 22:20:57 ERROR WARNING: Use --illegal-access=warn to enable warnings of further illegal reflective access operations
+2023.01.11 22:20:57 INFO  [info] Configured .env environment
+2023.01.11 22:20:57 ERROR WARNING: All illegal access operations will be denied in a future release
+2023.01.11 22:20:59 INFO  [success] Generated .bloop/root.json
+2023.01.11 22:20:59 INFO  [success] Generated .bloop/root-test.json
+2023.01.11 22:20:59 INFO  [success] Total time: 1 s, completed 11 Jan 2023, 10:20:59 PM
+2023.01.11 22:20:59 INFO  time: ran 'sbt bloopInstall' in 17s
+2023.01.11 22:20:59 INFO  Disconnecting from Bloop session...
+2023.01.11 22:20:59 INFO  Shut down connection with build server.
+2023.01.11 22:20:59 INFO  Shut down connection with build server.
+2023.01.11 22:20:59 INFO  Shut down connection with build server.
+2023.01.11 22:20:59 INFO  Attempting to connect to the build server...
+2023.01.11 22:20:59 INFO  Bloop uses /usr/lib/jvm/java-11-openjdk-amd64 defined at /home/luivatra/.bloop/bloop.json
+2023.01.11 22:20:59 INFO  tracing is disabled for protocol BSP, to enable tracing of incoming and outgoing JSON messages create an empty file at /home/luivatra/develop/ergo/pratir-backend/.metals/bsp.trace.json or /home/luivatra/.cache/metals/bsp.trace.json
+2023.01.11 22:20:59 INFO  Attempting to connect to the build server...
+2023.01.11 22:20:59 INFO  Bloop uses /usr/lib/jvm/java-11-openjdk-amd64 defined at /home/luivatra/.bloop/bloop.json
+2023.01.11 22:20:59 INFO  Attempting to connect to the build server...
+2023.01.11 22:20:59 INFO  Bloop uses /usr/lib/jvm/java-11-openjdk-amd64 defined at /home/luivatra/.bloop/bloop.json
+2023.01.11 22:20:59 INFO  tracing is disabled for protocol BSP, to enable tracing of incoming and outgoing JSON messages create an empty file at /home/luivatra/develop/ergo/pratir-backend/project/project/.metals/bsp.trace.json or /home/luivatra/.cache/metals/bsp.trace.json
+2023.01.11 22:21:00 INFO  tracing is disabled for protocol BSP, to enable tracing of incoming and outgoing JSON messages create an empty file at /home/luivatra/develop/ergo/pratir-backend/project/.metals/bsp.trace.json or /home/luivatra/.cache/metals/bsp.trace.json
+2023.01.11 22:21:00 INFO  time: Connected to build server in 0.24s
+2023.01.11 22:21:00 INFO  Connected to Build server: Bloop v1.5.6
+2023.01.11 22:21:02 INFO  time: indexed workspace in 2.85s
+Jan 11, 2023 10:21:04 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 4034
+Jan 11, 2023 10:21:04 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 4035
+2023.01.11 22:21:19 INFO  shutting down Metals
+2023.01.11 22:21:20 INFO  Shut down connection with build server.
+2023.01.11 22:21:20 INFO  Shut down connection with build server.
+2023.01.11 22:21:20 INFO  Shut down connection with build server.
+2023.01.11 22:21:32 INFO  tracing is disabled for protocol LSP, to enable tracing of incoming and outgoing JSON messages create an empty file at /home/luivatra/develop/ergo/pratir-backend/.metals/lsp.trace.json or /home/luivatra/.cache/metals/lsp.trace.json
+2023.01.11 22:21:33 INFO  logging to file /home/luivatra/develop/ergo/pratir-backend/.metals/metals.log
+2023.01.11 22:21:33 INFO  Started: Metals version 0.11.10 in workspace '/home/luivatra/develop/ergo/pratir-backend' for client Visual Studio Code 1.74.2.
+SLF4J: No SLF4J providers were found.
+SLF4J: Defaulting to no-operation (NOP) logger implementation
+SLF4J: See https://www.slf4j.org/codes.html#noProviders for further details.
+SLF4J: Class path contains SLF4J bindings targeting slf4j-api versions 1.7.x or earlier.
+SLF4J: Ignoring binding found at [jar:file:/home/luivatra/.cache/coursier/v1/https/repo1.maven.org/maven2/com/outr/scribe-slf4j_2.13/3.10.5/scribe-slf4j_2.13-3.10.5.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: See https://www.slf4j.org/codes.html#ignoredBindings for an explanation.
+2023.01.11 22:21:36 INFO  time: initialize in 2.43s
+2023.01.11 22:21:38 INFO  Attempting to connect to the build server...
+2023.01.11 22:21:38 INFO  Bloop uses /usr/lib/jvm/java-11-openjdk-amd64 defined at /home/luivatra/.bloop/bloop.json
+2023.01.11 22:21:38 INFO  skipping build import with status 'Installed'
+2023.01.11 22:21:39 INFO  tracing is disabled for protocol BSP, to enable tracing of incoming and outgoing JSON messages create an empty file at /home/luivatra/develop/ergo/pratir-backend/.metals/bsp.trace.json or /home/luivatra/.cache/metals/bsp.trace.json
+2023.01.11 22:21:39 INFO  Attempting to connect to the build server...
+2023.01.11 22:21:39 INFO  Bloop uses /usr/lib/jvm/java-11-openjdk-amd64 defined at /home/luivatra/.bloop/bloop.json
+2023.01.11 22:21:39 INFO  Attempting to connect to the build server...
+2023.01.11 22:21:39 INFO  Bloop uses /usr/lib/jvm/java-11-openjdk-amd64 defined at /home/luivatra/.bloop/bloop.json
+2023.01.11 22:21:39 INFO  tracing is disabled for protocol BSP, to enable tracing of incoming and outgoing JSON messages create an empty file at /home/luivatra/develop/ergo/pratir-backend/project/project/.metals/bsp.trace.json or /home/luivatra/.cache/metals/bsp.trace.json
+2023.01.11 22:21:39 INFO  tracing is disabled for protocol BSP, to enable tracing of incoming and outgoing JSON messages create an empty file at /home/luivatra/develop/ergo/pratir-backend/project/.metals/bsp.trace.json or /home/luivatra/.cache/metals/bsp.trace.json
+2023.01.11 22:21:39 INFO  time: Connected to build server in 1.45s
+2023.01.11 22:21:39 INFO  Connected to Build server: Bloop v1.5.6
+2023.01.11 22:21:40 INFO  time: Imported build in 0.47s
+Jan 11, 2023 10:21:42 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 4
+Jan 11, 2023 10:21:42 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 1
+Jan 11, 2023 10:21:43 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 7
+2023.01.11 22:21:49 INFO  time: indexed workspace in 8.87s
+2023.01.11 22:21:49 INFO  compiling root (33 scala sources and 1 java source)
+2023.01.11 22:21:52 INFO  time: compiled root in 2.67s
+2023.01.11 22:21:52 INFO  compiling root (33 scala sources and 1 java source)
+2023.01.11 22:21:54 INFO  time: compiled root in 2.27s
+2023.01.11 22:24:49 INFO  compiling root (33 scala sources and 1 java source)
+2023.01.11 22:24:49 INFO  time: compiled root in 89ms
+2023.01.11 22:25:03 INFO  compiling root (33 scala sources and 1 java source)
+2023.01.11 22:25:05 INFO  time: compiled root in 2.39s
+Jan 11, 2023 10:25:30 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 425
+2023.01.11 22:25:31 INFO  compiling root (33 scala sources and 1 java source)
+2023.01.11 22:25:31 INFO  time: compiled root in 0.89s
+2023.01.11 22:25:36 INFO  compiling root (33 scala sources and 1 java source)
+2023.01.11 22:25:36 INFO  time: compiled root in 0.99s
+Jan 11, 2023 10:25:47 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 477
+2023.01.11 22:25:54 INFO  compiling root (33 scala sources and 1 java source)
+2023.01.11 22:26:00 WARN  one feature warning; re-run with -feature for details
+2023.01.11 22:26:00 INFO  time: compiled root in 5.99s
+Jan 11, 2023 10:26:34 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 546
+2023.01.11 22:26:50 INFO  compiling root (1 scala source)
+2023.01.11 22:26:52 INFO  time: compiled root in 1.42s
+2023.01.11 22:27:29 INFO  compiling root (1 scala source)
+2023.01.11 22:27:31 INFO  time: compiled root in 1.48s
+Jan 11, 2023 10:28:41 PM scala.meta.internal.pc.CompilerAccess retryWithCleanCompiler
+INFO: compiler crashed due to an error in the Scala compiler, retrying with new compiler instance.
+Jan 11, 2023 10:28:55 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 729
+Jan 11, 2023 10:28:55 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 727
+Jan 11, 2023 10:28:56 PM scala.meta.internal.pc.CompilerAccess retryWithCleanCompiler
+INFO: compiler crashed due to an error in the Scala compiler, retrying with new compiler instance.
+Jan 11, 2023 10:29:02 PM scala.meta.internal.pc.CompilerAccess retryWithCleanCompiler
+INFO: compiler crashed due to an error in the Scala compiler, retrying with new compiler instance.
+Jan 11, 2023 10:36:05 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 1495
+2023.01.11 22:36:30 INFO  compiling root (1 scala source)
+2023.01.11 22:36:30 INFO  time: compiled root in 0.49s
+2023.01.11 22:36:36 INFO  compiling root (1 scala source)
+2023.01.11 22:36:36 INFO  time: compiled root in 0.28s
+2023.01.11 22:36:59 INFO  compiling root (1 scala source)
+2023.01.11 22:36:59 INFO  time: compiled root in 0.34s
+2023.01.11 22:37:25 INFO  compiling root (1 scala source)
+2023.01.11 22:37:27 INFO  time: compiled root in 2.02s
+2023.01.11 22:37:32 INFO  compiling root (1 scala source)
+2023.01.11 22:37:33 INFO  time: compiled root in 1.65s
+2023.01.11 22:39:50 INFO  compiling root (1 scala source)
+2023.01.11 22:39:51 INFO  time: compiled root in 1.52s
+2023.01.11 22:42:46 INFO  compiling root (1 scala source)
+2023.01.11 22:42:47 INFO  time: compiled root in 1.52s
+2023.01.11 22:47:52 INFO  compiling root (1 scala source)
+2023.01.11 22:47:55 INFO  time: compiled root in 2.46s
+2023.01.11 22:48:12 INFO  compiling root (1 scala source)
+2023.01.11 22:48:14 INFO  time: compiled root in 1.38s
+2023.01.11 22:48:55 INFO  compiling root (1 scala source)
+2023.01.11 22:48:56 INFO  time: compiled root in 1.09s
+Exception in thread "pool-3-thread-1" java.lang.InterruptedException
+	at scala.meta.internal.metals.FutureCancelToken.checkCanceled(FutureCancelToken.scala:29)
+	at scala.meta.internal.pc.CompilerAccess.$anonfun$onCompilerJobQueue$1(CompilerAccess.scala:195)
+	at scala.meta.internal.pc.CompilerJobQueue$Job.run(CompilerJobQueue.scala:152)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+Exception in thread "pool-3-thread-2" java.lang.InterruptedException
+	at scala.meta.internal.metals.FutureCancelToken.checkCanceled(FutureCancelToken.scala:29)
+	at scala.meta.internal.pc.CompilerAccess.$anonfun$onCompilerJobQueue$1(CompilerAccess.scala:195)
+	at scala.meta.internal.pc.CompilerJobQueue$Job.run(CompilerJobQueue.scala:152)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+Jan 11, 2023 10:55:02 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 3430
+2023.01.11 22:55:41 INFO  compiling root (1 scala source)
+2023.01.11 22:55:41 INFO  time: compiled root in 0.14s
+2023.01.11 22:55:55 INFO  compiling root (1 scala source)
+2023.01.11 22:55:55 INFO  time: compiled root in 0.11s
+2023.01.11 22:56:24 INFO  compiling root (1 scala source)
+2023.01.11 22:56:24 INFO  time: compiled root in 95ms
+2023.01.11 22:56:31 INFO  compiling root (1 scala source)
+2023.01.11 22:56:31 INFO  time: compiled root in 0.25s
+2023.01.11 22:56:34 INFO  compiling root (1 scala source)
+2023.01.11 22:56:34 INFO  time: compiled root in 0.22s
+2023.01.11 22:56:43 INFO  compiling root (1 scala source)
+2023.01.11 22:56:43 INFO  time: compiled root in 0.26s
+2023.01.11 22:57:36 INFO  compiling root (1 scala source)
+2023.01.11 22:57:36 INFO  time: compiled root in 0.35s
+Exception in thread "pool-3-thread-3" java.lang.InterruptedException
+	at scala.meta.internal.metals.FutureCancelToken.checkCanceled(FutureCancelToken.scala:29)
+	at scala.meta.internal.pc.CompilerAccess.$anonfun$onCompilerJobQueue$1(CompilerAccess.scala:195)
+	at scala.meta.internal.pc.CompilerJobQueue$Job.run(CompilerJobQueue.scala:152)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+Exception in thread "pool-3-thread-4" java.lang.InterruptedException
+	at scala.meta.internal.metals.FutureCancelToken.checkCanceled(FutureCancelToken.scala:29)
+	at scala.meta.internal.pc.CompilerAccess.$anonfun$onCompilerJobQueue$1(CompilerAccess.scala:195)
+	at scala.meta.internal.pc.CompilerJobQueue$Job.run(CompilerJobQueue.scala:152)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+2023.01.11 22:59:11 INFO  compiling root (1 scala source)
+2023.01.11 22:59:11 INFO  time: compiled root in 0.29s
+Jan 11, 2023 10:59:28 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 4224
+2023.01.11 22:59:28 INFO  compiling root (1 scala source)
+2023.01.11 22:59:28 INFO  time: compiled root in 0.29s
+Exception in thread "pool-3-thread-5" java.lang.InterruptedException
+	at scala.meta.internal.metals.FutureCancelToken.checkCanceled(FutureCancelToken.scala:29)
+	at scala.meta.internal.pc.CompilerAccess.$anonfun$onCompilerJobQueue$1(CompilerAccess.scala:195)
+	at scala.meta.internal.pc.CompilerJobQueue$Job.run(CompilerJobQueue.scala:152)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+2023.01.11 22:59:51 INFO  compiling root (1 scala source)
+2023.01.11 22:59:51 INFO  time: compiled root in 0.19s
+2023.01.11 23:00:03 INFO  compiling root (1 scala source)
+2023.01.11 23:00:03 INFO  time: compiled root in 0.34s
+2023.01.11 23:00:38 INFO  compiling root (1 scala source)
+2023.01.11 23:00:38 INFO  time: compiled root in 0.2s
+Jan 11, 2023 11:00:53 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 4369
+Jan 11, 2023 11:01:58 PM scala.meta.internal.pc.CompilerAccess retryWithCleanCompiler
+INFO: compiler crashed due to an error in the Scala compiler, retrying with new compiler instance.
+Exception in thread "pool-3-thread-6" java.lang.InterruptedException
+	at scala.meta.internal.metals.FutureCancelToken.checkCanceled(FutureCancelToken.scala:29)
+	at scala.meta.internal.pc.CompilerAccess.$anonfun$onCompilerJobQueue$1(CompilerAccess.scala:195)
+	at scala.meta.internal.pc.CompilerJobQueue$Job.run(CompilerJobQueue.scala:152)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+2023.01.11 23:02:17 INFO  compiling root (1 scala source)
+2023.01.11 23:02:17 INFO  time: compiled root in 0.21s
+2023.01.11 23:02:22 INFO  compiling root (1 scala source)
+2023.01.11 23:02:22 INFO  time: compiled root in 0.23s
+2023.01.11 23:04:07 INFO  compiling root (1 scala source)
+2023.01.11 23:04:07 INFO  time: compiled root in 0.19s
+Jan 11, 2023 11:05:10 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 4914
+2023.01.11 23:05:26 INFO  compiling root (1 scala source)
+2023.01.11 23:05:26 INFO  time: compiled root in 0.25s
+2023.01.11 23:05:35 INFO  compiling root (1 scala source)
+2023.01.11 23:05:35 INFO  time: compiled root in 0.2s
+2023.01.11 23:05:45 INFO  compiling root (1 scala source)
+2023.01.11 23:05:45 INFO  time: compiled root in 0.24s
+Jan 11, 2023 11:05:58 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 5078
+2023.01.11 23:06:01 INFO  compiling root (1 scala source)
+2023.01.11 23:06:01 INFO  time: compiled root in 0.29s
+2023.01.11 23:06:12 INFO  compiling root (1 scala source)
+2023.01.11 23:06:12 INFO  time: compiled root in 0.3s
+2023.01.11 23:06:19 INFO  compiling root (1 scala source)
+2023.01.11 23:06:19 INFO  time: compiled root in 0.2s
+2023.01.11 23:06:50 INFO  compiling root (1 scala source)
+2023.01.11 23:06:50 INFO  time: compiled root in 0.22s
+2023.01.11 23:07:25 INFO  compiling root (1 scala source)
+2023.01.11 23:07:25 INFO  time: compiled root in 0.28s
+Jan 11, 2023 11:07:59 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 5256
+Exception in thread "pool-3-thread-7" java.lang.InterruptedException
+	at scala.meta.internal.metals.FutureCancelToken.checkCanceled(FutureCancelToken.scala:29)
+	at scala.meta.internal.pc.CompilerAccess.$anonfun$onCompilerJobQueue$1(CompilerAccess.scala:195)
+	at scala.meta.internal.pc.CompilerJobQueue$Job.run(CompilerJobQueue.scala:152)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+Exception in thread "pool-3-thread-8" java.lang.InterruptedException
+	at scala.meta.internal.metals.FutureCancelToken.checkCanceled(FutureCancelToken.scala:29)
+	at scala.meta.internal.pc.CompilerAccess.$anonfun$onCompilerJobQueue$1(CompilerAccess.scala:195)
+	at scala.meta.internal.pc.CompilerJobQueue$Job.run(CompilerJobQueue.scala:152)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+Exception in thread "pool-3-thread-9" java.lang.InterruptedException
+	at scala.meta.internal.metals.FutureCancelToken.checkCanceled(FutureCancelToken.scala:29)
+	at scala.meta.internal.pc.CompilerAccess.$anonfun$onCompilerJobQueue$1(CompilerAccess.scala:195)
+	at scala.meta.internal.pc.CompilerJobQueue$Job.run(CompilerJobQueue.scala:152)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+Jan 11, 2023 11:08:03 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 5277
+Jan 11, 2023 11:08:23 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 5321
+Jan 11, 2023 11:08:24 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 5322
+Jan 11, 2023 11:08:24 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 5323
+Jan 11, 2023 11:08:24 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 5324
+2023.01.11 23:08:24 INFO  compiling root (1 scala source)
+2023.01.11 23:08:24 INFO  time: compiled root in 0.44s
+2023.01.11 23:08:49 INFO  compiling root (1 scala source)
+2023.01.11 23:08:51 INFO  time: compiled root in 1.5s
+2023.01.11 23:16:03 INFO  compiling root (1 scala source)
+2023.01.11 23:16:06 INFO  time: compiled root in 3.15s
+Jan 11, 2023 11:16:55 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 5601
+2023.01.11 23:17:04 INFO  compiling root (1 scala source)
+2023.01.11 23:17:06 INFO  time: compiled root in 1.71s
+2023.01.11 23:20:48 INFO  compiling root (1 scala source)
+2023.01.11 23:20:49 INFO  time: compiled root in 1.55s
+2023.01.11 23:24:57 INFO  compiling root (1 scala source)
+2023.01.11 23:24:59 INFO  time: compiled root in 1.72s
+2023.01.11 23:29:49 INFO  compiling root (1 scala source)
+2023.01.11 23:29:51 INFO  time: compiled root in 1.5s
+Jan 11, 2023 11:30:38 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 5987
+2023.01.11 23:31:56 INFO  compiling root (1 scala source)
+2023.01.11 23:31:56 INFO  time: compiled root in 0.71s
+Jan 11, 2023 11:36:45 PM org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+INFO: Unsupported notification method: $/setTrace

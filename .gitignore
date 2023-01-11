@@ -8,3 +8,6 @@ target
 /.settings
 /RUNNING_PID
 .env
+.bloop/
+.metals/
+.vscode/
