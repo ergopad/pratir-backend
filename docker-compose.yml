@@ -24,7 +24,7 @@ services:
         options:
             max-file: 5
             max-size: 10m
-    command: sbt run
+    command: sbt run build.sbt
 
 # this may require cmd: docker network create ergopad-net
 networks:
