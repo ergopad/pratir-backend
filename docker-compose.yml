@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+
+  quicknode:
+    container_name: pratir
+    image: openjdk
+    restart: unless-stopped
+    ports:
+      - 9000:9000
+    networks:
+      - ergopad-net
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 10s
+        max_attempts: 5
+        window: 90s
+    logging:
+        driver: "json-file"
+        options:
+            max-file: 5
+            max-size: 10m
+    command: sbt run
+
+# this may require cmd: docker network create ergopad-net
+networks:
+  ergopad-net:
+    external: true
