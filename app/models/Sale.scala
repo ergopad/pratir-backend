@@ -26,5 +26,7 @@ final case class Sale(
     startTime: Instant, 
     endTime: Instant, 
     sellerWallet: String,
-    status: SaleStatus.Value
+    status: SaleStatus.Value,
+    initialNanoErgFee: Long,
+    saleFeePct: Int
 )

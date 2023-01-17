@@ -6,6 +6,7 @@ import util.Pratir
 import org.ergoplatform.appkit.Address
 import models.Sale
 import org.ergoplatform.appkit.ErgoValue
+import org.ergoplatform.restapi.client.Transactions
 
 object SaleBox {
 

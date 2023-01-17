@@ -12,5 +12,7 @@ final case class SaleFull(
     sellerWallet: String,
     saleWallet: String,
     packs: Array[PackFull],
-    tokens: Array[TokenForSale]
+    tokens: Array[TokenForSale],
+    initialNanoErgFee: Long,
+    saleFeePct: Int
 )

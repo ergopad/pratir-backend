@@ -14,14 +14,16 @@ import com.google.common.collect
 import scala.concurrent.Await
 import scala.concurrent.duration
 import scala.util.Random
+import play.api.Logging
 
 
 @Singleton
 class SalesDAO @Inject()(protected val dbConfigProvider: DatabaseConfigProvider)(implicit ec: ExecutionContext)
-  extends HasDatabaseConfigProvider[JdbcProfile] {
+  extends HasDatabaseConfigProvider[JdbcProfile] with Logging {
     import profile.api._
 
     def updateSaleStatus(saleId: UUID, newStatus: SaleStatus.Value) = {
+        logger.info(s"""Setting status for ${saleId.toString()} to $newStatus""")
         val query = Sales.sales.filter(_.id === saleId).map(sale => sale.status).update(newStatus)
         db.run(query)
     }
@@ -66,7 +68,13 @@ class SalesDAO @Inject()(protected val dbConfigProvider: DatabaseConfigProvider)
         db.run(query)
     }
 
+    def getTokenForSale(tokenId: UUID): Future[TokenForSale] = {
+        val query = TokensForSale.tokensForSale.filter(_.id === tokenId).result.head
+        db.run(query)
+    }
+
     def newTokenOrder(userAddress: String, saleId: UUID, packId: UUID, orderBoxId: UUID): Future[Any] = {
+        logger.info(s"""Registering new token order for ${saleId.toString()}""")
         db.run(DBIO.seq(TokenOrders.tokenOrders += TokenOrder(UUID.randomUUID(), userAddress, saleId, packId, orderBoxId, "", TokenOrderStatus.INITIALIZED)))
     }
 
@@ -81,16 +89,18 @@ class SalesDAO @Inject()(protected val dbConfigProvider: DatabaseConfigProvider)
     }
 
     def pickRandomToken(saleId: UUID, category: String) = {
-        val totalRarityQuery = TokensForSale.tokensForSale.filter(_.category === category).filter(_.amount > 0).map(_.rarity).sum.result
-        val totalRarity = Await.result(db.run(totalRarityQuery), duration.Duration.Inf).get
-        val tokensForSaleQuery = TokensForSale.tokensForSale.filter(_.category === category).filter(_.amount > 0).result
-        val tokensForSale = Await.result(db.run(tokensForSaleQuery), duration.Duration.Inf)
-        var rollingSum: Double = 0
-        val luckyPick = Random.nextDouble()*totalRarity
-        tokensForSale.find(token => {
-            rollingSum += token.rarity
-            rollingSum >= luckyPick
-        }).get
+        val randomTokenUUID = UUID.fromString(Await.result(db.run(sql"""
+        select "ID"  
+        from 
+            (select "ID", ("RARITY"*random()) as "LUCKY_NUM"
+            from "TOKENS_FOR_SALE"
+            where "AMOUNT" > 0 
+            and "SALE_ID" = UUID(${saleId.toString()})
+            and "CATEGORY" = $category
+            order by "LUCKY_NUM" desc) as X
+        LIMIT 1
+        """.as[String]), duration.Duration.Inf).head)
+        getTokenForSale(randomTokenUUID)
     }
 
     def reserveToken(tokenForSale: TokenForSale) = {
@@ -126,7 +136,9 @@ object Sales {
         def endTime = column[Instant]("END_TIME", O.Default(Instant.now().plus(Duration.ofDays(365))))
         def sellerWallet = column[String]("SELLER_WALLET")
         def status = column[SaleStatus.Value]("STATUS")
-        def * = (id, name, description, startTime, endTime, sellerWallet, status) <> (Sale.tupled, Sale.unapply)
+        def initialNanoErgFee = column[Long]("INITIAL_NANOERG_FEE")
+        def saleFeePct = column[Int]("SALE_FEE_PCT")
+        def * = (id, name, description, startTime, endTime, sellerWallet, status, initialNanoErgFee, saleFeePct) <> (Sale.tupled, Sale.unapply)
     }
 
     val sales = TableQuery[Sales]
@@ -137,11 +149,12 @@ object TokensForSale {
         def id = column[UUID]("ID", O.PrimaryKey)
         def tokenId = column[String]("TOKEN_ID", O.Length(64, false))
         def amount = column[Int]("AMOUNT", O.Default(0))
+        def originalAmount = column[Int]("ORIGINAL_AMOUNT")
         def rarity = column[Double]("RARITY")
         def category = column[String]("CATEGORY")
         def saleId = column[UUID]("SALE_ID")
         def sale = foreignKey("TOKENS_FOR_SALE__SALE_ID_FK", saleId, Sales.sales)(_.id, onDelete=ForeignKeyAction.Cascade)
-        def * = (id, tokenId, amount, rarity, category, saleId) <> (TokenForSale.tupled, TokenForSale.unapply)
+        def * = (id, tokenId, amount, originalAmount, rarity, category, saleId) <> (TokenForSale.tupled, TokenForSale.unapply)
     }
 
     val tokensForSale = TableQuery[TokensForSale]

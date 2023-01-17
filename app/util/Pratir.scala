@@ -25,9 +25,6 @@ object Pratir {
         ExtendedSecretKey.deriveMasterKey(seed, false)
     }
 
-    private val dHTInputs: java.util.List[DiffieHellmanTupleProverInput] =
-        new java.util.ArrayList[DiffieHellmanTupleProverInput](0)
-
     lazy val mnemonic = Mnemonic.create(SecretString.create(sys.env.get("SECRET").get),SecretString.create(""))
 
     def sign(ctx: BlockchainContext, unsigned: UnsignedTransaction) = {
@@ -40,4 +37,8 @@ object Pratir {
     def getSaleAddress(sale: Sale) = {
         new ErgoTreeContract(SaleBox.contract(sale),NetworkType.MAINNET).toAddress()
     }
+
+    lazy val initialNanoErgFee = sys.env.get("INITIAL_NANO_ERG_FEE").get.toLong
+    lazy val saleFeePct = sys.env.get("SALE_FEE_PCT").get.toInt
+    lazy val pratirFeeWallet = sys.env.get("PRATIR_FEE_WALLET").get
 }

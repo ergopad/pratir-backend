@@ -21,7 +21,7 @@ import models.SaleStatus
 import org.ergoplatform.appkit.RestApiErgoClient
 import org.ergoplatform.appkit.NetworkType
 import org.ergoplatform.appkit.BlockchainContext
-import util.Pratir
+import util._
 import scala.collection.JavaConverters._
 import scala.collection.mutable.HashMap
 import org.ergoplatform.appkit.CoveringBoxes
@@ -40,14 +40,74 @@ import org.ergoplatform.appkit.InputBox
 import org.ergoplatform.appkit.ErgoToken
 import org.ergoplatform.appkit.Address
 import scala.util.Random
+import org.ergoplatform.appkit.ErgoClient
+import play.api.Logging
 
 class UpdateStatusTask @Inject() (protected val dbConfigProvider: DatabaseConfigProvider, actorSystem: ActorSystem)
-extends  HasDatabaseConfigProvider[JdbcProfile]{
-  actorSystem.scheduler.scheduleWithFixedDelay(initialDelay = 5.seconds, delay = 5.seconds)(() =>
-    try {
-        Random.setSeed(Instant.now().toEpochMilli())
-        val ergoClient = RestApiErgoClient.create(sys.env.get("ERGO_NODE").get,NetworkType.MAINNET,"",sys.env.get("ERGO_EXPLORER").get)
-        val salesdao = new SalesDAO(dbConfigProvider)
+extends  HasDatabaseConfigProvider[JdbcProfile] with Logging {
+    actorSystem.scheduler.scheduleWithFixedDelay(initialDelay = 5.seconds, delay = 10.seconds)(() =>
+        try {
+            Random.setSeed(Instant.now().toEpochMilli())
+            val ergoClient = RestApiErgoClientWithNodePoolDataSource.create(sys.env.get("ERGO_NODE").get,NetworkType.MAINNET,"",sys.env.get("ERGO_EXPLORER").get)
+            val salesdao = new SalesDAO(dbConfigProvider)
+            logger.info("Handling open orders...")
+            try {
+                handleOrders(ergoClient,salesdao)
+            } catch {
+                case e: Exception => logger.error(e.getMessage())
+            }
+            logger.info("Handling sales...")
+            try {
+                handleSales(ergoClient,salesdao)
+            } catch {
+                case e: Exception => logger.error(e.getMessage())
+            }
+        } catch {
+            case e: Exception => logger.error(e.getMessage(), e)
+        }
+    )
+
+    def handleSales(ergoClient: ErgoClient, salesdao: SalesDAO) = {
+        val activeSales = Await.result(salesdao.getAllActive, Duration.Inf)
+            activeSales.foreach(as => {
+                if (Instant.now().isAfter(as.endTime)) {
+                    Await.result(salesdao.updateSaleStatus(as.id,SaleStatus.FINISHED),Duration.Inf)
+                } else if (as.status == SaleStatus.PENDING) {
+                    val balance = new HashMap[String,Long]()
+                    val boxes = ergoClient.getDataSource().getUnspentBoxesFor(Pratir.getSaleAddress(as),0,100)
+                    boxes.asScala.foreach(utxo =>
+                        {
+                            balance.put("nanoerg",utxo.getValue()+balance.getOrElse("nanoerg",0L))
+                            utxo.getTokens().asScala.foreach(token =>
+                                balance.put(token.getId().toString(),token.getValue()+balance.getOrElse(token.getId().toString(),0L)))
+                        })
+
+                    val tokensRequired = Await.result(salesdao.getTokensForSale(as.id),Duration.Inf)
+                    //check base fee
+                    val baseFeeDeposit = balance.getOrElse("nanoerg",0L) >= as.initialNanoErgFee + 1000000L
+                    val tokensDeposit = tokensRequired.forall(tr => tr.amount <= balance.getOrElse(tr.tokenId,0L))
+
+                    if (baseFeeDeposit && tokensDeposit) {
+                        Await.result(salesdao.updateSaleStatus(as.id,SaleStatus.WAITING),Duration.Inf)
+                    }
+                } else if (as.status == SaleStatus.WAITING && Instant.now().isAfter(as.startTime)) {
+                    ergoClient.execute(new java.util.function.Function[BlockchainContext,Unit] {
+                            override def apply(ctx: BlockchainContext): Unit = {
+                                val feeBox = ctx.newTxBuilder().outBoxBuilder().contract(Address.create(Pratir.pratirFeeWallet).toErgoContract()).value(as.initialNanoErgFee).build()
+                                val boxesLoader = new ExplorerAndPoolUnspentBoxesLoader().withAllowChainedTx(true)
+                                val boxOperations = BoxOperations.createForSender(Pratir.getSaleAddress(as),ctx).withInputBoxesLoader(boxesLoader)
+                                    .withMaxInputBoxesToSelect(20).withFeeAmount(1000000L).withAmountToSpend(as.initialNanoErgFee)
+                                val unsigned = boxOperations.buildTxWithDefaultInputs(tb => tb.addOutputs(feeBox))
+                                val signed = Pratir.sign(ctx,unsigned)
+                                ctx.sendTransaction(signed)
+                                Await.result(salesdao.updateSaleStatus(as.id,SaleStatus.LIVE),Duration.Inf)
+                            }
+                    })
+                }
+            })
+    }
+
+    def handleOrders(ergoClient: ErgoClient, salesdao: SalesDAO) = {
         val openOrders = Await.result(salesdao.getOpenTokenOrders, Duration.Inf)
         openOrders.foreach(oto => {
             if (oto.status == TokenOrderStatus.INITIALIZED) {
@@ -55,7 +115,7 @@ extends  HasDatabaseConfigProvider[JdbcProfile]{
                 if (boxes.exists((box: InputBox) => oto.orderBoxId == UUID.fromString(new String(box.getRegisters().get(3).getValue().asInstanceOf[Coll[Byte]].toArray,StandardCharsets.UTF_8))))
                     Await.result(salesdao.updateTokenOrderStatus(oto.id,TokenOrderStatus.CONFIRMING,""),Duration.Inf)
             }
-            if (oto.status == TokenOrderStatus.INITIALIZED || oto.status == TokenOrderStatus.CONFIRMING) {
+            if (oto.status == TokenOrderStatus.INITIALIZED || oto.status == TokenOrderStatus.CONFIRMING || oto.status == TokenOrderStatus.CONFIRMED) {
                 val boxes = ergoClient.getDataSource().getUnspentBoxesFor(new ErgoTreeContract(BuyOrder.contract(oto.userAddress),NetworkType.MAINNET).toAddress(),0,100).asScala.toArray
                 if (boxes.exists((box: InputBox) => oto.orderBoxId == UUID.fromString(new String(box.getRegisters().get(3).getValue().asInstanceOf[Coll[Byte]].toArray,StandardCharsets.UTF_8)))) {
                     Await.result(salesdao.updateTokenOrderStatus(oto.id,TokenOrderStatus.CONFIRMED,""),Duration.Inf)
@@ -70,7 +130,7 @@ extends  HasDatabaseConfigProvider[JdbcProfile]{
                         val pack = Await.result(salesdao.getPackEntries(oto.packId), Duration.Inf)
                         val tokensPicked = pack.flatMap(pe => {
                             Range(0,pe.amount).map(i => {
-                                val randomNFT = salesdao.pickRandomToken(oto.saleId, pe.category)
+                                val randomNFT = Await.result(salesdao.pickRandomToken(oto.saleId, pe.category), Duration.Inf)
                                 Await.result(salesdao.reserveToken(randomNFT),Duration.Inf)
                                 randomNFT
                             })
@@ -86,7 +146,6 @@ extends  HasDatabaseConfigProvider[JdbcProfile]{
                                 val boxOperations = BoxOperations.createForSender(Pratir.getSaleAddress(sale),ctx).withInputBoxesLoader(boxesLoader)
                                     .withMaxInputBoxesToSelect(20).withFeeAmount(1500000L)
                                 val unsigned = boxOperations.buildTxWithDefaultInputs(tb => tb.addOutputs(nftBox, sellerBox).addInputs(orderBox))
-                                println(unsigned)
                                 val signed = Pratir.sign(ctx,unsigned)
                                 ctx.sendTransaction(signed)
                                 Await.result(salesdao.updateTokenOrderStatus(oto.id,TokenOrderStatus.FULLFILLING,signed.getId()),Duration.Inf)
@@ -109,61 +168,7 @@ extends  HasDatabaseConfigProvider[JdbcProfile]{
                     }
                 }
             }
-        })
-        val activeSales = Await.result(salesdao.getAllActive, Duration.Inf)
-        activeSales.foreach(as => {
-            println("Checking active sale")
-            if (Instant.now().isAfter(as.endTime)) {
-                println("Sale is finished")
-                Await.result(salesdao.updateSaleStatus(as.id,SaleStatus.FINISHED),Duration.Inf)
-            } else if (as.status == SaleStatus.PENDING) {
-                println("Status pending")
-                //Checking to see whether all NFT's are present in sale wallet
-                println("Checking balance for ".concat(Pratir.getSaleAddress(as).toString()))
-                val balance = new HashMap[String,Long]()
-                val boxes = ergoClient.getDataSource().getUnspentBoxesFor(Pratir.getSaleAddress(as),0,100)
-                println(boxes.size())
-                boxes.asScala.foreach(utxo =>
-                    {
-                        balance.put("nanoerg",utxo.getValue()+balance.getOrElse("nanoerg",0L))
-                        utxo.getTokens().asScala.foreach(token =>
-                            balance.put(token.getId().toString(),token.getValue()+balance.getOrElse(token.getId().toString(),0L)))
-                    })
-
-                val tokensRequired = Await.result(salesdao.getTokensForSale(as.id),Duration.Inf)
-                balance.foreach(println(_))
-                //check base fee
-                val baseFeeDeposit = balance.getOrElse("nanoerg",0L) >= 100000000
-                val tokensDeposit = tokensRequired.forall(tr => tr.amount <= balance.getOrElse(tr.tokenId,0L))
-
-                if (baseFeeDeposit && tokensDeposit) {
-                    Await.result(salesdao.updateSaleStatus(as.id,SaleStatus.WAITING),Duration.Inf)
-                }
-            } else if (as.status == SaleStatus.WAITING && Instant.now().isAfter(as.startTime)) {
-                ergoClient.execute(new java.util.function.Function[BlockchainContext,Unit] {
-                        override def apply(ctx: BlockchainContext): Unit = {
-                            println("1")
-                            val feeBox = ctx.newTxBuilder().outBoxBuilder().contract(Pratir.address().toErgoContract()).value(100000000L).build()
-                            println("2")
-                            val boxesLoader = new ExplorerAndPoolUnspentBoxesLoader().withAllowChainedTx(true)
-                            println("3")
-                            val boxOperations = BoxOperations.createForSender(Pratir.getSaleAddress(as),ctx).withInputBoxesLoader(boxesLoader)
-                                .withMaxInputBoxesToSelect(20).withFeeAmount(1000000L)
-                            println("4")
-                            val unsigned = boxOperations.buildTxWithDefaultInputs(tb => tb.addOutputs(feeBox))
-                            println("4.5")
-                            val signed = Pratir.sign(ctx,unsigned)
-                            println("4.75")
-                            ctx.sendTransaction(signed)
-                            println("5")
-                            Await.result(salesdao.updateSaleStatus(as.id,SaleStatus.LIVE),Duration.Inf)
-                        }
-                })
-            }
-        })
-    } catch {
-        case e: Exception => println(e)
+        })        
     }
-  )
 }
 

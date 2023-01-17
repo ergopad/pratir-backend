@@ -13,9 +13,8 @@ import models._
 import java.util.UUID
 import scala.concurrent.duration.Duration
 import scala.concurrent.Await
-import _root_.util.Pratir
+import _root_.util._
 import org.ergoplatform.appkit.BoxOperations
-import org.ergoplatform.appkit.RestApiErgoClient
 import org.ergoplatform.appkit.NetworkType
 import org.ergoplatform.appkit.BlockchainContext
 import contracts.BuyOrder
@@ -31,6 +30,7 @@ import org.ergoplatform.appkit.Address
 import scala.collection.JavaConverters._
 import special.collection.Coll
 import org.ergoplatform.appkit.UnsignedTransaction
+import org.ergoplatform.appkit.OutBox
 
 @Singleton
 class SaleController @Inject()(protected val dbConfigProvider: DatabaseConfigProvider, val controllerComponents: ControllerComponents)(implicit ec: ExecutionContext)
@@ -73,7 +73,7 @@ extends BaseController
                 PackFull(p.id, p.name, price.toArray, content.toArray)
             }
         )
-        Ok(Json.toJson(SaleFull(sale.id, sale.name, sale.description, sale.startTime, sale.endTime, sale.sellerWallet, Pratir.getSaleAddress(sale).toString(), packs.toArray, tokens.toArray)))
+        Ok(Json.toJson(SaleFull(sale.id, sale.name, sale.description, sale.startTime, sale.endTime, sale.sellerWallet, Pratir.getSaleAddress(sale).toString(), packs.toArray, tokens.toArray, sale.initialNanoErgFee, sale.saleFeePct)))
     }
 
     def createSale() = Action { implicit request =>
@@ -88,9 +88,9 @@ extends BaseController
             case None => BadRequest
             case Some(newSale) =>
                 val saleId = UUID.randomUUID()
-                val saleAdded = Sale(saleId, newSale.name, newSale.description, newSale.startTime, newSale.endTime, newSale.sellerWallet, SaleStatus.PENDING)
+                val saleAdded = Sale(saleId, newSale.name, newSale.description, newSale.startTime, newSale.endTime, newSale.sellerWallet, SaleStatus.PENDING, Pratir.initialNanoErgFee, Pratir.saleFeePct)
                 val tokensAdded = newSale.tokens.map((token: NewTokenForSale) =>
-                    TokenForSale(UUID.randomUUID(),token.tokenId,token.amount,token.rarity,token.category,saleId)
+                    TokenForSale(UUID.randomUUID(),token.tokenId,0,token.amount,token.rarity,token.category,saleId)
                 )
                 val packsDBIO = DBIO.seq(newSale.packs.flatMap((pack: NewPack) => {
                     val packId = UUID.randomUUID()
@@ -127,7 +127,7 @@ extends BaseController
             case None => BadRequest
             case Some(buyOrder) => {
                 val salesdao = new SalesDAO(dbConfigProvider)
-                val ergoClient = RestApiErgoClient.create(sys.env.get("ERGO_NODE").get,NetworkType.MAINNET,"",sys.env.get("ERGO_EXPLORER").get)
+                val ergoClient = RestApiErgoClientWithNodePoolDataSource.create(sys.env.get("ERGO_NODE").get,NetworkType.MAINNET,"",sys.env.get("ERGO_EXPLORER").get)
                 Ok(Json.toJson(MUnsignedTransaction(ergoClient.execute(new java.util.function.Function[BlockchainContext,UnsignedTransaction] {
                         override def apply(ctx: BlockchainContext): UnsignedTransaction = {
                             val buyOrderBoxes = buyOrder.requests.flatMap((bsr: BuySaleRequest) => {
@@ -159,7 +159,8 @@ extends BaseController
                             }) 
                             val boxesLoader = new ExplorerAndPoolUnspentBoxesLoader().withAllowChainedTx(true)
                             val boxOperations = BoxOperations.createForSenders(buyOrder.userWallet.map(Address.create(_)).toList.asJava,ctx).withInputBoxesLoader(boxesLoader)
-                                .withMaxInputBoxesToSelect(20).withFeeAmount(1000000L)
+                                .withMaxInputBoxesToSelect(50).withFeeAmount(1000000L).withAmountToSpend(buyOrderBoxes.foldLeft(0L)((z: Long, bob: OutBox) => z + bob.getValue()))
+                            println(buyOrderBoxes(0).getValue())
                             val unsigned = boxOperations.buildTxWithDefaultInputs(tb => tb.addOutputs(buyOrderBoxes:_*))
                             buyOrderBoxes.foreach(bob => {
                                  Await.result(salesdao.newTokenOrder(
