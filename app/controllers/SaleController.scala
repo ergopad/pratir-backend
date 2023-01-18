@@ -130,12 +130,17 @@ extends BaseController
                 val ergoClient = RestApiErgoClientWithNodePoolDataSource.create(sys.env.get("ERGO_NODE").get,NetworkType.MAINNET,"",sys.env.get("ERGO_EXPLORER").get)
                 Ok(Json.toJson(MUnsignedTransaction(ergoClient.execute(new java.util.function.Function[BlockchainContext,UnsignedTransaction] {
                         override def apply(ctx: BlockchainContext): UnsignedTransaction = {
+                            val totalPrices = new HashMap[String, Long]()
                             val buyOrderBoxes = buyOrder.requests.flatMap((bsr: BuySaleRequest) => {
                                 bsr.packRequests.flatMap(bpr => {
                                     val packPrice = Await.result(salesdao.getPrice(bpr.packId), Duration.Inf)
                                     val combinedPrices = new HashMap[String, Long]()
                                     packPrice.foreach(p => combinedPrices.put(p.tokenId, p.amount + combinedPrices.getOrElse(p.tokenId,0L)))
                                     scala.collection.immutable.Range(0,bpr.count).map(i => {
+
+                                        val boxValue = combinedPrices.getOrElse("0"*64, 0L) + 4000000L
+
+                                        totalPrices.put("0"*64, boxValue + totalPrices.getOrElse("0"*64,0L))
                                         val outBoxBuilder = ctx.newTxBuilder()
                                             .outBoxBuilder()
                                             .registers(
@@ -145,23 +150,33 @@ extends BaseController
                                                 ErgoValueBuilder.buildFor(Colls.fromArray(UUID.randomUUID().toString().getBytes(StandardCharsets.UTF_8)))
                                             )
                                             .contract(new ErgoTreeContract(BuyOrder.contract(buyOrder.userWallet(0)), NetworkType.MAINNET))
-                                            .value(combinedPrices.getOrElse("0"*64, 0L) + 2000000L)
-                                        if (combinedPrices.filterNot(_._1 == "0"*64).size > 0) 
+                                            .value(boxValue)
+                                        if (combinedPrices.filterNot(_._1 == "0"*64).size > 0) {
+                                            val tokens = combinedPrices.filterNot(_._1 == "0"*64).map((kv: (String, Long)) => new ErgoToken(kv._1,kv._2)).toArray
+                                            tokens.foreach(t => totalPrices.put(t.getId.toString, t.getValue + totalPrices.getOrElse(t.getId.toString,0L)))
                                             outBoxBuilder
                                             .tokens(
-                                                combinedPrices.filterNot(_._1 == "0"*64).map((kv: (String, Long)) => new ErgoToken(kv._1,kv._2)).toArray:_*
+                                                tokens:_*
                                             )
                                             .build()
-                                        else
+                                        } else
                                             outBoxBuilder.build()
                                     })
                                 })
                             }) 
+                            
                             val boxesLoader = new ExplorerAndPoolUnspentBoxesLoader().withAllowChainedTx(true)
+                            
                             val boxOperations = BoxOperations.createForSenders(buyOrder.userWallet.map(Address.create(_)).toList.asJava,ctx).withInputBoxesLoader(boxesLoader)
-                                .withMaxInputBoxesToSelect(50).withFeeAmount(1000000L).withAmountToSpend(buyOrderBoxes.foldLeft(0L)((z: Long, bob: OutBox) => z + bob.getValue()))
-                            println(buyOrderBoxes(0).getValue())
+                                .withMaxInputBoxesToSelect(50)
+                                .withFeeAmount(1000000L)
+                                .withAmountToSpend(totalPrices.get("0"*64).get)
+
+                            if (totalPrices.size > 1) 
+                                boxOperations.withTokensToSpend(totalPrices.filterNot(_._1 == "0"*64).map((kv: (String, Long)) => new ErgoToken(kv._1,kv._2)).toList.asJava)
+
                             val unsigned = boxOperations.buildTxWithDefaultInputs(tb => tb.addOutputs(buyOrderBoxes:_*))
+
                             buyOrderBoxes.foreach(bob => {
                                  Await.result(salesdao.newTokenOrder(
                                     buyOrder.targetAddress, 
@@ -170,6 +185,7 @@ extends BaseController
                                     UUID.fromString(new String(bob.getRegisters().get(3).getValue().asInstanceOf[Coll[Byte]].toArray, StandardCharsets.UTF_8))
                                 ), Duration.Inf)
                             })
+
                             unsigned
                         }
                 }))))
