@@ -34,10 +34,6 @@ object Pratir {
     def address() = 
         Address.createEip3Address(0,NetworkType.MAINNET,mnemonic.getPhrase(),mnemonic.getPassword(),false)
 
-    def getSaleAddress(sale: Sale) = {
-        new ErgoTreeContract(SaleBox.contract(sale),NetworkType.MAINNET).toAddress()
-    }
-
     lazy val initialNanoErgFee = sys.env.get("INITIAL_NANO_ERG_FEE").get.toLong
     lazy val saleFeePct = sys.env.get("SALE_FEE_PCT").get.toInt
     lazy val pratirFeeWallet = sys.env.get("PRATIR_FEE_WALLET").get

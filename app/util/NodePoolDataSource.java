@@ -13,6 +13,8 @@ import org.ergoplatform.restapi.client.Transactions;
 import org.ergoplatform.restapi.client.ErgoTransaction;
 import org.ergoplatform.restapi.client.ErgoTransactionOutput;
 import org.ergoplatform.appkit.ErgoClientException;
+import retrofit2.Response;
+import retrofit2.Call;
 
 public class NodePoolDataSource extends NodeAndExplorerDataSourceImpl {
 
@@ -41,6 +43,17 @@ public class NodePoolDataSource extends NodeAndExplorerDataSourceImpl {
             }
         }
         return inputBoxes;
+    }
+
+    public Integer getUnconfirmedTransactionState(String txId) {
+        Call<ErgoTransaction> apiCall = getNodeTransactionsApi().getUnconfirmedTransactionById(txId);
+        try {
+            Response<ErgoTransaction> response = apiCall.execute();
+            return response.code();
+        } catch (Exception e) {
+            throw new ErgoClientException(
+                String.format("Error executing API request to %s: %s", apiCall.request().url(), e.getMessage()), e);
+        }
     }
   
 }

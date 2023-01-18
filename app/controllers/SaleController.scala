@@ -54,6 +54,7 @@ extends BaseController
     implicit val mInputJson = Json.format[MInput]
     implicit val mOutputJson = Json.format[MOutput]
     implicit val mUnsignedTransactionJson = Json.format[MUnsignedTransaction]
+    implicit val createdSaleJson = Json.format[CreatedSale]
 
     def getAll(): Action[AnyContent] = Action.async { implicit request =>
         val salesdao = new SalesDAO(dbConfigProvider)
@@ -62,23 +63,14 @@ extends BaseController
 
     def getSale(_saleId: String) = Action {
         implicit request =>
-        val saleId = UUID.fromString(_saleId)
         val salesdao = new SalesDAO(dbConfigProvider)
-        val sale = Await.result(salesdao.getSale(saleId), Duration.Inf)
-        val tokens = Await.result(salesdao.getTokensForSale(saleId), Duration.Inf)
-        val packs = Await.result(salesdao.getPacks(saleId), Duration.Inf).map(
-            p => {
-                val price = Await.result(salesdao.getPrice(p.id), Duration.Inf)
-                val content = Await.result(salesdao.getPackEntries(p.id), Duration.Inf)
-                PackFull(p.id, p.name, price.toArray, content.toArray)
-            }
-        )
-        Ok(Json.toJson(SaleFull(sale.id, sale.name, sale.description, sale.startTime, sale.endTime, sale.sellerWallet, Pratir.getSaleAddress(sale).toString(), packs.toArray, tokens.toArray, sale.initialNanoErgFee, sale.saleFeePct)))
+        Ok(Json.toJson(SaleFull.fromSaleId(_saleId, salesdao)))
     }
 
     def createSale() = Action { implicit request =>
         val content = request.body
         val jsonObject = content.asJson
+        val salesdao = new SalesDAO(dbConfigProvider)
         val sale: Option[NewSale] = 
             jsonObject.flatMap( 
                 Json.fromJson[NewSale](_).asOpt 
@@ -111,7 +103,8 @@ extends BaseController
                     TokensForSale.tokensForSale ++= tokensAdded,
                     packsDBIO
                 )),Duration.Inf)
-                Created(Json.toJson(saleAdded))
+                val fullSale = SaleFull.fromSaleId(saleAdded.id.toString(), salesdao)
+                Created(Json.toJson(CreatedSale(fullSale,None)))
         }
     }
 
@@ -179,10 +172,10 @@ extends BaseController
 
                             buyOrderBoxes.foreach(bob => {
                                  Await.result(salesdao.newTokenOrder(
+                                    UUID.fromString(new String(bob.getRegisters().get(3).getValue().asInstanceOf[Coll[Byte]].toArray, StandardCharsets.UTF_8)),
                                     buyOrder.targetAddress, 
                                     UUID.fromString(new String(bob.getRegisters().get(0).getValue().asInstanceOf[Coll[Byte]].toArray, StandardCharsets.UTF_8)),
-                                    UUID.fromString(new String(bob.getRegisters().get(1).getValue().asInstanceOf[Coll[Byte]].toArray, StandardCharsets.UTF_8)),
-                                    UUID.fromString(new String(bob.getRegisters().get(3).getValue().asInstanceOf[Coll[Byte]].toArray, StandardCharsets.UTF_8))
+                                    UUID.fromString(new String(bob.getRegisters().get(1).getValue().asInstanceOf[Coll[Byte]].toArray, StandardCharsets.UTF_8))
                                 ), Duration.Inf)
                             })
 

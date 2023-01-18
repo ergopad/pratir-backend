@@ -73,9 +73,9 @@ class SalesDAO @Inject()(protected val dbConfigProvider: DatabaseConfigProvider)
         db.run(query)
     }
 
-    def newTokenOrder(userAddress: String, saleId: UUID, packId: UUID, orderBoxId: UUID): Future[Any] = {
+    def newTokenOrder(id: UUID, userAddress: String, saleId: UUID, packId: UUID): Future[Any] = {
         logger.info(s"""Registering new token order for ${saleId.toString()}""")
-        db.run(DBIO.seq(TokenOrders.tokenOrders += TokenOrder(UUID.randomUUID(), userAddress, saleId, packId, orderBoxId, "", TokenOrderStatus.INITIALIZED)))
+        db.run(DBIO.seq(TokenOrders.tokenOrders += TokenOrder(id, userAddress, saleId, packId, "", "", TokenOrderStatus.INITIALIZED)))
     }
 
     def getOpenTokenOrders(): Future[Seq[TokenOrder]] = {
@@ -83,8 +83,13 @@ class SalesDAO @Inject()(protected val dbConfigProvider: DatabaseConfigProvider)
         db.run(query)
     }
 
-    def updateTokenOrderStatus(tokenOrderId: UUID, newStatus: TokenOrderStatus.Value, followUpTxId: String) = {
-        val query = TokenOrders.tokenOrders.filter(_.id === tokenOrderId).map(tokenOrder => (tokenOrder.status, tokenOrder.followUpTxId)).update((newStatus,followUpTxId))
+    def updateTokenOrderStatus(tokenOrderId: UUID, orderBoxId: String, newStatus: TokenOrderStatus.Value, followUpTxId: String) = {
+        val query = TokenOrders.tokenOrders.filter(_.id === tokenOrderId).map(tokenOrder => (tokenOrder.orderBoxId, tokenOrder.status, tokenOrder.followUpTxId)).update((orderBoxId, newStatus,followUpTxId))
+        db.run(query)
+    }
+
+    def tokensLeft(saleId: UUID) = {
+        val query = TokensForSale.tokensForSale.filter(_.saleId === saleId).map(_.amount).sum.result
         db.run(query)
     }
 
@@ -115,7 +120,7 @@ object TokenOrders {
         def userWallet = column[String]("USER_WALLET")
         def saleId = column[UUID]("SALE_ID")
         def packId = column[UUID]("PACK_ID")
-        def orderBoxId = column[UUID]("ORDER_BOX_ID")
+        def orderBoxId = column[String]("ORDER_BOX_ID")
         def followUpTxId = column[String]("FOLLOW_UP_TX_ID", O.Length(64, true))
         def status = column[TokenOrderStatus.Value]("STATUS")
         def sale = foreignKey("TOKEN_ORDERS__SALE_ID_FK", saleId, Sales.sales)(_.id, onDelete=ForeignKeyAction.Cascade)
