@@ -8,6 +8,7 @@ final case class NewSale(
     startTime: Instant, 
     endTime: Instant, 
     sellerWallet: String,
+    password: String,
     packs: Array[NewPack],
     tokens: Array[NewTokenForSale],
     sourceAddresses: Array[String]

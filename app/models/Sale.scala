@@ -44,7 +44,8 @@ final case class Sale(
     sellerWallet: String,
     status: SaleStatus.Value,
     initialNanoErgFee: Long,
-    saleFeePct: Int
+    saleFeePct: Int,
+    password: String
 ) {
     def isFinished: Boolean = Instant.now().isAfter(endTime)
 

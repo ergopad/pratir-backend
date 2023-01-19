@@ -148,7 +148,8 @@ object Sales {
         def status = column[SaleStatus.Value]("STATUS")
         def initialNanoErgFee = column[Long]("INITIAL_NANOERG_FEE")
         def saleFeePct = column[Int]("SALE_FEE_PCT")
-        def * = (id, name, description, startTime, endTime, sellerWallet, status, initialNanoErgFee, saleFeePct) <> (Sale.tupled, Sale.unapply)
+        def password = column[String]("PASSWORD")
+        def * = (id, name, description, startTime, endTime, sellerWallet, status, initialNanoErgFee, saleFeePct, password) <> (Sale.tupled, Sale.unapply)
     }
 
     val sales = TableQuery[Sales]

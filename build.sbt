@@ -18,6 +18,10 @@ libraryDependencies ++= Seq(
 // https://mvnrepository.com/artifact/org.ergoplatform/ergo-appkit
 libraryDependencies += "org.ergoplatform" %% "ergo-appkit" % "5.0.0"
 
+libraryDependencies ++= Seq(
+  "org.springframework.security" % "spring-security-crypto" % "5.6.2"
+)
+
 
 // Adds additional packages into Twirl
 //TwirlKeys.templateImports += "com.example.controllers._"

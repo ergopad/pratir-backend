@@ -36,7 +36,6 @@ import org.ergoplatform.appkit.OutBox
 class SaleController @Inject()(protected val dbConfigProvider: DatabaseConfigProvider, val controllerComponents: ControllerComponents)(implicit ec: ExecutionContext)
 extends BaseController
  with HasDatabaseConfigProvider[JdbcProfile] {
-    implicit val saleJson = Json.format[Sale]
     implicit val newTokenForSaleJson = Json.format[NewTokenForSale]
     implicit val newPriceJson = Json.format[NewPrice]
     implicit val newPackEntryJson = Json.format[NewPackEntry]
@@ -56,10 +55,11 @@ extends BaseController
     implicit val mUnsignedTransactionJson = Json.format[MUnsignedTransaction]
     implicit val createdSaleJson = Json.format[CreatedSale]
     implicit val bootstrapSaleJson = Json.format[BootstrapSale]
+    implicit val saleLiteJson = Json.format[SaleLite]
 
     def getAll(): Action[AnyContent] = Action.async { implicit request =>
         val salesdao = new SalesDAO(dbConfigProvider)
-        salesdao.getAll.map(sale => Ok(Json.toJson(sale)))
+        salesdao.getAll.map(sale => Ok(Json.toJson(sale.map(SaleLite.fromSale(_)))))
     }
 
     def getSale(_saleId: String) = Action {
@@ -81,7 +81,8 @@ extends BaseController
             case None => BadRequest
             case Some(newSale) =>
                 val saleId = UUID.randomUUID()
-                val saleAdded = Sale(saleId, newSale.name, newSale.description, newSale.startTime, newSale.endTime, newSale.sellerWallet, SaleStatus.PENDING, Pratir.initialNanoErgFee, Pratir.saleFeePct)
+                val encryptedPassword = Pratir.encoder.encode(newSale.password)
+                val saleAdded = Sale(saleId, newSale.name, newSale.description, newSale.startTime, newSale.endTime, newSale.sellerWallet, SaleStatus.PENDING, Pratir.initialNanoErgFee, Pratir.saleFeePct, encryptedPassword)
                 val tokensAdded = newSale.tokens.map((token: NewTokenForSale) =>
                     TokenForSale(UUID.randomUUID(),token.tokenId,0,token.amount,token.rarity,token.category,saleId)
                 )

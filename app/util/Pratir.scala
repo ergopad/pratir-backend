@@ -17,8 +17,11 @@ import org.ergoplatform.appkit.AppkitProvingInterpreter
 import org.ergoplatform.wallet.mnemonic.{Mnemonic => WMnemonic}
 import org.ergoplatform.wallet.secrets.ExtendedSecretKey
 import sigmastate.basics.DiffieHellmanTupleProverInput
+import org.springframework.security.crypto.argon2.Argon2PasswordEncoder
 
 object Pratir {
+
+    val encoder = new Argon2PasswordEncoder(32,64,1,15*1024,2)
 
     private val masterKey = {
         val seed = mnemonic.toSeed()
