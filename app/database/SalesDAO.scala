@@ -112,6 +112,11 @@ class SalesDAO @Inject()(protected val dbConfigProvider: DatabaseConfigProvider)
         val query = TokensForSale.tokensForSale.filter(_.id === tokenForSale.id).map(_.amount).update(tokenForSale.amount-1)
         db.run(query)
     }
+
+    def updateTokenAmount(saleId: UUID, tokenId: String, amount: Int) = {
+        val query = TokensForSale.tokensForSale.filter(_.saleId === saleId).filter(_.tokenId === tokenId).map(_.amount).update(amount)
+        db.run(query)
+    }
 }
 
 object TokenOrders {

@@ -55,6 +55,7 @@ extends BaseController
     implicit val mOutputJson = Json.format[MOutput]
     implicit val mUnsignedTransactionJson = Json.format[MUnsignedTransaction]
     implicit val createdSaleJson = Json.format[CreatedSale]
+    implicit val bootstrapSaleJson = Json.format[BootstrapSale]
 
     def getAll(): Action[AnyContent] = Action.async { implicit request =>
         val salesdao = new SalesDAO(dbConfigProvider)
@@ -104,7 +105,31 @@ extends BaseController
                     packsDBIO
                 )),Duration.Inf)
                 val fullSale = SaleFull.fromSaleId(saleAdded.id.toString(), salesdao)
-                Created(Json.toJson(CreatedSale(fullSale,None)))
+                val ergoClient = RestApiErgoClientWithNodePoolDataSource.create(sys.env.get("ERGO_NODE").get,NetworkType.MAINNET,"",sys.env.get("ERGO_EXPLORER").get)
+                val bootStrapTx = try {
+                    Some(MUnsignedTransaction(saleAdded.bootstrapTx(newSale.sourceAddresses, ergoClient, salesdao)))
+                } catch {
+                    case e: Exception => None
+                }
+                Created(Json.toJson(CreatedSale(fullSale,bootStrapTx)))
+        }
+    }
+
+    def bootstrapSale() = Action { implicit request =>
+        val salesdao = new SalesDAO(dbConfigProvider)
+        val content = request.body
+        val jsonObject = content.asJson
+        val bootstrapSaleRequest: Option[BootstrapSale] = 
+            jsonObject.flatMap( 
+                Json.fromJson[BootstrapSale](_).asOpt 
+            )
+        bootstrapSaleRequest match {
+            case None => BadRequest
+            case Some(bootstrapSale) => {
+                val ergoClient = RestApiErgoClientWithNodePoolDataSource.create(sys.env.get("ERGO_NODE").get,NetworkType.MAINNET,"",sys.env.get("ERGO_EXPLORER").get)
+                val sale = Await.result(salesdao.getSale(bootstrapSale.saleId), Duration.Inf)
+                Ok(Json.toJson(MUnsignedTransaction(sale.bootstrapTx(bootstrapSale.sourceAddresses, ergoClient, salesdao))))
+            }
         }
     }
 
@@ -144,8 +169,9 @@ extends BaseController
                                             )
                                             .contract(new ErgoTreeContract(BuyOrder.contract(buyOrder.userWallet(0)), NetworkType.MAINNET))
                                             .value(boxValue)
-                                        if (combinedPrices.filterNot(_._1 == "0"*64).size > 0) {
-                                            val tokens = combinedPrices.filterNot(_._1 == "0"*64).map((kv: (String, Long)) => new ErgoToken(kv._1,kv._2)).toArray
+                                        val tokenPrice = combinedPrices.filterNot(cp => cp._1 == "0"*64 || cp._2 < 1)
+                                        if (tokenPrice.size > 0) {
+                                            val tokens = tokenPrice.map((kv: (String, Long)) => new ErgoToken(kv._1,kv._2)).toArray
                                             tokens.foreach(t => totalPrices.put(t.getId.toString, t.getValue + totalPrices.getOrElse(t.getId.toString,0L)))
                                             outBoxBuilder
                                             .tokens(

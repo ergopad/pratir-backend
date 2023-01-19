@@ -19,6 +19,9 @@ import org.ergoplatform.appkit.ExplorerAndPoolUnspentBoxesLoader
 import org.ergoplatform.appkit.BoxOperations
 import org.ergoplatform.appkit.impl.ErgoTreeContract
 import org.ergoplatform.appkit.NetworkType
+import org.ergoplatform.appkit.UnsignedTransaction
+import org.ergoplatform.appkit.ErgoToken
+import org.ergoplatform.appkit.InputBox
 
 object SaleStatus extends Enumeration {
     type SaleStatus = Value
@@ -49,8 +52,8 @@ final case class Sale(
         if (status != SaleStatus.PENDING) return
         val balance = new HashMap[String,Long]()
                 
-        val boxes = ergoClient.getDataSource().getUnspentBoxesFor(getSaleAddress,0,100)
-        boxes.asScala.foreach(utxo =>
+        val boxes = ergoClient.getDataSource().getUnspentBoxesFor(getSaleAddress,0,100).asScala ++ ergoClient.getDataSource().getUnconfirmedUnspentBoxesFor(getSaleAddress,0,100).asScala
+        boxes.foreach(utxo =>
             {
                 balance.put("nanoerg",utxo.getValue()+balance.getOrElse("nanoerg",0L))
                 utxo.getTokens().asScala.foreach(token =>
@@ -59,8 +62,12 @@ final case class Sale(
 
         val tokensRequired = Await.result(salesdao.getTokensForSale(id),Duration.Inf)
         //check base fee
-        val baseFeeDeposit = balance.getOrElse("nanoerg",0L) >= initialNanoErgFee + 1000000L
-        val tokensDeposit = tokensRequired.forall(tr => tr.amount <= balance.getOrElse(tr.tokenId,0L))
+        val baseFeeDeposit = balance.getOrElse("nanoerg",0L) >= initialNanoErgFee + boxes.size*1000000L
+        val tokensDeposit = tokensRequired.forall(tr => {
+            if (tr.amount != balance.getOrElse(tr.tokenId,0L))
+                Await.result(salesdao.updateTokenAmount(id,tr.tokenId,balance.getOrElse(tr.tokenId,0L).toInt), Duration.Inf)
+            tr.originalAmount <= balance.getOrElse(tr.tokenId,0L)
+        })
 
         if (baseFeeDeposit && tokensDeposit) {
             Await.result(salesdao.updateSaleStatus(id,SaleStatus.WAITING),Duration.Inf)
@@ -91,6 +98,34 @@ final case class Sale(
                 ctx.sendTransaction(signed)
                 
                 Await.result(salesdao.updateSaleStatus(id,SaleStatus.LIVE),Duration.Inf)
+            }
+        })
+    }
+
+    def bootstrapTx(fromAddresses: Array[String], ergoClient: ErgoClient, salesdao: SalesDAO): UnsignedTransaction = {
+        val tokens = Await.result(salesdao.getTokensForSale(id), Duration.Inf)
+        ergoClient.execute(new java.util.function.Function[BlockchainContext,UnsignedTransaction] {
+            override def apply(ctx: BlockchainContext): UnsignedTransaction = {
+                val currentBoxes = ctx.getDataSource().getUnconfirmedUnspentBoxesFor(getSaleAddress, 0, 100).asScala ++ ctx.getDataSource().getUnspentBoxesFor(getSaleAddress, 0, 100).asScala
+
+                val ergNeeded = 1000000L + initialNanoErgFee + currentBoxes.size*1000000L - currentBoxes.foldLeft(0L)((z: Long, box: InputBox) => z + box.getValue)
+
+                val outBox = 
+                    ctx.newTxBuilder().outBoxBuilder()
+                    .value(ergNeeded)
+                    .contract(getSaleAddress.toErgoContract())
+                    .tokens(tokens.filter(t => t.amount < t.originalAmount).take(50).map(et => new ErgoToken(et.tokenId, et.originalAmount-et.amount)):_*)
+                    .build()
+                
+                val boxesLoader = new ExplorerAndPoolUnspentBoxesLoader().withAllowChainedTx(true)
+
+                val boxOperations = BoxOperations.createForSenders(fromAddresses.map(Address.create(_)).toList.asJava,ctx)
+                        .withInputBoxesLoader(boxesLoader)
+                        .withFeeAmount(1000000L)
+                        .withAmountToSpend(ergNeeded)
+                        .withTokensToSpend(outBox.getTokens())
+
+                boxOperations.buildTxWithDefaultInputs(tb => tb.addOutputs(outBox))
             }
         })
     }

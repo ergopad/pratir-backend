@@ -9,5 +9,6 @@ final case class NewSale(
     endTime: Instant, 
     sellerWallet: String,
     packs: Array[NewPack],
-    tokens: Array[NewTokenForSale]
+    tokens: Array[NewTokenForSale],
+    sourceAddresses: Array[String]
 )

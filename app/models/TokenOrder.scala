@@ -71,7 +71,7 @@ final case class TokenOrder(
             packPrice.foreach(p => combinedPrices.put(p.tokenId, p.amount + combinedPrices.getOrElse(p.tokenId,0L)))
             
             val sufficientFunds = orderBox.getValue() >= combinedPrices.getOrElse("0"*64,0L) + 4000000L && 
-                combinedPrices.filterNot(_._1 == "0"*64)
+                combinedPrices.filterNot(cp => cp._1 == "0"*64 || cp._2 < 1)
                 .forall((token: (String, Long)) => 
                     orderBox.getTokens().asScala.exists((ergoToken: ErgoToken) => 
                         ergoToken.getId().toString() == token._1 && ergoToken.getValue() >= token._2))
@@ -107,14 +107,15 @@ final case class TokenOrder(
                             .contract(Address.create(sale.sellerWallet).toErgoContract())
                             .value(combinedPrices.getOrElse("0"*64,0L)*100/(100-sale.saleFeePct)+1000000L)
                         if (combinedPrices.filterNot(_._1 == "0"*64).size > 0)
-                            sellerBoxBuilder.tokens(combinedPrices.filterNot(_._1 == "0"*64).map(t => new ErgoToken(t._1,t._2*100/(100-sale.saleFeePct))).toArray:_*)
+                            sellerBoxBuilder.tokens(combinedPrices.filterNot(_._1 == "0"*64).map(t => new ErgoToken(t._1,math.round(math.abs(t._2).toDouble*100/(100-sale.saleFeePct)).toLong)).toArray:_*)
                         val sellerBox = sellerBoxBuilder.build()                              
                         
+                        val feeTokens = combinedPrices.filterNot(cp => cp._1 == "0"*64 || math.abs(cp._2)*100/sale.saleFeePct < 1)
                         val feeBoxBuilder = ctx.newTxBuilder().outBoxBuilder()
                             .contract(Address.create(Pratir.pratirFeeWallet).toErgoContract())
                             .value(combinedPrices.getOrElse("0"*64,0L)*100/sale.saleFeePct+1000000L)
-                        if (combinedPrices.filterNot(_._1 == "0"*64).size > 0)
-                            feeBoxBuilder.tokens(combinedPrices.filterNot(_._1 == "0"*64).map(t => new ErgoToken(t._1,t._2*100/sale.saleFeePct)).toArray:_*)
+                        if (feeTokens.size > 0)
+                            feeBoxBuilder.tokens(feeTokens.map(t => new ErgoToken(t._1,math.abs(t._2)*100/sale.saleFeePct)).toArray:_*)
                         val feeBox = feeBoxBuilder.build()
 
                         val boxesLoader = new ExplorerAndPoolUnspentBoxesLoader().withAllowChainedTx(true)
