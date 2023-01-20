@@ -72,21 +72,30 @@ extends  HasDatabaseConfigProvider[JdbcProfile] with Logging {
         val activeSales = Await.result(salesdao.getAllActive, Duration.Inf)
             
         activeSales.foreach(as => {
+            try {
+                if (as.status == SaleStatus.LIVE) {
 
-            val tokensLeft = Await.result(salesdao.tokensLeft(as.id), Duration.Inf).getOrElse(0)
-            
-            if (as.isFinished || (tokensLeft <= 0 && as.status != SaleStatus.PENDING)) {
+                    as.handleLive(ergoClient, salesdao)
+
+                }
+
+                val tokensLeft = Await.result(salesdao.tokensLeft(as.id), Duration.Inf).getOrElse(0)
                 
-                Await.result(salesdao.updateSaleStatus(as.id,SaleStatus.FINISHED),Duration.Inf)
-            
-            } else if (as.status == SaleStatus.PENDING) {
+                if (as.isFinished || (tokensLeft <= 0 && as.status != SaleStatus.PENDING)) {
+                    
+                    Await.result(salesdao.updateSaleStatus(as.id,SaleStatus.FINISHED),Duration.Inf)
                 
-                as.handlePending(ergoClient, salesdao)
-            
-            } else if (as.status == SaleStatus.WAITING && Instant.now().isAfter(as.startTime)) {
+                } else if (as.status == SaleStatus.PENDING) {
+                    
+                    as.handlePending(ergoClient, salesdao)
                 
-                as.handleWaiting(ergoClient, salesdao)
-                
+                } else if (as.status == SaleStatus.WAITING && Instant.now().isAfter(as.startTime)) {
+                    
+                    as.handleWaiting(ergoClient, salesdao)
+                    
+                }
+            } catch {
+                case e: Exception => logger.error(e.getMessage())
             }
         })
     }
@@ -96,21 +105,24 @@ extends  HasDatabaseConfigProvider[JdbcProfile] with Logging {
         val openOrders = Await.result(salesdao.getOpenTokenOrders, Duration.Inf)
         
         openOrders.foreach(oto => {
-            
-            if (oto.status == TokenOrderStatus.INITIALIZED) {
+            try {
+                if (oto.status == TokenOrderStatus.INITIALIZED) {
+                    
+                    oto.handleInitialized(ergoClient, salesdao)
+                    
+                }
                 
-                oto.handleInitialized(ergoClient, salesdao)
-                
-            }
-            
-            if (oto.status == TokenOrderStatus.INITIALIZED || oto.status == TokenOrderStatus.CONFIRMING || oto.status == TokenOrderStatus.CONFIRMED) {
-                
-                oto.handleSale(ergoClient, salesdao)
-                
-            } else if (oto.status == TokenOrderStatus.FULLFILLING || oto.status == TokenOrderStatus.REFUNDING) {
+                if (oto.status == TokenOrderStatus.INITIALIZED || oto.status == TokenOrderStatus.CONFIRMING || oto.status == TokenOrderStatus.CONFIRMED) {
+                    
+                    oto.handleSale(ergoClient, salesdao)
+                    
+                } else if (oto.status == TokenOrderStatus.FULLFILLING || oto.status == TokenOrderStatus.REFUNDING) {
 
-                oto.followUp(ergoClient, salesdao)
+                    oto.followUp(ergoClient, salesdao)
 
+                }
+            } catch {
+                case e: Exception => logger.error(e.getMessage())
             }
         })        
     }

@@ -89,6 +89,7 @@ class SalesDAO @Inject()(protected val dbConfigProvider: DatabaseConfigProvider)
     }
 
     def updateTokenOrderStatus(tokenOrderId: UUID, orderBoxId: String, newStatus: TokenOrderStatus.Value, followUpTxId: String) = {
+        logger.info(s"""Setting status for order ${tokenOrderId.toString()} to $newStatus""")
         val query = TokenOrders.tokenOrders.filter(_.id === tokenOrderId).map(tokenOrder => (tokenOrder.orderBoxId, tokenOrder.status, tokenOrder.followUpTxId)).update((orderBoxId, newStatus,followUpTxId))
         db.run(query)
     }

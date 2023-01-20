@@ -23,6 +23,7 @@ import org.ergoplatform.appkit.UnsignedTransaction
 import org.ergoplatform.appkit.ErgoToken
 import org.ergoplatform.appkit.InputBox
 import util.NodePoolDataSource
+import play.api.Logging
 
 object SaleStatus extends Enumeration {
     type SaleStatus = Value
@@ -47,7 +48,7 @@ final case class Sale(
     initialNanoErgFee: Long,
     saleFeePct: Int,
     password: String
-) {
+) extends Logging {
     def isFinished: Boolean = Instant.now().isAfter(endTime)
 
     def handleLive(ergoClient: ErgoClient, salesdao: SalesDAO): Unit = {
@@ -120,16 +121,19 @@ final case class Sale(
         val tokens = Await.result(salesdao.getTokensForSale(id), Duration.Inf)
         ergoClient.execute(new java.util.function.Function[BlockchainContext,UnsignedTransaction] {
             override def apply(ctx: BlockchainContext): UnsignedTransaction = {
-                val currentBoxes = ctx.getDataSource().getUnconfirmedUnspentBoxesFor(getSaleAddress, 0, 100).asScala ++ ctx.getDataSource().getUnspentBoxesFor(getSaleAddress, 0, 100).asScala
+                val currentBoxes = ctx.getDataSource().asInstanceOf[NodePoolDataSource].getAllUnspentBoxesFor(getSaleAddress).asScala
 
-                val ergNeeded = 1000000L + initialNanoErgFee + currentBoxes.size*1000000L - currentBoxes.foldLeft(0L)((z: Long, box: InputBox) => z + box.getValue)
+                val ergNeeded = 2000000L + initialNanoErgFee + currentBoxes.size*1000000L - currentBoxes.foldLeft(0L)((z: Long, box: InputBox) => z + box.getValue)
 
-                val outBox = 
+                val outBoxBuilder = 
                     ctx.newTxBuilder().outBoxBuilder()
                     .value(ergNeeded)
                     .contract(getSaleAddress.toErgoContract())
-                    .tokens(tokens.filter(t => t.amount < t.originalAmount).take(50).map(et => new ErgoToken(et.tokenId, et.originalAmount-et.amount)):_*)
-                    .build()
+
+                if (tokens.filter(t => t.amount < t.originalAmount).size > 0) 
+                    outBoxBuilder.tokens(tokens.filter(t => t.amount < t.originalAmount).take(50).map(et => new ErgoToken(et.tokenId, et.originalAmount-et.amount)):_*)
+                    
+                val outBox = outBoxBuilder.build()
                 
                 val boxesLoader = new ExplorerAndPoolUnspentBoxesLoader().withAllowChainedTx(true)
 

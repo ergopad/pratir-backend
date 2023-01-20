@@ -31,6 +31,9 @@ import scala.collection.JavaConverters._
 import special.collection.Coll
 import org.ergoplatform.appkit.UnsignedTransaction
 import org.ergoplatform.appkit.OutBox
+import org.ergoplatform.appkit.InputBoxesSelectionException.NotEnoughTokensException
+import org.ergoplatform.appkit.InputBoxesSelectionException.NotEnoughErgsException
+import org.ergoplatform.appkit.InputBoxesSelectionException.NotEnoughCoinsForChangeException
 
 @Singleton
 class SaleController @Inject()(protected val dbConfigProvider: DatabaseConfigProvider, val controllerComponents: ControllerComponents)(implicit ec: ExecutionContext)
@@ -129,7 +132,14 @@ extends BaseController
             case Some(bootstrapSale) => {
                 val ergoClient = RestApiErgoClientWithNodePoolDataSource.create(sys.env.get("ERGO_NODE").get,NetworkType.MAINNET,"",sys.env.get("ERGO_EXPLORER").get)
                 val sale = Await.result(salesdao.getSale(bootstrapSale.saleId), Duration.Inf)
-                Ok(Json.toJson(MUnsignedTransaction(sale.bootstrapTx(bootstrapSale.sourceAddresses, ergoClient, salesdao))))
+                try {
+                    Ok(Json.toJson(MUnsignedTransaction(sale.bootstrapTx(bootstrapSale.sourceAddresses, ergoClient, salesdao))))
+                } catch {
+                    case nete: NotEnoughTokensException => BadRequest("The wallet did not contain the tokens required for bootstrapping")
+                    case neee: NotEnoughErgsException => BadRequest("Not enough erg in wallet for bootstrapping")
+                    case necfc: NotEnoughCoinsForChangeException => BadRequest("Not enough erg for change box, try consolidating your utxos to remove this error")
+                    case e: Exception => BadRequest(e.getMessage())
+                }                     
             }
         }
     }
@@ -147,6 +157,7 @@ extends BaseController
             case Some(buyOrder) => {
                 val salesdao = new SalesDAO(dbConfigProvider)
                 val ergoClient = RestApiErgoClientWithNodePoolDataSource.create(sys.env.get("ERGO_NODE").get,NetworkType.MAINNET,"",sys.env.get("ERGO_EXPLORER").get)
+                try {
                 Ok(Json.toJson(MUnsignedTransaction(ergoClient.execute(new java.util.function.Function[BlockchainContext,UnsignedTransaction] {
                         override def apply(ctx: BlockchainContext): UnsignedTransaction = {
                             val totalPrices = new HashMap[String, Long]()
@@ -157,7 +168,7 @@ extends BaseController
                                     packPrice.foreach(p => combinedPrices.put(p.tokenId, p.amount + combinedPrices.getOrElse(p.tokenId,0L)))
                                     scala.collection.immutable.Range(0,bpr.count).map(i => {
 
-                                        val boxValue = combinedPrices.getOrElse("0"*64, 0L) + 4000000L
+                                        val boxValue = combinedPrices.getOrElse("0"*64, 0L) + 5000000L
 
                                         totalPrices.put("0"*64, boxValue + totalPrices.getOrElse("0"*64,0L))
                                         val outBoxBuilder = ctx.newTxBuilder()
@@ -188,7 +199,7 @@ extends BaseController
                             val boxesLoader = new ExplorerAndPoolUnspentBoxesLoader().withAllowChainedTx(true)
                             
                             val boxOperations = BoxOperations.createForSenders(buyOrder.userWallet.map(Address.create(_)).toList.asJava,ctx).withInputBoxesLoader(boxesLoader)
-                                .withMaxInputBoxesToSelect(50)
+                                .withMaxInputBoxesToSelect(100)
                                 .withFeeAmount(1000000L)
                                 .withAmountToSpend(totalPrices.get("0"*64).get)
 
@@ -209,6 +220,12 @@ extends BaseController
                             unsigned
                         }
                 }))))
+                } catch {
+                    case nete: NotEnoughTokensException => BadRequest("The wallet did not enough tokens for this order")
+                    case neee: NotEnoughErgsException => BadRequest("Not enough erg in wallet for this order")
+                    case necfc: NotEnoughCoinsForChangeException => BadRequest("Not enough erg for change box, try consolidating your utxos to remove this error")
+                    case e: Exception => BadRequest(e.getMessage())
+                }
             }
         }
     }

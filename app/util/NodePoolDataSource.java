@@ -47,8 +47,8 @@ public class NodePoolDataSource extends NodeAndExplorerDataSourceImpl {
         List<String> spentBoxes = new ArrayList<>();
         List<InputBox> outputBoxes = new ArrayList<>();
         String ergoTreeHex = address.getErgoAddress().script().bytesHex();
-        Transactions transactions = executeCall(getNodeTransactionsApi().getUnconfirmedTransactionsByErgoTree(
-            "\"" + ergoTreeHex + "\"", offset, limit));
+        Transactions transactions = executeCall(getNodeTransactionsApi().getUnconfirmedTransactions(
+             limit, offset));
 
         // now check if we have boxes on the address
         for (ErgoTransaction tx : transactions) {
@@ -92,11 +92,11 @@ public class NodePoolDataSource extends NodeAndExplorerDataSourceImpl {
         foundAll = false;
 
         while (!foundAll) {
-            Triplet<List<String>,List<InputBox>,Transactions> partialMempool = getMempoolBoxesFor(address,offset,1000);
+            Triplet<List<String>,List<InputBox>,Transactions> partialMempool = getMempoolBoxesFor(address,offset,100);
             unconfirmed.addAll(partialMempool.getValue1());
             spent.addAll(partialMempool.getValue0());
-            if (partialMempool.getValue2().size() == 1000) {
-                offset += 1000;
+            if (partialMempool.getValue2().size() >= 99) {
+                offset += 100;
             } else {
                 foundAll = true;
             }
