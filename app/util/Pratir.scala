@@ -18,6 +18,9 @@ import org.ergoplatform.wallet.mnemonic.{Mnemonic => WMnemonic}
 import org.ergoplatform.wallet.secrets.ExtendedSecretKey
 import sigmastate.basics.DiffieHellmanTupleProverInput
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder
+import org.ergoplatform.appkit.InputBox
+import scala.collection.mutable.HashMap
+import scala.collection.JavaConverters._
 
 object Pratir {
 
@@ -40,4 +43,15 @@ object Pratir {
     lazy val initialNanoErgFee = sys.env.get("INITIAL_NANO_ERG_FEE").get.toLong
     lazy val saleFeePct = sys.env.get("SALE_FEE_PCT").get.toInt
     lazy val pratirFeeWallet = sys.env.get("PRATIR_FEE_WALLET").get
+
+    def balance(boxes: Array[InputBox]): HashMap[String, Long] = {
+        val balance = new HashMap[String,Long]()
+        boxes.foreach(utxo =>
+            {
+                balance.put("nanoerg",utxo.getValue()+balance.getOrElse("nanoerg",0L))
+                utxo.getTokens().asScala.foreach(token =>
+                    balance.put(token.getId().toString(),token.getValue()+balance.getOrElse(token.getId().toString(),0L)))
+            })
+        balance
+    }
 }

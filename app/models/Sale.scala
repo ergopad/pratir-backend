@@ -22,6 +22,7 @@ import org.ergoplatform.appkit.NetworkType
 import org.ergoplatform.appkit.UnsignedTransaction
 import org.ergoplatform.appkit.ErgoToken
 import org.ergoplatform.appkit.InputBox
+import util.NodePoolDataSource
 
 object SaleStatus extends Enumeration {
     type SaleStatus = Value
@@ -49,17 +50,28 @@ final case class Sale(
 ) {
     def isFinished: Boolean = Instant.now().isAfter(endTime)
 
+    def handleLive(ergoClient: ErgoClient, salesdao: SalesDAO): Unit = {
+        if (status != SaleStatus.LIVE) return
+        
+        val boxes = ergoClient.getDataSource().asInstanceOf[NodePoolDataSource].getAllUnspentBoxesFor(getSaleAddress).asScala
+        
+        val balance = Pratir.balance(boxes.toArray)
+
+        val tokensForSale = Await.result(salesdao.getTokensForSale(id), Duration.Inf)
+
+        tokensForSale.foreach(tfs => {
+            if (tfs.amount != balance.getOrElse(tfs.tokenId,0L).toInt) {
+                Await.result(salesdao.updateTokenAmount(id, tfs.tokenId, balance.getOrElse(tfs.tokenId,0L).toInt), Duration.Inf)
+            }
+        })
+    }
+
     def handlePending(ergoClient: ErgoClient, salesdao: SalesDAO): Unit = {
         if (status != SaleStatus.PENDING) return
-        val balance = new HashMap[String,Long]()
                 
-        val boxes = ergoClient.getDataSource().getUnspentBoxesFor(getSaleAddress,0,100).asScala ++ ergoClient.getDataSource().getUnconfirmedUnspentBoxesFor(getSaleAddress,0,100).asScala
-        boxes.foreach(utxo =>
-            {
-                balance.put("nanoerg",utxo.getValue()+balance.getOrElse("nanoerg",0L))
-                utxo.getTokens().asScala.foreach(token =>
-                    balance.put(token.getId().toString(),token.getValue()+balance.getOrElse(token.getId().toString(),0L)))
-            })
+        val boxes = ergoClient.getDataSource().asInstanceOf[NodePoolDataSource].getAllUnspentBoxesFor(getSaleAddress).asScala
+        
+        val balance = Pratir.balance(boxes.toArray)
 
         val tokensRequired = Await.result(salesdao.getTokensForSale(id),Duration.Inf)
         //check base fee
@@ -76,6 +88,7 @@ final case class Sale(
     }
 
     def handleWaiting(ergoClient: ErgoClient, salesdao: SalesDAO): Unit = {
+        if (status != SaleStatus.WAITING) return
         ergoClient.execute(new java.util.function.Function[BlockchainContext,Unit] {
             override def apply(ctx: BlockchainContext): Unit = {
                 

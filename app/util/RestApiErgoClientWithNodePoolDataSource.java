@@ -27,7 +27,7 @@ public class RestApiErgoClientWithNodePoolDataSource implements ErgoClient {
     public final static String defaultMainnetExplorerUrl = "https://api.ergoplatform.com";
     public final static String defaultTestnetExplorerUrl = "https://api-testnet.ergoplatform.com";
 
-    RestApiErgoClientWithNodePoolDataSource(String nodeUrl, NetworkType networkType, String apiKey, String explorerUrl) {
+    RestApiErgoClientWithNodePoolDataSource(String nodeUrl, NetworkType networkType, String apiKey, String danaidesUrl) {
         _networkType = networkType;
 
         OkHttpClient.Builder httpClientBuilder = new OkHttpClient().newBuilder();
@@ -35,14 +35,14 @@ public class RestApiErgoClientWithNodePoolDataSource implements ErgoClient {
         ApiClient nodeClient = new ApiClient(nodeUrl, "ApiKeyAuth", apiKey);
         nodeClient.configureFromOkClientBuilder(httpClientBuilder);
 
-        ExplorerApiClient explorerClient;
-        if (!Strings.isNullOrEmpty(explorerUrl)) {
-            explorerClient = new ExplorerApiClient(explorerUrl);
-            explorerClient.configureFromOkClientBuilder(httpClientBuilder);
+        DanaidesAPIClient danaidesClient;
+        if (!Strings.isNullOrEmpty(danaidesUrl)) {
+            danaidesClient = new DanaidesAPIClient(danaidesUrl);
+            danaidesClient.configureFromOkClientBuilder(httpClientBuilder);
         } else {
-            explorerClient = null;
+            danaidesClient = null;
         }
-        apiClient = new NodePoolDataSource(nodeClient, explorerClient);
+        apiClient = new NodePoolDataSource(nodeClient, danaidesClient);
     }
 
     @Override

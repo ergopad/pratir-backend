@@ -68,8 +68,13 @@ class SalesDAO @Inject()(protected val dbConfigProvider: DatabaseConfigProvider)
         db.run(query)
     }
 
-    def getTokenForSale(tokenId: UUID): Future[TokenForSale] = {
-        val query = TokensForSale.tokensForSale.filter(_.id === tokenId).result.head
+    def getTokenForSale(id: UUID): Future[TokenForSale] = {
+        val query = TokensForSale.tokensForSale.filter(_.id === id).result.head
+        db.run(query)
+    }
+
+    def getTokenForSale(tokenId: String, saleId: UUID): Future[TokenForSale] = {
+        val query = TokensForSale.tokensForSale.filter(tfs => tfs.saleId === saleId && tfs.tokenId === tokenId).result.head
         db.run(query)
     }
 
@@ -79,7 +84,7 @@ class SalesDAO @Inject()(protected val dbConfigProvider: DatabaseConfigProvider)
     }
 
     def getOpenTokenOrders(): Future[Seq[TokenOrder]] = {
-        val query = TokenOrders.tokenOrders.filter(_.status =!= TokenOrderStatus.FULLFILLED).filter(_.status =!= TokenOrderStatus.REFUNDED).filter(_.status =!= TokenOrderStatus.FAILED).result
+        val query = TokenOrders.tokenOrders.filterNot(_.status inSet Seq(TokenOrderStatus.FULLFILLED, TokenOrderStatus.REFUNDED, TokenOrderStatus.FAILED)).result
         db.run(query)
     }
 
@@ -109,12 +114,14 @@ class SalesDAO @Inject()(protected val dbConfigProvider: DatabaseConfigProvider)
     }
 
     def reserveToken(tokenForSale: TokenForSale) = {
+        if (tokenForSale.amount-1 < 0) throw new Exception("Token amount can not be negative")
         val query = TokensForSale.tokensForSale.filter(_.id === tokenForSale.id).map(_.amount).update(tokenForSale.amount-1)
         db.run(query)
     }
 
     def updateTokenAmount(saleId: UUID, tokenId: String, amount: Int) = {
-        val query = TokensForSale.tokensForSale.filter(_.saleId === saleId).filter(_.tokenId === tokenId).map(_.amount).update(amount)
+        if (amount < 0) throw new Exception("Token amount can not be negative")
+        val query = TokensForSale.tokensForSale.filter(tfs => tfs.saleId === saleId && tfs.tokenId === tokenId).map(_.amount).update(amount)
         db.run(query)
     }
 }
