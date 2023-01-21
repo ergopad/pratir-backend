@@ -73,15 +73,21 @@ extends  HasDatabaseConfigProvider[JdbcProfile] with Logging {
             
         activeSales.foreach(as => {
             try {
-                if (as.status == SaleStatus.LIVE) {
+                if (as.status == SaleStatus.LIVE || as.status == SaleStatus.SOLD_OUT) {
 
                     as.handleLive(ergoClient, salesdao)
 
                 }
 
                 val tokensLeft = Await.result(salesdao.tokensLeft(as.id), Duration.Inf).getOrElse(0)
+
+                if (tokensLeft < 1) {
+
+                    Await.result(salesdao.updateSaleStatus(as.id,SaleStatus.SOLD_OUT),Duration.Inf)
+                    
+                }
                 
-                if (as.isFinished || (tokensLeft <= 0 && as.status != SaleStatus.PENDING)) {
+                if (as.isFinished) {
                     
                     Await.result(salesdao.updateSaleStatus(as.id,SaleStatus.FINISHED),Duration.Inf)
                 

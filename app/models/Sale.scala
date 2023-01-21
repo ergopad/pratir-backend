@@ -27,7 +27,7 @@ import play.api.Logging
 
 object SaleStatus extends Enumeration {
     type SaleStatus = Value
-    val PENDING, WAITING, LIVE, FINISHED = Value
+    val PENDING, WAITING, LIVE, SOLD_OUT, FINISHED = Value
 
     implicit val readsSaleStatus = Reads.enumNameReads(SaleStatus)
     implicit val writesSaleStatus = Writes.enumNameWrites
@@ -54,19 +54,27 @@ final case class Sale(
     def isFinished: Boolean = Instant.now().isAfter(endTime)
 
     def handleLive(ergoClient: ErgoClient, salesdao: SalesDAO): Unit = {
-        if (status != SaleStatus.LIVE) return
+        if (status == SaleStatus.LIVE || status == SaleStatus.SOLD_OUT) {
         
-        val boxes = ergoClient.getDataSource().asInstanceOf[NodePoolDataSource].getAllUnspentBoxesFor(getSaleAddress).asScala
-        
-        val balance = Pratir.balance(boxes.toArray)
+            val boxes = ergoClient.getDataSource().asInstanceOf[NodePoolDataSource].getAllUnspentBoxesFor(getSaleAddress).asScala
+            
+            val balance = Pratir.balance(boxes.toArray)
 
-        val tokensForSale = Await.result(salesdao.getTokensForSale(id), Duration.Inf)
+            val tokensForSale = Await.result(salesdao.getTokensForSale(id), Duration.Inf)
 
-        tokensForSale.foreach(tfs => {
-            if (tfs.amount != balance.getOrElse(tfs.tokenId,0L).toInt) {
-                Await.result(salesdao.updateTokenAmount(id, tfs.tokenId, balance.getOrElse(tfs.tokenId,0L).toInt), Duration.Inf)
-            }
-        })
+            var foundChange = false
+
+            tokensForSale.foreach(tfs => {
+                if (tfs.amount != balance.getOrElse(tfs.tokenId,0L).toInt) {
+                    Await.result(salesdao.updateTokenAmount(id, tfs.tokenId, balance.getOrElse(tfs.tokenId,0L).toInt), Duration.Inf)
+                    foundChange = true
+                }
+            })
+
+            if (status == SaleStatus.SOLD_OUT && foundChange)
+                Await.result(salesdao.updateSaleStatus(id, SaleStatus.LIVE), Duration.Inf)
+
+        }
     }
 
     def handlePending(ergoClient: ErgoClient, salesdao: SalesDAO): Unit = {

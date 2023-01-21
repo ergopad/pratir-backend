@@ -53,9 +53,9 @@ final case class TokenOrder(
 ) extends Logging {
     def handleInitialized(ergoClient: ErgoClient, salesdao: SalesDAO): Unit = {
         val boxes = ergoClient.getDataSource().getUnconfirmedUnspentBoxesFor(new ErgoTreeContract(BuyOrder.contract(userAddress),NetworkType.MAINNET).toAddress(),0,100).asScala.toArray
-                
-        if (boxes.exists((box: InputBox) => id == UUID.fromString(new String(box.getRegisters().get(3).getValue().asInstanceOf[Coll[Byte]].toArray,StandardCharsets.UTF_8))))
-            Await.result(salesdao.updateTokenOrderStatus(id,"",TokenOrderStatus.CONFIRMING,""),Duration.Inf)
+        val orderBox = boxes.filter((box: InputBox) => id == UUID.fromString(new String(box.getRegisters().get(3).getValue().asInstanceOf[Coll[Byte]].toArray,StandardCharsets.UTF_8)))    
+        if (orderBox.size > 0)
+            Await.result(salesdao.updateTokenOrderStatus(id,orderBox(0).getId().toString(),TokenOrderStatus.CONFIRMING,""),Duration.Inf)
     }
 
     def handleSale(ergoClient: ErgoClient, salesdao: SalesDAO): Unit = {
@@ -165,7 +165,7 @@ final case class TokenOrder(
                 }
             } 
             
-            if (!success) {
+            if (!success && !(sale.status == SaleStatus.SOLD_OUT && sale.updated_at.isAfter(Instant.now().minusSeconds(600)))) {
                 ergoClient.execute(new java.util.function.Function[BlockchainContext,Unit] {
                     override def apply(ctx: BlockchainContext): Unit = {
                         val signed = Pratir.sign(ctx,refund(ctx, orderBox))
