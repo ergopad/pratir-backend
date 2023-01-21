@@ -60,6 +60,7 @@ extends BaseController
     implicit val createdSaleJson = Json.format[CreatedSale]
     implicit val bootstrapSaleJson = Json.format[BootstrapSale]
     implicit val saleLiteJson = Json.format[SaleLite]
+    implicit val tokenOrderJson = Json.format[TokenOrder]
 
     def getAll(): Action[AnyContent] = Action.async { implicit request =>
         val salesdao = new SalesDAO(dbConfigProvider)
@@ -143,6 +144,12 @@ extends BaseController
                 }                     
             }
         }
+    }
+
+    def getBuyOrders(address: String): Action[AnyContent] = Action.async { implicit request =>
+        val salesdao = new SalesDAO(dbConfigProvider)
+        val orders = salesdao.getTokenOrderHistory(address)
+        orders.map(o => Ok(Json.toJson(o)))
     }
 
     def buyOrder() = Action { implicit request =>

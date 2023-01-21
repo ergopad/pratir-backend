@@ -8,3 +8,4 @@ GET     /sale/:saleId           controllers.SaleController.getSale(saleId: Strin
 POST    /sale                   controllers.SaleController.createSale()
 POST    /sale/bootstrap         controllers.SaleController.bootstrapSale()
 POST    /order                  controllers.SaleController.buyOrder()
+GET     /order/:address         controllers.SaleController.getBuyOrders(address: String)

@@ -88,6 +88,11 @@ class SalesDAO @Inject()(protected val dbConfigProvider: DatabaseConfigProvider)
         db.run(query)
     }
 
+    def getTokenOrderHistory(address: String): Future[Seq[TokenOrder]] = {
+        val query = TokenOrders.tokenOrders.filter(_.userWallet === address).sortBy(_.createdAt.desc).result
+        db.run(query)
+    }
+
     def updateTokenOrderStatus(tokenOrderId: UUID, orderBoxId: String, newStatus: TokenOrderStatus.Value, followUpTxId: String) = {
         logger.info(s"""Setting status for order ${tokenOrderId.toString()} to $newStatus""")
         val query = TokenOrders.tokenOrders.filter(_.id === tokenOrderId).map(tokenOrder => (tokenOrder.orderBoxId, tokenOrder.status, tokenOrder.followUpTxId, tokenOrder.updatedAt)).update((orderBoxId, newStatus,followUpTxId, Instant.now()))

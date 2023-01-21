@@ -81,10 +81,10 @@ extends  HasDatabaseConfigProvider[JdbcProfile] with Logging {
 
                 val tokensLeft = Await.result(salesdao.tokensLeft(as.id), Duration.Inf).getOrElse(0)
 
-                if (tokensLeft < 1) {
+                if (as.status == SaleStatus.LIVE && tokensLeft < 1) {
 
                     Await.result(salesdao.updateSaleStatus(as.id,SaleStatus.SOLD_OUT),Duration.Inf)
-                    
+
                 }
                 
                 if (as.isFinished) {
