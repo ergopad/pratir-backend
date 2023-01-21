@@ -34,6 +34,7 @@ import org.ergoplatform.appkit.OutBox
 import org.ergoplatform.appkit.InputBoxesSelectionException.NotEnoughTokensException
 import org.ergoplatform.appkit.InputBoxesSelectionException.NotEnoughErgsException
 import org.ergoplatform.appkit.InputBoxesSelectionException.NotEnoughCoinsForChangeException
+import java.time.Instant
 
 @Singleton
 class SaleController @Inject()(protected val dbConfigProvider: DatabaseConfigProvider, val controllerComponents: ControllerComponents)(implicit ec: ExecutionContext)
@@ -85,7 +86,7 @@ extends BaseController
             case Some(newSale) =>
                 val saleId = UUID.randomUUID()
                 val encryptedPassword = Pratir.encoder.encode(newSale.password)
-                val saleAdded = Sale(saleId, newSale.name, newSale.description, newSale.startTime, newSale.endTime, newSale.sellerWallet, SaleStatus.PENDING, Pratir.initialNanoErgFee, Pratir.saleFeePct, encryptedPassword)
+                val saleAdded = Sale(saleId, newSale.name, newSale.description, newSale.startTime, newSale.endTime, newSale.sellerWallet, SaleStatus.PENDING, Pratir.initialNanoErgFee, Pratir.saleFeePct, encryptedPassword, Instant.now(), Instant.now())
                 val tokensAdded = newSale.tokens.map((token: NewTokenForSale) =>
                     TokenForSale(UUID.randomUUID(),token.tokenId,0,token.amount,token.rarity,token.category,saleId)
                 )
@@ -168,7 +169,7 @@ extends BaseController
                                     packPrice.foreach(p => combinedPrices.put(p.tokenId, p.amount + combinedPrices.getOrElse(p.tokenId,0L)))
                                     scala.collection.immutable.Range(0,bpr.count).map(i => {
 
-                                        val boxValue = combinedPrices.getOrElse("0"*64, 0L) + 5000000L
+                                        val boxValue = combinedPrices.getOrElse("0"*64, 0L) + 4000000L
 
                                         totalPrices.put("0"*64, boxValue + totalPrices.getOrElse("0"*64,0L))
                                         val outBoxBuilder = ctx.newTxBuilder()

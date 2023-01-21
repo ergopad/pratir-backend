@@ -47,7 +47,9 @@ final case class Sale(
     status: SaleStatus.Value,
     initialNanoErgFee: Long,
     saleFeePct: Int,
-    password: String
+    password: String,
+    created_at: Instant,
+    updated_at: Instant
 ) extends Logging {
     def isFinished: Boolean = Instant.now().isAfter(endTime)
 

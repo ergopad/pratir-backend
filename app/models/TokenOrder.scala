@@ -26,6 +26,7 @@ import org.ergoplatform.appkit.UnsignedTransaction
 import _root_.util.NodePoolDataSource
 import org.ergoplatform.appkit.ErgoClientException
 import play.api.Logging
+import java.time.Instant
 
 object TokenOrderStatus extends Enumeration {
     type TokenOrderStatus = Value
@@ -46,7 +47,9 @@ final case class TokenOrder(
     packId: UUID,
     orderBoxId: String,
     followUpTxId: String,
-    status: TokenOrderStatus.Value
+    status: TokenOrderStatus.Value,
+    created_at: Instant,
+    updated_at: Instant
 ) extends Logging {
     def handleInitialized(ergoClient: ErgoClient, salesdao: SalesDAO): Unit = {
         val boxes = ergoClient.getDataSource().getUnconfirmedUnspentBoxesFor(new ErgoTreeContract(BuyOrder.contract(userAddress),NetworkType.MAINNET).toAddress(),0,100).asScala.toArray
@@ -57,6 +60,8 @@ final case class TokenOrder(
 
     def handleSale(ergoClient: ErgoClient, salesdao: SalesDAO): Unit = {
         val boxes = ergoClient.getDataSource().getUnspentBoxesFor(new ErgoTreeContract(BuyOrder.contract(userAddress),NetworkType.MAINNET).toAddress(),0,100).asScala.toArray
+        //Testing only
+        //val boxes = ergoClient.getDataSource().asInstanceOf[NodePoolDataSource].getAllUnspentBoxesFor(new ErgoTreeContract(BuyOrder.contract(userAddress),NetworkType.MAINNET).toAddress()).asScala.toArray
 
         var success = false
                 
@@ -78,10 +83,11 @@ final case class TokenOrder(
                     orderBox.getTokens().asScala.exists((ergoToken: ErgoToken) => 
                         ergoToken.getId().toString() == token._1 && ergoToken.getValue() >= token._2))
             if (sufficientFunds && sale.status == SaleStatus.LIVE) {
+                val negativeTokens = combinedPrices.filterNot(cp => cp._1 == "0"*64 || cp._2 > 0)
                 val negativeSalesInOrder = try {
-                    combinedPrices.filterNot(cp => cp._1 == "0"*64 || cp._2 > 0).foreach(c => {
+                    negativeTokens.foreach(c => {
                         val tokenForSale = Await.result(salesdao.getTokenForSale(c._1, sale.id), Duration.Inf)
-                        Await.result(salesdao.reserveToken(tokenForSale), Duration.Inf)
+                        Await.result(salesdao.reserveToken(tokenForSale,math.abs(c._2).toInt), Duration.Inf)
                     })
                     true
                 } catch {
@@ -132,12 +138,18 @@ final case class TokenOrder(
                             val boxesLoader = new ExplorerAndPoolUnspentBoxesLoader().withAllowChainedTx(true)
                             
                             val boxOperations = BoxOperations.createForSender(sale.getSaleAddress,ctx).withInputBoxesLoader(boxesLoader)
-                                .withMaxInputBoxesToSelect(20)
+                                .withTokensToSpend((nftBox.getTokens().asScala ++ negativeTokens.map(t => new ErgoToken(t._1, math.abs(t._2)))).asJava)
+                                .withAmountToSpend(1000000L)
                                 .withFeeAmount(1000000L)
-                                .withTokensToSpend(nftBox.getTokens())
                             
                             try{
-                                val unsigned = boxOperations.buildTxWithDefaultInputs(tb => tb.addOutputs(nftBox, sellerBox, feeBox).addInputs(orderBox))
+                                val unsigned = ctx.newTxBuilder
+                                    .addOutputs(nftBox, sellerBox, feeBox)
+                                    .addInputs(orderBox)
+                                    .fee(1000000L)
+                                    .sendChangeTo(sale.getSaleAddress)
+                                    .addInputs(boxOperations.loadTop(2000000L).asScala:_*)
+                                    .build()
                                 
                                 val signed = Pratir.sign(ctx,unsigned)
                                 

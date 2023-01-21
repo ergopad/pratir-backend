@@ -24,7 +24,7 @@ class SalesDAO @Inject()(protected val dbConfigProvider: DatabaseConfigProvider)
 
     def updateSaleStatus(saleId: UUID, newStatus: SaleStatus.Value) = {
         logger.info(s"""Setting status for ${saleId.toString()} to $newStatus""")
-        val query = Sales.sales.filter(_.id === saleId).map(sale => sale.status).update(newStatus)
+        val query = Sales.sales.filter(_.id === saleId).map(sale => (sale.status, sale.updatedAt)).update((newStatus, Instant.now()))
         db.run(query)
     }
 
@@ -80,7 +80,7 @@ class SalesDAO @Inject()(protected val dbConfigProvider: DatabaseConfigProvider)
 
     def newTokenOrder(id: UUID, userAddress: String, saleId: UUID, packId: UUID): Future[Any] = {
         logger.info(s"""Registering new token order for ${saleId.toString()}""")
-        db.run(DBIO.seq(TokenOrders.tokenOrders += TokenOrder(id, userAddress, saleId, packId, "", "", TokenOrderStatus.INITIALIZED)))
+        db.run(DBIO.seq(TokenOrders.tokenOrders += TokenOrder(id, userAddress, saleId, packId, "", "", TokenOrderStatus.INITIALIZED, Instant.now(), Instant.now())))
     }
 
     def getOpenTokenOrders(): Future[Seq[TokenOrder]] = {
@@ -90,7 +90,7 @@ class SalesDAO @Inject()(protected val dbConfigProvider: DatabaseConfigProvider)
 
     def updateTokenOrderStatus(tokenOrderId: UUID, orderBoxId: String, newStatus: TokenOrderStatus.Value, followUpTxId: String) = {
         logger.info(s"""Setting status for order ${tokenOrderId.toString()} to $newStatus""")
-        val query = TokenOrders.tokenOrders.filter(_.id === tokenOrderId).map(tokenOrder => (tokenOrder.orderBoxId, tokenOrder.status, tokenOrder.followUpTxId)).update((orderBoxId, newStatus,followUpTxId))
+        val query = TokenOrders.tokenOrders.filter(_.id === tokenOrderId).map(tokenOrder => (tokenOrder.orderBoxId, tokenOrder.status, tokenOrder.followUpTxId, tokenOrder.updatedAt)).update((orderBoxId, newStatus,followUpTxId, Instant.now()))
         db.run(query)
     }
 
@@ -114,9 +114,9 @@ class SalesDAO @Inject()(protected val dbConfigProvider: DatabaseConfigProvider)
         getTokenForSale(randomTokenUUID)
     }
 
-    def reserveToken(tokenForSale: TokenForSale) = {
+    def reserveToken(tokenForSale: TokenForSale, reserveAmount: Int = 1) = {
         if (tokenForSale.amount-1 < 0) throw new Exception("Token amount can not be negative")
-        val query = TokensForSale.tokensForSale.filter(_.id === tokenForSale.id).map(_.amount).update(tokenForSale.amount-1)
+        val query = TokensForSale.tokensForSale.filter(_.id === tokenForSale.id).map(_.amount).update(tokenForSale.amount-reserveAmount)
         db.run(query)
     }
 
@@ -136,9 +136,11 @@ object TokenOrders {
         def orderBoxId = column[String]("ORDER_BOX_ID")
         def followUpTxId = column[String]("FOLLOW_UP_TX_ID", O.Length(64, true))
         def status = column[TokenOrderStatus.Value]("STATUS")
+        def createdAt = column[Instant]("CREATED_AT")
+        def updatedAt = column[Instant]("UPDATED_AT")
         def sale = foreignKey("TOKEN_ORDERS__SALE_ID_FK", saleId, Sales.sales)(_.id, onDelete=ForeignKeyAction.Cascade)
         def pack = foreignKey("TOKEN_ORDERS__PACK_ID_FK", packId, Packs.packs)(_.id, onDelete=ForeignKeyAction.Cascade)
-        def * = (id, userWallet, saleId, packId, orderBoxId, followUpTxId, status) <> (TokenOrder.tupled, TokenOrder.unapply)
+        def * = (id, userWallet, saleId, packId, orderBoxId, followUpTxId, status, createdAt, updatedAt) <> (TokenOrder.tupled, TokenOrder.unapply)
     }
 
     val tokenOrders = TableQuery[TokenOrders]
@@ -157,7 +159,9 @@ object Sales {
         def initialNanoErgFee = column[Long]("INITIAL_NANOERG_FEE")
         def saleFeePct = column[Int]("SALE_FEE_PCT")
         def password = column[String]("PASSWORD")
-        def * = (id, name, description, startTime, endTime, sellerWallet, status, initialNanoErgFee, saleFeePct, password) <> (Sale.tupled, Sale.unapply)
+        def createdAt = column[Instant]("CREATED_AT")
+        def updatedAt = column[Instant]("UPDATED_AT")
+        def * = (id, name, description, startTime, endTime, sellerWallet, status, initialNanoErgFee, saleFeePct, password, createdAt, updatedAt) <> (Sale.tupled, Sale.unapply)
     }
 
     val sales = TableQuery[Sales]
