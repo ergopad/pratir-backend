@@ -69,7 +69,8 @@ final case class TokenOrder(
 
             val orderBox = boxes.find((box: InputBox) => id == UUID.fromString(new String(box.getRegisters().get(3).getValue().asInstanceOf[Coll[Byte]].toArray,StandardCharsets.UTF_8))).get
             
-            Await.result(salesdao.updateTokenOrderStatus(id,orderBox.getId.toString, TokenOrderStatus.CONFIRMED,""),Duration.Inf)
+            if (status == TokenOrderStatus.CONFIRMING)
+                Await.result(salesdao.updateTokenOrderStatus(id,orderBox.getId.toString, TokenOrderStatus.CONFIRMED,""),Duration.Inf)
 
             val sale = Await.result(salesdao.getSale(saleId), Duration.Inf)
             val packPrice = Await.result(salesdao.getPrice(packId), Duration.Inf)
