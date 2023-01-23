@@ -29,7 +29,7 @@ class SalesDAO @Inject()(protected val dbConfigProvider: DatabaseConfigProvider)
     }
 
     def getAll : Future[Seq[Sale]] = {
-        val query = Sales.sales.result
+        val query = Sales.sales.sortBy(_.createdAt.desc).result
         db.run(query)        
     }
 
@@ -84,7 +84,7 @@ class SalesDAO @Inject()(protected val dbConfigProvider: DatabaseConfigProvider)
     }
 
     def getOpenTokenOrders(): Future[Seq[TokenOrder]] = {
-        val query = TokenOrders.tokenOrders.filterNot(_.status inSet Seq(TokenOrderStatus.FULLFILLED, TokenOrderStatus.REFUNDED, TokenOrderStatus.FAILED)).result
+        val query = TokenOrders.tokenOrders.filterNot(_.status inSet Seq(TokenOrderStatus.FULLFILLED, TokenOrderStatus.REFUNDED, TokenOrderStatus.FAILED)).sortBy(_.createdAt).result
         db.run(query)
     }
 

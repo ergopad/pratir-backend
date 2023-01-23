@@ -14,7 +14,8 @@ object SaleBox {
     {
         val currentTime = CONTEXT.preHeader.timestamp
         val live = currentTime < _endTime
-        sigmaProp((PratirPK && live) || (SellerPK && !live))
+        val uniqueTime = currentTime > _uniqueTime
+        sigmaProp((PratirPK || (SellerPK && !live)) && uniqueTime)
     }
     """
 
@@ -23,6 +24,7 @@ object SaleBox {
         constants.put("PratirPK",Pratir.address.getPublicKey())
         constants.put("SellerPK",Address.create(sale.sellerWallet).getPublicKey())
         constants.put("_endTime", ErgoValue.of(sale.endTime.toEpochMilli()).getValue())
+        constants.put("_uniqueTime", ErgoValue.of(sale.created_at.toEpochMilli()).getValue())
         JavaHelpers.compile(
             constants, script, ErgoAddressEncoder.MainnetNetworkPrefix
         )

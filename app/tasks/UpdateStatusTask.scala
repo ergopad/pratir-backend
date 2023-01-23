@@ -42,6 +42,10 @@ import org.ergoplatform.appkit.Address
 import scala.util.Random
 import org.ergoplatform.appkit.ErgoClient
 import play.api.Logging
+import org.ergoplatform.appkit.OutBox
+import models.Fulfillment
+import scala.collection.mutable.Buffer
+import scala.collection.mutable.ArrayBuffer
 
 class UpdateStatusTask @Inject() (protected val dbConfigProvider: DatabaseConfigProvider, actorSystem: ActorSystem)
 extends  HasDatabaseConfigProvider[JdbcProfile] with Logging {
@@ -109,6 +113,8 @@ extends  HasDatabaseConfigProvider[JdbcProfile] with Logging {
     def handleOrders(ergoClient: ErgoClient, salesdao: SalesDAO) = {
         
         val openOrders = Await.result(salesdao.getOpenTokenOrders, Duration.Inf)
+
+        val fulfillments = new HashMap[UUID, Buffer[Fulfillment]]()
         
         openOrders.foreach(oto => {
             try {
@@ -120,7 +126,10 @@ extends  HasDatabaseConfigProvider[JdbcProfile] with Logging {
                 
                 if (oto.status == TokenOrderStatus.INITIALIZED || oto.status == TokenOrderStatus.CONFIRMING || oto.status == TokenOrderStatus.CONFIRMED) {
                     
-                    oto.handleSale(ergoClient, salesdao)
+                    oto.handleSale(ergoClient, salesdao) match {
+                        case Some(fulfillment) => fulfillments.put(fulfillment.saleId, fulfillments.getOrElse(fulfillment.saleId, new ArrayBuffer[Fulfillment]()) ++ Array(fulfillment))
+                        case None =>                        
+                    }
                     
                 } else if (oto.status == TokenOrderStatus.FULLFILLING || oto.status == TokenOrderStatus.REFUNDING) {
 
@@ -130,7 +139,9 @@ extends  HasDatabaseConfigProvider[JdbcProfile] with Logging {
             } catch {
                 case e: Exception => logger.error(e.getMessage())
             }
-        })        
+        })
+
+        fulfillments.foreach(ff => ff._2.grouped(30).foreach(batch => Await.result(salesdao.getSale(ff._1), Duration.Inf).fulfill(batch.toArray, ergoClient, salesdao)))     
     }
 }
 

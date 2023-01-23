@@ -27,6 +27,10 @@ import _root_.util.NodePoolDataSource
 import org.ergoplatform.appkit.ErgoClientException
 import play.api.Logging
 import java.time.Instant
+import org.ergoplatform.appkit.impl.OutBoxBuilderImpl
+import org.ergoplatform.wallet.transactions.TransactionBuilder
+import org.ergoplatform.appkit.impl.UnsignedTransactionBuilderImpl
+import org.ergoplatform.appkit.OutBox
 
 object TokenOrderStatus extends Enumeration {
     type TokenOrderStatus = Value
@@ -58,12 +62,10 @@ final case class TokenOrder(
             Await.result(salesdao.updateTokenOrderStatus(id,orderBox(0).getId().toString(),TokenOrderStatus.CONFIRMING,""),Duration.Inf)
     }
 
-    def handleSale(ergoClient: ErgoClient, salesdao: SalesDAO): Unit = {
+    def handleSale(ergoClient: ErgoClient, salesdao: SalesDAO): Option[Fulfillment] = {
         val boxes = ergoClient.getDataSource().getUnspentBoxesFor(new ErgoTreeContract(BuyOrder.contract(userAddress),NetworkType.MAINNET).toAddress(),0,100).asScala.toArray
         //Testing only
         //val boxes = ergoClient.getDataSource().asInstanceOf[NodePoolDataSource].getAllUnspentBoxesFor(new ErgoTreeContract(BuyOrder.contract(userAddress),NetworkType.MAINNET).toAddress()).asScala.toArray
-
-        var success = false
                 
         if (boxes.exists((box: InputBox) => id == UUID.fromString(new String(box.getRegisters().get(3).getValue().asInstanceOf[Coll[Byte]].toArray,StandardCharsets.UTF_8)))) {
 
@@ -83,7 +85,7 @@ final case class TokenOrder(
                 .forall((token: (String, Long)) => 
                     orderBox.getTokens().asScala.exists((ergoToken: ErgoToken) => 
                         ergoToken.getId().toString() == token._1 && ergoToken.getValue() >= token._2))
-            if (sufficientFunds && sale.status == SaleStatus.LIVE) {
+            val result: Option[Fulfillment] = if (sufficientFunds && sale.status == SaleStatus.LIVE) {
                 val negativeTokens = combinedPrices.filterNot(cp => cp._1 == "0"*64 || cp._2 > 0)
                 val negativeSalesInOrder = try {
                     negativeTokens.foreach(c => {
@@ -111,22 +113,22 @@ final case class TokenOrder(
                     val tokenMap = new HashMap[String,Long]()
                     
                     tokensPicked.foreach(pick => tokenMap.put(pick.tokenId, 1l + tokenMap.getOrElse(pick.tokenId,0L)))
-
+                    var nftBox, sellerBox, feeBox: Option[OutBox] = None
                     ergoClient.execute(new java.util.function.Function[BlockchainContext,Unit] {
                         override def apply(ctx: BlockchainContext): Unit = {
                             
-                            val nftBox = ctx.newTxBuilder().outBoxBuilder()
+                            nftBox = Some(ctx.newTxBuilder().outBoxBuilder()
                                 .contract(Address.create(userAddress).toErgoContract())
                                 .value(1000000L)
                                 .tokens(tokenMap.map(et => new ErgoToken(et._1,et._2)).toSeq:_*)
-                                .build()
+                                .build())
                             
                             val sellerBoxBuilder = ctx.newTxBuilder().outBoxBuilder()
                                 .contract(Address.create(sale.sellerWallet).toErgoContract())
                                 .value(combinedPrices.getOrElse("0"*64,0L)*(100-sale.saleFeePct)/100+1000000L)
                             if (combinedPrices.filterNot(_._1 == "0"*64).size > 0)
                                 sellerBoxBuilder.tokens(combinedPrices.filterNot(_._1 == "0"*64).map(t => new ErgoToken(t._1,math.round(math.abs(t._2).toDouble*(100.0-sale.saleFeePct)/100.0).toLong)).toArray:_*)
-                            val sellerBox = sellerBoxBuilder.build()                              
+                            sellerBox = Some(sellerBoxBuilder.build())                              
                             
                             val feeTokens = combinedPrices.filterNot(cp => cp._1 == "0"*64 || math.abs(cp._2)*sale.saleFeePct/100 < 1)
                             val feeBoxBuilder = ctx.newTxBuilder().outBoxBuilder()
@@ -134,39 +136,18 @@ final case class TokenOrder(
                                 .value(combinedPrices.getOrElse("0"*64,0L)*sale.saleFeePct/100+1000000L)
                             if (feeTokens.size > 0)
                                 feeBoxBuilder.tokens(feeTokens.map(t => new ErgoToken(t._1,math.abs(t._2)*sale.saleFeePct/100)).toArray:_*)
-                            val feeBox = feeBoxBuilder.build()
-
-                            val boxesLoader = new ExplorerAndPoolUnspentBoxesLoader().withAllowChainedTx(true)
-                            
-                            val boxOperations = BoxOperations.createForSender(sale.getSaleAddress,ctx).withInputBoxesLoader(boxesLoader)
-                                .withTokensToSpend((nftBox.getTokens().asScala ++ negativeTokens.map(t => new ErgoToken(t._1, math.abs(t._2)))).asJava)
-                                .withAmountToSpend(1000000L)
-                                .withFeeAmount(1000000L)
-                            
-                            try{
-                                val unsigned = ctx.newTxBuilder
-                                    .addOutputs(nftBox, sellerBox, feeBox)
-                                    .addInputs(orderBox)
-                                    .fee(1000000L)
-                                    .sendChangeTo(sale.getSaleAddress)
-                                    .addInputs(boxOperations.loadTop(2000000L).asScala:_*)
-                                    .build()
-                                
-                                val signed = Pratir.sign(ctx,unsigned)
-                                
-                                ctx.sendTransaction(signed)
-                                
-                                Await.result(salesdao.updateTokenOrderStatus(id,orderBox.getId.toString,TokenOrderStatus.FULLFILLING,signed.getId()),Duration.Inf)
-                                success = true
-                            } catch {
-                                case e: Exception => logger.error(e.getMessage())
-                            }
+                            feeBox = Some(feeBoxBuilder.build())
                         }
                     })
+                    Some(Fulfillment(saleId, id, orderBox, nftBox.get, sellerBox.get, feeBox.get))
+                } else {
+                    None
                 }
-            } 
+            } else {
+                None
+            }
             
-            if (!success && !(sale.status == SaleStatus.SOLD_OUT && sale.updated_at.isAfter(Instant.now().minusSeconds(600)))) {
+            if (!result.isDefined && !(sale.status == SaleStatus.SOLD_OUT && sale.updated_at.isAfter(Instant.now().minusSeconds(600)))) {
                 ergoClient.execute(new java.util.function.Function[BlockchainContext,Unit] {
                     override def apply(ctx: BlockchainContext): Unit = {
                         val signed = Pratir.sign(ctx,refund(ctx, orderBox))
@@ -177,6 +158,9 @@ final case class TokenOrder(
                     }
                 })
             }
+            result
+        } else {
+            None
         }
     }
 
