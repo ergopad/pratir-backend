@@ -1,4 +1,4 @@
-FROM hseeberger/scala-sbt:8u222_1.3.5_2.13.1
+FROM hseeberger/scala-sbt:8u312_1.6.2_2.13.8
 WORKDIR /app
 
 # Copy the application source in.
@@ -9,4 +9,4 @@ RUN sbt compile
 
 # Set the command to run and other metadata when the container starts.
 EXPOSE 9000
-CMD sbt run
+CMD sbt run 
