@@ -9,4 +9,4 @@ RUN sbt compile
 
 # Set the command to run and other metadata when the container starts.
 EXPOSE 9000
-CMD sbt run 
+CMD sbt run

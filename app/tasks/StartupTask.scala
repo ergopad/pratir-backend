@@ -26,12 +26,13 @@ extends  HasDatabaseConfigProvider[JdbcProfile]{
         TableQuery[Prices.Prices].schema ++
         TableQuery[Packs.Packs].schema ++
         TableQuery[PackEntries.PackEntries].schema ++ 
-        TableQuery[TokenOrders.TokenOrders].schema
+        TableQuery[TokenOrders.TokenOrders].schema ++
+        TableQuery[Users.Users].schema
       // the block of code that will be executed
       Await.result(db.run(DBIO.seq(
           // schema.dropIfExists,
           schema.create
-      )),Duration.Inf)
+      )), Duration.Inf)
       println("Startup done")
     } catch {
       case e: Exception => println(e)

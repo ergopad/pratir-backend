@@ -17,6 +17,6 @@ extends BaseController {
     implicit val pingResponseJson = Json.format[PingResponse]
 
     def ping(): Action[AnyContent] = Action { implicit request =>
-        Ok(Json.toJson(PingResponse("ok", "Hello World!")))
+        Ok(Json.toJson(PingResponse(status="ok", message="Hello World!")))
     }
 }
