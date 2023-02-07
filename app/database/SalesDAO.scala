@@ -152,7 +152,6 @@ object TokenOrders {
 }
 
 object Sales {
-
     class Sales(tag: Tag) extends Table[Sale](tag, "SALES") {
         def id = column[UUID]("ID", O.PrimaryKey)
         def name = column[String]("NAME")
