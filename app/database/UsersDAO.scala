@@ -40,7 +40,7 @@ class UsersDAO @Inject() (protected val dbConfigProvider: DatabaseConfigProvider
 
     def updateUser(user: User): Future[Any] = {
         val query =
-            for (dbUser <- Users.users if dbUser.id === user.id)
+            for (dbUser <- Users.users if dbUser.address === user.address)
                 yield (dbUser.name, dbUser.pfpUrl, dbUser.tagline)
         db.run(query.update(user.name, user.pfpUrl, user.tagline)) map { _ > 0 }
     }
