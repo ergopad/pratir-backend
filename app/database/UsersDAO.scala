@@ -17,10 +17,11 @@ import slick.jdbc.PostgresProfile.api._
 
 import models._
 
-
 @Singleton
-class UsersDAO @Inject()(protected val dbConfigProvider: DatabaseConfigProvider)(implicit ec: ExecutionContext)
-  extends HasDatabaseConfigProvider[JdbcProfile] with Logging {
+class UsersDAO @Inject() (protected val dbConfigProvider: DatabaseConfigProvider)(
+    implicit ec: ExecutionContext
+) extends HasDatabaseConfigProvider[JdbcProfile]
+    with Logging {
 
     def getAll: Future[Seq[User]] = {
         val query = Users.users.result
@@ -32,10 +33,17 @@ class UsersDAO @Inject()(protected val dbConfigProvider: DatabaseConfigProvider)
         db.run(query)
     }
 
-    // def newTokenOrder(id: UUID, userAddress: String, saleId: UUID, packId: UUID): Future[Any] = {
-    //     logger.info(s"""Registering new token order for ${saleId.toString()}""")
-    //     db.run(DBIO.seq(TokenOrders.tokenOrders += TokenOrder(id, userAddress, saleId, packId, "", "", TokenOrderStatus.INITIALIZED, Instant.now(), Instant.now())))
-    // }
+    def createUser(user: User): Future[Any] = {
+        val query = Users.users += user
+        db.run(query)
+    }
+
+    def updateUser(user: User): Future[Any] = {
+        val query =
+            for (dbUser <- Users.users if dbUser.id === user.id)
+                yield (dbUser.name, dbUser.pfpUrl, dbUser.tagline)
+        db.run(query.update(user.name, user.pfpUrl, user.tagline)) map { _ > 0 }
+    }
 }
 
 object Users {

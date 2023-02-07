@@ -1,6 +1,8 @@
 package models
 
-final case class NewUser(
+// todo: add ergoauth temp token
+final case class UpdateUser(
+    id: String,
     address: String,
     name: String,
     pfpUrl: String,

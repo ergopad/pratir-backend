@@ -17,3 +17,4 @@ GET     /order/:address         controllers.SaleController.getBuyOrders(address:
 # User Controller
 GET     /user                   controllers.UserController.getAll()
 GET     /user/:address          controllers.UserController.getUser(address: String)
+POST    /user                   controllers.UserController.updateUser()
