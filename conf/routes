@@ -18,3 +18,5 @@ GET     /order/:address         controllers.SaleController.getBuyOrders(address:
 GET     /user                   controllers.UserController.getAll()
 GET     /user/:address          controllers.UserController.getUser(address: String)
 POST    /user                   controllers.UserController.updateUser()
+POST    /auth                   controllers.UserController.auth()
+POST    /auth/:verificationId   controllers.UserController.verify(verificationId: String)
