@@ -1,5 +1,8 @@
 package controllers
 
+import com.amazonaws.services.s3.model.PutObjectRequest
+import com.amazonaws.services.s3.model.CannedAccessControlList
+
 import java.math.BigInteger
 import java.security.SecureRandom
 import java.util.Base64
@@ -15,6 +18,7 @@ import play.api.mvc._
 
 import models._
 import database._
+import util._
 
 import scala.concurrent.ExecutionContext
 import scala.concurrent.Await
@@ -23,6 +27,7 @@ import scala.concurrent.duration.Duration
 @Singleton
 class UserController @Inject() (
     val usersDao: UsersDAO,
+    val s3: S3Client,
     val controllerComponents: ControllerComponents
 )(implicit ec: ExecutionContext)
     extends BaseController
@@ -33,6 +38,7 @@ class UserController @Inject() (
     implicit val userAuthResponseJson = Json.format[UserAuthResponse]
     implicit val userVerifyRequestJson = Json.format[UserVerifyRequest]
     implicit val userVerifyResponseJson = Json.format[UserVerifyResponse]
+    implicit val fileUploadResponseJson = Json.format[FileUploadResponse]
 
     def getAll(): Action[AnyContent] = Action.async { implicit request =>
         usersDao.getAll.map(user => Ok(Json.toJson(user)))
@@ -162,6 +168,31 @@ class UserController @Inject() (
                 } catch {
                     case e: Exception => BadRequest(e.getMessage)
                 }
+        }
+    }
+
+    def uploadFile = Action(parse.multipartFormData) { request =>
+        try {
+            request.body
+                .file("fileobject")
+                .map { fileobject =>
+                    val filename = UUID.randomUUID.toString + "." + fileobject.filename
+                    // upload time
+                    s3.get.putObject(
+                        new PutObjectRequest(
+                            s3.bucket,
+                            filename,
+                            fileobject.ref
+                        ).withCannedAcl(CannedAccessControlList.PublicRead)
+                    )
+                    val objectUrl = "https://%s.s3.%s.amazonaws.com/%s".format(s3.bucket, s3.region, filename)
+                    Ok(Json.toJson(FileUploadResponse("ok", "File Uploaded", Some(objectUrl))))
+                }
+                .getOrElse {
+                    NotFound("File Not Found")
+                }
+        } catch {
+            case e: Exception => BadRequest(e.getMessage)
         }
     }
 
