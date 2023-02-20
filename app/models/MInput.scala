@@ -1,6 +1,7 @@
 package models
 
 import scala.collection.mutable.HashMap
+import play.api.libs.json.Json
 
 final case class MInput(
   extension: Map[String, String],
@@ -13,3 +14,7 @@ final case class MInput(
   transactionId: String,
   index: Short
 )
+
+object MInput {
+  implicit val json = Json.format[MInput]
+}

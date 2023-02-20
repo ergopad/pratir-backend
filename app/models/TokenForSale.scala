@@ -7,7 +7,6 @@ final case class TokenForSale(
     tokenId: String,
     amount: Int,
     originalAmount: Int,
-    rarity: Double,
-    category: String,
+    rarity: String,
     saleId: UUID
 )

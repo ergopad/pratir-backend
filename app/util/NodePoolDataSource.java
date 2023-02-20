@@ -13,6 +13,7 @@ import org.ergoplatform.restapi.client.Transactions;
 import org.ergoplatform.restapi.client.ErgoTransaction;
 import org.ergoplatform.restapi.client.ErgoTransactionInput;
 import org.ergoplatform.restapi.client.ErgoTransactionOutput;
+import org.ergoplatform.explorer.client.model.Items;
 import org.ergoplatform.appkit.ErgoClientException;
 import retrofit2.Response;
 import retrofit2.Call;
@@ -70,42 +71,48 @@ public class NodePoolDataSource extends NodeAndExplorerDataSourceImpl {
     }
 
     public List<InputBox> getAllUnspentBoxesFor(Address address) {
+        return getAllUnspentBoxesFor(address, true);
+    }
+
+    public List<InputBox> getAllUnspentBoxesFor(Address address, Boolean includeMempool) {
 
         List<InputBox> confirmed = new ArrayList<>();
         boolean foundAll = false;
         int offset = 0;
 
         while (!foundAll) {
-            List<InputBox> confirmedPartial = getUnspentBoxesFor(address,offset,500);
+            List<InputBox> confirmedPartial = getUnspentBoxesFor(address,offset,100);
             confirmed.addAll(confirmedPartial);
-            if (confirmedPartial.size() == 500) {
-                offset += 500;
-            } else {
-                foundAll = true;
-            }
-        }
-        
-        List<InputBox> unconfirmed = new ArrayList<>();
-        List<String> spent = new ArrayList<>();
-
-        offset = 0;
-        foundAll = false;
-
-        while (!foundAll) {
-            Triplet<List<String>,List<InputBox>,Transactions> partialMempool = getMempoolBoxesFor(address,offset,100);
-            unconfirmed.addAll(partialMempool.getValue1());
-            spent.addAll(partialMempool.getValue0());
-            if (partialMempool.getValue2().size() >= 99) {
+            if (confirmedPartial.size() == 100) {
                 offset += 100;
             } else {
                 foundAll = true;
             }
         }
+        
+        if (includeMempool) {
+            List<InputBox> unconfirmed = new ArrayList<>();
+            List<String> spent = new ArrayList<>();
 
-        confirmed.removeIf(ib -> spent.contains(ib.getId().toString()));
-        unconfirmed.removeIf(ib -> spent.contains(ib.getId().toString()));
+            offset = 0;
+            foundAll = false;
 
-        confirmed.addAll(unconfirmed);
+            while (!foundAll) {
+                Triplet<List<String>,List<InputBox>,Transactions> partialMempool = getMempoolBoxesFor(address,offset,100);
+                unconfirmed.addAll(partialMempool.getValue1());
+                spent.addAll(partialMempool.getValue0());
+                if (partialMempool.getValue2().size() >= 99) {
+                    offset += 100;
+                } else {
+                    foundAll = true;
+                }
+            }
+
+            confirmed.removeIf(ib -> spent.contains(ib.getId().toString()));
+            unconfirmed.removeIf(ib -> spent.contains(ib.getId().toString()));
+
+            confirmed.addAll(unconfirmed);
+        }
 
         return confirmed;
     }

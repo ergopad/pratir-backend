@@ -1,6 +1,8 @@
 package models
 
+import play.api.libs.json.JsValue
+
 final case class NewPackEntry(
-    category: String,
+    rarity: JsValue,
     amount: Int
 )

@@ -5,6 +5,7 @@ import scala.collection.JavaConverters._
 import scala.collection.mutable.HashMap
 import org.ergoplatform.appkit.impl.InputBoxImpl
 import org.ergoplatform.appkit.impl.UnsignedTransactionImpl
+import play.api.libs.json.Json
 
 final case class MUnsignedTransaction(
     inputs: Array[MInput],
@@ -13,6 +14,9 @@ final case class MUnsignedTransaction(
 )
 
 object MUnsignedTransaction {
+
+    implicit val munsignedTransactionJson = Json.format[MUnsignedTransaction]
+
     def apply(unsigned: UnsignedTransaction): MUnsignedTransaction = {
         val inputs = unsigned.getInputs().asScala.map(inp => 
             MInput(
@@ -52,45 +56,3 @@ object MUnsignedTransaction {
         MUnsignedTransaction(inputs,dataInputs,outputs)
     }
 }
-
-// def unsignedTxToJson(unsignedTx: UnsignedTransactionImpl): String = {
-//         inputs = []
-//         for i in unsignedTx.getInputs():
-//             j = json.loads(i.toJson(False))
-//             j["extension"] = {}
-//             j["value"] = str(j["value"])
-//             for ass in j["assets"]:
-//                 ass["amount"] = str(ass["amount"])
-//             inputs.append(j)
-//         dataInputs = []
-//         for di in unsignedTx.getDataInputs():
-//             j = json.loads(di.toJson(False))
-//             j["extension"] = {}
-//             j["value"] = str(j["value"])
-//             for ass in j["assets"]:
-//                 ass["amount"] = str(ass["amount"])
-//             dataInputs.append(j)
-//         outputs = []
-//         for o in unsignedTx.getOutputs():
-//             assets = []
-//             for t in o.getTokens():
-//                 assets.append({'tokenId': str(t.getId().toString()), 'amount': str(t.getValue())})  
-//             additionalRegisters = {}
-//             r = 4
-//             for additionalRegister in o.getRegisters():
-//                 additionalRegisters[f'R{r}']=additionalRegister.toHex()
-//                 r+=1
-//             outputs.append({
-//                 'value': str(o.getValue()),
-//                 'ergoTree': o.getErgoTree().bytesHex(),
-//                 'assets': assets,
-//                 'additionalRegisters': additionalRegisters,
-//                 'creationHeight': o.getCreationHeight()
-//             })
-
-//         return {
-//             'inputs': inputs,
-//             'dataInputs': dataInputs,
-//             'outputs': outputs
-//         }
-//     }

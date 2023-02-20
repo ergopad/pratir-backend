@@ -46,6 +46,7 @@ import org.ergoplatform.appkit.OutBox
 import models.Fulfillment
 import scala.collection.mutable.Buffer
 import scala.collection.mutable.ArrayBuffer
+import models.NFTCollectionStatus
 
 class UpdateStatusTask @Inject() (protected val dbConfigProvider: DatabaseConfigProvider, actorSystem: ActorSystem)
 extends  HasDatabaseConfigProvider[JdbcProfile] with Logging {
@@ -54,6 +55,7 @@ extends  HasDatabaseConfigProvider[JdbcProfile] with Logging {
             Random.setSeed(Instant.now().toEpochMilli())
             val ergoClient = RestApiErgoClientWithNodePoolDataSource.create(sys.env.get("ERGO_NODE").get,NetworkType.MAINNET,"",sys.env.get("ERGO_EXPLORER").get)
             val salesdao = new SalesDAO(dbConfigProvider)
+            val mintdao = new MintDAO(dbConfigProvider)
             logger.info("Handling open orders...")
             try {
                 handleOrders(ergoClient,salesdao)
