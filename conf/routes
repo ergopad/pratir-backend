@@ -20,3 +20,4 @@ GET     /user/:address          controllers.UserController.getUser(address: Stri
 POST    /user                   controllers.UserController.updateUser()
 POST    /auth                   controllers.UserController.auth()
 POST    /auth/:verificationId   controllers.UserController.verify(verificationId: String)
+POST    /upload_file            controllers.UserController.uploadFile()

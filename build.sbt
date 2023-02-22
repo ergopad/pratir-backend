@@ -23,9 +23,14 @@ libraryDependencies ++= Seq(
   "org.springframework.security" % "spring-security-crypto" % "5.6.2"
 )
 
+// https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk
+libraryDependencies ++= Seq(
+  "com.amazonaws" % "aws-java-sdk" % "1.12.409",
+  "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.12.1"
+)
 
 // Adds additional packages into Twirl
-//TwirlKeys.templateImports += "com.example.controllers._"
+// TwirlKeys.templateImports += "com.example.controllers._"
 
 // Adds additional packages into conf/routes
 // play.sbt.routes.RoutesKeys.routesImport += "com.example.binders._"
