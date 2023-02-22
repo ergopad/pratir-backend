@@ -21,17 +21,22 @@ extends  HasDatabaseConfigProvider[JdbcProfile]{
   actorSystem.scheduler.scheduleOnce(delay = 5.seconds)(
     try {
       println("Running startup")
-      val schema = TableQuery[Sales.Sales].schema ++ 
+      val schema = 
+        TableQuery[Sales.Sales].schema ++ 
         TableQuery[TokensForSale.TokensForSale].schema ++
-        TableQuery[Prices.Prices].schema ++
         TableQuery[Packs.Packs].schema ++
+        TableQuery[Prices.Prices].schema ++
         TableQuery[PackEntries.PackEntries].schema ++ 
         TableQuery[TokenOrders.TokenOrders].schema ++
         TableQuery[Users.Users].schema ++
-        TableQuery[AuthRequests.AuthRequests].schema
+        TableQuery[AuthRequests.AuthRequests].schema ++
+        TableQuery[Artists.Artists].schema ++
+        TableQuery[Collections.Collections].schema ++
+        TableQuery[NFTs.NFTs].schema
       // the block of code that will be executed
       Await.result(db.run(DBIO.seq(
-          schema.createIfNotExists
+          //schema.dropIfExists,
+          schema.create
       )), Duration.Inf)
       println("Startup done")
     } catch {

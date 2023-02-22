@@ -7,7 +7,7 @@ import play.api.db.slick.HasDatabaseConfigProvider
 import slick.jdbc.JdbcProfile
 import scala.concurrent.Future
 import models._
-import slick.jdbc.PostgresProfile.api._
+import database.JsonPostgresProfile.api._
 import java.time._
 import java.util.UUID
 import com.google.common.collect
@@ -15,6 +15,7 @@ import scala.concurrent.Await
 import scala.concurrent.duration
 import scala.util.Random
 import play.api.Logging
+import play.api.libs.json.JsValue
 
 
 @Singleton
@@ -58,9 +59,25 @@ class SalesDAO @Inject()(protected val dbConfigProvider: DatabaseConfigProvider)
         db.run(query)
     }
 
+    def injectPackTokenId(packPlaceHolder: String, tokenId: String, saleId: UUID) = {
+        db.run(sqlu"""
+        UPDATE prices
+        SET token_id = ${tokenId}
+        WHERE token_id = ${packPlaceHolder}
+        AND pack_id IN (
+            SELECT id FROM packs
+            WHERE sale_id = UUID(${saleId.toString()})
+            )
+        """)
+    }
+
     def getPackEntries(packId: UUID): Future[Seq[PackEntry]] = {
         val query = PackEntries.packEntries.filter(_.packId === packId).result
         db.run(query)
+    }
+
+    def insertTokenForSale(tokenForSale: TokenForSale) = {
+        db.run(DBIO.seq(TokensForSale.tokensForSale += tokenForSale))
     }
 
     def getTokensForSale(saleId: UUID): Future[Seq[TokenForSale]] = {
@@ -104,19 +121,30 @@ class SalesDAO @Inject()(protected val dbConfigProvider: DatabaseConfigProvider)
         db.run(query)
     }
 
-    def pickRandomToken(saleId: UUID, category: String) = {
+    def pickRandomToken(saleId: UUID, rarity: String) = {
         val randomTokenUUID = UUID.fromString(Await.result(db.run(sql"""
-        select "ID"  
+        select "id"  
         from 
-            (select "ID", ("RARITY"*random()) as "LUCKY_NUM"
-            from "TOKENS_FOR_SALE"
-            where "AMOUNT" > 0 
-            and "SALE_ID" = UUID(${saleId.toString()})
-            and "CATEGORY" = $category
-            order by "LUCKY_NUM" desc) as X
+            (select "id", (random()) as "lucky_num"
+            from "tokens_for_sale"
+            where "amount" > 0 
+            and "sale_id" = UUID(${saleId.toString()})
+            and "rarity" = $rarity
+            order by "lucky_num" desc) as X
         LIMIT 1
         """.as[String]), duration.Duration.Inf).head)
         getTokenForSale(randomTokenUUID)
+    }
+
+    def rarityOdds(saleId: UUID, packRarity: PackRarity) = {
+        Await.result(db.run(sql"""
+        SELECT random()*${packRarity.odds}*SUM(amount)/SUM(original_amount) AS "lucky_num"
+            FROM "tokens_for_sale"
+            WHERE "sale_id" = UUID(${saleId.toString()})
+            AND "rarity" = ${packRarity.rarity}
+            GROUP BY sale_id, rarity
+        LIMIT 1
+        """.as[Double]), duration.Duration.Inf).head.toDouble
     }
 
     def reserveToken(tokenForSale: TokenForSale, reserveAmount: Int = 1) = {
@@ -133,18 +161,18 @@ class SalesDAO @Inject()(protected val dbConfigProvider: DatabaseConfigProvider)
 }
 
 object TokenOrders {
-    class TokenOrders(tag: Tag) extends Table[TokenOrder](tag, "TOKEN_ORDERS") {
-        def id = column[UUID]("ID", O.PrimaryKey)
-        def userWallet = column[String]("USER_WALLET")
-        def saleId = column[UUID]("SALE_ID")
-        def packId = column[UUID]("PACK_ID")
-        def orderBoxId = column[String]("ORDER_BOX_ID")
-        def followUpTxId = column[String]("FOLLOW_UP_TX_ID", O.Length(64, true))
-        def status = column[TokenOrderStatus.Value]("STATUS")
-        def createdAt = column[Instant]("CREATED_AT")
-        def updatedAt = column[Instant]("UPDATED_AT")
-        def sale = foreignKey("TOKEN_ORDERS__SALE_ID_FK", saleId, Sales.sales)(_.id, onDelete=ForeignKeyAction.Cascade)
-        def pack = foreignKey("TOKEN_ORDERS__PACK_ID_FK", packId, Packs.packs)(_.id, onDelete=ForeignKeyAction.Cascade)
+    class TokenOrders(tag: Tag) extends Table[TokenOrder](tag, "token_orders") {
+        def id = column[UUID]("id", O.PrimaryKey)
+        def userWallet = column[String]("user_wallet")
+        def saleId = column[UUID]("sale_id")
+        def packId = column[UUID]("pack_id")
+        def orderBoxId = column[String]("order_box_id")
+        def followUpTxId = column[String]("follow_up_tx_id", O.Length(64, true))
+        def status = column[TokenOrderStatus.Value]("status")
+        def createdAt = column[Instant]("created_at")
+        def updatedAt = column[Instant]("updated_at")
+        def sale = foreignKey("token_orders__sale_id_fk", saleId, Sales.sales)(_.id, onDelete=ForeignKeyAction.Cascade)
+        def pack = foreignKey("token_orders__pack_id_fk", packId, Packs.packs)(_.id, onDelete=ForeignKeyAction.Cascade)
         def * = (id, userWallet, saleId, packId, orderBoxId, followUpTxId, status, createdAt, updatedAt) <> (TokenOrder.tupled, TokenOrder.unapply)
     }
 
@@ -152,19 +180,19 @@ object TokenOrders {
 }
 
 object Sales {
-    class Sales(tag: Tag) extends Table[Sale](tag, "SALES") {
-        def id = column[UUID]("ID", O.PrimaryKey)
-        def name = column[String]("NAME")
-        def description = column[String]("DESCRIPTION")
-        def startTime = column[Instant]("START_TIME", O.Default(Instant.now()))
-        def endTime = column[Instant]("END_TIME", O.Default(Instant.now().plus(Duration.ofDays(365))))
-        def sellerWallet = column[String]("SELLER_WALLET")
-        def status = column[SaleStatus.Value]("STATUS")
-        def initialNanoErgFee = column[Long]("INITIAL_NANOERG_FEE")
-        def saleFeePct = column[Int]("SALE_FEE_PCT")
-        def password = column[String]("PASSWORD")
-        def createdAt = column[Instant]("CREATED_AT")
-        def updatedAt = column[Instant]("UPDATED_AT")
+    class Sales(tag: Tag) extends Table[Sale](tag, "sales") {
+        def id = column[UUID]("id", O.PrimaryKey)
+        def name = column[String]("name")
+        def description = column[String]("description")
+        def startTime = column[Instant]("start_time", O.Default(Instant.now()))
+        def endTime = column[Instant]("end_time", O.Default(Instant.now().plus(Duration.ofDays(365))))
+        def sellerWallet = column[String]("seller_wallet")
+        def status = column[SaleStatus.Value]("status")
+        def initialNanoErgFee = column[Long]("initial_nanoerg_fee")
+        def saleFeePct = column[Int]("sale_fee_pct")
+        def password = column[String]("password")
+        def createdAt = column[Instant]("created_at")
+        def updatedAt = column[Instant]("updated_at")
         def * = (id, name, description, startTime, endTime, sellerWallet, status, initialNanoErgFee, saleFeePct, password, createdAt, updatedAt) <> (Sale.tupled, Sale.unapply)
     }
 
@@ -172,28 +200,27 @@ object Sales {
 }
 
 object TokensForSale {
-    class TokensForSale(tag: Tag) extends Table[TokenForSale]   (tag, "TOKENS_FOR_SALE") {
-        def id = column[UUID]("ID", O.PrimaryKey)
-        def tokenId = column[String]("TOKEN_ID", O.Length(64, false))
-        def amount = column[Int]("AMOUNT", O.Default(0))
-        def originalAmount = column[Int]("ORIGINAL_AMOUNT")
-        def rarity = column[Double]("RARITY")
-        def category = column[String]("CATEGORY")
-        def saleId = column[UUID]("SALE_ID")
-        def sale = foreignKey("TOKENS_FOR_SALE__SALE_ID_FK", saleId, Sales.sales)(_.id, onDelete=ForeignKeyAction.Cascade)
-        def * = (id, tokenId, amount, originalAmount, rarity, category, saleId) <> (TokenForSale.tupled, TokenForSale.unapply)
+    class TokensForSale(tag: Tag) extends Table[TokenForSale]   (tag, "tokens_for_sale") {
+        def id = column[UUID]("id", O.PrimaryKey)
+        def tokenId = column[String]("token_id", O.Length(64, false))
+        def amount = column[Int]("amount", O.Default(0))
+        def originalAmount = column[Int]("original_amount")
+        def rarity = column[String]("rarity")
+        def saleId = column[UUID]("sale_id")
+        def sale = foreignKey("tokens_for_sale__sale_id_fk", saleId, Sales.sales)(_.id, onDelete=ForeignKeyAction.Cascade)
+        def * = (id, tokenId, amount, originalAmount, rarity, saleId) <> (TokenForSale.tupled, TokenForSale.unapply)
     }
 
     val tokensForSale = TableQuery[TokensForSale]
 }
 
 object Prices {
-    class Prices(tag: Tag) extends Table[Price](tag, "PRICES") {
-        def id = column[UUID]("ID", O.PrimaryKey)
-        def tokenId = column[String]("TOKEN_ID", O.Length(64, false))
-        def amount = column[Long]("AMOUNT", O.Default(0))
-        def packId = column[UUID]("PACK_ID")
-        def pack = foreignKey("PRICES__PACK_ID_FK", packId, Packs.packs)(_.id, onDelete=ForeignKeyAction.Cascade)
+    class Prices(tag: Tag) extends Table[Price](tag, "prices") {
+        def id = column[UUID]("id", O.PrimaryKey)
+        def tokenId = column[String]("token_id", O.Length(64, false))
+        def amount = column[Long]("amount", O.Default(0))
+        def packId = column[UUID]("pack_id")
+        def pack = foreignKey("prices__pack_id_fk", packId, Packs.packs)(_.id, onDelete=ForeignKeyAction.Cascade)
         def * = (id, tokenId, amount, packId) <> (Price.tupled, Price.unapply)
     }
 
@@ -201,25 +228,26 @@ object Prices {
 }
 
 object Packs {
-    class Packs(tag: Tag) extends Table[Pack](tag, "PACKS") {
-        def id = column[UUID]("ID", O.PrimaryKey)
-        def name = column[String]("NAME")
-        def saleId = column[UUID]("SALE_ID")
-        def sale = foreignKey("PACKAGES__SALE_ID_FK", saleId, Sales.sales)(_.id, onDelete=ForeignKeyAction.Cascade)
-        def * = (id, name, saleId) <> (Pack.tupled, Pack.unapply)
+    class Packs(tag: Tag) extends Table[Pack](tag, "packs") {
+        def id = column[UUID]("id", O.PrimaryKey)
+        def name = column[String]("name")
+        def image = column[String]("image")
+        def saleId = column[UUID]("sale_id")
+        def sale = foreignKey("packages__sale_id_fk", saleId, Sales.sales)(_.id, onDelete=ForeignKeyAction.Cascade)
+        def * = (id, name, image, saleId) <> (Pack.tupled, Pack.unapply)
     }
 
     val packs = TableQuery[Packs]
 }
 
 object PackEntries {
-    class PackEntries(tag: Tag) extends Table[PackEntry](tag, "PACK_ENTRIES") {
-        def id = column[UUID]("ID", O.PrimaryKey)
-        def category = column[String]("CATEGORY")
-        def amount = column[Int]("AMOUNT")
-        def packId = column[UUID]("PACK_ID")
-        def pack = foreignKey("PACK_ENTRIES__PACK_ID_FK", packId, Packs.packs)(_.id, onDelete=ForeignKeyAction.Cascade)
-        def * = (id, category, amount, packId) <> (PackEntry.tupled, PackEntry.unapply)
+    class PackEntries(tag: Tag) extends Table[PackEntry](tag, "pack_entries") {
+        def id = column[UUID]("id", O.PrimaryKey)
+        def rarity = column[JsValue]("rarity")
+        def amount = column[Int]("amount")
+        def packId = column[UUID]("pack_id")
+        def pack = foreignKey("pack_entries__pack_id_fk", packId, Packs.packs)(_.id, onDelete=ForeignKeyAction.Cascade)
+        def * = (id, rarity, amount, packId) <> (PackEntry.tupled, PackEntry.unapply)
     }
 
     val packEntries = TableQuery[PackEntries]

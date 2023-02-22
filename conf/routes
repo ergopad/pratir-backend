@@ -4,20 +4,43 @@
 # ~~~~
 
 # Ping Controller
-GET     /ping                   controllers.PingController.ping()
+GET     /ping                           controllers.PingController.ping()
 
 # Sale Controller
-GET     /sale                   controllers.SaleController.getAll()
-GET     /sale/:saleId           controllers.SaleController.getSale(saleId: String)
-POST    /sale                   controllers.SaleController.createSale()
-POST    /sale/bootstrap         controllers.SaleController.bootstrapSale()
-POST    /order                  controllers.SaleController.buyOrder()
-GET     /order/:address         controllers.SaleController.getBuyOrders(address: String)
+###
+#  summary: Get all sales
+#  tags:
+#    - Sale endpoints
+#  responses:
+#    200:
+#      description: success
+#      schema:
+#        type: array
+#        items:
+#          $ref: '#/definitions/models.SaleLite'
+###
+GET     /sale                           controllers.SaleController.getAll()
+GET     /sale/:saleId                   controllers.SaleController.getSale(saleId: String)
+POST    /sale                           controllers.SaleController.createSale()
+POST    /sale/bootstrap                 controllers.SaleController.bootstrapSale()
+POST    /order                          controllers.SaleController.buyOrder()
+GET     /order/:address                 controllers.SaleController.getBuyOrders(address: String)
 
 # User Controller
-GET     /user                   controllers.UserController.getAll()
-GET     /user/:address          controllers.UserController.getUser(address: String)
-POST    /user                   controllers.UserController.updateUser()
+GET     /user                           controllers.UserController.getAll()
+GET     /user/:address                  controllers.UserController.getUser(address: String)
+POST    /user                           controllers.UserController.updateUser()
+
+# Mint Controller
+POST    /artist                         controllers.MintController.createArtist()
+
+GET     /collection                     controllers.MintController.getAllCollections()
+POST    /collection                     controllers.MintController.createCollection()
+GET     /collection/:collectionId/mint  controllers.MintController.mintCollection(collectionId: String)
+
+POST    /nft                            controllers.MintController.createNFTs()
 POST    /auth                   controllers.UserController.auth()
 POST    /auth/:verificationId   controllers.UserController.verify(verificationId: String)
 POST    /upload_file            controllers.UserController.uploadFile()
+
+GET  /assets/*file        controllers.Assets.at(file)

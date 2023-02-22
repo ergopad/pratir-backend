@@ -40,7 +40,6 @@ import java.time.Instant
 class SaleController @Inject()(protected val dbConfigProvider: DatabaseConfigProvider, val controllerComponents: ControllerComponents)(implicit ec: ExecutionContext)
 extends BaseController
  with HasDatabaseConfigProvider[JdbcProfile] {
-    implicit val newTokenForSaleJson = Json.format[NewTokenForSale]
     implicit val newPriceJson = Json.format[NewPrice]
     implicit val newPackEntryJson = Json.format[NewPackEntry]
     implicit val newPackJson = Json.format[NewPack]
@@ -53,7 +52,6 @@ extends BaseController
     implicit val buyPackRequestJson = Json.format[BuyPackRequest]
     implicit val buySaleRequestJson = Json.format[BuySaleRequest]
     implicit val buyRequestJson = Json.format[BuyRequest]
-    implicit val mTokenJson = Json.format[MToken]
     implicit val mInputJson = Json.format[MInput]
     implicit val mOutputJson = Json.format[MOutput]
     implicit val mUnsignedTransactionJson = Json.format[MUnsignedTransaction]
@@ -77,33 +75,21 @@ extends BaseController
         val content = request.body
         val jsonObject = content.asJson
         val salesdao = new SalesDAO(dbConfigProvider)
-        val sale: Option[NewSale] = 
-            jsonObject.flatMap( 
-                Json.fromJson[NewSale](_).asOpt 
-            ) 
+        val sale = Json.fromJson[NewSale](jsonObject.get)
         
         sale match {
-            case None => BadRequest
-            case Some(newSale) =>
+            case je: JsError => BadRequest(JsError.toJson(je))
+            case js: JsSuccess[NewSale] =>
+                val newSale = js.value
+                
                 val saleId = UUID.randomUUID()
                 val encryptedPassword = Pratir.encoder.encode(newSale.password)
                 val saleAdded = Sale(saleId, newSale.name, newSale.description, newSale.startTime, newSale.endTime, newSale.sellerWallet, SaleStatus.PENDING, Pratir.initialNanoErgFee, Pratir.saleFeePct, encryptedPassword, Instant.now(), Instant.now())
                 val tokensAdded = newSale.tokens.map((token: NewTokenForSale) =>
-                    TokenForSale(UUID.randomUUID(),token.tokenId,0,token.amount,token.rarity,token.category,saleId)
+                    TokenForSale(UUID.randomUUID(),token.tokenId,0,token.amount,token.rarity,saleId)
                 )
                 val packsDBIO = DBIO.seq(newSale.packs.flatMap((pack: NewPack) => {
-                    val packId = UUID.randomUUID()
-                    Seq[DBIOAction[Any,slick.dbio.NoStream,?]](
-                        Packs.packs += Pack(packId, pack.name, saleId),
-                        PackEntries.packEntries ++=
-                            pack.content.map(entry =>
-                                PackEntry(UUID.randomUUID(), entry.category, entry.amount, packId)
-                            ),
-                        Prices.prices ++=
-                            pack.price.map(p =>
-                                Price(UUID.randomUUID(), p.tokenId, p.amount, packId)
-                            )
-                    )
+                    pack.toPacks(saleId)
                 }):_*)
                 Await.result(db.run(DBIO.seq(
                     Sales.sales += saleAdded,
