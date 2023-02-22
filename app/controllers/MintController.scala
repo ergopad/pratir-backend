@@ -32,6 +32,7 @@ import models.AvailableTrait
 import models.Trait
 import models.Royalty
 import models.Social
+import database.SalesDAO
 
 @Singleton
 class MintController @Inject()(protected val dbConfigProvider: DatabaseConfigProvider, val controllerComponents: ControllerComponents)(implicit ec: ExecutionContext)
@@ -55,15 +56,10 @@ with HasDatabaseConfigProvider[JdbcProfile] {
                 case je: JsError => BadRequest(JsError.toJson(je))
                 case js: JsSuccess[NewArtist] =>
                     val newArtist = js.value
-                    Json.fromJson[Seq[Social]](newArtist.social) match {
-                        case jse: JsError =>  BadRequest(JsError.toJson(jse))
-                        case _ =>
-                            val artistId = UUID.randomUUID()
-                            val artistAdded = Artist(artistId, newArtist.address, newArtist.name, newArtist.website, newArtist.tagline, newArtist.avatarUrl, newArtist.bannerUrl, newArtist.social, Instant.now(), Instant.now())
-                            Await.result(mintdao.insertArtist(artistAdded), Duration.Inf)
-                            Created(Json.toJson(artistAdded))
-                    }
-                    
+                    val artistId = UUID.randomUUID()
+                    val artistAdded = Artist(artistId, newArtist.address, newArtist.name, newArtist.website, newArtist.tagline, newArtist.avatarUrl, newArtist.bannerUrl, Json.toJson(newArtist.social), Instant.now(), Instant.now())
+                    Await.result(mintdao.insertArtist(artistAdded), Duration.Inf)
+                    Created(Json.toJson(artistAdded)) 
             }
         } catch {
             case e: Exception => BadRequest(Json.toJson(e.getMessage()))
@@ -90,15 +86,17 @@ with HasDatabaseConfigProvider[JdbcProfile] {
             val content = request.body
             val jsonObject = content.asJson
             val mintdao = new MintDAO(dbConfigProvider)
+            val salesdao = new SalesDAO(dbConfigProvider)
             Json.fromJson[NewNFTCollection](jsonObject.get) match {
                 case je: JsError => BadRequest(JsError.toJson(je))
                 case js: JsSuccess[NewNFTCollection] => 
-                    Json.fromJson[Seq[AvailableTrait]](js.value.availableTraits) match {
-                        case jje: JsError => BadRequest(JsError.toJson(jje))
-                        case jjs: JsSuccess[Seq[AvailableTrait]] =>
-                            val collectionAdded = mintdao.insertCollection(js.value)
-                            Created(Json.toJson(collectionAdded))
+                    val collectionAdded = mintdao.insertCollection(js.value)
+                    js.value.saleId match {
+                        case Some(saleId) =>
+                            mintdao.insertNFTs(Await.result(salesdao.getSale(saleId), Duration.Inf).packTokensToMint(salesdao, collectionAdded.id))
+                        case None => None
                     }
+                    Created(Json.toJson(collectionAdded))
             }
         } catch {
             case e: Exception => BadRequest(Json.toJson(e.getMessage()))
@@ -113,16 +111,8 @@ with HasDatabaseConfigProvider[JdbcProfile] {
         Json.fromJson[Seq[NewNFT]](jsonObject.get) match {
             case je: JsError => BadRequest(JsError.toJson(je))
             case js: JsSuccess[Seq[NewNFT]] => 
-                if (js.value.forall(newnft => Json.fromJson[Seq[Trait]](newnft.traits).asOpt match { case None => false case Some(t) => true})) {
-                    if (js.value.forall(newnft => Json.fromJson[Seq[Royalty]](newnft.royalty).asOpt match { case None => false case Some(r) => true})) {
-                        val nftsAdded = mintdao.insertNFTs(js.value)
-                        Created(Json.toJson(nftsAdded))
-                    } else {
-                        BadRequest(Json.toJson(js.value.map(newnft => Json.fromJson[Seq[Royalty]](newnft.royalty) match { case tje: JsError => JsError.toJson(tje) case _ => Json.toJson("")})))
-                    }
-                 } else {
-                    BadRequest(Json.toJson(js.value.map(newnft => Json.fromJson[Seq[Trait]](newnft.traits) match { case tje: JsError => JsError.toJson(tje) case _ => Json.toJson("")})))
-                 }      
+                val nftsAdded = mintdao.insertNewNFTs(js.value)
+                Created(Json.toJson(nftsAdded))                   
         }
     }
 }

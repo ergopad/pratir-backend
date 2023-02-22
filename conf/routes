@@ -7,6 +7,18 @@
 GET     /ping                           controllers.PingController.ping()
 
 # Sale Controller
+###
+# summary: Get all sales
+# tags:
+#   - Sale endpoints
+# responses:
+#   200:
+#     description: success
+#     schema:
+#       type: array
+#       items:
+#         $ref: '#/definitions/models.SaleLite'
+###
 GET     /sale                           controllers.SaleController.getAll()
 GET     /sale/:saleId                   controllers.SaleController.getSale(saleId: String)
 POST    /sale                           controllers.SaleController.createSale()
@@ -27,3 +39,5 @@ POST    /collection                     controllers.MintController.createCollect
 GET     /collection/:collectionId/mint  controllers.MintController.mintCollection(collectionId: String)
 
 POST    /nft                            controllers.MintController.createNFTs()
+
+GET  /assets/*file        controllers.Assets.at(file)

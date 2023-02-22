@@ -20,6 +20,7 @@ import models.NewNFTCollection
 import scala.concurrent.Await
 import scala.concurrent.duration.Duration
 import models.NewNFT
+import play.api.libs.json.Json
 
 @Singleton
 class MintDAO @Inject()(protected val dbConfigProvider: DatabaseConfigProvider)(implicit ec: ExecutionContext)
@@ -62,8 +63,8 @@ class MintDAO @Inject()(protected val dbConfigProvider: DatabaseConfigProvider)(
             newCollection.collectionLogoUrl,
             newCollection.category,
             newCollection.mintingExpiry,
-            newCollection.rarities,
-            newCollection.availableTraits,
+            Json.toJson(newCollection.rarities),
+            Json.toJson(newCollection.availableTraits),
             newCollection.saleId,
             NFTCollectionStatus.INITIALIZED,
             "",
@@ -100,7 +101,7 @@ class MintDAO @Inject()(protected val dbConfigProvider: DatabaseConfigProvider)(
         db.run(query)
     }
 
-    def insertNFTs(newNFTs: Seq[NewNFT]) = {
+    def insertNewNFTs(newNFTs: Seq[NewNFT]): Seq[NFT] = {
         val nftsAdded = newNFTs.map(newNFT =>
             NFT(
                 UUID.randomUUID(),
@@ -110,18 +111,22 @@ class MintDAO @Inject()(protected val dbConfigProvider: DatabaseConfigProvider)(
                 newNFT.name,
                 newNFT.image,
                 newNFT.description,
-                newNFT.traits,
+                Json.toJson(newNFT.traits),
                 newNFT.rarity,
                 newNFT.explicit,
                 NFTStatus.INITIALIZED,
                 "",
-                newNFT.royalty,
+                Json.toJson(newNFT.royalty),
                 Instant.now(),
                 Instant.now()
             )
         )
-        Await.result(db.run(DBIO.seq(NFTs.nfts ++= nftsAdded)), Duration.Inf)
-        nftsAdded
+        insertNFTs(nftsAdded)
+    }
+
+    def insertNFTs(newNFTs: Seq[NFT]): Seq[NFT] = {
+        Await.result(db.run(DBIO.seq(NFTs.nfts ++= newNFTs)), Duration.Inf)
+        newNFTs
     }
 }
 

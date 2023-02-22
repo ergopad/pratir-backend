@@ -13,8 +13,8 @@ final case class NewNFTCollection(
     collectionLogoUrl: String,
     category: String,
     mintingExpiry: Long, //unix timestamp of last date of expiry. If no expiry, must be -1. May not be undefined
-    rarities: JsValue,
-    availableTraits: JsValue,
+    rarities: Seq[AvailableRarity],
+    availableTraits: Seq[AvailableTrait],
     saleId: Option[UUID]
 )
 

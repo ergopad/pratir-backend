@@ -33,11 +33,11 @@ final case class NewPack(
             Packs.packs += Pack(packId, name, image, saleId),
             PackEntries.packEntries ++=
                 content.map(entry =>
-                    PackEntry(UUID.randomUUID(), entry.rarity, entry.amount, packId)
+                    PackEntry(UUID.randomUUID(), Json.toJson(entry.rarity), entry.amount, packId)
                 ),
             Prices.prices ++=
                 price.map(p =>
-                    Price(UUID.randomUUID(), p.tokenId, p.amount, packId)
+                    Price(UUID.randomUUID(), p.tokenId.getOrElse("0"*64), p.amount, packId)
                 )
         )
     }
@@ -48,11 +48,11 @@ final case class NewPack(
             Packs.packs += Pack(packId, name, image, saleId),
             PackEntries.packEntries ++=
                 content.map(entry =>
-                    PackEntry(UUID.randomUUID(), Json.toJson[PackRarity](PackRarity(s"_pt_rarity_${name}",100)), entry.amount, packId)
+                    PackEntry(UUID.randomUUID(), Json.toJson[Seq[PackRarity]](Array(PackRarity(s"_pt_rarity_${name}",100))), entry.amount, packId)
                 ),
             Prices.prices ++=
                 price.map(p =>
-                    Price(UUID.randomUUID(), p.tokenId, p.amount, packId)
+                    Price(UUID.randomUUID(), p.tokenId.getOrElse("0"*64), p.amount, packId)
                 )
         )
     }
@@ -63,11 +63,11 @@ final case class NewPack(
             Packs.packs += Pack(derivedPackId, name, image, saleId),
             PackEntries.packEntries ++=
                 content.map(entry =>
-                    PackEntry(UUID.randomUUID(), entry.rarity, entry.amount, derivedPackId)
+                    PackEntry(UUID.randomUUID(), Json.toJson(entry.rarity), entry.amount, derivedPackId)
                 ),
             Prices.prices ++=
                 price.map(p =>
-                    Price(UUID.randomUUID(), s"_pt_${count.get.toString}_${name}", -1, derivedPackId)
+                    Price(UUID.randomUUID(), s"_pt_${count.get.toString}_${name}", 1, derivedPackId)
                 )
         )
     }
@@ -78,11 +78,11 @@ final case class NewPack(
             Packs.packs += Pack(packId, name, image, saleId),
             PackEntries.packEntries ++=
                 content.map(entry =>
-                    PackEntry(UUID.randomUUID(), entry.rarity, entry.amount, packId)
+                    PackEntry(UUID.randomUUID(), Json.toJson(entry.rarity), entry.amount, packId)
                 ),
             Prices.prices ++=
                 price.map(p =>
-                    Price(UUID.randomUUID(), p.tokenId, p.amount, packId)
+                    Price(UUID.randomUUID(), p.tokenId.getOrElse("0"*64), p.amount, packId)
                 )++Array(Price(UUID.randomUUID(), s"_pt_${count.get.toString}_${name}", -1, packId))
         )
     }

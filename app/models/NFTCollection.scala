@@ -158,8 +158,20 @@ final case class NFTCollection(
         ergoClient.execute(new java.util.function.Function[BlockchainContext,Unit] {
             override def apply(ctx: BlockchainContext): Unit = {
                 val balance = Pratir.balance(ctx.getDataSource().asInstanceOf[NodePoolDataSource].getAllUnspentBoxesFor(_mintContract.toAddress()).asScala.filter(ib =>
-                    // 
-                    true))
+                    if (ib.getRegisters().size() > 0) {
+                        ib.getRegisters().get(0).getValue() match {
+                            case collByte(cb) => 
+                                try {
+                                    new String(ib.getRegisters().get(0).getValue().asInstanceOf[Coll[Byte]].toArray, StandardCharsets.UTF_8).equals(id.toString())
+                                } catch {
+                                    case e: Exception => false
+                                }
+                            case _ => false
+                        }
+                    } else {
+                        false
+                    }
+                ))
                 if (balance._1 >= nanoErgNeeded + 1000000L) {
                     val collectionIssuerBox = ctx.newTxBuilder().outBoxBuilder()
                         .contract(_mintContract)

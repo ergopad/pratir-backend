@@ -33,6 +33,7 @@ import java.io.IOException
 import java.net.URL
 import java.io.BufferedInputStream
 import org.ergoplatform.appkit.UnsignedTransaction
+import org.ergoplatform.appkit.Eip4Token
 
 object NFTStatus extends Enumeration {
     type NFTStatus = Value
@@ -105,7 +106,25 @@ final case class NFT(
                     }
 
 
-                val mintNFTBox = ctx.newTxBuilder().outBoxBuilder()
+                val mintNFTBox = if (rarity.contains("_pt_")) {
+                    ctx.newTxBuilder().outBoxBuilder()
+                    .mintToken(
+                        new Eip4Token(
+                            issuerBox.getId().toString(),
+                            amount,
+                            name,
+                            description,
+                            0,
+                            ErgoValueBuilder.buildFor(Colls.fromArray(Array[Byte](1.toByte,5.toByte))),
+                            ErgoValueBuilder.buildFor(Colls.fromArray(hash)),
+                            ErgoValueBuilder.buildFor(Colls.fromArray(image.getBytes(StandardCharsets.UTF_8)))
+                        )
+                    )
+                    .value(1000000L)
+                    .contract(address(mintdao, salesdao).toErgoContract())
+                    .build()
+                } else {
+                    ctx.newTxBuilder().outBoxBuilder()
                     .mintToken(Eip4TokenBuilder.buildNftPictureToken(
                         issuerBox.getId().toString(),
                         amount,
@@ -118,6 +137,7 @@ final case class NFT(
                     .value(1000000L)
                     .contract(address(mintdao, salesdao).toErgoContract())
                     .build()
+                }
 
                 ctx.newTxBuilder()
                     .addInputs(issuerBox)
@@ -219,6 +239,22 @@ final case class NFT(
                 val balance = Pratir.balance(ergoClient.getDataSource().asInstanceOf[NodePoolDataSource].getAllUnspentBoxesFor(mintingAddress,false).asScala)
                 if (balance._2.contains(tokenId)) {
                     Await.result(mintdao.updateNFTStatus(id, tokenId, NFTStatus.MINTED, mintTransactionId), Duration.Inf)
+                    val collection = Await.result(mintdao.getCollection(collectionId), Duration.Inf)
+                    collection.saleId match {
+                        case None => Unit
+                        case Some(saleId) => 
+                            Await.result(salesdao.insertTokenForSale(TokenForSale(
+                                UUID.randomUUID(),
+                                tokenId,
+                                amount.toInt,
+                                amount.toInt,
+                                rarity,
+                                saleId
+                            )), Duration.Inf)
+                            if (rarity.contains("_pt_rarity")) {
+                                Await.result(salesdao.injectPackTokenId(s"_pt_${amount.toString()}_${name}", tokenId, saleId), Duration.Inf)
+                            }
+                    }
                 } else {
                     logger.info(s"""Transaction lost, waiting 10 seconds...""")
                     Thread.sleep(10000)

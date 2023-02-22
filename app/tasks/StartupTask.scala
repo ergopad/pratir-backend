@@ -24,8 +24,8 @@ extends  HasDatabaseConfigProvider[JdbcProfile]{
       val schema = 
         TableQuery[Sales.Sales].schema ++ 
         TableQuery[TokensForSale.TokensForSale].schema ++
-        TableQuery[Prices.Prices].schema ++
         TableQuery[Packs.Packs].schema ++
+        TableQuery[Prices.Prices].schema ++
         TableQuery[PackEntries.PackEntries].schema ++ 
         TableQuery[TokenOrders.TokenOrders].schema ++
         TableQuery[Users.Users].schema ++ 

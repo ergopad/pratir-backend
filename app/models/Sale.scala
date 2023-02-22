@@ -25,6 +25,8 @@ import org.ergoplatform.appkit.InputBox
 import util.NodePoolDataSource
 import play.api.Logging
 import org.ergoplatform.appkit.ErgoId
+import play.api.libs.json.Json
+import scala.collection.mutable.ArrayBuffer
 
 object SaleStatus extends Enumeration {
     type SaleStatus = Value
@@ -211,6 +213,52 @@ final case class Sale(
                         .withTokensToSpend(outBox.getTokens())
 
                 boxOperations.buildTxWithDefaultInputs(tb => tb.addOutputs(outBox))
+            }
+        })
+    }
+
+    def packTokensToMint(salesdao: SalesDAO, collectionId: UUID) = {
+        implicit val packEntryJson = Json.format[PackEntry]
+        val minted = ArrayBuffer[String]()
+
+        val packs = Await.result(salesdao.getPacks(id), Duration.Inf).map(
+            p => {
+                val price = Await.result(salesdao.getPrice(p.id), Duration.Inf)
+                val content = Await.result(salesdao.getPackEntries(p.id), Duration.Inf)
+                PackFull(p.id, p.name, p.image, price.toArray, content.toArray)
+            }
+        )
+        packs.flatMap(p => {
+            p.price.find(pr => pr.tokenId.contains("_pt_")) match {
+                case Some(pr) =>
+                    val values = pr.tokenId.split("_")
+                    val amount = values(2).toLong
+                    val name = values(3).trim()
+                    if (minted.contains(name)) {
+                        Array[NFT]()
+                    } else {
+                        minted.append(name)
+                    
+                        val description = Json.toJson[Array[NewPackEntry]](p.content.map(pe => NewPackEntry(Json.fromJson[Seq[PackRarity]](pe.rarity).get, pe.amount))).toString()
+                        Array(NFT(
+                            UUID.randomUUID(), 
+                            collectionId, 
+                            "", 
+                            amount, 
+                            name, 
+                            p.image, 
+                            description, 
+                            Json.toJson[Seq[Trait]](Array[Trait]()), 
+                            "_pt_rarity_"+name, 
+                            false, 
+                            NFTStatus.INITIALIZED, 
+                            "", 
+                            Json.toJson[Seq[Royalty]](Array[Royalty]()), 
+                            Instant.now(), 
+                            Instant.now()))
+                    }
+                case None => 
+                    Array[NFT]()
             }
         })
     }

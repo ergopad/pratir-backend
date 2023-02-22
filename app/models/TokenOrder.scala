@@ -105,7 +105,9 @@ final case class TokenOrder(
                     val tokensPicked = pack.flatMap(pe => {
                         Range(0,pe.amount).map(i => {
                             val randomRarity = pe.pickRarity(salesdao, saleId)
+                            logger.info(s"Random rarity: $randomRarity")
                             val randomNFT = Await.result(salesdao.pickRandomToken(saleId, randomRarity.rarity), Duration.Inf)
+                            logger.info(s"Random token: ${randomNFT.tokenId}")
                             Await.result(salesdao.reserveToken(randomNFT),Duration.Inf)
                             randomNFT
                         })

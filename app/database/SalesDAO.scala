@@ -59,9 +59,25 @@ class SalesDAO @Inject()(protected val dbConfigProvider: DatabaseConfigProvider)
         db.run(query)
     }
 
+    def injectPackTokenId(packPlaceHolder: String, tokenId: String, saleId: UUID) = {
+        db.run(sqlu"""
+        UPDATE prices
+        SET token_id = ${tokenId}
+        WHERE token_id = ${packPlaceHolder}
+        AND pack_id IN (
+            SELECT id FROM packs
+            WHERE sale_id = UUID(${saleId.toString()})
+            )
+        """)
+    }
+
     def getPackEntries(packId: UUID): Future[Seq[PackEntry]] = {
         val query = PackEntries.packEntries.filter(_.packId === packId).result
         db.run(query)
+    }
+
+    def insertTokenForSale(tokenForSale: TokenForSale) = {
+        db.run(DBIO.seq(TokensForSale.tokensForSale += tokenForSale))
     }
 
     def getTokensForSale(saleId: UUID): Future[Seq[TokenForSale]] = {
@@ -122,13 +138,13 @@ class SalesDAO @Inject()(protected val dbConfigProvider: DatabaseConfigProvider)
 
     def rarityOdds(saleId: UUID, packRarity: PackRarity) = {
         Await.result(db.run(sql"""
-        SELECT random()*${packRarity.odds.toString()}*SUM(amount)/SUM(original_amount) AS "lucky_num"
+        SELECT random()*${packRarity.odds}*SUM(amount)/SUM(original_amount) AS "lucky_num"
             FROM "tokens_for_sale"
             WHERE "sale_id" = UUID(${saleId.toString()})
             AND "rarity" = ${packRarity.rarity}
             GROUP BY sale_id, rarity
         LIMIT 1
-        """.as[String]), duration.Duration.Inf).head.toDouble
+        """.as[Double]), duration.Duration.Inf).head.toDouble
     }
 
     def reserveToken(tokenForSale: TokenForSale, reserveAmount: Int = 1) = {

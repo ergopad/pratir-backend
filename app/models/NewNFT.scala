@@ -10,10 +10,10 @@ final case class NewNFT(
     name: String,
     image: String,
     description: String,
-    traits: JsValue,
+    traits: Seq[Trait],
     rarity: String,
     explicit: Boolean,
-    royalty: JsValue
+    royalty: Seq[Royalty]
 )
 
 object NewNFT {

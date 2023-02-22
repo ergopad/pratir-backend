@@ -10,7 +10,7 @@ final case class NewArtist(
     tagline: String,
     avatarUrl: String,
     bannerUrl: String,
-    social: JsValue
+    social: Seq[Social]
 )
 
 object NewArtist {

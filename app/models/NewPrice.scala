@@ -1,6 +1,6 @@
 package models
 
 final case class NewPrice(
-    tokenId: String,
+    tokenId: Option[String],
     amount: Long
 )
