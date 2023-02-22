@@ -1,15 +1,14 @@
-package controllers;
+package controllers
 
 import javax.inject._
 
 import play.api.mvc._
-import play.api.libs.json._
+import play.api.libs.json.Json
 
 import models._
 import database._
 
 import scala.concurrent.ExecutionContext
-
 
 @Singleton
 class PingController @Inject()(val controllerComponents: ControllerComponents)(implicit ec: ExecutionContext)

@@ -28,7 +28,8 @@ extends  HasDatabaseConfigProvider[JdbcProfile]{
         TableQuery[Prices.Prices].schema ++
         TableQuery[PackEntries.PackEntries].schema ++ 
         TableQuery[TokenOrders.TokenOrders].schema ++
-        TableQuery[Users.Users].schema ++ 
+        TableQuery[Users.Users].schema ++
+        TableQuery[AuthRequests.AuthRequests].schema ++
         TableQuery[Artists.Artists].schema ++
         TableQuery[Collections.Collections].schema ++
         TableQuery[NFTs.NFTs].schema

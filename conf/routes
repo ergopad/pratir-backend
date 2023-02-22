@@ -39,5 +39,8 @@ POST    /collection                     controllers.MintController.createCollect
 GET     /collection/:collectionId/mint  controllers.MintController.mintCollection(collectionId: String)
 
 POST    /nft                            controllers.MintController.createNFTs()
+POST    /auth                   controllers.UserController.auth()
+POST    /auth/:verificationId   controllers.UserController.verify(verificationId: String)
+POST    /upload_file            controllers.UserController.uploadFile()
 
 GET  /assets/*file        controllers.Assets.at(file)
