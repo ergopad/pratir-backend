@@ -81,6 +81,7 @@ extends BaseController
             case je: JsError => BadRequest(JsError.toJson(je))
             case js: JsSuccess[NewSale] =>
                 val newSale = js.value
+                
                 val saleId = UUID.randomUUID()
                 val encryptedPassword = Pratir.encoder.encode(newSale.password)
                 val saleAdded = Sale(saleId, newSale.name, newSale.description, newSale.startTime, newSale.endTime, newSale.sellerWallet, SaleStatus.PENDING, Pratir.initialNanoErgFee, Pratir.saleFeePct, encryptedPassword, Instant.now(), Instant.now())
