@@ -4,6 +4,7 @@ services:
 
   pratir-api:
     container_name: pratir-api
+    image: pratir-backend:latest
     env_file: .env
     ports:
       - 9000:9000
