@@ -9,6 +9,8 @@ swaggerDomainNameSpaces := Seq("models")
 
 scalaVersion := "2.12.17"
 
+dockerUpdateLatest := true
+
 libraryDependencies += guice
 libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "5.0.0" % Test
 libraryDependencies += "org.javatuples" % "javatuples" % "1.2"
