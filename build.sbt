@@ -14,6 +14,7 @@ import com.typesafe.sbt.packager.docker.DockerPermissionStrategy
 dockerChmodType := DockerChmodType.UserGroupWriteExecute
 dockerPermissionStrategy := DockerPermissionStrategy.CopyChown
 dockerUpdateLatest := true
+dockerBaseImage := "openjdk:11"
 
 libraryDependencies += guice
 libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "5.0.0" % Test
