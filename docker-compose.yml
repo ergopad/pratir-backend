@@ -11,9 +11,6 @@ services:
     networks:
       - pratir-net
     restart: unless-stopped
-    build:
-      context: ./
-      dockerfile: ./Dockerfile
   pratir-db:
     container_name: pratir-db
     env_file: .env
