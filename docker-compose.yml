@@ -19,12 +19,14 @@ services:
     image: postgres:14
     restart: unless-stopped
     volumes: 
-      - ./postgres_vol:/var/lib/postgresql/data:cached
-      - ./app/sql/config/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - postgres_vol:/var/lib/postgresql/data:cached
     ports: 
       - 5445:5432
     networks:
       - pratir-net
+
+volumes:
+  postgres_vol:
 
 networks:
   pratir-net:
