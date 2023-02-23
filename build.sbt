@@ -9,6 +9,10 @@ swaggerDomainNameSpaces := Seq("models")
 
 scalaVersion := "2.12.17"
 
+import com.typesafe.sbt.packager.docker.DockerChmodType
+import com.typesafe.sbt.packager.docker.DockerPermissionStrategy
+dockerChmodType := DockerChmodType.UserGroupWriteExecute
+dockerPermissionStrategy := DockerPermissionStrategy.CopyChown
 dockerUpdateLatest := true
 
 libraryDependencies += guice
