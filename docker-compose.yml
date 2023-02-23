@@ -2,17 +2,30 @@ version: '3'
 
 services:
 
-  quicknode:
-    container_name: pratir
+  pratir-api:
+    container_name: pratir-api
+    env_file: .env
     ports:
       - 9000:9000
     networks:
-      - ergopad-net
+      - pratir-net
+    restart: unless-stopped
     build:
       context: ./
       dockerfile: ./Dockerfile
+  pratir-db:
+    container_name: pratir-db
+    env_file: .env
+    image: postgres:14
+    restart: unless-stopped
+    volumes: 
+      - ./postgres_vol:/var/lib/postgresql/data:cached
+      - ./app/sql/config/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports: 
+      - 5445:5432
+    networks:
+      - pratir-net
 
-# this may require cmd: docker network create ergopad-net
 networks:
-  ergopad-net:
-    external: true
+  pratir-net:
+    driver: bridge
