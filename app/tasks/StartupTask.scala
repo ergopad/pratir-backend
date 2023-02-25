@@ -22,11 +22,13 @@ extends  HasDatabaseConfigProvider[JdbcProfile]{
     try {
       println("Running startup")
       val schema = 
-        TableQuery[Sales.Sales].schema ++ 
+        TableQuery[Sales.Sales].schema ++
+        TableQuery[HighlightedSales.HighlightedSales].schema ++
         TableQuery[TokensForSale.TokensForSale].schema ++
         TableQuery[Packs.Packs].schema ++
         TableQuery[Prices.Prices].schema ++
-        TableQuery[PackEntries.PackEntries].schema ++ 
+        TableQuery[PackEntries.PackEntries].schema ++
+        TableQuery[PackEntries.PackEntries].schema ++
         TableQuery[TokenOrders.TokenOrders].schema ++
         TableQuery[Users.Users].schema ++
         TableQuery[AuthRequests.AuthRequests].schema ++

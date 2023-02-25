@@ -59,10 +59,17 @@ extends BaseController
     implicit val bootstrapSaleJson = Json.format[BootstrapSale]
     implicit val saleLiteJson = Json.format[SaleLite]
     implicit val tokenOrderJson = Json.format[TokenOrder]
+    implicit val HighlightSaleRequestJson = Json.format[HighlightSaleRequest]
+    implicit val HighlightSaleResponseJson = Json.format[HighlightSaleResponse]
 
     def getAll(): Action[AnyContent] = Action.async { implicit request =>
         val salesdao = new SalesDAO(dbConfigProvider)
         salesdao.getAll.map(sale => Ok(Json.toJson(sale.map(SaleLite.fromSale(_)))))
+    }
+
+    def getAllHighlighted(): Action[AnyContent] = Action.async { implicit request =>
+        val salesdao = new SalesDAO(dbConfigProvider)
+        salesdao.getAllHighlighted.map(sale => Ok(Json.toJson(sale.map(SaleLite.fromSale(_)))))
     }
 
     def getSale(_saleId: String) = Action {
@@ -223,4 +230,66 @@ extends BaseController
             }
         }
     }
- }
+
+    def highlightSale() = Action { implicit request => 
+        val salesdao = new SalesDAO(dbConfigProvider)
+        val content = request.body
+        val jsonObject = content.asJson
+        val highlightSaleRequest: Option[HighlightSaleRequest] = 
+            jsonObject.flatMap( 
+                Json.fromJson[HighlightSaleRequest](_).asOpt 
+            )
+        highlightSaleRequest match {
+            case None => BadRequest
+            case Some(highlightSale) => {
+                try {
+                    if (isValidAuthToken(highlightSale.verificationToken)) {
+                        Await.result(salesdao.highlightSale(highlightSale.saleId), Duration.Inf)
+                        Ok(Json.toJson(HighlightSaleResponse("ok", "Sale Highlighted", Some(highlightSale.saleId))))
+                    } else {
+                        Unauthorized("Unauthorized - Token Verification Failed")
+                    }
+                } catch {
+                    case e: Exception => BadRequest(e.getMessage)
+                }
+            }
+        }
+    }
+
+    def removeSaleFromHighlights() = Action { implicit request => 
+        val salesdao = new SalesDAO(dbConfigProvider)
+        val content = request.body
+        val jsonObject = content.asJson
+        val highlightSaleRequest: Option[HighlightSaleRequest] = 
+            jsonObject.flatMap( 
+                Json.fromJson[HighlightSaleRequest](_).asOpt 
+            )
+        highlightSaleRequest match {
+            case None => BadRequest
+            case Some(highlightSale) => {
+                try {
+                    if (isValidAuthToken(highlightSale.verificationToken)) {
+                        Await.result(salesdao.removeSaleFromHighlights(highlightSale.saleId), Duration.Inf)
+                        Ok(Json.toJson(HighlightSaleResponse("ok", "Sale Highlight Removed", Some(highlightSale.saleId))))
+                    } else {
+                        Unauthorized("Unauthorized - Token Verification Failed")
+                    }
+                } catch {
+                    case e: Exception => BadRequest(e.getMessage)
+                }
+            }
+        }
+    }
+
+    private def isValidAuthToken(verificationToken: String): Boolean = {
+        val usersDao = new UsersDAO(dbConfigProvider)
+        val admin = sys.env.get("ADMIN_ACCESS_WALLET").get
+        val authRequest = Await.result(usersDao.getAuthRequestByToken(verificationToken), Duration.Inf)
+        if (authRequest.isDefined && authRequest.get.address.equals(admin)) {
+            Await.result(usersDao.deleteAuthRequest(authRequest.get.id), Duration.Inf)
+            true
+        } else {
+            false
+        }
+    }
+}
