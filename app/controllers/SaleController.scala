@@ -37,9 +37,13 @@ import org.ergoplatform.appkit.InputBoxesSelectionException.NotEnoughCoinsForCha
 import java.time.Instant
 
 @Singleton
-class SaleController @Inject()(protected val dbConfigProvider: DatabaseConfigProvider, val controllerComponents: ControllerComponents)(implicit ec: ExecutionContext)
-extends BaseController
- with HasDatabaseConfigProvider[JdbcProfile] {
+class SaleController @Inject()(
+    val salesdao: SalesDAO,
+    val usersDao: UsersDAO,
+    val controllerComponents: ControllerComponents,
+    protected val dbConfigProvider: DatabaseConfigProvider
+)(implicit ec: ExecutionContext)
+extends BaseController with HasDatabaseConfigProvider[JdbcProfile]{
     implicit val newPriceJson = Json.format[NewPrice]
     implicit val newPackEntryJson = Json.format[NewPackEntry]
     implicit val newPackJson = Json.format[NewPack]
@@ -63,25 +67,21 @@ extends BaseController
     implicit val HighlightSaleResponseJson = Json.format[HighlightSaleResponse]
 
     def getAll(): Action[AnyContent] = Action.async { implicit request =>
-        val salesdao = new SalesDAO(dbConfigProvider)
         salesdao.getAll.map(sale => Ok(Json.toJson(sale.map(SaleLite.fromSale(_)))))
     }
 
     def getAllHighlighted(): Action[AnyContent] = Action.async { implicit request =>
-        val salesdao = new SalesDAO(dbConfigProvider)
         salesdao.getAllHighlighted.map(sale => Ok(Json.toJson(sale.map(SaleLite.fromSale(_)))))
     }
 
     def getSale(_saleId: String) = Action {
         implicit request =>
-        val salesdao = new SalesDAO(dbConfigProvider)
         Ok(Json.toJson(SaleFull.fromSaleId(_saleId, salesdao)))
     }
 
     def createSale() = Action { implicit request =>
         val content = request.body
         val jsonObject = content.asJson
-        val salesdao = new SalesDAO(dbConfigProvider)
         val sale = Json.fromJson[NewSale](jsonObject.get)
         
         sale match {
@@ -115,7 +115,6 @@ extends BaseController
     }
 
     def bootstrapSale() = Action { implicit request =>
-        val salesdao = new SalesDAO(dbConfigProvider)
         val content = request.body
         val jsonObject = content.asJson
         val bootstrapSaleRequest: Option[BootstrapSale] = 
@@ -140,13 +139,11 @@ extends BaseController
     }
 
     def getBuyOrders(address: String): Action[AnyContent] = Action.async { implicit request =>
-        val salesdao = new SalesDAO(dbConfigProvider)
         val orders = salesdao.getTokenOrderHistory(address)
         orders.map(o => Ok(Json.toJson(o)))
     }
 
     def buyOrder() = Action { implicit request =>
-        val salesdao = new SalesDAO(dbConfigProvider)
         val content = request.body
         val jsonObject = content.asJson
         val buyRequest: Option[BuyRequest] = 
@@ -156,7 +153,6 @@ extends BaseController
         buyRequest match {
             case None => BadRequest
             case Some(buyOrder) => {
-                val salesdao = new SalesDAO(dbConfigProvider)
                 val ergoClient = RestApiErgoClientWithNodePoolDataSource.create(sys.env.get("ERGO_NODE").get,NetworkType.MAINNET,"",sys.env.get("ERGO_EXPLORER").get)
                 try {
                 Ok(Json.toJson(MUnsignedTransaction(ergoClient.execute(new java.util.function.Function[BlockchainContext,UnsignedTransaction] {
@@ -232,7 +228,6 @@ extends BaseController
     }
 
     def highlightSale() = Action { implicit request => 
-        val salesdao = new SalesDAO(dbConfigProvider)
         val content = request.body
         val jsonObject = content.asJson
         val highlightSaleRequest: Option[HighlightSaleRequest] = 
@@ -257,7 +252,6 @@ extends BaseController
     }
 
     def removeSaleFromHighlights() = Action { implicit request => 
-        val salesdao = new SalesDAO(dbConfigProvider)
         val content = request.body
         val jsonObject = content.asJson
         val highlightSaleRequest: Option[HighlightSaleRequest] = 
@@ -282,7 +276,6 @@ extends BaseController
     }
 
     private def isValidAuthToken(verificationToken: String): Boolean = {
-        val usersDao = new UsersDAO(dbConfigProvider)
         val admin = sys.env.get("ADMIN_ACCESS_WALLET").get
         val authRequest = Await.result(usersDao.getAuthRequestByToken(verificationToken), Duration.Inf)
         if (authRequest.isDefined && authRequest.get.address.equals(admin)) {

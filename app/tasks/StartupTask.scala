@@ -28,7 +28,6 @@ extends  HasDatabaseConfigProvider[JdbcProfile]{
         TableQuery[Packs.Packs].schema ++
         TableQuery[Prices.Prices].schema ++
         TableQuery[PackEntries.PackEntries].schema ++
-        TableQuery[PackEntries.PackEntries].schema ++
         TableQuery[TokenOrders.TokenOrders].schema ++
         TableQuery[Users.Users].schema ++
         TableQuery[AuthRequests.AuthRequests].schema ++
