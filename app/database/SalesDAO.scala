@@ -39,6 +39,14 @@ class SalesDAO @Inject()(protected val dbConfigProvider: DatabaseConfigProvider)
         db.run(query)        
     }
 
+    def getAllHighlighted : Future[Seq[Sale]] = {
+        val subquery = HighlightedSales.highlightedSales
+            .map { _.saleId }
+        val query = Sales.sales.filter(_.id in subquery)
+        val action = query.result
+        db.run(action)
+    }
+
     def getSale(saleId: UUID): Future[Sale] = {
         val query = Sales.sales.filter(_.id === saleId).result.head
         db.run(query)
@@ -158,6 +166,16 @@ class SalesDAO @Inject()(protected val dbConfigProvider: DatabaseConfigProvider)
         val query = TokensForSale.tokensForSale.filter(tfs => tfs.saleId === saleId && tfs.tokenId === tokenId).map(_.amount).update(amount)
         db.run(query)
     }
+
+    def highlightSale(saleId: UUID) = {
+        val query = HighlightedSales.highlightedSales += HighlightedSale(UUID.randomUUID, saleId)
+        db.run(query)
+    }
+
+    def removeSaleFromHighlights(saleId: UUID) = {
+        val query = HighlightedSales.highlightedSales.filter(_.saleId === saleId)
+        db.run(query.delete)
+    }
 }
 
 object TokenOrders {
@@ -251,4 +269,15 @@ object PackEntries {
     }
 
     val packEntries = TableQuery[PackEntries]
+}
+
+object HighlightedSales {
+    class HighlightedSales(tag: Tag) extends Table[HighlightedSale](tag, "HIGHLIGHTED_SALES") {
+        def id = column[UUID]("ID", O.PrimaryKey)
+        def saleId = column[UUID]("SALE_ID")
+        def sale = foreignKey("HIGHLIGHTED_SALES__SALE_IF_FK", saleId, Sales.sales)(_.id, onDelete=ForeignKeyAction.Cascade)
+        def * = (id, saleId) <> (HighlightedSale.tupled, HighlightedSale.unapply)
+    }
+
+    val highlightedSales = TableQuery[HighlightedSales]
 }

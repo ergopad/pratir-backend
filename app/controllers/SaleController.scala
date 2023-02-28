@@ -37,9 +37,13 @@ import org.ergoplatform.appkit.InputBoxesSelectionException.NotEnoughCoinsForCha
 import java.time.Instant
 
 @Singleton
-class SaleController @Inject()(protected val dbConfigProvider: DatabaseConfigProvider, val controllerComponents: ControllerComponents)(implicit ec: ExecutionContext)
-extends BaseController
- with HasDatabaseConfigProvider[JdbcProfile] {
+class SaleController @Inject()(
+    val salesdao: SalesDAO,
+    val usersDao: UsersDAO,
+    val controllerComponents: ControllerComponents,
+    protected val dbConfigProvider: DatabaseConfigProvider
+)(implicit ec: ExecutionContext)
+extends BaseController with HasDatabaseConfigProvider[JdbcProfile]{
     implicit val newPriceJson = Json.format[NewPrice]
     implicit val newPackEntryJson = Json.format[NewPackEntry]
     implicit val newPackJson = Json.format[NewPack]
@@ -59,22 +63,25 @@ extends BaseController
     implicit val bootstrapSaleJson = Json.format[BootstrapSale]
     implicit val saleLiteJson = Json.format[SaleLite]
     implicit val tokenOrderJson = Json.format[TokenOrder]
+    implicit val HighlightSaleRequestJson = Json.format[HighlightSaleRequest]
+    implicit val HighlightSaleResponseJson = Json.format[HighlightSaleResponse]
 
     def getAll(): Action[AnyContent] = Action.async { implicit request =>
-        val salesdao = new SalesDAO(dbConfigProvider)
         salesdao.getAll.map(sale => Ok(Json.toJson(sale.map(SaleLite.fromSale(_)))))
+    }
+
+    def getAllHighlighted(): Action[AnyContent] = Action.async { implicit request =>
+        salesdao.getAllHighlighted.map(sale => Ok(Json.toJson(sale.map(SaleLite.fromSale(_)))))
     }
 
     def getSale(_saleId: String) = Action {
         implicit request =>
-        val salesdao = new SalesDAO(dbConfigProvider)
         Ok(Json.toJson(SaleFull.fromSaleId(_saleId, salesdao)))
     }
 
     def createSale() = Action { implicit request =>
         val content = request.body
         val jsonObject = content.asJson
-        val salesdao = new SalesDAO(dbConfigProvider)
         val sale = Json.fromJson[NewSale](jsonObject.get)
         
         sale match {
@@ -108,7 +115,6 @@ extends BaseController
     }
 
     def bootstrapSale() = Action { implicit request =>
-        val salesdao = new SalesDAO(dbConfigProvider)
         val content = request.body
         val jsonObject = content.asJson
         val bootstrapSaleRequest: Option[BootstrapSale] = 
@@ -133,13 +139,11 @@ extends BaseController
     }
 
     def getBuyOrders(address: String): Action[AnyContent] = Action.async { implicit request =>
-        val salesdao = new SalesDAO(dbConfigProvider)
         val orders = salesdao.getTokenOrderHistory(address)
         orders.map(o => Ok(Json.toJson(o)))
     }
 
     def buyOrder() = Action { implicit request =>
-        val salesdao = new SalesDAO(dbConfigProvider)
         val content = request.body
         val jsonObject = content.asJson
         val buyRequest: Option[BuyRequest] = 
@@ -149,7 +153,6 @@ extends BaseController
         buyRequest match {
             case None => BadRequest
             case Some(buyOrder) => {
-                val salesdao = new SalesDAO(dbConfigProvider)
                 val ergoClient = RestApiErgoClientWithNodePoolDataSource.create(sys.env.get("ERGO_NODE").get,NetworkType.MAINNET,"",sys.env.get("ERGO_EXPLORER").get)
                 try {
                 Ok(Json.toJson(MUnsignedTransaction(ergoClient.execute(new java.util.function.Function[BlockchainContext,UnsignedTransaction] {
@@ -223,4 +226,63 @@ extends BaseController
             }
         }
     }
- }
+
+    def highlightSale() = Action { implicit request => 
+        val content = request.body
+        val jsonObject = content.asJson
+        val highlightSaleRequest: Option[HighlightSaleRequest] = 
+            jsonObject.flatMap( 
+                Json.fromJson[HighlightSaleRequest](_).asOpt 
+            )
+        highlightSaleRequest match {
+            case None => BadRequest
+            case Some(highlightSale) => {
+                try {
+                    if (isValidAuthToken(highlightSale.verificationToken)) {
+                        Await.result(salesdao.highlightSale(highlightSale.saleId), Duration.Inf)
+                        Ok(Json.toJson(HighlightSaleResponse("ok", "Sale Highlighted", Some(highlightSale.saleId))))
+                    } else {
+                        Unauthorized("Unauthorized - Token Verification Failed")
+                    }
+                } catch {
+                    case e: Exception => BadRequest(e.getMessage)
+                }
+            }
+        }
+    }
+
+    def removeSaleFromHighlights() = Action { implicit request => 
+        val content = request.body
+        val jsonObject = content.asJson
+        val highlightSaleRequest: Option[HighlightSaleRequest] = 
+            jsonObject.flatMap( 
+                Json.fromJson[HighlightSaleRequest](_).asOpt 
+            )
+        highlightSaleRequest match {
+            case None => BadRequest
+            case Some(highlightSale) => {
+                try {
+                    if (isValidAuthToken(highlightSale.verificationToken)) {
+                        Await.result(salesdao.removeSaleFromHighlights(highlightSale.saleId), Duration.Inf)
+                        Ok(Json.toJson(HighlightSaleResponse("ok", "Sale Highlight Removed", Some(highlightSale.saleId))))
+                    } else {
+                        Unauthorized("Unauthorized - Token Verification Failed")
+                    }
+                } catch {
+                    case e: Exception => BadRequest(e.getMessage)
+                }
+            }
+        }
+    }
+
+    private def isValidAuthToken(verificationToken: String): Boolean = {
+        val admin = sys.env.get("ADMIN_ACCESS_WALLET").get
+        val authRequest = Await.result(usersDao.getAuthRequestByToken(verificationToken), Duration.Inf)
+        if (authRequest.isDefined && authRequest.get.address.equals(admin)) {
+            Await.result(usersDao.deleteAuthRequest(authRequest.get.id), Duration.Inf)
+            true
+        } else {
+            false
+        }
+    }
+}
