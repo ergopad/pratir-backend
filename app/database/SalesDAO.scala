@@ -272,10 +272,10 @@ object PackEntries {
 }
 
 object HighlightedSales {
-    class HighlightedSales(tag: Tag) extends Table[HighlightedSale](tag, "HIGHLIGHTED_SALES") {
-        def id = column[UUID]("ID", O.PrimaryKey)
-        def saleId = column[UUID]("SALE_ID")
-        def sale = foreignKey("HIGHLIGHTED_SALES__SALE_IF_FK", saleId, Sales.sales)(_.id, onDelete=ForeignKeyAction.Cascade)
+    class HighlightedSales(tag: Tag) extends Table[HighlightedSale](tag, "highlighted_sales") {
+        def id = column[UUID]("id", O.PrimaryKey)
+        def saleId = column[UUID]("sale_id")
+        def sale = foreignKey("highlighted_sales__sale_id_fk", saleId, Sales.sales)(_.id, onDelete=ForeignKeyAction.Cascade)
         def * = (id, saleId) <> (HighlightedSale.tupled, HighlightedSale.unapply)
     }
 
