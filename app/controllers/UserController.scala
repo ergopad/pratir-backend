@@ -13,6 +13,8 @@ import javax.inject._
 import org.ergoplatform.appkit._
 
 import play.api.Logging
+import play.api.libs.json.JsArray
+import play.api.libs.json.JsValue
 import play.api.libs.json.Json
 import play.api.mvc._
 
@@ -47,7 +49,7 @@ class UserController @Inject() (
     def getUser(address: String): Action[AnyContent] = Action { implicit request =>
         val user = Await.result(usersDao.getUser(address), Duration.Inf)
         val mockId = UUID.randomUUID
-        Ok(Json.toJson(user.getOrElse(User(mockId, address, address, "", ""))))
+        Ok(Json.toJson(user.getOrElse(User(mockId, address, address, "", "", "", "", JsArray.empty))))
     }
 
     def updateUser(): Action[AnyContent] = Action { implicit request =>
@@ -68,7 +70,7 @@ class UserController @Inject() (
                     // update user
                     val uuid = UUID.randomUUID
                     val userUpdate =
-                        User(uuid, user.address, user.name, user.pfpUrl, user.tagline)
+                        User(uuid, user.address, user.name, user.pfpUrl, user.bannerUrl, user.tagline, user.website, user.socials)
                     // check if existing user
                     val checkUser = Await.result(usersDao.getUser(user.address), Duration.Inf)
                     if (checkUser.isDefined)
@@ -81,7 +83,6 @@ class UserController @Inject() (
                 } else {
                     Unauthorized("Unauthorized - Token Verification Failed")
                 }
-
         }
     }
 

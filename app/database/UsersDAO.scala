@@ -8,12 +8,13 @@ import javax.inject.Singleton
 import play.api.db.slick.DatabaseConfigProvider
 import play.api.db.slick.HasDatabaseConfigProvider
 import play.api.Logging
+import play.api.libs.json.JsValue
 
 import scala.concurrent.ExecutionContext
 import scala.concurrent.Future
 
 import slick.jdbc.JdbcProfile
-import slick.jdbc.PostgresProfile.api._
+import database.JsonPostgresProfile.api._
 
 import models._
 
@@ -41,8 +42,8 @@ class UsersDAO @Inject() (protected val dbConfigProvider: DatabaseConfigProvider
     def updateUser(user: User): Future[Any] = {
         val query =
             for (dbUser <- Users.users if dbUser.address === user.address)
-                yield (dbUser.name, dbUser.pfpUrl, dbUser.tagline)
-        db.run(query.update(user.name, user.pfpUrl, user.tagline)) map { _ > 0 }
+                yield (dbUser.name, dbUser.pfpUrl, dbUser.bannerUrl, dbUser.tagline, dbUser.website, dbUser.socials)
+        db.run(query.update(user.name, user.pfpUrl, user.bannerUrl, user.tagline, user.website, user.socials)) map { _ > 0 }
     }
 
     def getAuthRequest(id: UUID): Future[Option[AuthRequest]] = {
@@ -74,25 +75,28 @@ class UsersDAO @Inject() (protected val dbConfigProvider: DatabaseConfigProvider
 }
 
 object Users {
-    class Users(tag: Tag) extends Table[User](tag, "USERS") {
-        def id = column[UUID]("ID", O.PrimaryKey)
-        def address = column[String]("ADDRESS")
-        def name = column[String]("NAME")
-        def pfpUrl = column[String]("PFP_URL")
-        def tagline = column[String]("TAGLINE")
-        def * = (id, address, name, pfpUrl, tagline) <> (User.tupled, User.unapply)
-        def addressIndex = index("USERS_ADDRESS_INDEX", (address), unique = true)
+    class Users(tag: Tag) extends Table[User](tag, "users") {
+        def id = column[UUID]("id", O.PrimaryKey)
+        def address = column[String]("address")
+        def name = column[String]("name")
+        def pfpUrl = column[String]("pfp_url")
+        def bannerUrl = column[String]("banner_url")
+        def tagline = column[String]("tagline")
+        def website = column[String]("website")
+        def socials = column[JsValue]("socials")
+        def * = (id, address, name, pfpUrl, bannerUrl, tagline, website, socials) <> (User.tupled, User.unapply)
+        def addressIndex = index("users_address_index", (address), unique = true)
     }
 
     val users = TableQuery[Users]
 }
 
 object AuthRequests {
-    class AuthRequests(tag: Tag) extends Table[AuthRequest](tag, "AUTH_REQUESTS") {
-        def id = column[UUID]("ID", O.PrimaryKey)
-        def address = column[String]("ADDRESS")
-        def signingMessage = column[String]("SIGNING_MESSGAGE")
-        def verificationToken = column[Option[String]]("VERIFICATION_TOKEN")
+    class AuthRequests(tag: Tag) extends Table[AuthRequest](tag, "auth_requests") {
+        def id = column[UUID]("id", O.PrimaryKey)
+        def address = column[String]("address")
+        def signingMessage = column[String]("signing_message")
+        def verificationToken = column[Option[String]]("verification_token")
         def * = (id, address, signingMessage, verificationToken) <> (AuthRequest.tupled, AuthRequest.unapply)
     }
 
