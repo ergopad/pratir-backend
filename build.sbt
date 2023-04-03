@@ -45,6 +45,8 @@ libraryDependencies ++= Seq(
   "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.12.1"
 )
 
+libraryDependencies += ws
+
 // Adds additional packages into Twirl
 // TwirlKeys.templateImports += "com.example.controllers._"
 
