@@ -14,5 +14,5 @@ final case class SaleLite(
 )
 
 object SaleLite {
-    def fromSale(sale: Sale) = SaleLite(sale.id, sale.name, sale.description, sale.startTime, sale.endTime, sale.status, sale.getSaleAddress.toString())
+    def fromSale(sale: Sale) = SaleLite(sale.id, sale.name, sale.description, sale.startTime, sale.endTime, sale.status, sale.sellerWallet, sale.getSaleAddress.toString())
 }
