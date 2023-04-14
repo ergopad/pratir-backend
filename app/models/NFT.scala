@@ -142,6 +142,8 @@ final case class NFT(
                 }
               })
 
+          val inputs = List(issuerBox) ++ extraInputs
+
           val newIssuerBoxBuilder = ctx
             .newTxBuilder()
             .outBoxBuilder()
@@ -151,7 +153,11 @@ final case class NFT(
                 ctx.getNetworkType()
               )
             )
-            .value(issuerBox.getValue() - 2000000L)
+            .value(
+              inputs.foldLeft(0L)((z: Long, b: InputBox) =>
+                z + b.getValue
+              ) - 2000000L
+            )
             .tokens(issuerBox.getTokens().asScala: _*)
 
           val newIssuerBox = nextNFT match {
@@ -207,7 +213,7 @@ final case class NFT(
 
           ctx
             .newTxBuilder()
-            .addInputs((List(issuerBox) ++ extraInputs): _*)
+            .addInputs(inputs: _*)
             .addOutputs(newIssuerBox, mintNFTBox)
             .fee(1000000L)
             .sendChangeTo(
