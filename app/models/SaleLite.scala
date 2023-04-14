@@ -10,9 +10,10 @@ final case class SaleLite(
     startTime: Instant, 
     endTime: Instant, 
     status: SaleStatus.Value,
+    sellerWaller: String,
     saleWallet: String
 )
 
 object SaleLite {
-    def fromSale(sale: Sale) = SaleLite(sale.id, sale.name, sale.description, sale.startTime, sale.endTime, sale.status, sale.getSaleAddress.toString())
+    def fromSale(sale: Sale) = SaleLite(sale.id, sale.name, sale.description, sale.startTime, sale.endTime, sale.status, sale.sellerWallet, sale.getSaleAddress.toString())
 }
