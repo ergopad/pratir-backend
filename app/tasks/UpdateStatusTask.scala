@@ -48,102 +48,143 @@ import scala.collection.mutable.Buffer
 import scala.collection.mutable.ArrayBuffer
 import models.NFTCollectionStatus
 
-class UpdateStatusTask @Inject() (protected val dbConfigProvider: DatabaseConfigProvider, actorSystem: ActorSystem)
-extends  HasDatabaseConfigProvider[JdbcProfile] with Logging {
-    actorSystem.scheduler.scheduleWithFixedDelay(initialDelay = 5.seconds, delay = 10.seconds)(() =>
-        try {
-            Random.setSeed(Instant.now().toEpochMilli())
-            val ergoClient = RestApiErgoClientWithNodePoolDataSource.create(sys.env.get("ERGO_NODE").get,NetworkType.MAINNET,"",sys.env.get("ERGO_EXPLORER").get)
-            val salesdao = new SalesDAO(dbConfigProvider)
-            val mintdao = new MintDAO(dbConfigProvider)
-            logger.info("Handling open orders...")
-            try {
-                handleOrders(ergoClient,salesdao)
-            } catch {
-                case e: Exception => logger.error(e.getMessage())
-            }
-            logger.info("Handling sales...")
-            try {
-                handleSales(ergoClient,salesdao)
-            } catch {
-                case e: Exception => logger.error(e.getMessage())
-            }
-        } catch {
-            case e: Exception => logger.error(e.getMessage(), e)
+class UpdateStatusTask @Inject() (
+    protected val dbConfigProvider: DatabaseConfigProvider,
+    actorSystem: ActorSystem
+) extends HasDatabaseConfigProvider[JdbcProfile]
+    with Logging {
+  actorSystem.scheduler.scheduleWithFixedDelay(
+    initialDelay = 5.seconds,
+    delay = 10.seconds
+  )(() =>
+    try {
+      Random.setSeed(Instant.now().toEpochMilli())
+      val ergoClient = RestApiErgoClientWithNodePoolDataSource.create(
+        sys.env.get("ERGO_NODE").get,
+        NetworkType.MAINNET,
+        "",
+        sys.env.get("ERGO_EXPLORER").get
+      )
+      val salesdao = new SalesDAO(dbConfigProvider)
+      val mintdao = new MintDAO(dbConfigProvider)
+      logger.info("Handling open orders...")
+      try {
+        handleOrders(ergoClient, salesdao)
+      } catch {
+        case e: Exception => logger.error(e.getMessage())
+      }
+      logger.info("Handling sales...")
+      try {
+        handleSales(ergoClient, salesdao)
+      } catch {
+        case e: Exception => logger.error(e.getMessage())
+      }
+    } catch {
+      case e: Exception => logger.error(e.getMessage(), e)
+    }
+  )
+
+  def handleSales(ergoClient: ErgoClient, salesdao: SalesDAO) = {
+
+    val activeSales =
+      Await.result(salesdao.getAllActive, Duration.Inf).map(_._1._1)
+
+    activeSales.foreach(as => {
+      try {
+        if (as.status == SaleStatus.LIVE || as.status == SaleStatus.SOLD_OUT) {
+
+          as.handleLive(ergoClient, salesdao)
+
         }
+
+        val tokensLeft =
+          Await.result(salesdao.tokensLeft(as.id), Duration.Inf).getOrElse(0)
+
+        if (as.status == SaleStatus.LIVE && tokensLeft < 1) {
+
+          Await.result(
+            salesdao.updateSaleStatus(as.id, SaleStatus.SOLD_OUT),
+            Duration.Inf
+          )
+
+        }
+
+        if (as.isFinished) {
+
+          Await.result(
+            salesdao.updateSaleStatus(as.id, SaleStatus.FINISHED),
+            Duration.Inf
+          )
+
+        } else if (as.status == SaleStatus.PENDING) {
+
+          as.handlePending(ergoClient, salesdao)
+
+        } else if (
+          as.status == SaleStatus.WAITING && Instant.now().isAfter(as.startTime)
+        ) {
+
+          as.handleWaiting(ergoClient, salesdao)
+
+        }
+      } catch {
+        case e: Exception => logger.error(e.getMessage())
+      }
+    })
+  }
+
+  def handleOrders(ergoClient: ErgoClient, salesdao: SalesDAO) = {
+
+    val openOrders = Await.result(salesdao.getOpenTokenOrders, Duration.Inf)
+
+    val fulfillments = new HashMap[UUID, Buffer[Fulfillment]]()
+
+    openOrders.foreach(oto => {
+      try {
+        if (oto.status == TokenOrderStatus.INITIALIZED) {
+
+          oto.handleInitialized(ergoClient, salesdao)
+
+        }
+
+        if (
+          oto.status == TokenOrderStatus.INITIALIZED || oto.status == TokenOrderStatus.CONFIRMING || oto.status == TokenOrderStatus.CONFIRMED
+        ) {
+
+          oto.handleSale(ergoClient, salesdao) match {
+            case Some(fulfillment) =>
+              fulfillments.put(
+                fulfillment.saleId,
+                fulfillments.getOrElse(
+                  fulfillment.saleId,
+                  new ArrayBuffer[Fulfillment]()
+                ) ++ Array(fulfillment)
+              )
+            case None =>
+          }
+
+        } else if (
+          oto.status == TokenOrderStatus.FULLFILLING || oto.status == TokenOrderStatus.REFUNDING
+        ) {
+
+          oto.followUp(ergoClient, salesdao)
+
+        }
+      } catch {
+        case e: Exception => logger.error(e.getMessage())
+      }
+    })
+
+    fulfillments.foreach(ff =>
+      ff._2
+        .grouped(30)
+        .foreach(batch =>
+          Await
+            .result(salesdao.getSale(ff._1), Duration.Inf)
+            ._1
+            ._1
+            .fulfill(batch.toArray, ergoClient, salesdao)
+        )
     )
-
-    def handleSales(ergoClient: ErgoClient, salesdao: SalesDAO) = {
-        
-        val activeSales = Await.result(salesdao.getAllActive, Duration.Inf)
-            
-        activeSales.foreach(as => {
-            try {
-                if (as.status == SaleStatus.LIVE || as.status == SaleStatus.SOLD_OUT) {
-
-                    as.handleLive(ergoClient, salesdao)
-
-                }
-
-                val tokensLeft = Await.result(salesdao.tokensLeft(as.id), Duration.Inf).getOrElse(0)
-
-                if (as.status == SaleStatus.LIVE && tokensLeft < 1) {
-
-                    Await.result(salesdao.updateSaleStatus(as.id,SaleStatus.SOLD_OUT),Duration.Inf)
-
-                }
-                
-                if (as.isFinished) {
-                    
-                    Await.result(salesdao.updateSaleStatus(as.id,SaleStatus.FINISHED),Duration.Inf)
-                
-                } else if (as.status == SaleStatus.PENDING) {
-                    
-                    as.handlePending(ergoClient, salesdao)
-                
-                } else if (as.status == SaleStatus.WAITING && Instant.now().isAfter(as.startTime)) {
-                    
-                    as.handleWaiting(ergoClient, salesdao)
-                    
-                }
-            } catch {
-                case e: Exception => logger.error(e.getMessage())
-            }
-        })
-    }
-
-    def handleOrders(ergoClient: ErgoClient, salesdao: SalesDAO) = {
-        
-        val openOrders = Await.result(salesdao.getOpenTokenOrders, Duration.Inf)
-
-        val fulfillments = new HashMap[UUID, Buffer[Fulfillment]]()
-        
-        openOrders.foreach(oto => {
-            try {
-                if (oto.status == TokenOrderStatus.INITIALIZED) {
-                    
-                    oto.handleInitialized(ergoClient, salesdao)
-                    
-                }
-                
-                if (oto.status == TokenOrderStatus.INITIALIZED || oto.status == TokenOrderStatus.CONFIRMING || oto.status == TokenOrderStatus.CONFIRMED) {
-                    
-                    oto.handleSale(ergoClient, salesdao) match {
-                        case Some(fulfillment) => fulfillments.put(fulfillment.saleId, fulfillments.getOrElse(fulfillment.saleId, new ArrayBuffer[Fulfillment]()) ++ Array(fulfillment))
-                        case None =>                        
-                    }
-                    
-                } else if (oto.status == TokenOrderStatus.FULLFILLING || oto.status == TokenOrderStatus.REFUNDING) {
-
-                    oto.followUp(ergoClient, salesdao)
-
-                }
-            } catch {
-                case e: Exception => logger.error(e.getMessage())
-            }
-        })
-
-        fulfillments.foreach(ff => ff._2.grouped(30).foreach(batch => Await.result(salesdao.getSale(ff._1), Duration.Inf).fulfill(batch.toArray, ergoClient, salesdao)))     
-    }
+  }
 }
-

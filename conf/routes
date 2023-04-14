@@ -19,10 +19,11 @@ GET     /ping                           controllers.PingController.ping()
 #        items:
 #          $ref: '#/definitions/models.SaleLite'
 ###
-GET     /sale                           controllers.SaleController.getAll()
+GET     /sale                           controllers.SaleController.getAllFiltered(status: Option[String] ?= None, address: Option[String] ?= None)
 GET     /sale/highlight                 controllers.SaleController.getAllHighlighted()
 GET     /sale/:saleId                   controllers.SaleController.getSale(saleId: String)
 POST    /sale                           controllers.SaleController.createSale()
+POST    /sale/filtered                  controllers.SaleController.getAllFilteredMulti(status: Option[String] ?= None)
 POST    /sale/bootstrap                 controllers.SaleController.bootstrapSale()
 POST    /sale/highlight                 controllers.SaleController.highlightSale()
 POST    /sale/highlight/delete          controllers.SaleController.removeSaleFromHighlights()
@@ -43,7 +44,7 @@ POST    /upload_file                    controllers.UserController.uploadFile()
 # Mint Controller
 POST    /artist                         controllers.MintController.createArtist()
 
-GET     /collection                     controllers.MintController.getAllCollections()
+GET     /collection                     controllers.MintController.getAllCollectionsFiltered(address: Option[String] ?= None)
 POST    /collection                     controllers.MintController.createCollection()
 GET     /collection/:collectionId/mint  controllers.MintController.mintCollection(collectionId: String)
 

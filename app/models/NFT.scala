@@ -34,6 +34,7 @@ import java.net.URL
 import java.io.BufferedInputStream
 import org.ergoplatform.appkit.UnsignedTransaction
 import org.ergoplatform.appkit.Eip4Token
+import special.collection.Coll
 
 object NFTStatus extends Enumeration {
   type NFTStatus = Value
@@ -111,6 +112,36 @@ final case class NFT(
 
           val hash = digest.digest(data)
 
+          val extraInputs =
+            ergoClient
+              .getDataSource()
+              .asInstanceOf[NodePoolDataSource]
+              .getAllUnspentBoxesFor(address(mintdao, salesdao))
+              .asScala
+              .filter(b => {
+                val registers = b.getRegisters()
+                if (registers.size() > 0) {
+                  b.getRegisters().get(0).getValue() match {
+                    case collection.collByte(cb) =>
+                      try {
+                        new String(
+                          b.getRegisters()
+                            .get(0)
+                            .getValue()
+                            .asInstanceOf[Coll[Byte]]
+                            .toArray,
+                          StandardCharsets.UTF_8
+                        ).equals(collectionId.toString())
+                      } catch {
+                        case e: Exception => false
+                      }
+                    case _ => false
+                  }
+                } else {
+                  false
+                }
+              })
+
           val newIssuerBoxBuilder = ctx
             .newTxBuilder()
             .outBoxBuilder()
@@ -176,7 +207,7 @@ final case class NFT(
 
           ctx
             .newTxBuilder()
-            .addInputs(issuerBox)
+            .addInputs((List(issuerBox) ++ extraInputs): _*)
             .addOutputs(newIssuerBox, mintNFTBox)
             .fee(1000000L)
             .sendChangeTo(
@@ -411,7 +442,7 @@ final case class NFT(
         val _artist = collection.artist(mintdao)
         Address.create(_artist.address)
       case Some(sid) =>
-        val sale = Await.result(salesdao.getSale(sid), Duration.Inf)
+        val sale = Await.result(salesdao.getSale(sid), Duration.Inf)._1._1
         sale.getSaleAddress
     }
   }

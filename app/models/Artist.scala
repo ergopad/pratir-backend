@@ -17,13 +17,17 @@ final case class Artist(
     createdAt: Instant,
     updatedAt: Instant
 ) {
-    def getSocials: Seq[Social] = {
-        val socials: Option[Seq[Social]] = 
-                Json.fromJson[Seq[Social]](social).asOpt 
-        
-        socials match {
-            case None => Array[Social]()
-            case Some(mySocials) => mySocials
-        }
+  def getSocials: Seq[Social] = {
+    val socials: Option[Seq[Social]] =
+      Json.fromJson[Seq[Social]](social).asOpt
+
+    socials match {
+      case None            => Array[Social]()
+      case Some(mySocials) => mySocials
     }
+  }
+}
+
+object Artist {
+  implicit val json = Json.format[Artist]
 }

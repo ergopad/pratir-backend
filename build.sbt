@@ -37,8 +37,6 @@ libraryDependencies ++= Seq(
 
 libraryDependencies += "org.webjars" % "swagger-ui" % "4.11.1"
 
-libraryDependencies += "org.webjars" % "swagger-ui" % "4.11.1"
-
 // https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk
 libraryDependencies ++= Seq(
   "com.amazonaws" % "aws-java-sdk" % "1.12.409",
