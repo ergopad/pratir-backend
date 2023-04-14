@@ -10,6 +10,7 @@ final case class SaleLite(
     startTime: Instant, 
     endTime: Instant, 
     status: SaleStatus.Value,
+    sellerWaller: String,
     saleWallet: String
 )
 
