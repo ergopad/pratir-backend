@@ -116,7 +116,9 @@ final case class NFT(
             ergoClient
               .getDataSource()
               .asInstanceOf[NodePoolDataSource]
-              .getAllUnspentBoxesFor(address(mintdao, salesdao))
+              .getAllUnspentBoxesFor(
+                collection.mintContract(collection.artist(mintdao)).toAddress()
+              )
               .asScala
               .filter(b => {
                 val registers = b.getRegisters()
