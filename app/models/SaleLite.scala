@@ -16,7 +16,7 @@ final case class SaleLite(
     status: SaleStatus.Value,
     sellerWaller: String,
     saleWallet: String,
-    packs: Int,
+    packs: Array[PackFull],
     tokens: Int,
     tokensTotal: Int,
     startingTokensTotal: Int,
@@ -32,12 +32,16 @@ object SaleLite {
       sale: ((Sale, Option[NFTCollection]), Option[Artist]),
       salesdao: SalesDAO
   ) = {
-    val packs =
-      Await.result(salesdao.getPacks(sale._1._1.id), Duration.Inf)
-    val tokens =
-      Await
-        .result(salesdao.getTokensForSale(sale._1._1.id), Duration.Inf)
-        .filter(!_.rarity.contains("_pt_"))
+    val packs = Await
+      .result(salesdao.getPacks(saleId), Duration.Inf)
+      .map(p => {
+        val price = Await.result(salesdao.getPrice(p.id), Duration.Inf)
+        val content = Await.result(salesdao.getPackEntries(p.id), Duration.Inf)
+        PackFull(p.id, p.name, p.image, price.toArray, content.toArray)
+      })
+    val tokens = Await
+      .result(salesdao.getTokensForSale(sale._1._1.id), Duration.Inf)
+      .filter(!_.rarity.contains("_pt_"))
     SaleLite(
       sale._1._1.id,
       sale._1._1.name,
@@ -47,7 +51,7 @@ object SaleLite {
       sale._1._1.status,
       sale._1._1.sellerWallet,
       sale._1._1.getSaleAddress.toString(),
-      packs.size,
+      packs.toArray,
       tokens.size,
       tokens.foldLeft(0)((z: Int, t: TokenForSale) => z + t.amount),
       tokens.foldLeft(0)((z: Int, t: TokenForSale) => z + t.originalAmount),
