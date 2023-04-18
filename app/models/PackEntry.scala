@@ -14,9 +14,18 @@ final case class PackEntry(
     amount: Int,
     packId: UUID
 ) {
-    def pickRarity(salesdao: SalesDAO, saleId: UUID) = {
-        Json.fromJson[Seq[PackRarity]](rarity).asInstanceOf[JsSuccess[Seq[PackRarity]]].value.map(pr =>
-            (salesdao.rarityOdds(saleId, pr), pr)    
-        ).sortBy(-1*_._1).head._2
-    }
+  def pickRarity(salesdao: SalesDAO, saleId: UUID) = {
+    Json
+      .fromJson[Seq[PackRarity]](rarity)
+      .asInstanceOf[JsSuccess[Seq[PackRarity]]]
+      .value
+      .map(pr => (salesdao.rarityOdds(saleId, pr), pr))
+      .sortBy(-1 * _._1)
+      .head
+      ._2
+  }
+}
+
+object PackEntry {
+  implicit val json = Json.format[PackEntry]
 }

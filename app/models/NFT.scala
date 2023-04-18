@@ -455,3 +455,7 @@ final case class NFT(
     }
   }
 }
+
+object NFT {
+  implicit val json = Json.format[NFT]
+}

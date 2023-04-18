@@ -31,6 +31,7 @@ import org.ergoplatform.appkit.impl.OutBoxBuilderImpl
 import org.ergoplatform.wallet.transactions.TransactionBuilder
 import org.ergoplatform.appkit.impl.UnsignedTransactionBuilderImpl
 import org.ergoplatform.appkit.OutBox
+import play.api.libs.json.Json
 
 object TokenOrderStatus extends Enumeration {
   type TokenOrderStatus = Value
@@ -424,4 +425,8 @@ final case class TokenOrder(
       .sendChangeTo(Address.create(Pratir.pratirFeeWallet))
       .build
   }
+}
+
+object TokenOrder {
+  implicit val json = Json.format[TokenOrder]
 }

@@ -5,6 +5,7 @@ import java.util.UUID
 import database.SalesDAO
 import scala.concurrent.Await
 import scala.concurrent.duration.Duration
+import play.api.libs.json.Json
 
 final case class SaleFull(
     id: UUID,
@@ -23,6 +24,9 @@ final case class SaleFull(
 )
 
 object SaleFull {
+
+  implicit val json = Json.format[SaleFull]
+
   def fromSaleId(_saleId: String, salesdao: SalesDAO) = {
     val saleId = UUID.fromString(_saleId)
     val saleCollArtist = Await.result(salesdao.getSale(saleId), Duration.Inf)

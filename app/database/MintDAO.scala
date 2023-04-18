@@ -309,7 +309,7 @@ object NFTs {
       royalty,
       createdAt,
       updatedAt
-    ) <> (NFT.tupled, NFT.unapply)
+    ) <> ((NFT.apply _).tupled, NFT.unapply)
   }
 
   val nfts = TableQuery[NFTs]

@@ -1,6 +1,7 @@
 package models
 
 import play.api.libs.json.JsValue
+import play.api.libs.json.Json
 
 final case class UpdateUser(
     id: String,
@@ -13,3 +14,7 @@ final case class UpdateUser(
     socials: JsValue,
     verificationToken: String
 )
+
+object UpdateUser {
+  implicit val json = Json.format[UpdateUser]
+}

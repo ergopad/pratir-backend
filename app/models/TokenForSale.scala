@@ -1,6 +1,7 @@
 package models
 
 import java.util.UUID
+import play.api.libs.json.Json
 
 final case class TokenForSale(
     id: UUID,
@@ -10,3 +11,7 @@ final case class TokenForSale(
     rarity: String,
     saleId: UUID
 )
+
+object TokenForSale {
+  implicit val json = Json.format[TokenForSale]
+}

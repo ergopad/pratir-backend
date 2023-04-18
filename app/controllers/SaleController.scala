@@ -47,27 +47,6 @@ class SaleController @Inject() (
 )(implicit ec: ExecutionContext)
     extends BaseController
     with HasDatabaseConfigProvider[JdbcProfile] {
-  implicit val newPriceJson = Json.format[NewPrice]
-  implicit val newPackEntryJson = Json.format[NewPackEntry]
-  implicit val newPackJson = Json.format[NewPack]
-  implicit val newSaleJson = Json.format[NewSale]
-  implicit val priceJson = Json.format[Price]
-  implicit val packEntryJson = Json.format[PackEntry]
-  implicit val packFullJson = Json.format[PackFull]
-  implicit val tokenForSaleJson = Json.format[TokenForSale]
-  implicit val saleFullJson = Json.format[SaleFull]
-  implicit val buyPackRequestJson = Json.format[BuyPackRequest]
-  implicit val buySaleRequestJson = Json.format[BuySaleRequest]
-  implicit val buyRequestJson = Json.format[BuyRequest]
-  implicit val mInputJson = Json.format[MInput]
-  implicit val mOutputJson = Json.format[MOutput]
-  implicit val mUnsignedTransactionJson = Json.format[MUnsignedTransaction]
-  implicit val createdSaleJson = Json.format[CreatedSale]
-  implicit val bootstrapSaleJson = Json.format[BootstrapSale]
-  implicit val saleLiteJson = Json.format[SaleLite]
-  implicit val tokenOrderJson = Json.format[TokenOrder]
-  implicit val HighlightSaleRequestJson = Json.format[HighlightSaleRequest]
-  implicit val HighlightSaleResponseJson = Json.format[HighlightSaleResponse]
 
   def getAll(): Action[AnyContent] = Action.async { implicit request =>
     salesdao.getAll.map(sale =>

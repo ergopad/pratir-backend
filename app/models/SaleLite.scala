@@ -33,7 +33,7 @@ object SaleLite {
       salesdao: SalesDAO
   ) = {
     val packs = Await
-      .result(salesdao.getPacks(saleId), Duration.Inf)
+      .result(salesdao.getPacks(sale._1._1.id), Duration.Inf)
       .map(p => {
         val price = Await.result(salesdao.getPrice(p.id), Duration.Inf)
         val content = Await.result(salesdao.getPackEntries(p.id), Duration.Inf)

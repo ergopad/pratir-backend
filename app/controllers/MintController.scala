@@ -40,10 +40,6 @@ class MintController @Inject() (
 )(implicit ec: ExecutionContext)
     extends BaseController
     with HasDatabaseConfigProvider[JdbcProfile] {
-  implicit val nftCollectionJson = Json.format[NFTCollection]
-  implicit val artistJson = Json.format[Artist]
-  implicit val nftJson = Json.format[NFT]
-  implicit val fileUploadResponseJson = Json.format[FileUploadResponse]
 
   def getAllCollections(): mvc.Action[mvc.AnyContent] = Action.async {
     implicit request =>

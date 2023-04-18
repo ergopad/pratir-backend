@@ -352,7 +352,7 @@ object TokenOrders {
       status,
       createdAt,
       updatedAt
-    ) <> (TokenOrder.tupled, TokenOrder.unapply)
+    ) <> ((TokenOrder.apply _).tupled, TokenOrder.unapply)
   }
 
   val tokenOrders = TableQuery[TokenOrders]
@@ -388,7 +388,7 @@ object Sales {
       password,
       createdAt,
       updatedAt
-    ) <> (Sale.tupled, Sale.unapply)
+    ) <> ((Sale.apply _).tupled, Sale.unapply)
   }
 
   val sales = TableQuery[Sales]
@@ -414,7 +414,7 @@ object TokensForSale {
       originalAmount,
       rarity,
       saleId
-    ) <> (TokenForSale.tupled, TokenForSale.unapply)
+    ) <> ((TokenForSale.apply _).tupled, TokenForSale.unapply)
   }
 
   val tokensForSale = TableQuery[TokensForSale]
@@ -430,7 +430,8 @@ object Prices {
       _.id,
       onDelete = ForeignKeyAction.Cascade
     )
-    def * = (id, tokenId, amount, packId) <> (Price.tupled, Price.unapply)
+    def * =
+      (id, tokenId, amount, packId) <> ((Price.apply _).tupled, Price.unapply)
   }
 
   val prices = TableQuery[Prices]
@@ -446,7 +447,7 @@ object Packs {
       _.id,
       onDelete = ForeignKeyAction.Cascade
     )
-    def * = (id, name, image, saleId) <> (Pack.tupled, Pack.unapply)
+    def * = (id, name, image, saleId) <> ((Pack.apply _).tupled, Pack.unapply)
   }
 
   val packs = TableQuery[Packs]
@@ -463,7 +464,12 @@ object PackEntries {
       onDelete = ForeignKeyAction.Cascade
     )
     def * =
-      (id, rarity, amount, packId) <> (PackEntry.tupled, PackEntry.unapply)
+      (
+        id,
+        rarity,
+        amount,
+        packId
+      ) <> ((PackEntry.apply _).tupled, PackEntry.unapply)
   }
 
   val packEntries = TableQuery[PackEntries]
@@ -478,7 +484,10 @@ object HighlightedSales {
       _.id,
       onDelete = ForeignKeyAction.Cascade
     )
-    def * = (id, saleId) <> (HighlightedSale.tupled, HighlightedSale.unapply)
+    def * = (
+      id,
+      saleId
+    ) <> ((HighlightedSale.apply _).tupled, HighlightedSale.unapply)
   }
 
   val highlightedSales = TableQuery[HighlightedSales]
