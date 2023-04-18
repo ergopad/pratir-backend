@@ -16,7 +16,7 @@ final case class SaleLite(
     status: SaleStatus.Value,
     sellerWaller: String,
     saleWallet: String,
-    packs: Array[PackLite],
+    packs: Array[PackFull],
     tokens: Int,
     tokensTotal: Int,
     startingTokensTotal: Int,
@@ -33,10 +33,11 @@ object SaleLite {
       salesdao: SalesDAO
   ) = {
     val packs = Await
-      .result(salesdao.getPacks(sale._1._1.id), Duration.Inf)
+      .result(salesdao.getPacks(saleId), Duration.Inf)
       .map(p => {
         val price = Await.result(salesdao.getPrice(p.id), Duration.Inf)
-        PackLite(p.id, p.name, p.image, price.toArray)
+        val content = Await.result(salesdao.getPackEntries(p.id), Duration.Inf)
+        PackFull(p.id, p.name, p.image, price.toArray, content.toArray)
       })
     val tokens = Await
       .result(salesdao.getTokensForSale(sale._1._1.id), Duration.Inf)
