@@ -21,6 +21,7 @@ import scala.concurrent.Await
 import scala.concurrent.duration.Duration
 import models.NewNFT
 import play.api.libs.json.Json
+import util.Pratir
 
 @Singleton
 class MintDAO @Inject() (
@@ -62,6 +63,19 @@ class MintDAO @Inject() (
     val query =
       Collections.collections.filter(_.id === collectionId).result.head
     db.run(query)
+  }
+
+  def getCollectionIdBySlug(
+      collectionSlug: String
+  ): Option[UUID] = {
+    val query = Collections.collections.result
+    val res = Await.result(db.run(query), Duration.Inf)
+    val requiredColl = res.find(collection => Pratir.stringToUrl(collection.name) == collectionSlug)
+    if (requiredColl.isDefined) {
+      Some(requiredColl.get.id)
+    } else {
+      None
+    }
   }
 
   def getUnmintedCollections() = {
@@ -218,6 +232,7 @@ object Collections {
       _.id ?,
       onDelete = ForeignKeyAction.SetNull
     )
+    def nameIndex = index("collections_name_index", (name), unique = true)
     def * = (
       id,
       artistId,

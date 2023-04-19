@@ -27,6 +27,7 @@ import scala.concurrent.duration.Duration
 
 import slick.jdbc.JdbcProfile
 
+import util.Pratir
 import util.RestApiErgoClientWithNodePoolDataSource
 import util.NFTStorageClient
 
@@ -34,23 +35,39 @@ import models._
 
 @Singleton
 class MintController @Inject() (
-    protected val dbConfigProvider: DatabaseConfigProvider,
+    val mintdao: MintDAO,
+    val salesdao: SalesDAO,
+    val nftStorageClient: NFTStorageClient,
     val controllerComponents: ControllerComponents,
-    val nftStorageClient: NFTStorageClient
+    protected val dbConfigProvider: DatabaseConfigProvider
 )(implicit ec: ExecutionContext)
     extends BaseController
     with HasDatabaseConfigProvider[JdbcProfile] {
 
   def getAllCollections(): mvc.Action[mvc.AnyContent] = Action.async {
     implicit request =>
-      val mintdao = new MintDAO(dbConfigProvider)
       mintdao.getAllCollections.map(collection => Ok(Json.toJson(collection)))
   }
+
+  def getCollection(collectionId: String): mvc.Action[mvc.AnyContent] =
+    Action { implicit request =>
+      try {
+        val uuid =
+          if (Pratir.isValidUUID(collectionId)) UUID.fromString(collectionId)
+          else
+            mintdao
+              .getCollectionIdBySlug(collectionId)
+              .getOrElse(UUID.randomUUID)
+        val collection = Await.result(mintdao.getCollection(uuid), Duration.Inf)
+        Ok(Json.toJson(collection))
+      } catch {
+        case e: Exception => BadRequest(e.getMessage())
+      }
+    }
 
   def getAllCollectionsFiltered(
       address: Option[String]
   ): mvc.Action[mvc.AnyContent] = Action.async { implicit request =>
-    val mintdao = new MintDAO(dbConfigProvider)
     mintdao
       .getAllCollectionsFiltered(address)
       .map(collection => Ok(Json.toJson(collection)))
@@ -60,7 +77,6 @@ class MintController @Inject() (
     try {
       val content = request.body
       val jsonObject = content.asJson
-      val mintdao = new MintDAO(dbConfigProvider)
       Json.fromJson[NewArtist](jsonObject.get) match {
         case je: JsError => BadRequest(JsError.toJson(je))
         case js: JsSuccess[NewArtist] =>
@@ -88,7 +104,6 @@ class MintController @Inject() (
 
   def mintCollection(_collectionId: String) = Action { implicit request =>
     val collectionId = UUID.fromString(_collectionId)
-    val mintdao = new MintDAO(dbConfigProvider)
     val collection =
       Await.result(mintdao.getCollection(collectionId), Duration.Inf)
     val ergoClient = RestApiErgoClientWithNodePoolDataSource.create(
@@ -122,8 +137,6 @@ class MintController @Inject() (
     try {
       val content = request.body
       val jsonObject = content.asJson
-      val mintdao = new MintDAO(dbConfigProvider)
-      val salesdao = new SalesDAO(dbConfigProvider)
       Json.fromJson[NewNFTCollection](jsonObject.get) match {
         case je: JsError => BadRequest(JsError.toJson(je))
         case js: JsSuccess[NewNFTCollection] =>
@@ -149,7 +162,6 @@ class MintController @Inject() (
   def createNFTs() = Action { implicit request =>
     val content = request.body
     val jsonObject = content.asJson
-    val mintdao = new MintDAO(dbConfigProvider)
 
     Json.fromJson[Seq[NewNFT]](jsonObject.get) match {
       case je: JsError => BadRequest(JsError.toJson(je))

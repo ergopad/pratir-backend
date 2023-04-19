@@ -45,6 +45,7 @@ POST    /upload_file                    controllers.UserController.uploadFile()
 POST    /artist                         controllers.MintController.createArtist()
 
 GET     /collection                     controllers.MintController.getAllCollectionsFiltered(address: Option[String] ?= None)
+GET     /collection/:collectionId       controllers.MintController.getCollection(collectionId: String)
 POST    /collection                     controllers.MintController.createCollection()
 GET     /collection/:collectionId/mint  controllers.MintController.mintCollection(collectionId: String)
 

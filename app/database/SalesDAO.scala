@@ -16,6 +16,7 @@ import scala.concurrent.duration
 import scala.util.Random
 import play.api.Logging
 import play.api.libs.json.JsValue
+import util.Pratir
 
 @Singleton
 class SalesDAO @Inject() (
@@ -113,6 +114,19 @@ class SalesDAO @Inject() (
       .result
       .head
     db.run(query)
+  }
+
+  def getSaleIdBySlug(
+      saleSlug: String
+  ): Option[UUID] = {
+    val query = Sales.sales.result
+    val res = Await.result(db.run(query), duration.Duration.Inf)
+    val requiredSale = res.find(sale => Pratir.stringToUrl(sale.name) == saleSlug)
+    if (requiredSale.isDefined) {
+      Some(requiredSale.get.id)
+    } else {
+      None
+    }
   }
 
   def getPacks(saleId: UUID): Future[Seq[Pack]] = {
@@ -375,6 +389,7 @@ object Sales {
     def password = column[String]("password")
     def createdAt = column[Instant]("created_at")
     def updatedAt = column[Instant]("updated_at")
+    def nameIndex = index("sales_name_index", (name), unique = true)
     def * = (
       id,
       name,
