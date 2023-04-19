@@ -1,42 +1,50 @@
 package controllers;
 
-import play.api.mvc._
+import java.time.Instant
+import java.util.UUID
+import java.nio.charset.CharsetEncoder
+import java.nio.charset.StandardCharsets
+
 import javax.inject._
+
 import slick.lifted.TableQuery
-import database._
-import play.api.libs.json._
-import play.api.db.slick._
 import slick.jdbc.PostgresProfile.api._
 import slick.jdbc.JdbcProfile
-import scala.concurrent.ExecutionContext
-import models._
-import java.util.UUID
-import scala.concurrent.duration.Duration
-import scala.concurrent.Await
+
 import _root_.util._
+
 import org.ergoplatform.appkit.BoxOperations
 import org.ergoplatform.appkit.NetworkType
 import org.ergoplatform.appkit.BlockchainContext
-import contracts.BuyOrder
 import org.ergoplatform.appkit.impl.ErgoTreeContract
 import org.ergoplatform.appkit.ExplorerAndPoolUnspentBoxesLoader
-import scala.collection.mutable.HashMap
 import org.ergoplatform.appkit.ErgoToken
 import org.ergoplatform.appkit.scalaapi.ErgoValueBuilder
-import sigmastate.eval.Colls
-import java.nio.charset.CharsetEncoder
-import java.nio.charset.StandardCharsets
 import org.ergoplatform.appkit.Address
-import scala.collection.JavaConverters._
-import special.collection.Coll
 import org.ergoplatform.appkit.UnsignedTransaction
 import org.ergoplatform.appkit.OutBox
 import org.ergoplatform.appkit.InputBoxesSelectionException.NotEnoughTokensException
 import org.ergoplatform.appkit.InputBoxesSelectionException.NotEnoughErgsException
 import org.ergoplatform.appkit.InputBoxesSelectionException.NotEnoughCoinsForChangeException
-import java.time.Instant
-import models.AddressList
+
+import play.api.mvc._
+import play.api.libs.json._
+import play.api.db.slick._
+
+import scala.collection.mutable.HashMap
+import scala.collection.JavaConverters._
+import scala.concurrent.ExecutionContext
 import scala.concurrent.Future
+import scala.concurrent.duration.Duration
+import scala.concurrent.Await
+
+import sigmastate.eval.Colls
+
+import special.collection.Coll
+
+import contracts.BuyOrder
+import database._
+import models._
 
 @Singleton
 class SaleController @Inject() (
@@ -95,7 +103,16 @@ class SaleController @Inject() (
   }
 
   def getSale(_saleId: String) = Action { implicit request =>
-    Ok(Json.toJson(SaleFull.fromSaleId(_saleId, salesdao)))
+    try {
+      if (Pratir.isValidUUID(_saleId)) {
+        Ok(Json.toJson(SaleFull.fromSaleId(_saleId, salesdao)))
+      } else {
+        val uuid = salesdao.getSaleIdBySlug(_saleId).getOrElse(UUID.randomUUID)
+        Ok(Json.toJson(SaleFull.fromSaleId(uuid.toString, salesdao)))
+      }
+    } catch {
+      case e: Exception => BadRequest(e.getMessage())
+    }
   }
 
   def createSale() = Action { implicit request =>
