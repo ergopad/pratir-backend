@@ -63,7 +63,7 @@ final case class NewPack(
             Json.toJson[Seq[PackRarity]](
               Array(PackRarity(s"_pt_rarity_${name}", 100))
             ),
-            entry.amount,
+            1,
             packId
           )
         ),
