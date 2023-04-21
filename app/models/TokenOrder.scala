@@ -153,7 +153,9 @@ final case class TokenOrder(
         )
 
       val sale = Await.result(salesdao.getSale(saleId), Duration.Inf)._1._1
-      val packPrice = Await.result(salesdao.getPrice(packId), Duration.Inf)
+      val pack = Await.result(salesdao.getPack(packId), Duration.Inf)
+      val fullPack = PackFull(pack, salesdao)
+      val packPrice = fullPack.price
 
       val combinedPrices = new HashMap[String, Long]()
       packPrice.foreach(p =>
@@ -176,8 +178,11 @@ final case class TokenOrder(
                   .getValue() >= token._2
               )
           )
+
       val result: Option[Fulfillment] =
-        if (sufficientFunds && sale.status == SaleStatus.LIVE) {
+        if (
+          sufficientFunds && sale.status == SaleStatus.LIVE && !fullPack.soldOut
+        ) {
           val negativeTokens =
             combinedPrices.filterNot(cp => cp._1 == "0" * 64 || cp._2 > 0)
           val negativeSalesInOrder =
@@ -199,9 +204,9 @@ final case class TokenOrder(
             }
           if (negativeSalesInOrder) {
 
-            val pack =
-              Await.result(salesdao.getPackEntries(packId), Duration.Inf)
-            val tokensPicked = pack.flatMap(pe => {
+            val packContent = fullPack.content
+
+            val tokensPicked = packContent.flatMap(pe => {
               Range(0, pe.amount).map(i => {
                 val randomRarity = pe.pickRarity(salesdao, saleId)
                 logger.info(s"Random rarity: $randomRarity")

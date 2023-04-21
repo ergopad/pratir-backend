@@ -15,15 +15,17 @@ final case class PackEntry(
     packId: UUID
 ) {
   def pickRarity(salesdao: SalesDAO, saleId: UUID) = {
-    Json
-      .fromJson[Seq[PackRarity]](rarity)
-      .asInstanceOf[JsSuccess[Seq[PackRarity]]]
-      .value
+    getRarity
       .map(pr => (salesdao.rarityOdds(saleId, pr), pr))
       .sortBy(-1 * _._1)
       .head
       ._2
   }
+
+  def getRarity = Json
+    .fromJson[Seq[PackRarity]](rarity)
+    .asInstanceOf[JsSuccess[Seq[PackRarity]]]
+    .value
 }
 
 object PackEntry {

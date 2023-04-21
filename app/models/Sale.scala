@@ -334,9 +334,7 @@ final case class Sale(
     val packs = Await
       .result(salesdao.getPacks(id), Duration.Inf)
       .map(p => {
-        val price = Await.result(salesdao.getPrice(p.id), Duration.Inf)
-        val content = Await.result(salesdao.getPackEntries(p.id), Duration.Inf)
-        PackFull(p.id, p.name, p.image, price.toArray, content.toArray)
+        PackFull(p, salesdao)
       })
     packs.flatMap(p => {
       p.price.find(pr => pr.tokenId.contains("_pt_")) match {

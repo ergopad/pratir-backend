@@ -121,7 +121,8 @@ class SalesDAO @Inject() (
   ): Option[UUID] = {
     val query = Sales.sales.result
     val res = Await.result(db.run(query), duration.Duration.Inf)
-    val requiredSale = res.find(sale => Pratir.stringToUrl(sale.name) == saleSlug)
+    val requiredSale =
+      res.find(sale => Pratir.stringToUrl(sale.name) == saleSlug)
     if (requiredSale.isDefined) {
       Some(requiredSale.get.id)
     } else {
@@ -259,6 +260,16 @@ class SalesDAO @Inject() (
   def tokensLeft(saleId: UUID) = {
     val query = TokensForSale.tokensForSale
       .filter(_.saleId === saleId)
+      .map(_.amount)
+      .sum
+      .result
+    db.run(query)
+  }
+
+  def tokensLeft(saleId: UUID, rarity: String) = {
+    val query = TokensForSale.tokensForSale
+      .filter(_.saleId === saleId)
+      .filter(_.rarity === rarity)
       .map(_.amount)
       .sum
       .result

@@ -35,9 +35,7 @@ object SaleFull {
     val packs = Await
       .result(salesdao.getPacks(saleId), Duration.Inf)
       .map(p => {
-        val price = Await.result(salesdao.getPrice(p.id), Duration.Inf)
-        val content = Await.result(salesdao.getPackEntries(p.id), Duration.Inf)
-        PackFull(p.id, p.name, p.image, price.toArray, content.toArray)
+        PackFull(p, salesdao)
       })
     SaleFull(
       sale.id,
