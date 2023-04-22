@@ -302,7 +302,7 @@ class SalesDAO @Inject() (
     Await
       .result(
         db.run(sql"""
-        SELECT random()*${packRarity.odds}*SUM(amount)/SUM(original_amount) AS "lucky_num"
+        SELECT coalesce(random()*${packRarity.odds}*SUM(amount)/SUM(original_amount),0) AS "lucky_num"
             FROM "tokens_for_sale"
             WHERE "sale_id" = UUID(${saleId.toString()})
             AND "rarity" = ${packRarity.rarity}
