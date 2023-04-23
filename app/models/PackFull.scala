@@ -22,19 +22,20 @@ object PackFull {
   def apply(p: Pack, salesdao: SalesDAO): PackFull = {
     val price = Await.result(salesdao.getPrice(p.id), Duration.Inf)
     val content = Await.result(salesdao.getPackEntries(p.id), Duration.Inf)
-    val notSoldOut = content.forall(pe =>
-      Await
-        .result(
-          salesdao
-            .tokensLeft(p.saleId, pe.pickRarity(salesdao, p.saleId).rarity),
-          Duration.Inf
-        )
-        .getOrElse(0) > 0
-    ) && price.forall(pr =>
-      pr.amount > 0 || Await
-        .result(salesdao.getTokenForSale(pr.tokenId, p.saleId), Duration.Inf)
-        .amount > -1 * pr.amount
-    )
+    val notSoldOut =
+      content.forall(pe =>
+        Await
+          .result(
+            salesdao
+              .tokensLeft(p.saleId, pe.pickRarity(salesdao, p.saleId).rarity),
+            Duration.Inf
+          )
+          .getOrElse(0) > 0
+      ) && price.forall(pr =>
+        pr.amount > 0 || Await
+          .result(salesdao.getTokenForSale(pr.tokenId, p.saleId), Duration.Inf)
+          .amount > -1 * pr.amount
+      )
     PackFull(p.id, p.name, p.image, price.toArray, content.toArray, !notSoldOut)
   }
 }

@@ -6,6 +6,8 @@ import play.api.libs.json.Json
 import database.SalesDAO
 import scala.concurrent.Await
 import scala.concurrent.duration.Duration
+import play.api.Logging
+import com.github.nscala_time.time.Imports._
 
 final case class SaleLite(
     id: UUID,
@@ -14,7 +16,7 @@ final case class SaleLite(
     startTime: Instant,
     endTime: Instant,
     status: SaleStatus.Value,
-    sellerWaller: String,
+    sellerWallet: String,
     saleWallet: String,
     packs: Array[PackFull],
     tokens: Int,
@@ -24,7 +26,7 @@ final case class SaleLite(
     artist: Option[Artist]
 )
 
-object SaleLite {
+object SaleLite extends Logging {
 
   implicit val json = Json.format[SaleLite]
 
@@ -32,14 +34,19 @@ object SaleLite {
       sale: ((Sale, Option[NFTCollection]), Option[Artist]),
       salesdao: SalesDAO
   ) = {
-    val packs = Await
-      .result(salesdao.getPacks(sale._1._1.id), Duration.Inf)
-      .map(p => {
-        PackFull(p, salesdao)
-      })
+    val start = DateTime.now()
+    val packs = salesdao.getPacksFull(sale._1._1.id)
+    val getPacksTime = DateTime.now()
+    logger.info(
+      "Time to get packs: " + (start to getPacksTime).millis.toString
+    )
     val tokens = Await
       .result(salesdao.getTokensForSale(sale._1._1.id), Duration.Inf)
       .filter(!_.rarity.contains("_pt_"))
+    val getTokensTime = DateTime.now()
+    logger.info(
+      "Time to get tokens: " + (getPacksTime to getTokensTime).millis.toString
+    )
     SaleLite(
       sale._1._1.id,
       sale._1._1.name,

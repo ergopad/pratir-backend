@@ -43,6 +43,8 @@ libraryDependencies ++= Seq(
   "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.12.1"
 )
 
+libraryDependencies += "com.github.nscala-time" %% "nscala-time" % "2.32.0"
+
 libraryDependencies += ws
 
 // Adds additional packages into Twirl

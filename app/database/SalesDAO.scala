@@ -17,6 +17,7 @@ import scala.util.Random
 import play.api.Logging
 import play.api.libs.json.JsValue
 import util.Pratir
+import play.api.libs.json.Json
 
 @Singleton
 class SalesDAO @Inject() (
@@ -70,6 +71,7 @@ class SalesDAO @Inject() (
       .on(_._2.flatMap(_.artistId ?) === _.id)
       .sortBy(_._1._1.createdAt.desc)
       .result
+    query.statements.foreach(logger.info(_))
     db.run(query)
   }
 
@@ -128,6 +130,45 @@ class SalesDAO @Inject() (
     } else {
       None
     }
+  }
+
+  def getPacksFull(saleId: UUID): Seq[PackFull] = {
+    val jsResult = Await
+      .result(
+        db.run(sql"""
+        select jsonb_agg(to_jsonb(p.*))::text from (select 
+          id,
+          name,
+          image,
+          (select jsonb_agg(to_jsonb(pr.*)) from (
+            select id, token_id as "tokenId", amount, pack_id as "packId" from prices where pack_id = pack.id
+          ) pr) as "price",
+          (select jsonb_agg(to_jsonb(pc.*)) from (
+            select id, rarity, amount, pack_id as "packId" from pack_entries where pack_id = pack.id
+          ) pc) as "content",
+          case 
+            when (coalesce(((select sum(amount) from tokens_for_sale tfs where tfs.sale_id = pack.sale_id and rarity in (
+              SELECT rarity
+              FROM (
+                select rarity as "rarities" 
+                from public.pack_entries pes
+                where pes.pack_id = pack.id
+              ) pe, jsonb_to_recordset(pe.rarities) as items(rarity text)
+            ))
+            ),0) <= 0) then TRUE
+            when exists (select * 
+                  from tokens_for_sale tfs 
+                  where tfs.sale_id = pack.sale_id 
+                  and tfs.token_id in (select token_id from prices where pack_id = pack.id)
+                  and tfs.amount <= 0) then TRUE
+            else FALSE end as "soldOut"
+        from packs pack
+        where pack.sale_id = UUID(${saleId.toString()})) p
+        """.as[String]),
+        duration.Duration.Inf
+      )
+      .head
+    Json.fromJson[Seq[PackFull]](Json.parse(jsResult)).get
   }
 
   def getPacks(saleId: UUID): Future[Seq[Pack]] = {

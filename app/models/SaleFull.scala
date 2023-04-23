@@ -6,6 +6,8 @@ import database.SalesDAO
 import scala.concurrent.Await
 import scala.concurrent.duration.Duration
 import play.api.libs.json.Json
+import play.api.Logging
+import com.github.nscala_time.time.Imports._
 
 final case class SaleFull(
     id: UUID,
@@ -23,20 +25,27 @@ final case class SaleFull(
     artist: Option[Artist]
 )
 
-object SaleFull {
+object SaleFull extends Logging {
 
   implicit val json = Json.format[SaleFull]
 
   def fromSaleId(_saleId: String, salesdao: SalesDAO) = {
+    val start = DateTime.now()
     val saleId = UUID.fromString(_saleId)
     val saleCollArtist = Await.result(salesdao.getSale(saleId), Duration.Inf)
+    val getSaleTime = DateTime.now()
+    logger.info("Time to get sale: " + (start to getSaleTime).millis.toString)
     val sale = saleCollArtist._1._1
     val tokens = Await.result(salesdao.getTokensForSale(saleId), Duration.Inf)
-    val packs = Await
-      .result(salesdao.getPacks(saleId), Duration.Inf)
-      .map(p => {
-        PackFull(p, salesdao)
-      })
+    val getTokensTime = DateTime.now()
+    logger.info(
+      "Time to get tokens: " + (getSaleTime to getTokensTime).millis.toString
+    )
+    val packs = salesdao.getPacksFull(saleCollArtist._1._1.id)
+    val getPacksTime = DateTime.now()
+    logger.info(
+      "Time to get packs: " + (getTokensTime to getPacksTime).millis.toString
+    )
     SaleFull(
       sale.id,
       sale.name,
