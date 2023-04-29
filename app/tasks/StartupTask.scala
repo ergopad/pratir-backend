@@ -31,7 +31,6 @@ extends  HasDatabaseConfigProvider[JdbcProfile]{
         TableQuery[TokenOrders.TokenOrders].schema ++
         TableQuery[Users.Users].schema ++
         TableQuery[AuthRequests.AuthRequests].schema ++
-        TableQuery[Artists.Artists].schema ++
         TableQuery[Collections.Collections].schema ++
         TableQuery[NFTs.NFTs].schema
       // the block of code that will be executed

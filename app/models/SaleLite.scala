@@ -23,7 +23,7 @@ final case class SaleLite(
     tokensTotal: Int,
     startingTokensTotal: Int,
     collection: Option[NFTCollection],
-    artist: Option[Artist]
+    artist: Option[User]
 )
 
 object SaleLite extends Logging {
@@ -31,7 +31,7 @@ object SaleLite extends Logging {
   implicit val json = Json.format[SaleLite]
 
   def fromSale(
-      sale: ((Sale, Option[NFTCollection]), Option[Artist]),
+      sale: ((Sale, Option[NFTCollection]), Option[User]),
       salesdao: SalesDAO
   ) = {
     val start = DateTime.now()

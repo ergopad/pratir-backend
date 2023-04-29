@@ -10,6 +10,7 @@ import org.ergoplatform.appkit.ErgoClient
 import org.ergoplatform.appkit.UnsignedTransaction
 import util.RestApiErgoClientWithNodePoolDataSource
 import database.MintDAO
+import database.UsersDAO
 import scala.concurrent.Await
 import scala.concurrent.duration.Duration
 import contracts.Mint
@@ -69,14 +70,16 @@ final case class NFTCollection(
     updatedAt: Instant
 ) extends Logging {
 
-  def artist(mintdao: MintDAO) =
-    Await.result(mintdao.getArtist(artistId), Duration.Inf)
+  def artist(usersdao: UsersDAO) = {
+    val artistOption = Await.result(usersdao.getUserById(artistId), Duration.Inf)
+    artistOption.get
+  }
 
-  def mintContract(artist: Artist) =
+  def mintContract(artist: User) =
     new ErgoTreeContract(Mint.contract(artist.address), NetworkType.MAINNET)
 
-  def handleInitialized(ergoClient: ErgoClient, mintdao: MintDAO) = {
-    mint(ergoClient, mintdao)
+  def handleInitialized(ergoClient: ErgoClient, mintdao: MintDAO, usersdao: UsersDAO) = {
+    mint(ergoClient, mintdao, usersdao)
   }
 
   def getAvailableTraits = {
@@ -89,12 +92,12 @@ final case class NFTCollection(
     }
   }
 
-  def mintNFTs(ergoClient: ErgoClient, mintdao: MintDAO, salesdao: SalesDAO) = {
+  def mintNFTs(ergoClient: ErgoClient, mintdao: MintDAO, salesdao: SalesDAO, usersdao: UsersDAO) = {
     val nftMintsInMempool = Await.result(mintdao.getNFTsMinting, Duration.Inf)
 
     val mimMax = 30
 
-    val _artist = artist(mintdao)
+    val _artist = artist(usersdao)
     val _mintContract = mintContract(_artist)
 
     val collection = this
@@ -167,6 +170,7 @@ final case class NFTCollection(
                     ergoClient,
                     mintdao,
                     salesdao,
+                    usersdao,
                     if (nftsToBeMinted.length > i + 1)
                       Some(nftsToBeMinted(i + 1))
                     else None
@@ -216,8 +220,8 @@ final case class NFTCollection(
 
   val collByte = TypeCase[Coll[Byte]]
 
-  def mint(ergoClient: ErgoClient, mintdao: MintDAO) = {
-    val _artist = artist(mintdao)
+  def mint(ergoClient: ErgoClient, mintdao: MintDAO, usersdao: UsersDAO) = {
+    val _artist = artist(usersdao)
     val _mintContract = mintContract(_artist)
     val nfts = Await.result(mintdao.getNFTsForCollection(id), Duration.Inf)
     val nanoErgNeeded = 2000000L * (nfts.size + 4) - 1000000L
@@ -372,6 +376,7 @@ final case class NFTCollection(
   def followUp(
       ergoClient: ErgoClient,
       mintdao: MintDAO,
+      usersdao: UsersDAO,
       retries: Int = 10
   ): Unit = {
     if (retries < 0) {
@@ -387,7 +392,7 @@ final case class NFTCollection(
         .getUnconfirmedTransactionState(mintingTxId)
       // If the tx is no longer in the mempool we need to ensure it is confirmed and set the state accordingly
       if (mempoolTxState == 404) {
-        val _artist = artist(mintdao)
+        val _artist = artist(usersdao)
         val _mintContract = mintContract(_artist)
         val balance = Pratir.balance(
           ergoClient
@@ -408,7 +413,7 @@ final case class NFTCollection(
         } else {
           logger.info(s"""Transaction lost, waiting 10 seconds...""")
           Thread.sleep(10000)
-          followUp(ergoClient, mintdao, retries - 1)
+          followUp(ergoClient, mintdao, usersdao, retries - 1)
         }
       }
     }
@@ -416,11 +421,12 @@ final case class NFTCollection(
 
   def mintBootstrap(
       ergoClient: ErgoClient,
-      mintdao: MintDAO
+      mintdao: MintDAO,
+      usersdao: UsersDAO
   ): UnsignedTransaction = {
     val nfts = Await.result(mintdao.getNFTsForCollection(id), Duration.Inf)
     val nanoErgNeeded = 2000000L * (nfts.size + 4)
-    val _artist = artist(mintdao)
+    val _artist = artist(usersdao)
     val _mintContract = mintContract(_artist)
     ergoClient.execute(
       new java.util.function.Function[BlockchainContext, UnsignedTransaction] {

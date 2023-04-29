@@ -1,23 +1,27 @@
 package database
 
-import javax.inject._
-import play.api.db.slick.DatabaseConfigProvider
-import scala.concurrent.ExecutionContext
-import play.api.db.slick.HasDatabaseConfigProvider
-import slick.jdbc.JdbcProfile
-import scala.concurrent.Future
-import models._
-import database.JsonPostgresProfile.api._
 import java.time._
 import java.util.UUID
+
 import com.google.common.collect
-import scala.concurrent.Await
-import scala.concurrent.duration
-import scala.util.Random
+
+import javax.inject._
+
 import play.api.Logging
-import play.api.libs.json.JsValue
+import play.api.db.slick.{DatabaseConfigProvider, HasDatabaseConfigProvider}
+import play.api.libs.json.{JsValue, Json}
+
+import slick.jdbc.JdbcProfile
+import database.JsonPostgresProfile.api._
+
+import models._
+
+import scala.concurrent.{Await, ExecutionContext, Future}
+import scala.concurrent.duration
+
+import scala.util.Random
+
 import util.Pratir
-import play.api.libs.json.Json
 
 @Singleton
 class SalesDAO @Inject() (
@@ -36,11 +40,11 @@ class SalesDAO @Inject() (
     db.run(query)
   }
 
-  def getAll: Future[Seq[((Sale, Option[NFTCollection]), Option[Artist])]] = {
+  def getAll: Future[Seq[((Sale, Option[NFTCollection]), Option[User])]] = {
     val query = Sales.sales
       .joinLeft(Collections.collections)
       .on(_.id === _.saleId)
-      .joinLeft(Artists.artists)
+      .joinLeft(Users.users)
       .on(_._2.flatMap(_.artistId ?) === _.id)
       .sortBy(_._1._1.createdAt.desc)
       .result
@@ -50,7 +54,7 @@ class SalesDAO @Inject() (
   def getAllFiltered(
       status: Option[String],
       address: Option[String]
-  ): Future[Seq[((Sale, Option[NFTCollection]), Option[Artist])]] = {
+  ): Future[Seq[((Sale, Option[NFTCollection]), Option[User])]] = {
     val mainQuery = Sales.sales
     val statusFiltered = status match {
       case None => mainQuery
@@ -67,7 +71,7 @@ class SalesDAO @Inject() (
     val query = addressFiltered
       .joinLeft(Collections.collections)
       .on(_.id === _.saleId)
-      .joinLeft(Artists.artists)
+      .joinLeft(Users.users)
       .on(_._2.flatMap(_.artistId ?) === _.id)
       .sortBy(_._1._1.createdAt.desc)
       .result
@@ -76,12 +80,12 @@ class SalesDAO @Inject() (
   }
 
   def getAllActive
-      : Future[Seq[((Sale, Option[NFTCollection]), Option[Artist])]] = {
+      : Future[Seq[((Sale, Option[NFTCollection]), Option[User])]] = {
     val query = Sales.sales
       .filter(_.status =!= SaleStatus.FINISHED)
       .joinLeft(Collections.collections)
       .on(_.id === _.saleId)
-      .joinLeft(Artists.artists)
+      .joinLeft(Users.users)
       .on(_._2.flatMap(_.artistId ?) === _.id)
       .sortBy(_._1._1.createdAt.desc)
       .result
@@ -89,14 +93,14 @@ class SalesDAO @Inject() (
   }
 
   def getAllHighlighted
-      : Future[Seq[((Sale, Option[NFTCollection]), Option[Artist])]] = {
+      : Future[Seq[((Sale, Option[NFTCollection]), Option[User])]] = {
     val subquery = HighlightedSales.highlightedSales
       .map { _.saleId }
     val query = Sales.sales
       .filter(_.id in subquery)
       .joinLeft(Collections.collections)
       .on(_.id === _.saleId)
-      .joinLeft(Artists.artists)
+      .joinLeft(Users.users)
       .on(_._2.flatMap(_.artistId ?) === _.id)
       .sortBy(_._1._1.createdAt.desc)
       .result
@@ -105,12 +109,12 @@ class SalesDAO @Inject() (
 
   def getSale(
       saleId: UUID
-  ): Future[((Sale, Option[NFTCollection]), Option[Artist])] = {
+  ): Future[((Sale, Option[NFTCollection]), Option[User])] = {
     val query = Sales.sales
       .filter(_.id === saleId)
       .joinLeft(Collections.collections)
       .on(_.id === _.saleId)
-      .joinLeft(Artists.artists)
+      .joinLeft(Users.users)
       .on(_._2.flatMap(_.artistId ?) === _.id)
       .sortBy(_._1._1.createdAt.desc)
       .result

@@ -1,26 +1,29 @@
 package database
 
-import javax.inject._
-import play.api.db.slick.DatabaseConfigProvider
-import scala.concurrent.ExecutionContext
-import play.api.db.slick.HasDatabaseConfigProvider
-import slick.jdbc.JdbcProfile
-import play.api.Logging
-import java.util.UUID
-import play.api.libs.json.JsValue
-import models.NFTCollection
 import java.time.Instant
+import java.util.UUID
+
+import javax.inject._
+
+import play.api.Logging
+import play.api.db.slick.{DatabaseConfigProvider, HasDatabaseConfigProvider}
+import play.api.libs.json.{JsValue, Json}
+import slick.jdbc.JdbcProfile
+
 import database.JsonPostgresProfile.api._
-import models.NFTCollectionStatus
-import models.Artist
-import models.NFTStatus
-import models.NFT
-import scala.concurrent.Future
-import models.NewNFTCollection
-import scala.concurrent.Await
+
+import models.{
+  NFT,
+  NFTCollection,
+  NFTCollectionStatus,
+  NFTStatus,
+  NewNFT,
+  NewNFTCollection
+}
+
+import scala.concurrent.{Await, ExecutionContext, Future}
 import scala.concurrent.duration.Duration
-import models.NewNFT
-import play.api.libs.json.Json
+
 import util.Pratir
 
 @Singleton
@@ -30,15 +33,6 @@ class MintDAO @Inject() (
     extends HasDatabaseConfigProvider[JdbcProfile]
     with Logging {
   import profile.api._
-
-  def getArtist(artistId: UUID) = {
-    val query = Artists.artists.filter(_.id === artistId).result.head
-    db.run(query)
-  }
-
-  def insertArtist(artist: Artist) = {
-    db.run(DBIO.seq(Artists.artists += artist))
-  }
 
   def getAllCollections: Future[Seq[NFTCollection]] = {
     val query = Collections.collections.sortBy(_.createdAt.desc).result
@@ -50,7 +44,7 @@ class MintDAO @Inject() (
       case None => getAllCollections
       case Some(value) =>
         val query = Collections.collections
-          .joinLeft(Artists.artists)
+          .joinLeft(Users.users)
           .on(_.artistId === _.id)
           .filter(_._2.flatMap(_.address ?) === value)
           .map(_._1)
@@ -70,7 +64,9 @@ class MintDAO @Inject() (
   ): Option[UUID] = {
     val query = Collections.collections.result
     val res = Await.result(db.run(query), Duration.Inf)
-    val requiredColl = res.find(collection => Pratir.stringToUrl(collection.name) == collectionSlug)
+    val requiredColl = res.find(collection =>
+      Pratir.stringToUrl(collection.name) == collectionSlug
+    )
     if (requiredColl.isDefined) {
       Some(requiredColl.get.id)
     } else {
@@ -226,7 +222,7 @@ object Collections {
     def artist = foreignKey(
       "collections__artist_id_fk",
       artistId,
-      Artists.artists
+      Users.users
     )(_.id, onDelete = ForeignKeyAction.Cascade)
     def sale = foreignKey("collections__sale_id_fk", saleId, Sales.sales)(
       _.id ?,
@@ -255,35 +251,6 @@ object Collections {
   }
 
   val collections = TableQuery[Collections]
-}
-
-object Artists {
-  class Artists(tag: Tag) extends Table[Artist](tag, "artists") {
-    def id = column[UUID]("id", O.PrimaryKey)
-    def address = column[String]("address")
-    def name = column[String]("name")
-    def website = column[String]("website")
-    def tagline = column[String]("tagline")
-    def avatarUrl = column[String]("avatar_url")
-    def bannerUrl = column[String]("banner_url")
-    def social = column[JsValue]("social")
-    def createdAt = column[Instant]("created_at")
-    def updatedAt = column[Instant]("updated_at")
-    def * = (
-      id,
-      address,
-      name,
-      website,
-      tagline,
-      avatarUrl,
-      bannerUrl,
-      social,
-      createdAt,
-      updatedAt
-    ) <> ((Artist.apply _).tupled, Artist.unapply)
-  }
-
-  val artists = TableQuery[Artists]
 }
 
 object NFTs {

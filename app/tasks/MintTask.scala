@@ -53,12 +53,17 @@ extends  HasDatabaseConfigProvider[JdbcProfile] with Logging {
     actorSystem.scheduler.scheduleWithFixedDelay(initialDelay = 5.seconds, delay = 10.seconds)(() =>
         try {
             Random.setSeed(Instant.now().toEpochMilli())
-            val ergoClient = RestApiErgoClientWithNodePoolDataSource.create(sys.env.get("ERGO_NODE").get,NetworkType.MAINNET,"",sys.env.get("ERGO_EXPLORER").get)
+            val ergoClient = RestApiErgoClientWithNodePoolDataSource.create(
+                sys.env.get("ERGO_NODE").get,NetworkType.MAINNET,
+                "",
+                sys.env.get("ERGO_EXPLORER").get
+            )
             val salesdao = new SalesDAO(dbConfigProvider)
             val mintdao = new MintDAO(dbConfigProvider)
+            val usersdao = new UsersDAO(dbConfigProvider)
             logger.info("Handling mints...")
             try {
-                handleMints(ergoClient,mintdao,salesdao)
+                handleMints(ergoClient, mintdao, salesdao, usersdao)
             } catch {
                 case e: Exception => logger.error(e.getMessage())
             }
@@ -67,11 +72,11 @@ extends  HasDatabaseConfigProvider[JdbcProfile] with Logging {
         }
     )
 
-    def handleMints(ergoClient: ErgoClient, mintdao: MintDAO, salesdao: SalesDAO) = {
+    def handleMints(ergoClient: ErgoClient, mintdao: MintDAO, salesdao: SalesDAO, usersdao: UsersDAO) = {
         val mintingNFTs = Await.result(mintdao.getNFTsMinting, Duration.Inf)
 
         try {
-            mintingNFTs.foreach(_.followUp(ergoClient, mintdao, salesdao))
+            mintingNFTs.foreach(_.followUp(ergoClient, mintdao, salesdao, usersdao))
         } catch {
                 case e: Exception => logger.error(e.getMessage())
         }
@@ -82,15 +87,15 @@ extends  HasDatabaseConfigProvider[JdbcProfile] with Logging {
             try {
                 
                 if (umc.status == NFTCollectionStatus.INITIALIZED) {                 
-                    umc.handleInitialized(ergoClient, mintdao)               
+                    umc.handleInitialized(ergoClient, mintdao, usersdao)               
                 }
 
                 if (umc.status == NFTCollectionStatus.MINTING) {           
-                    umc.followUp(ergoClient, mintdao)
+                    umc.followUp(ergoClient, mintdao, usersdao)
                 }
 
                 if (umc.status == NFTCollectionStatus.MINTING_NFTS) {
-                    umc.mintNFTs(ergoClient, mintdao, salesdao)
+                    umc.mintNFTs(ergoClient, mintdao, salesdao, usersdao)
                 }
                 
             } catch {
@@ -101,4 +106,3 @@ extends  HasDatabaseConfigProvider[JdbcProfile] with Logging {
         })
     }
 }
-
