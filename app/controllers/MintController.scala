@@ -2,6 +2,7 @@ package controllers
 
 import database.SalesDAO
 import database.MintDAO
+import database.UsersDAO
 
 import java.util.UUID
 import java.time.Instant
@@ -37,6 +38,7 @@ import models._
 class MintController @Inject() (
     val mintdao: MintDAO,
     val salesdao: SalesDAO,
+    val usersdao: UsersDAO,
     val nftStorageClient: NFTStorageClient,
     val controllerComponents: ControllerComponents,
     protected val dbConfigProvider: DatabaseConfigProvider
@@ -73,35 +75,6 @@ class MintController @Inject() (
       .map(collection => Ok(Json.toJson(collection)))
   }
 
-  def createArtist() = Action { implicit request =>
-    try {
-      val content = request.body
-      val jsonObject = content.asJson
-      Json.fromJson[NewArtist](jsonObject.get) match {
-        case je: JsError => BadRequest(JsError.toJson(je))
-        case js: JsSuccess[NewArtist] =>
-          val newArtist = js.value
-          val artistId = UUID.randomUUID()
-          val artistAdded = Artist(
-            artistId,
-            newArtist.address,
-            newArtist.name,
-            newArtist.website,
-            newArtist.tagline,
-            newArtist.avatarUrl,
-            newArtist.bannerUrl,
-            Json.toJson(newArtist.social),
-            Instant.now(),
-            Instant.now()
-          )
-          Await.result(mintdao.insertArtist(artistAdded), Duration.Inf)
-          Created(Json.toJson(artistAdded))
-      }
-    } catch {
-      case e: Exception => BadRequest(Json.toJson(e.getMessage()))
-    }
-  }
-
   def mintCollection(_collectionId: String) = Action { implicit request =>
     val collectionId = UUID.fromString(_collectionId)
     val collection =
@@ -115,7 +88,7 @@ class MintController @Inject() (
     try {
       Ok(
         Json.toJson(
-          MUnsignedTransaction(collection.mintBootstrap(ergoClient, mintdao))
+          MUnsignedTransaction(collection.mintBootstrap(ergoClient, mintdao, usersdao))
         )
       )
     } catch {

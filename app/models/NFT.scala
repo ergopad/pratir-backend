@@ -1,40 +1,33 @@
 package models
 
-import java.util.UUID
-import play.api.libs.json.JsValue
-import java.time.Instant
-import play.api.libs.json.Reads
-import play.api.libs.json.Writes
-import slick.jdbc.PostgresProfile.api._
-import play.api.libs.json.Json
-import org.ergoplatform.appkit.ErgoClient
-import database.MintDAO
-import scala.concurrent.Await
-import scala.concurrent.duration.Duration
-import util.NodePoolDataSource
-import util.Pratir
-import scala.collection.JavaConverters._
-import play.api.Logging
-import database.SalesDAO
-import org.ergoplatform.appkit.Address
-import contracts.Mint
-import org.ergoplatform.appkit.InputBox
-import org.ergoplatform.appkit.scalaapi.ErgoValueBuilder
-import sigmastate.eval.Colls
-import org.ergoplatform.appkit.ErgoValue
-import java.nio.charset.StandardCharsets
-import org.ergoplatform.appkit.ErgoId
-import org.ergoplatform.appkit.BlockchainContext
-import org.ergoplatform.appkit.impl.ErgoTreeContract
-import org.ergoplatform.appkit.impl.Eip4TokenBuilder
-import scala.io.Source
-import java.security.MessageDigest
-import java.io.IOException
+import java.io.{BufferedInputStream, IOException}
 import java.net.URL
-import java.io.BufferedInputStream
-import org.ergoplatform.appkit.UnsignedTransaction
-import org.ergoplatform.appkit.Eip4Token
+import java.nio.charset.StandardCharsets
+import java.security.MessageDigest
+import java.time.Instant
+import java.util.UUID
+
+import org.ergoplatform.appkit._
+import org.ergoplatform.appkit.impl.Eip4TokenBuilder
+import org.ergoplatform.appkit.impl.ErgoTreeContract
+import org.ergoplatform.appkit.scalaapi.ErgoValueBuilder
+
+import play.api.Logging
+import play.api.libs.json.{Json, JsValue, Reads, Writes}
+
+import scala.collection.JavaConverters._
+import scala.concurrent.{Await, ExecutionContext}
+import scala.concurrent.duration.Duration
+
+import sigmastate.eval.Colls
+import slick.jdbc.PostgresProfile.api._
 import special.collection.Coll
+
+import util.{Pratir, NodePoolDataSource}
+
+import contracts.Mint
+
+import database.{MintDAO, SalesDAO, UsersDAO}
 
 object NFTStatus extends Enumeration {
   type NFTStatus = Value
@@ -71,6 +64,7 @@ final case class NFT(
       ergoClient: ErgoClient,
       mintdao: MintDAO,
       salesdao: SalesDAO,
+      usersdao: UsersDAO,
       nextNFT: Option[NFT]
   ): UnsignedTransaction = {
     val collection =
@@ -117,7 +111,7 @@ final case class NFT(
               .getDataSource()
               .asInstanceOf[NodePoolDataSource]
               .getAllUnspentBoxesFor(
-                collection.mintContract(collection.artist(mintdao)).toAddress()
+                collection.mintContract(collection.artist(usersdao)).toAddress()
               )
               .asScala
               .filter(b => {
@@ -191,7 +185,7 @@ final case class NFT(
                 )
               )
               .value(1000000L)
-              .contract(address(mintdao, salesdao).toErgoContract())
+              .contract(address(mintdao, salesdao, usersdao).toErgoContract())
               .build()
           } else {
             ctx
@@ -209,7 +203,7 @@ final case class NFT(
                 )
               )
               .value(1000000L)
-              .contract(address(mintdao, salesdao).toErgoContract())
+              .contract(address(mintdao, salesdao, usersdao).toErgoContract())
               .build()
           }
 
@@ -370,6 +364,7 @@ final case class NFT(
       ergoClient: ErgoClient,
       mintdao: MintDAO,
       salesdao: SalesDAO,
+      usersdao: UsersDAO,
       retries: Int = 10
   ): Unit = {
     if (retries < 0) {
@@ -384,7 +379,7 @@ final case class NFT(
         .getUnconfirmedTransactionState(mintTransactionId)
       // If the tx is no longer in the mempool we need to ensure it is confirmed and set the state accordingly
       if (mempoolTxState == 404) {
-        val mintingAddress = address(mintdao, salesdao)
+        val mintingAddress = address(mintdao, salesdao, usersdao)
         val balance = Pratir.balance(
           ergoClient
             .getDataSource()
@@ -434,20 +429,20 @@ final case class NFT(
         } else {
           logger.info(s"""Transaction lost, waiting 10 seconds...""")
           Thread.sleep(10000)
-          followUp(ergoClient, mintdao, salesdao, retries - 1)
+          followUp(ergoClient, mintdao, salesdao, usersdao, retries - 1)
         }
       }
     }
   }
 
-  def address(mintdao: MintDAO, salesdao: SalesDAO) = {
+  def address(mintdao: MintDAO, salesdao: SalesDAO, usersdao: UsersDAO) = {
     val collection =
       Await.result(mintdao.getCollection(collectionId), Duration.Inf)
     collection.saleId match {
       case None =>
         val collection =
           Await.result(mintdao.getCollection(collectionId), Duration.Inf)
-        val _artist = collection.artist(mintdao)
+        val _artist = collection.artist(usersdao)
         Address.create(_artist.address)
       case Some(sid) =>
         val sale = Await.result(salesdao.getSale(sid), Duration.Inf)._1._1

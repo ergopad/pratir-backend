@@ -22,7 +22,7 @@ final case class SaleFull(
     initialNanoErgFee: Long,
     saleFeePct: Int,
     collection: Option[NFTCollection],
-    artist: Option[Artist]
+    artist: Option[User]
 )
 
 object SaleFull extends Logging {

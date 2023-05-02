@@ -1,5 +1,6 @@
 package database
 
+import java.time.Instant
 import java.util.UUID
 
 import javax.inject.Inject
@@ -28,6 +29,11 @@ class UsersDAO @Inject() (
 
   def getAll: Future[Seq[User]] = {
     val query = Users.users.result
+    db.run(query)
+  }
+
+  def getUserById(id: UUID): Future[Option[User]] = {
+    val query = Users.users.filter(_.id === id).result.headOption
     db.run(query)
   }
 
@@ -107,6 +113,8 @@ object Users {
     def tagline = column[String]("tagline")
     def website = column[String]("website")
     def socials = column[JsValue]("socials")
+    def createdAt = column[Instant]("created_at")
+    def updatedAt = column[Instant]("updated_at")
     def * = (
       id,
       address,
@@ -115,7 +123,9 @@ object Users {
       bannerUrl,
       tagline,
       website,
-      socials
+      socials,
+      createdAt,
+      updatedAt
     ) <> ((User.apply _).tupled, User.unapply)
     def addressIndex = index("users_address_index", (address), unique = true)
   }

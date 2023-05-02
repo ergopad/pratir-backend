@@ -5,6 +5,7 @@ import com.amazonaws.services.s3.model.CannedAccessControlList
 
 import java.math.BigInteger
 import java.security.SecureRandom
+import java.time.Instant
 import java.util.Base64
 import java.util.UUID
 
@@ -46,7 +47,7 @@ class UserController @Inject() (
       Ok(
         Json.toJson(
           user.getOrElse(
-            User(mockId, address, address, "", "", "", "", JsArray.empty)
+            User(mockId, address, address, "", "", "", "", JsArray.empty, Instant.EPOCH, Instant.EPOCH)
           )
         )
       )
@@ -78,6 +79,9 @@ class UserController @Inject() (
           )
           // update user
           val uuid = UUID.randomUUID
+          // check if existing user
+          val checkUser =
+            Await.result(usersDao.getUser(user.address), Duration.Inf)
           val userUpdate =
             User(
               uuid,
@@ -87,11 +91,10 @@ class UserController @Inject() (
               user.bannerUrl,
               user.tagline,
               user.website,
-              user.socials
+              user.socials,
+              if (checkUser.isDefined) checkUser.get.createdAt else Instant.now(),
+              Instant.now()
             )
-          // check if existing user
-          val checkUser =
-            Await.result(usersDao.getUser(user.address), Duration.Inf)
           if (checkUser.isDefined)
             Await.result(usersDao.updateUser(userUpdate), Duration.Inf)
           else
