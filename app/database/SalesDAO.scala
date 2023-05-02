@@ -168,7 +168,13 @@ class SalesDAO @Inject() (
         duration.Duration.Inf
       )
       .head
-    Json.fromJson[Seq[PackFull]](Json.parse(jsResult)).get
+    try {
+      Json.fromJson[Seq[PackFull]](Json.parse(jsResult)).get
+    } catch {
+      case e: Exception =>
+        logger.error(s"Failed to parse packs for ${saleId.toString()}", e)
+        Array[PackFull]()
+    }
   }
 
   def getPacks(saleId: UUID): Future[Seq[Pack]] = {
