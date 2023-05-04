@@ -250,7 +250,6 @@ final case class Sale(
           val boxOperations = BoxOperations
             .createForSender(getSaleAddress, ctx)
             .withInputBoxesLoader(boxesLoader)
-            .withMaxInputBoxesToSelect(20)
             .withFeeAmount(1000000L)
             .withAmountToSpend(initialNanoErgFee)
 
