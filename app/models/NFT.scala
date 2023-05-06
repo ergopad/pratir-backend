@@ -226,13 +226,15 @@ final case class NFT(
 
   def registersMatch(collection: NFTCollection, issuerBox: InputBox) = {
     val correctRegisters = issuerBoxRegisters(collection)
-    correctRegisters.indices.forall(i =>
-      issuerBox
-        .getRegisters()
-        .get(i)
-        .toHex()
-        .equals(correctRegisters(i).toHex())
-    )
+    if (correctRegisters.size > issuerBox.getRegisters().size()) false
+    else
+      correctRegisters.indices.forall(i =>
+        issuerBox
+          .getRegisters()
+          .get(i)
+          .toHex()
+          .equals(correctRegisters(i).toHex())
+      )
   }
 
   def issuerBoxRegisters(collection: NFTCollection) = {
