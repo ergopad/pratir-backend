@@ -51,6 +51,7 @@ class SaleController @Inject() (
     val salesdao: SalesDAO,
     val usersDao: UsersDAO,
     val controllerComponents: ControllerComponents,
+    val cruxClient: CruxClient,
     protected val dbConfigProvider: DatabaseConfigProvider
 )(implicit ec: ExecutionContext)
     extends BaseController
