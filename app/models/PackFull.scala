@@ -18,7 +18,7 @@ final case class PackFull(
 )
 
 object PackFull {
-  implicit val json = Json.format[PackFull]
+  implicit val json = Json.using[Json.WithDefaultValues].format[PackFull]
 
   def apply(p: Pack, salesdao: SalesDAO): PackFull = {
     val price = Await.result(salesdao.getPrice(p.id), Duration.Inf)
