@@ -12,6 +12,7 @@ final case class PackFull(
     name: String,
     image: String,
     price: Array[Price],
+    derivedPrice: Array[DerivedPrice],
     content: Array[PackEntry],
     soldOut: Boolean
 )
@@ -36,6 +37,15 @@ object PackFull {
           .result(salesdao.getTokenForSale(pr.tokenId, p.saleId), Duration.Inf)
           .amount > -1 * pr.amount
       )
-    PackFull(p.id, p.name, p.image, price.toArray, content.toArray, !notSoldOut)
+    val derivedPrices = price.flatMap(p => DerivedPrice.fromPrice(p)).flatten
+    PackFull(
+      p.id,
+      p.name,
+      p.image,
+      price.toArray,
+      derivedPrices.toArray,
+      content.toArray,
+      !notSoldOut
+    )
   }
 }

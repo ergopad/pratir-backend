@@ -5,6 +5,7 @@ import play.api.libs.json.Json
 
 final case class BuyPackRequest(
     packId: UUID,
+    currencyTokenId: String,
     count: Int
 )
 

@@ -22,6 +22,10 @@ import scala.concurrent.duration
 import scala.util.Random
 
 import util.Pratir
+import slick.jdbc.GetResult
+import com.github.tminglei.slickpg.ExPostgresProfile
+import slick.ast.ColumnOption
+import slick.relational.RelationalProfile
 
 @Singleton
 class SalesDAO @Inject() (
@@ -327,26 +331,29 @@ class SalesDAO @Inject() (
     db.run(query)
   }
 
-  def pickRandomToken(saleId: UUID, rarity: String) = {
-    val randomTokenUUID = UUID.fromString(
-      Await
-        .result(
-          db.run(sql"""
-        select "id"  
+  def pickRandomTokens(saleId: UUID, rarity: String, amount: Int = 1) = {
+    implicit val getTokenForSaleResult = GetResult(r =>
+      TokenForSale(
+        UUID.fromString(r.nextString()),
+        r.nextString(),
+        r.nextInt(),
+        r.nextInt(),
+        r.nextString(),
+        UUID.fromString(r.nextString())
+      )
+    );
+
+    db.run(sql"""
+        select  "id", "tokenId", amount, "originalAmount", rarity, "saleId"  
         from 
-            (select "id", (random()) as "lucky_num"
+            (select "id", "tokenId", amount, "originalAmount", rarity, "saleId", (random()) as "lucky_num"
             from "tokens_for_sale"
             where "amount" > 0 
             and "sale_id" = UUID(${saleId.toString()})
             and "rarity" = $rarity
             order by "lucky_num" desc) as X
-        LIMIT 1
-        """.as[String]),
-          duration.Duration.Inf
-        )
-        .head
-    )
-    getTokenForSale(randomTokenUUID)
+        LIMIT $amount
+        """.as[TokenForSale])
   }
 
   def rarityOdds(saleId: UUID, packRarity: PackRarity) = {
@@ -451,6 +458,7 @@ object Sales {
     def password = column[String]("password")
     def createdAt = column[Instant]("created_at")
     def updatedAt = column[Instant]("updated_at")
+    def profitShare = column[JsValue]("profit_share")
     def nameIndex = index("sales_name_index", (name), unique = true)
     def * = (
       id,
@@ -464,7 +472,8 @@ object Sales {
       saleFeePct,
       password,
       createdAt,
-      updatedAt
+      updatedAt,
+      profitShare
     ) <> ((Sale.apply _).tupled, Sale.unapply)
   }
 

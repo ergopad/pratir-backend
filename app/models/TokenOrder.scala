@@ -32,6 +32,8 @@ import org.ergoplatform.wallet.transactions.TransactionBuilder
 import org.ergoplatform.appkit.impl.UnsignedTransactionBuilderImpl
 import org.ergoplatform.appkit.OutBox
 import play.api.libs.json.Json
+import play.api.libs.json.JsError
+import play.api.libs.json.JsSuccess
 
 object TokenOrderStatus extends Enumeration {
   type TokenOrderStatus = Value
@@ -157,17 +159,24 @@ final case class TokenOrder(
       val fullPack = PackFull(pack, salesdao)
       val packPrice = fullPack.price
 
-      val combinedPrices = new HashMap[String, Long]()
+      val basePrice = new HashMap[String, Long]()
       packPrice.foreach(p =>
-        combinedPrices.put(
+        basePrice.put(
           p.tokenId,
-          p.amount + combinedPrices.getOrElse(p.tokenId, 0L)
+          p.amount + basePrice.getOrElse(p.tokenId, 0L)
         )
       )
 
-      val sufficientFunds = orderBox
-        .getValue() >= combinedPrices.getOrElse("0" * 64, 0L) + 4000000L &&
-        combinedPrices
+      val derivedPrices = fullPack.derivedPrice.map(dp =>
+        HashMap[String, Long]((dp.tokenId, dp.amount))
+      )
+
+      val potentialPrices = Array(basePrice) ++ derivedPrices
+
+      val combinedPricesOpt = potentialPrices.find(pp => {
+        orderBox
+          .getValue() >= pp.getOrElse("0" * 64, 0L) + 4000000L &&
+        pp
           .filterNot(cp => cp._1 == "0" * 64 || cp._2 < 1)
           .forall((token: (String, Long)) =>
             orderBox
@@ -178,11 +187,15 @@ final case class TokenOrder(
                   .getValue() >= token._2
               )
           )
+      })
+
+      val sufficientFunds = combinedPricesOpt.isDefined
 
       val result: Option[Fulfillment] =
         if (
           sufficientFunds && sale.status == SaleStatus.LIVE && !fullPack.soldOut
         ) {
+          val combinedPrices = combinedPricesOpt.get
           val negativeTokens =
             combinedPrices.filterNot(cp => cp._1 == "0" * 64 || cp._2 > 0)
           val negativeSalesInOrder =
@@ -206,14 +219,48 @@ final case class TokenOrder(
 
             val packContent = fullPack.content
 
+            val rarityList = packContent
+              .flatMap(pe => {
+                pe.getRarity
+              })
+              .map(pr => pr.rarity)
+              .toSet
+
+            val randomTokens
+                : collection.mutable.Map[String, Iterator[TokenForSale]] =
+              collection.mutable.Map(
+                rarityList
+                  .map(r => {
+                    (
+                      r,
+                      Await
+                        .result(
+                          salesdao.pickRandomTokens(saleId, r, 100),
+                          Duration.Inf
+                        )
+                        .toIterator
+                    )
+                  })
+                  .toSeq: _*
+              )
+
             val tokensPicked = packContent.flatMap(pe => {
               Range(0, pe.amount).map(i => {
                 val randomRarity = pe.pickRarity(salesdao, saleId)
                 logger.info(s"Random rarity: $randomRarity")
-                val randomNFT = Await.result(
-                  salesdao.pickRandomToken(saleId, randomRarity.rarity),
-                  Duration.Inf
-                )
+                var randomTokenIterator =
+                  randomTokens.get(randomRarity.rarity).get
+                if (!randomTokenIterator.hasNext) {
+                  randomTokenIterator = Await
+                    .result(
+                      salesdao
+                        .pickRandomTokens(saleId, randomRarity.rarity, 100),
+                      Duration.Inf
+                    )
+                    .toIterator;
+                  randomTokens.update(randomRarity.rarity, randomTokenIterator)
+                }
+                val randomNFT = randomTokenIterator.next()
                 logger.info(s"Random token: ${randomNFT.tokenId}")
                 Await.result(salesdao.reserveToken(randomNFT), Duration.Inf)
                 randomNFT
@@ -228,7 +275,8 @@ final case class TokenOrder(
                 1L + tokenMap.getOrElse(pick.tokenId, 0L)
               )
             )
-            var nftBox, sellerBox, feeBox: Option[OutBox] = None
+            var nftBox, sellerBox: Option[OutBox] = None
+            var profitShareBoxes: Option[Array[OutBox]] = None
             ergoClient.execute(
               new java.util.function.Function[BlockchainContext, Unit] {
                 override def apply(ctx: BlockchainContext): Unit = {
@@ -247,6 +295,20 @@ final case class TokenOrder(
                       .build()
                   )
 
+                  val profitShares = (Json
+                    .fromJson[Array[SaleProfitShare]](sale.profitShare) match {
+                    case JsError(errors)     => Array[SaleProfitShare]()
+                    case JsSuccess(value, _) => value
+                  }) ++ Array(
+                    SaleProfitShare(
+                      Address.create(Pratir.pratirFeeWallet).toString(),
+                      sale.saleFeePct
+                    )
+                  )
+
+                  val totalProfitSharePct =
+                    profitShares.foldLeft(0)((z, ps) => z + ps.pct)
+
                   val sellerBoxBuilder = ctx
                     .newTxBuilder()
                     .outBoxBuilder()
@@ -257,7 +319,7 @@ final case class TokenOrder(
                       combinedPrices.getOrElse(
                         "0" * 64,
                         0L
-                      ) * (100 - sale.saleFeePct) / 100 + 1000000L
+                      ) * (100 - totalProfitSharePct) / 100 + 1000000L
                     )
                   if (combinedPrices.filterNot(_._1 == "0" * 64).size > 0)
                     sellerBoxBuilder.tokens(
@@ -270,7 +332,7 @@ final case class TokenOrder(
                               .round(
                                 math
                                   .abs(t._2)
-                                  .toDouble * (100.0 - sale.saleFeePct) / 100.0
+                                  .toDouble * (100.0 - totalProfitSharePct) / 100.0
                               )
                               .toLong
                           )
@@ -279,35 +341,38 @@ final case class TokenOrder(
                     )
                   sellerBox = Some(sellerBoxBuilder.build())
 
-                  val feeTokens = combinedPrices.filterNot(cp =>
-                    cp._1 == "0" * 64 || math.abs(
-                      cp._2
-                    ) * sale.saleFeePct / 100 < 1
-                  )
-                  val feeBoxBuilder = ctx
-                    .newTxBuilder()
-                    .outBoxBuilder()
-                    .contract(
-                      Address.create(Pratir.pratirFeeWallet).toErgoContract()
+                  profitShareBoxes = Some(profitShares.map(ps => {
+
+                    val feeTokens = combinedPrices.filterNot(cp =>
+                      cp._1 == "0" * 64 || math.abs(
+                        cp._2
+                      ) * ps.pct / 100 < 1
                     )
-                    .value(
-                      combinedPrices.getOrElse(
-                        "0" * 64,
-                        0L
-                      ) * sale.saleFeePct / 100 + 1000000L
-                    )
-                  if (feeTokens.size > 0)
-                    feeBoxBuilder.tokens(
-                      feeTokens
-                        .map(t =>
-                          new ErgoToken(
-                            t._1,
-                            math.abs(t._2) * sale.saleFeePct / 100
+                    val feeBoxBuilder = ctx
+                      .newTxBuilder()
+                      .outBoxBuilder()
+                      .contract(
+                        Address.create(ps.address).toErgoContract()
+                      )
+                      .value(
+                        combinedPrices.getOrElse(
+                          "0" * 64,
+                          0L
+                        ) * ps.pct / 100 + 1000000L
+                      )
+                    if (feeTokens.size > 0)
+                      feeBoxBuilder.tokens(
+                        feeTokens
+                          .map(t =>
+                            new ErgoToken(
+                              t._1,
+                              math.abs(t._2) * ps.pct / 100
+                            )
                           )
-                        )
-                        .toArray: _*
-                    )
-                  feeBox = Some(feeBoxBuilder.build())
+                          .toArray: _*
+                      )
+                    feeBoxBuilder.build()
+                  }))
                 }
               }
             )
@@ -318,7 +383,7 @@ final case class TokenOrder(
                 orderBox,
                 nftBox.get,
                 sellerBox.get,
-                feeBox.get
+                profitShareBoxes.get
               )
             )
           } else {

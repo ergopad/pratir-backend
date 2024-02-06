@@ -139,7 +139,8 @@ class SaleController @Inject() (
           Pratir.saleFeePct,
           encryptedPassword,
           Instant.now(),
-          Instant.now()
+          Instant.now(),
+          Json.toJson(newSale.profitShare)
         )
         val tokensAdded = newSale.tokens.map((token: NewTokenForSale) =>
           TokenForSale(
@@ -291,12 +292,22 @@ class SaleController @Inject() (
                                 )
                               )
                             )
+                            val derivedPrices = packPrice
+                              .flatMap(pp => DerivedPrice.fromPrice(pp))
+                              .flatten
+                            derivedPrices.foreach(dp =>
+                              combinedPrices.put(dp.tokenId, dp.amount)
+                            )
+                            val priceInCurrency =
+                              combinedPrices.get(bpr.currencyTokenId).get;
                             scala.collection.immutable
                               .Range(0, bpr.count)
                               .map(i => {
 
-                                val boxValue = combinedPrices
-                                  .getOrElse("0" * 64, 0L) + 4000000L
+                                val boxValue =
+                                  (if (bpr.currencyTokenId.equals("0" * 64))
+                                     priceInCurrency
+                                   else 0L) + 4000000L
 
                                 totalPrices.put(
                                   "0" * 64,
@@ -343,15 +354,13 @@ class SaleController @Inject() (
                                     )
                                   )
                                   .value(boxValue)
-                                val tokenPrice = combinedPrices.filterNot(cp =>
-                                  cp._1 == "0" * 64 || cp._2 < 1
-                                )
-                                if (tokenPrice.size > 0) {
-                                  val tokens = tokenPrice
-                                    .map((kv: (String, Long)) =>
-                                      new ErgoToken(kv._1, kv._2)
+                                if (!bpr.currencyTokenId.equals("0" * 64)) {
+                                  val tokens = Array(
+                                    new ErgoToken(
+                                      bpr.currencyTokenId,
+                                      priceInCurrency
                                     )
-                                    .toArray
+                                  )
                                   tokens.foreach(t =>
                                     totalPrices.put(
                                       t.getId.toString,

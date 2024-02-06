@@ -11,5 +11,5 @@ final case class Fulfillment(
     orderBox: InputBox,
     nftBox: OutBox,
     sellerBox: OutBox,
-    feeBox: OutBox
+    profitShareBoxes: Array[OutBox]
 )

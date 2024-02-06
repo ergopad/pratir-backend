@@ -27,6 +27,7 @@ import play.api.Logging
 import org.ergoplatform.appkit.ErgoId
 import play.api.libs.json.Json
 import scala.collection.mutable.ArrayBuffer
+import play.api.libs.json.JsValue
 
 object SaleStatus extends Enumeration {
   type SaleStatus = Value
@@ -38,6 +39,15 @@ object SaleStatus extends Enumeration {
     e => e.toString,
     s => SaleStatus.withName(s)
   )
+}
+
+final case class SaleProfitShare(
+    address: String,
+    pct: Int
+)
+
+object SaleProfitShare {
+  implicit val json = Json.format[SaleProfitShare]
 }
 
 final case class Sale(
@@ -52,7 +62,8 @@ final case class Sale(
     saleFeePct: Int,
     password: String,
     created_at: Instant,
-    updated_at: Instant
+    updated_at: Instant,
+    profitShare: JsValue
 ) extends Logging {
   def isFinished: Boolean = Instant.now().isAfter(endTime)
 
@@ -91,28 +102,40 @@ final case class Sale(
             )
           val sellerBox = sellerBoxBuilder.build()
 
-          val feeBalance = Pratir.balance(fulfillments.map(f => f.feeBox))
-          val feeBoxBuilder = ctx
-            .newTxBuilder()
-            .outBoxBuilder()
-            .contract(
-              new ErgoTreeContract(
-                fulfillments(0).feeBox.getErgoTree(),
-                ctx.getNetworkType()
+          val profitShareAddresses = fulfillments
+            .flatMap(f => f.profitShareBoxes.map(psb => psb.getErgoTree()))
+            .toSet
+
+          val profitShareBoxes = profitShareAddresses
+            .map(psa => {
+              val feeBalance = Pratir.balance(
+                fulfillments.flatMap(f =>
+                  f.profitShareBoxes.filter(psb => psb.getErgoTree() == psa)
+                )
               )
-            )
-            .value(feeBalance._1)
-          if (feeBalance._2.size > 0)
-            feeBoxBuilder.tokens(
-              feeBalance._2
-                .map((st: (String, Long)) => new ErgoToken(st._1, st._2))
-                .toList: _*
-            )
-          val feeBox = feeBoxBuilder.build()
+              val feeBoxBuilder = ctx
+                .newTxBuilder()
+                .outBoxBuilder()
+                .contract(
+                  new ErgoTreeContract(
+                    psa,
+                    ctx.getNetworkType()
+                  )
+                )
+                .value(feeBalance._1)
+              if (feeBalance._2.size > 0)
+                feeBoxBuilder.tokens(
+                  feeBalance._2
+                    .map((st: (String, Long)) => new ErgoToken(st._1, st._2))
+                    .toList: _*
+                )
+              feeBoxBuilder.build()
+            })
+            .toArray
 
           val assetsLacking = Pratir.assetsMissing(
             orderBoxes,
-            nftBoxes ++ Array(sellerBox, feeBox)
+            nftBoxes ++ Array(sellerBox) ++ profitShareBoxes
           )
 
           val boxOperations = BoxOperations
@@ -124,7 +147,8 @@ final case class Sale(
           try {
             val unsigned = ctx.newTxBuilder
               .addOutputs(nftBoxes: _*)
-              .addOutputs(sellerBox, feeBox)
+              .addOutputs(sellerBox)
+              .addOutputs(profitShareBoxes: _*)
               .addInputs(orderBoxes: _*)
               .fee(1000000L)
               .sendChangeTo(getSaleAddress)
@@ -132,8 +156,6 @@ final case class Sale(
               .build()
 
             val signed = Pratir.sign(ctx, unsigned)
-
-            ctx.sendTransaction(signed)
 
             fulfillments.foreach(ff =>
               Await.result(
@@ -146,6 +168,8 @@ final case class Sale(
                 Duration.Inf
               )
             )
+
+            ctx.sendTransaction(signed)
           } catch {
             case e: Exception => logger.error(e.getMessage())
           }
