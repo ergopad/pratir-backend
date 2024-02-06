@@ -12,13 +12,13 @@ final case class PackFull(
     name: String,
     image: String,
     price: Array[Price],
-    derivedPrice: Array[DerivedPrice],
+    derivedPrice: Option[Array[DerivedPrice]],
     content: Array[PackEntry],
     soldOut: Boolean
 )
 
 object PackFull {
-  implicit val json = Json.using[Json.WithDefaultValues].format[PackFull]
+  implicit val json = Json.format[PackFull]
 
   def apply(p: Pack, salesdao: SalesDAO): PackFull = {
     val price = Await.result(salesdao.getPrice(p.id), Duration.Inf)
@@ -43,7 +43,7 @@ object PackFull {
       p.name,
       p.image,
       price.toArray,
-      derivedPrices.toArray,
+      Some(derivedPrices.toArray),
       content.toArray,
       !notSoldOut
     )

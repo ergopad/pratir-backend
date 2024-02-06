@@ -167,9 +167,9 @@ final case class TokenOrder(
         )
       )
 
-      val derivedPrices = fullPack.derivedPrice.map(dp =>
-        HashMap[String, Long]((dp.tokenId, dp.amount))
-      )
+      val derivedPrices = fullPack.derivedPrice
+        .getOrElse(new Array(0))
+        .map(dp => HashMap[String, Long]((dp.tokenId, dp.amount)))
 
       val potentialPrices = Array(basePrice) ++ derivedPrices
 

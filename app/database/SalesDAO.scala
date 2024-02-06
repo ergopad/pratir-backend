@@ -177,7 +177,13 @@ class SalesDAO @Inject() (
       )
       .head
     try {
-      Json.fromJson[Seq[PackFull]](Json.parse(jsResult)).get
+      val withoutDerived =
+        Json.fromJson[Seq[PackFull]](Json.parse(jsResult)).get
+      withoutDerived.map(pf => {
+        pf.copy(derivedPrice =
+          Some(pf.price.flatMap(p => DerivedPrice.fromPrice(p)).flatten)
+        )
+      })
     } catch {
       case e: Exception =>
         logger.error(s"Failed to parse packs for ${saleId.toString()}", e)
