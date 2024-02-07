@@ -34,6 +34,7 @@ import org.ergoplatform.appkit.OutBox
 import play.api.libs.json.Json
 import play.api.libs.json.JsError
 import play.api.libs.json.JsSuccess
+import org.ergoplatform.appkit.impl.BlockchainContextImpl
 
 object TokenOrderStatus extends Enumeration {
   type TokenOrderStatus = Value
@@ -110,7 +111,11 @@ final case class TokenOrder(
       .toArray
     // Testing only
     // val boxes = ergoClient.getDataSource().asInstanceOf[NodePoolDataSource].getAllUnspentBoxesFor(new ErgoTreeContract(BuyOrder.contract(userAddress),NetworkType.MAINNET).toAddress()).asScala.toArray
-
+    val height = ergoClient
+      .getDataSource()
+      .getLastBlockHeaders(1, false)
+      .get(0)
+      .getHeight()
     if (
       boxes.exists((box: InputBox) =>
         id == UUID.fromString(
@@ -156,7 +161,12 @@ final case class TokenOrder(
 
       val sale = Await.result(salesdao.getSale(saleId), Duration.Inf)._1._1
       val pack = Await.result(salesdao.getPack(packId), Duration.Inf)
-      val fullPack = PackFull(pack, salesdao)
+      val fullPack = PackFull(
+        pack,
+        salesdao,
+        orderBox.getCreationHeight(),
+        ergoClient.getDataSource()
+      )
       val packPrice = fullPack.price
 
       val basePrice = new HashMap[String, Long]()
@@ -169,13 +179,17 @@ final case class TokenOrder(
 
       val derivedPrices = fullPack.derivedPrice
         .getOrElse(new Array(0))
-        .map(dp => HashMap[String, Long]((dp.tokenId, dp.amount)))
+        .map(dp => {
+          val derivedPriceMap = new HashMap[String, Long]()
+          dp.foreach(p => derivedPriceMap.put(p.tokenId, p.amount))
+          derivedPriceMap
+        })
 
       val potentialPrices = Array(basePrice) ++ derivedPrices
 
       val combinedPricesOpt = potentialPrices.find(pp => {
         orderBox
-          .getValue() >= pp.getOrElse("0" * 64, 0L) + 4000000L &&
+          .getValue() >= pp.getOrElse("0" * 64, 0L) + 10000000L &&
         pp
           .filterNot(cp => cp._1 == "0" * 64 || cp._2 < 1)
           .forall((token: (String, Long)) =>
@@ -424,6 +438,7 @@ final case class TokenOrder(
   }
 
   def followUp(ergoClient: ErgoClient, salesdao: SalesDAO): Unit = {
+
     val mempoolTxState = ergoClient
       .getDataSource()
       .asInstanceOf[NodePoolDataSource]

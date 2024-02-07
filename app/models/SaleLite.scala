@@ -8,6 +8,7 @@ import scala.concurrent.Await
 import scala.concurrent.duration.Duration
 import play.api.Logging
 import com.github.nscala_time.time.Imports._
+import org.ergoplatform.appkit.BlockchainDataSource
 
 final case class SaleLite(
     id: UUID,
@@ -32,10 +33,12 @@ object SaleLite extends Logging {
 
   def fromSale(
       sale: ((Sale, Option[NFTCollection]), Option[User]),
-      salesdao: SalesDAO
+      salesdao: SalesDAO,
+      height: Int,
+      dataSource: BlockchainDataSource
   ) = {
     val start = DateTime.now()
-    val packs = salesdao.getPacksFull(sale._1._1.id)
+    val packs = salesdao.getPacksFull(sale._1._1.id, height, dataSource)
     val getPacksTime = DateTime.now()
     logger.info(
       "Time to get packs: " + (start to getPacksTime).millis.toString

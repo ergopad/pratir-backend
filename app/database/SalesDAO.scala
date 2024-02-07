@@ -26,10 +26,13 @@ import slick.jdbc.GetResult
 import com.github.tminglei.slickpg.ExPostgresProfile
 import slick.ast.ColumnOption
 import slick.relational.RelationalProfile
+import util.CruxClient
+import org.ergoplatform.appkit.BlockchainDataSource
 
 @Singleton
 class SalesDAO @Inject() (
-    protected val dbConfigProvider: DatabaseConfigProvider
+    protected val dbConfigProvider: DatabaseConfigProvider,
+    val cruxClient: CruxClient
 )(implicit ec: ExecutionContext)
     extends HasDatabaseConfigProvider[JdbcProfile]
     with Logging {
@@ -140,7 +143,11 @@ class SalesDAO @Inject() (
     }
   }
 
-  def getPacksFull(saleId: UUID): Seq[PackFull] = {
+  def getPacksFull(
+      saleId: UUID,
+      height: Int,
+      dataSource: BlockchainDataSource
+  ): Seq[PackFull] = {
     val jsResult = Await
       .result(
         db.run(sql"""
@@ -181,7 +188,9 @@ class SalesDAO @Inject() (
         Json.fromJson[Seq[PackFull]](Json.parse(jsResult)).get
       withoutDerived.map(pf => {
         pf.copy(derivedPrice =
-          Some(pf.price.flatMap(p => DerivedPrice.fromPrice(p)).flatten)
+          Some(
+            DerivedPrice.fromPrice(pf.price, height, dataSource, cruxClient)
+          )
         )
       })
     } catch {

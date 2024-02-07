@@ -58,29 +58,106 @@ class SaleController @Inject() (
     with HasDatabaseConfigProvider[JdbcProfile] {
 
   def getAll(): Action[AnyContent] = Action.async { implicit request =>
-    salesdao.getAll.map(sale =>
-      Ok(Json.toJson(sale.map(SaleLite.fromSale(_, salesdao))))
-    )
+    {
+      val ergoClient = RestApiErgoClientWithNodePoolDataSource.create(
+        sys.env.get("ERGO_NODE").get,
+        NetworkType.MAINNET,
+        "",
+        sys.env.get("ERGO_EXPLORER").get
+      )
+      val height = ergoClient
+        .getDataSource()
+        .getLastBlockHeaders(1, false)
+        .get(0)
+        .getHeight()
+      salesdao.getAll.map(sale =>
+        Ok(
+          Json.toJson(
+            sale.map(
+              SaleLite.fromSale(_, salesdao, height, ergoClient.getDataSource())
+            )
+          )
+        )
+      )
+    }
   }
 
   def getAllHighlighted(): Action[AnyContent] = Action.async {
     implicit request =>
-      salesdao.getAllHighlighted.map(sale =>
-        Ok(Json.toJson(sale.map(SaleLite.fromSale(_, salesdao))))
-      )
+      {
+        val ergoClient = RestApiErgoClientWithNodePoolDataSource.create(
+          sys.env.get("ERGO_NODE").get,
+          NetworkType.MAINNET,
+          "",
+          sys.env.get("ERGO_EXPLORER").get
+        )
+        val height = ergoClient
+          .getDataSource()
+          .getLastBlockHeaders(1, false)
+          .get(0)
+          .getHeight()
+        salesdao.getAllHighlighted.map(sale =>
+          Ok(
+            Json.toJson(
+              sale.map(
+                SaleLite.fromSale(
+                  _,
+                  salesdao,
+                  height,
+                  ergoClient.getDataSource()
+                )
+              )
+            )
+          )
+        )
+      }
   }
 
   def getAllFiltered(status: Option[String], address: Option[String]) =
     Action.async { implicit request =>
-      salesdao
-        .getAllFiltered(status, address)
-        .map(sale => Ok(Json.toJson(sale.map(SaleLite.fromSale(_, salesdao)))))
+      {
+        val ergoClient = RestApiErgoClientWithNodePoolDataSource.create(
+          sys.env.get("ERGO_NODE").get,
+          NetworkType.MAINNET,
+          "",
+          sys.env.get("ERGO_EXPLORER").get
+        )
+        val height = ergoClient
+          .getDataSource()
+          .getLastBlockHeaders(1, false)
+          .get(0)
+          .getHeight()
+        salesdao
+          .getAllFiltered(status, address)
+          .map(sale =>
+            Ok(
+              Json.toJson(
+                sale.map(
+                  SaleLite
+                    .fromSale(_, salesdao, height, ergoClient.getDataSource())
+                )
+              )
+            )
+          )
+      }
     }
 
   def getAllFilteredMulti(status: Option[String]) = Action { implicit request =>
     val content = request.body
     val jsonObject = content.asJson
     val addressListJson = Json.fromJson[AddressList](jsonObject.get)
+
+    val ergoClient = RestApiErgoClientWithNodePoolDataSource.create(
+      sys.env.get("ERGO_NODE").get,
+      NetworkType.MAINNET,
+      "",
+      sys.env.get("ERGO_EXPLORER").get
+    )
+    val height = ergoClient
+      .getDataSource()
+      .getLastBlockHeaders(1, false)
+      .get(0)
+      .getHeight()
 
     addressListJson match {
       case je: JsError => BadRequest(JsError.toJson(je))
@@ -96,7 +173,16 @@ class SaleController @Inject() (
                 )
               )
               .flatten
-              .map(sale => Json.toJson(SaleLite.fromSale(sale, salesdao)))
+              .map(sale =>
+                Json.toJson(
+                  SaleLite.fromSale(
+                    sale,
+                    salesdao,
+                    height,
+                    ergoClient.getDataSource()
+                  )
+                )
+              )
           )
         )
 
@@ -105,11 +191,40 @@ class SaleController @Inject() (
 
   def getSale(_saleId: String) = Action { implicit request =>
     try {
+      val ergoClient = RestApiErgoClientWithNodePoolDataSource.create(
+        sys.env.get("ERGO_NODE").get,
+        NetworkType.MAINNET,
+        "",
+        sys.env.get("ERGO_EXPLORER").get
+      )
+      val height = ergoClient
+        .getDataSource()
+        .getLastBlockHeaders(1, false)
+        .get(0)
+        .getHeight()
       if (Pratir.isValidUUID(_saleId)) {
-        Ok(Json.toJson(SaleFull.fromSaleId(_saleId, salesdao)))
+        Ok(
+          Json.toJson(
+            SaleFull.fromSaleId(
+              _saleId,
+              salesdao,
+              height,
+              ergoClient.getDataSource()
+            )
+          )
+        )
       } else {
         val uuid = salesdao.getSaleIdBySlug(_saleId).getOrElse(UUID.randomUUID)
-        Ok(Json.toJson(SaleFull.fromSaleId(uuid.toString, salesdao)))
+        Ok(
+          Json.toJson(
+            SaleFull.fromSaleId(
+              uuid.toString,
+              salesdao,
+              height,
+              ergoClient.getDataSource()
+            )
+          )
+        )
       }
     } catch {
       case e: Exception => BadRequest(e.getMessage())
@@ -166,12 +281,22 @@ class SaleController @Inject() (
           ),
           Duration.Inf
         )
-        val fullSale = SaleFull.fromSaleId(saleAdded.id.toString(), salesdao)
         val ergoClient = RestApiErgoClientWithNodePoolDataSource.create(
           sys.env.get("ERGO_NODE").get,
           NetworkType.MAINNET,
           "",
           sys.env.get("ERGO_EXPLORER").get
+        )
+        val height = ergoClient
+          .getDataSource()
+          .getLastBlockHeaders(1, false)
+          .get(0)
+          .getHeight()
+        val fullSale = SaleFull.fromSaleId(
+          saleAdded.id.toString(),
+          salesdao,
+          height,
+          ergoClient.getDataSource()
         )
         val bootStrapTx =
           try {
@@ -283,32 +408,56 @@ class SaleController @Inject() (
                               salesdao.getPrice(bpr.packId),
                               Duration.Inf
                             )
-                            val combinedPrices = new HashMap[String, Long]()
+
+                            val combinedPackPrice = new HashMap[String, Long]()
                             packPrice.foreach(p =>
-                              combinedPrices.put(
+                              combinedPackPrice.put(
                                 p.tokenId,
-                                p.amount + combinedPrices.getOrElse(
+                                p.amount + combinedPackPrice.getOrElse(
                                   p.tokenId,
                                   0L
                                 )
                               )
                             )
-                            val derivedPrices = packPrice
-                              .flatMap(pp => DerivedPrice.fromPrice(pp))
-                              .flatten
-                            derivedPrices.foreach(dp =>
-                              combinedPrices.put(dp.tokenId, dp.amount)
-                            )
-                            val priceInCurrency =
-                              combinedPrices.get(bpr.currencyTokenId).get;
+
+                            val derivedPrices =
+                              DerivedPrice.fromPrice(
+                                packPrice,
+                                ctx.getHeight(),
+                                ctx.getDataSource(),
+                                cruxClient
+                              )
+
+                            val combinedDerivedPrices =
+                              derivedPrices.map(dp => {
+                                val combinedDerivedPrice =
+                                  new HashMap[String, Long]()
+                                dp.foreach(p => {
+                                  combinedDerivedPrice.put(
+                                    p.tokenId,
+                                    p.amount + combinedDerivedPrice.getOrElse(
+                                      p.tokenId,
+                                      0L
+                                    )
+                                  )
+                                })
+                                combinedDerivedPrice
+                              })
+
+                            val potentialPrices =
+                              Array(combinedPackPrice) ++ combinedDerivedPrices
+
+                            val selectedPrice = potentialPrices
+                              .find(pp => pp.get(bpr.currencyTokenId).isDefined)
+                              .get
+
                             scala.collection.immutable
                               .Range(0, bpr.count)
                               .map(i => {
 
                                 val boxValue =
-                                  (if (bpr.currencyTokenId.equals("0" * 64))
-                                     priceInCurrency
-                                   else 0L) + 4000000L
+                                  selectedPrice
+                                    .getOrElse("0" * 64, 0L) + 10000000L
 
                                 totalPrices.put(
                                   "0" * 64,
@@ -355,13 +504,14 @@ class SaleController @Inject() (
                                     )
                                   )
                                   .value(boxValue)
-                                if (!bpr.currencyTokenId.equals("0" * 64)) {
-                                  val tokens = Array(
-                                    new ErgoToken(
-                                      bpr.currencyTokenId,
-                                      priceInCurrency
-                                    )
-                                  )
+                                if (
+                                  !bpr.currencyTokenId
+                                    .equals("0" * 64) || selectedPrice.size > 1
+                                ) {
+                                  val tokens = selectedPrice
+                                    .filter(sp => !sp._1.equals("0" * 64))
+                                    .map(sp => new ErgoToken(sp._1, sp._2))
+                                    .toArray
                                   tokens.foreach(t =>
                                     totalPrices.put(
                                       t.getId.toString,

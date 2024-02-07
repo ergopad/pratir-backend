@@ -3,9 +3,10 @@ package models
 import java.util.UUID
 import play.api.libs.json.Json
 import util.CruxClient
-import javax.inject.Inject
+import javax.inject._
 import org.joda.time.DateTime
 import org.joda.time.DateTimeZone
+import org.ergoplatform.appkit.BlockchainDataSource
 
 final case class DerivedPrice(
     derivedFrom: UUID,
@@ -14,10 +15,10 @@ final case class DerivedPrice(
     packId: UUID
 )
 
+@Singleton class PriceToDerivedPrice(val cruxClient: CruxClient) {}
+
 object DerivedPrice {
   implicit val json = Json.format[DerivedPrice]
-
-  @Inject var cruxClient: CruxClient = null;
 
   val supported_tokens = Array(
     "0" * 64, // Erg
@@ -25,40 +26,54 @@ object DerivedPrice {
   )
 
   def fromPrice(
-      price: Price,
+      prices: Seq[Price],
+      height: Int,
+      dataSource: BlockchainDataSource,
+      cruxClient: CruxClient,
       buffer: Double = 0.0
-  ): Option[Array[DerivedPrice]] = {
-    if (supported_tokens.contains(price.tokenId)) {
-      val currentTime = DateTime.now(DateTimeZone.UTC).getMillis() / 1000;
-      val timeWindow = 12 * 3600;
-      val baseTokenPrice =
-        cruxClient.get_price_stats(price.tokenId, currentTime, timeWindow);
-      val basePriceValue =
-        baseTokenPrice.avgUsd * price.amount / math.pow(
-          10,
-          baseTokenPrice.decimals
-        );
-      Some(
-        supported_tokens
-          .filter(st => !st.equals(price.tokenId))
-          .map(st => {
-            val derivedTokenPrice =
-              cruxClient.get_price_stats(st, currentTime, timeWindow);
-            val derivedAmount = math.round(
-              basePriceValue / derivedTokenPrice.avgUsd * math
-                .pow(10, derivedTokenPrice.decimals)
-            )
-            DerivedPrice(
-              price.id,
-              st,
-              derivedAmount,
-              price.packId
-            )
-          })
-      )
-    } else {
-      None
-    }
+  ): Array[Array[DerivedPrice]] = {
+    prices
+      .flatMap(price => {
+        if (DerivedPrice.supported_tokens.contains(price.tokenId)) {
+          val otherPrices = prices
+            .filter(p => !p.tokenId.equals(price.tokenId))
+            .map(p => DerivedPrice(p.id, p.tokenId, p.amount, p.packId))
+          val currentTime =
+            cruxClient.heightToTimestamp(height, dataSource) / 1000;
+          val timeWindow = 12 * 3600;
+          val baseTokenPrice =
+            cruxClient.get_price_stats(price.tokenId, currentTime, timeWindow);
+          val basePriceValue =
+            baseTokenPrice.avgUsd * price.amount / math.pow(
+              10,
+              baseTokenPrice.decimals
+            );
+          Some(
+            DerivedPrice.supported_tokens
+              .filter(st => !st.equals(price.tokenId))
+              .map(st => {
+                val derivedTokenPrice =
+                  cruxClient.get_price_stats(st, currentTime, timeWindow);
+                val derivedAmount = math.round(
+                  basePriceValue / derivedTokenPrice.avgUsd * math
+                    .pow(10, derivedTokenPrice.decimals)
+                )
+                Array(
+                  DerivedPrice(
+                    price.id,
+                    st,
+                    derivedAmount,
+                    price.packId
+                  )
+                ) ++ otherPrices
+              })
+          )
+        } else {
+          None
+        }
+      })
+      .flatten
+      .toArray
   }
 }
 

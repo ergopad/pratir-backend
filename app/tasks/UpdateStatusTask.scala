@@ -50,7 +50,8 @@ import models.NFTCollectionStatus
 
 class UpdateStatusTask @Inject() (
     protected val dbConfigProvider: DatabaseConfigProvider,
-    actorSystem: ActorSystem
+    actorSystem: ActorSystem,
+    val cruxClient: CruxClient
 ) extends HasDatabaseConfigProvider[JdbcProfile]
     with Logging {
   actorSystem.scheduler.scheduleWithFixedDelay(
@@ -65,7 +66,7 @@ class UpdateStatusTask @Inject() (
         "",
         sys.env.get("ERGO_EXPLORER").get
       )
-      val salesdao = new SalesDAO(dbConfigProvider)
+      val salesdao = new SalesDAO(dbConfigProvider, cruxClient)
       val mintdao = new MintDAO(dbConfigProvider)
       logger.info("Handling open orders...")
       try {

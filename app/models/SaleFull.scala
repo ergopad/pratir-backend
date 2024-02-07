@@ -8,6 +8,7 @@ import scala.concurrent.duration.Duration
 import play.api.libs.json.Json
 import play.api.Logging
 import com.github.nscala_time.time.Imports._
+import org.ergoplatform.appkit.BlockchainDataSource
 
 final case class SaleFull(
     id: UUID,
@@ -30,7 +31,12 @@ object SaleFull extends Logging {
 
   implicit val json = Json.format[SaleFull]
 
-  def fromSaleId(_saleId: String, salesdao: SalesDAO) = {
+  def fromSaleId(
+      _saleId: String,
+      salesdao: SalesDAO,
+      height: Int,
+      dataSource: BlockchainDataSource
+  ) = {
     val start = DateTime.now()
     val saleId = UUID.fromString(_saleId)
     val saleCollArtist = Await.result(salesdao.getSale(saleId), Duration.Inf)
@@ -42,7 +48,8 @@ object SaleFull extends Logging {
     logger.info(
       "Time to get tokens: " + (getSaleTime to getTokensTime).millis.toString
     )
-    val packs = salesdao.getPacksFull(saleCollArtist._1._1.id)
+    val packs =
+      salesdao.getPacksFull(saleCollArtist._1._1.id, height, dataSource)
     val getPacksTime = DateTime.now()
     logger.info(
       "Time to get packs: " + (getTokensTime to getPacksTime).millis.toString
