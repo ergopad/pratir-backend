@@ -45,14 +45,16 @@ object PackFull {
       )
     val derivedPrices =
       if (height >= 0)
-        DerivedPrice.fromPrice(price, height, dataSource, salesdao.cruxClient)
-      else new Array(0)
+        Some(
+          DerivedPrice.fromPrice(price, height, dataSource, salesdao.cruxClient)
+        )
+      else None
     PackFull(
       p.id,
       p.name,
       p.image,
       price.toArray,
-      Some(derivedPrices.toArray),
+      derivedPrices,
       content.toArray,
       !notSoldOut
     )
