@@ -1,18 +1,18 @@
 package models
 
-import scala.collection.mutable.HashMap
+import scala.collection.immutable.Map
 import play.api.libs.json.Json
 
 final case class MInput(
-  extension: Map[String, String],
-  boxId: String,
-  value: String,
-  ergoTree: String,
-  assets: Array[MToken],
-  additionalRegisters: Map[String, String],
-  creationHeight: Int,
-  transactionId: String,
-  index: Short
+    extension: Map[String, String],
+    boxId: String,
+    value: String,
+    ergoTree: String,
+    assets: Array[MToken],
+    additionalRegisters: Map[String, String],
+    creationHeight: Int,
+    transactionId: String,
+    index: Short
 )
 
 object MInput {

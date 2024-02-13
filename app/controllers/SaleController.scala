@@ -18,7 +18,7 @@ import org.ergoplatform.appkit.NetworkType
 import org.ergoplatform.appkit.BlockchainContext
 import org.ergoplatform.appkit.impl.ErgoTreeContract
 import org.ergoplatform.appkit.ExplorerAndPoolUnspentBoxesLoader
-import org.ergoplatform.appkit.ErgoToken
+import org.ergoplatform.sdk.ErgoToken
 import org.ergoplatform.appkit.scalaapi.ErgoValueBuilder
 import org.ergoplatform.appkit.Address
 import org.ergoplatform.appkit.UnsignedTransaction
@@ -38,13 +38,14 @@ import scala.concurrent.Future
 import scala.concurrent.duration.Duration
 import scala.concurrent.Await
 
-import sigmastate.eval.Colls
+import sigma.Colls
 
-import special.collection.Coll
+import sigma.Coll
 
 import contracts.BuyOrder
 import database._
 import models._
+import org.ergoplatform.appkit.RestApiErgoClient
 
 @Singleton
 class SaleController @Inject() (
@@ -59,11 +60,10 @@ class SaleController @Inject() (
 
   def getAll(): Action[AnyContent] = Action.async { implicit request =>
     {
-      val ergoClient = RestApiErgoClientWithNodePoolDataSource.create(
+      val ergoClient = RestApiErgoClient.createWithoutExplorer(
         sys.env.get("ERGO_NODE").get,
         NetworkType.MAINNET,
-        "",
-        sys.env.get("ERGO_EXPLORER").get
+        ""
       )
       val height = ergoClient
         .getDataSource()
@@ -85,11 +85,10 @@ class SaleController @Inject() (
   def getAllHighlighted(): Action[AnyContent] = Action.async {
     implicit request =>
       {
-        val ergoClient = RestApiErgoClientWithNodePoolDataSource.create(
+        val ergoClient = RestApiErgoClient.createWithoutExplorer(
           sys.env.get("ERGO_NODE").get,
           NetworkType.MAINNET,
-          "",
-          sys.env.get("ERGO_EXPLORER").get
+          ""
         )
         val height = ergoClient
           .getDataSource()
@@ -116,11 +115,10 @@ class SaleController @Inject() (
   def getAllFiltered(status: Option[String], address: Option[String]) =
     Action.async { implicit request =>
       {
-        val ergoClient = RestApiErgoClientWithNodePoolDataSource.create(
+        val ergoClient = RestApiErgoClient.createWithoutExplorer(
           sys.env.get("ERGO_NODE").get,
           NetworkType.MAINNET,
-          "",
-          sys.env.get("ERGO_EXPLORER").get
+          ""
         )
         val height = ergoClient
           .getDataSource()
@@ -147,11 +145,10 @@ class SaleController @Inject() (
     val jsonObject = content.asJson
     val addressListJson = Json.fromJson[AddressList](jsonObject.get)
 
-    val ergoClient = RestApiErgoClientWithNodePoolDataSource.create(
+    val ergoClient = RestApiErgoClient.createWithoutExplorer(
       sys.env.get("ERGO_NODE").get,
       NetworkType.MAINNET,
-      "",
-      sys.env.get("ERGO_EXPLORER").get
+      ""
     )
     val height = ergoClient
       .getDataSource()
@@ -191,11 +188,10 @@ class SaleController @Inject() (
 
   def getSale(_saleId: String) = Action { implicit request =>
     try {
-      val ergoClient = RestApiErgoClientWithNodePoolDataSource.create(
+      val ergoClient = RestApiErgoClient.createWithoutExplorer(
         sys.env.get("ERGO_NODE").get,
         NetworkType.MAINNET,
-        "",
-        sys.env.get("ERGO_EXPLORER").get
+        ""
       )
       val height = ergoClient
         .getDataSource()
@@ -281,11 +277,10 @@ class SaleController @Inject() (
           ),
           Duration.Inf
         )
-        val ergoClient = RestApiErgoClientWithNodePoolDataSource.create(
+        val ergoClient = RestApiErgoClient.createWithoutExplorer(
           sys.env.get("ERGO_NODE").get,
           NetworkType.MAINNET,
-          "",
-          sys.env.get("ERGO_EXPLORER").get
+          ""
         )
         val height = ergoClient
           .getDataSource()
@@ -326,11 +321,10 @@ class SaleController @Inject() (
     bootstrapSaleRequest match {
       case None => BadRequest
       case Some(bootstrapSale) => {
-        val ergoClient = RestApiErgoClientWithNodePoolDataSource.create(
+        val ergoClient = RestApiErgoClient.createWithoutExplorer(
           sys.env.get("ERGO_NODE").get,
           NetworkType.MAINNET,
-          "",
-          sys.env.get("ERGO_EXPLORER").get
+          ""
         )
         val sale =
           Await
@@ -382,11 +376,10 @@ class SaleController @Inject() (
     buyRequest match {
       case None => BadRequest
       case Some(buyOrder) => {
-        val ergoClient = RestApiErgoClientWithNodePoolDataSource.create(
+        val ergoClient = RestApiErgoClient.createWithoutExplorer(
           sys.env.get("ERGO_NODE").get,
           NetworkType.MAINNET,
-          "",
-          sys.env.get("ERGO_EXPLORER").get
+          ""
         )
         try {
           Ok(

@@ -34,10 +34,10 @@ import models.TokenOrderStatus
 import contracts.BuyOrder
 import org.ergoplatform.appkit.impl.ErgoTreeContract
 import java.nio.charset.StandardCharsets
-import special.collection.Coll
+import sigma.Coll
 import java.util.UUID
 import org.ergoplatform.appkit.InputBox
-import org.ergoplatform.appkit.ErgoToken
+import org.ergoplatform.sdk.ErgoToken
 import org.ergoplatform.appkit.Address
 import scala.util.Random
 import org.ergoplatform.appkit.ErgoClient
@@ -60,11 +60,10 @@ class MintTask @Inject() (
   )(() =>
     try {
       Random.setSeed(Instant.now().toEpochMilli())
-      val ergoClient = RestApiErgoClientWithNodePoolDataSource.create(
+      val ergoClient = RestApiErgoClient.createWithoutExplorer(
         sys.env.get("ERGO_NODE").get,
         NetworkType.MAINNET,
-        "",
-        sys.env.get("ERGO_EXPLORER").get
+        ""
       )
       val salesdao = new SalesDAO(dbConfigProvider, cruxClient)
       val mintdao = new MintDAO(dbConfigProvider)

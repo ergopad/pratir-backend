@@ -20,11 +20,11 @@ import org.ergoplatform.appkit.BoxOperations
 import org.ergoplatform.appkit.impl.ErgoTreeContract
 import org.ergoplatform.appkit.NetworkType
 import org.ergoplatform.appkit.UnsignedTransaction
-import org.ergoplatform.appkit.ErgoToken
+import org.ergoplatform.sdk.ErgoToken
 import org.ergoplatform.appkit.InputBox
 import util.NodePoolDataSource
 import play.api.Logging
-import org.ergoplatform.appkit.ErgoId
+import org.ergoplatform.sdk.ErgoId
 import play.api.libs.json.Json
 import scala.collection.mutable.ArrayBuffer
 import play.api.libs.json.JsValue

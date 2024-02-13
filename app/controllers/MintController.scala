@@ -29,10 +29,10 @@ import scala.concurrent.duration.Duration
 import slick.jdbc.JdbcProfile
 
 import util.Pratir
-import util.RestApiErgoClientWithNodePoolDataSource
 import util.NFTStorageClient
 
 import models._
+import org.ergoplatform.appkit.RestApiErgoClient
 
 @Singleton
 class MintController @Inject() (
@@ -79,16 +79,17 @@ class MintController @Inject() (
     val collectionId = UUID.fromString(_collectionId)
     val collection =
       Await.result(mintdao.getCollection(collectionId), Duration.Inf)
-    val ergoClient = RestApiErgoClientWithNodePoolDataSource.create(
+    val ergoClient = RestApiErgoClient.createWithoutExplorer(
       sys.env.get("ERGO_NODE").get,
       NetworkType.MAINNET,
-      "",
-      sys.env.get("ERGO_EXPLORER").get
+      ""
     )
     try {
       Ok(
         Json.toJson(
-          MUnsignedTransaction(collection.mintBootstrap(ergoClient, mintdao, usersdao))
+          MUnsignedTransaction(
+            collection.mintBootstrap(ergoClient, mintdao, usersdao)
+          )
         )
       )
     } catch {

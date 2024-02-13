@@ -8,7 +8,6 @@ import play.api.libs.json.Writes
 import slick.jdbc.PostgresProfile.api._
 import org.ergoplatform.appkit.ErgoClient
 import org.ergoplatform.appkit.UnsignedTransaction
-import util.RestApiErgoClientWithNodePoolDataSource
 import database.MintDAO
 import database.UsersDAO
 import scala.concurrent.Await
@@ -24,14 +23,14 @@ import play.api.libs.json.Json
 import org.ergoplatform.appkit.NetworkType
 import org.ergoplatform.appkit.scalaapi.ErgoValueBuilder
 import java.nio.charset.StandardCharsets
-import sigmastate.eval.Colls
+import sigma.Colls
 import util.Pratir
 import org.ergoplatform.appkit.Eip4Token
 import org.ergoplatform.appkit.impl.Eip4TokenBuilder
 import scala.collection.JavaConverters._
 import play.api.Logging
 import database.SalesDAO
-import special.collection.Coll
+import sigma.Coll
 import shapeless.TypeCase
 import shapeless.Typeable
 
@@ -71,14 +70,19 @@ final case class NFTCollection(
 ) extends Logging {
 
   def artist(usersdao: UsersDAO) = {
-    val artistOption = Await.result(usersdao.getUserById(artistId), Duration.Inf)
+    val artistOption =
+      Await.result(usersdao.getUserById(artistId), Duration.Inf)
     artistOption.get
   }
 
   def mintContract(artist: User) =
     new ErgoTreeContract(Mint.contract(artist.address), NetworkType.MAINNET)
 
-  def handleInitialized(ergoClient: ErgoClient, mintdao: MintDAO, usersdao: UsersDAO) = {
+  def handleInitialized(
+      ergoClient: ErgoClient,
+      mintdao: MintDAO,
+      usersdao: UsersDAO
+  ) = {
     mint(ergoClient, mintdao, usersdao)
   }
 
@@ -92,7 +96,12 @@ final case class NFTCollection(
     }
   }
 
-  def mintNFTs(ergoClient: ErgoClient, mintdao: MintDAO, salesdao: SalesDAO, usersdao: UsersDAO) = {
+  def mintNFTs(
+      ergoClient: ErgoClient,
+      mintdao: MintDAO,
+      salesdao: SalesDAO,
+      usersdao: UsersDAO
+  ) = {
     val nftMintsInMempool = Await.result(mintdao.getNFTsMinting, Duration.Inf)
 
     val mimMax = 30
@@ -125,7 +134,7 @@ final case class NFTCollection(
           .asScala
           .filter(ib =>
             if (ib.getTokens().size() > 0) {
-              ib.getTokens().get(0).getId().toString().equals(tokenId)
+              ib.getTokens().get(0).getId.toString().equals(tokenId)
             } else {
               false
             }

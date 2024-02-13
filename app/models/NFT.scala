@@ -11,6 +11,7 @@ import org.ergoplatform.appkit._
 import org.ergoplatform.appkit.impl.Eip4TokenBuilder
 import org.ergoplatform.appkit.impl.ErgoTreeContract
 import org.ergoplatform.appkit.scalaapi.ErgoValueBuilder
+import org.ergoplatform.sdk.ErgoId
 
 import play.api.Logging
 import play.api.libs.json.{Json, JsValue, Reads, Writes}
@@ -19,15 +20,15 @@ import scala.collection.JavaConverters._
 import scala.concurrent.{Await, ExecutionContext}
 import scala.concurrent.duration.Duration
 
-import sigmastate.eval.Colls
 import slick.jdbc.PostgresProfile.api._
-import special.collection.Coll
 
 import util.{Pratir, NodePoolDataSource}
 
 import contracts.Mint
 
 import database.{MintDAO, SalesDAO, UsersDAO}
+import sigma.Coll
+import sigma.Colls
 
 object NFTStatus extends Enumeration {
   type NFTStatus = Value
@@ -278,7 +279,7 @@ final case class NFT(
         )
       ),
       ErgoValueBuilder.buildFor(
-        Colls.fromArray(ErgoId.create(collection.tokenId).getBytes())
+        Colls.fromArray(ErgoId.create(collection.tokenId).getBytes)
       ),
       ErgoValueBuilder.buildFor(
         Colls.fromArray(

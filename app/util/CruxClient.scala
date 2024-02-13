@@ -52,11 +52,16 @@ class CruxClient @Inject() (ws: WSClient, cache: SyncCacheApi) {
 
   def heightToTimestamp(height: Int, dataSource: BlockchainDataSource): Long = {
     cache.getOrElseUpdate(height.toString())({
-      val headers = dataSource.getLastBlockHeaders(100, false)
-      headers.forEach(h =>
-        cache.set(h.getHeight().toString(), h.getTimestamp())
-      )
-      cache.get(height.toString()).get
+      val request = ws
+        .url(sys.env.get("ERGO_NODE").get + "/blocks/chainSlice")
+        .withQueryStringParameters(
+          ("fromHeight", height.toString()),
+          ("toHeight", height.toString())
+        )
+        .get()
+      val response = Await.result(request, Duration.Inf)
+      val timestamp = response.json.\(0).\("timestamp").get.as[Long]
+      timestamp
     })
   }
 }

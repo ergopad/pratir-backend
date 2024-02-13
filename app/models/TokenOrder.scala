@@ -13,7 +13,7 @@ import org.ergoplatform.appkit.NetworkType
 import contracts.BuyOrder
 import scala.collection.JavaConverters._
 import org.ergoplatform.appkit.InputBox
-import special.collection.Coll
+import sigma.Coll
 import java.nio.charset.StandardCharsets
 import scala.collection.mutable.HashMap
 import org.ergoplatform.appkit.BlockchainContext
@@ -21,7 +21,7 @@ import org.ergoplatform.appkit.ExplorerAndPoolUnspentBoxesLoader
 import org.ergoplatform.appkit.BoxOperations
 import util.Pratir
 import org.ergoplatform.appkit.Address
-import org.ergoplatform.appkit.ErgoToken
+import org.ergoplatform.sdk.ErgoToken
 import org.ergoplatform.appkit.UnsignedTransaction
 import _root_.util.NodePoolDataSource
 import org.ergoplatform.appkit.ErgoClientException
@@ -197,8 +197,8 @@ final case class TokenOrder(
               .getTokens()
               .asScala
               .exists((ergoToken: ErgoToken) =>
-                ergoToken.getId().toString() == token._1 && ergoToken
-                  .getValue() >= token._2
+                ergoToken.getId
+                  .toString() == token._1 && ergoToken.getValue >= token._2
               )
           )
       })

@@ -30,7 +30,7 @@ libraryDependencies += "com.github.tminglei" %% "slick-pg" % "0.21.1"
 libraryDependencies += "com.github.tminglei" %% "slick-pg_play-json" % "0.21.1"
 
 // https://mvnrepository.com/artifact/org.ergoplatform/ergo-appkit
-libraryDependencies += "org.ergoplatform" %% "ergo-appkit" % "5.0.0"
+libraryDependencies += "org.ergoplatform" %% "ergo-appkit" % "5.0.4"
 
 libraryDependencies ++= Seq(
   "org.springframework.security" % "spring-security-crypto" % "5.6.2"
@@ -47,6 +47,14 @@ libraryDependencies ++= Seq(
 libraryDependencies += "com.github.nscala-time" %% "nscala-time" % "2.32.0"
 
 libraryDependencies += ws
+
+resolvers ++= Seq(
+  "Sonatype Releases" at "https://oss.sonatype.org/content/repositories/releases/",
+  "SonaType" at "https://oss.sonatype.org/content/groups/public",
+  "Sonatype Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots/",
+  "Sonatype Snapshots S1" at "https://s01.oss.sonatype.org/content/repositories/snapshots/",
+  "Bintray" at "https://jcenter.bintray.com/"
+)
 
 // Adds additional packages into Twirl
 // TwirlKeys.templateImports += "com.example.controllers._"

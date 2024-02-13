@@ -3,7 +3,7 @@ package util
 import org.ergoplatform.appkit.ErgoProver
 import org.ergoplatform.appkit.impl.BlockchainContextImpl
 import org.ergoplatform.appkit.UnsignedTransaction
-import org.ergoplatform.appkit.SecretString
+import org.ergoplatform.sdk.SecretString
 import org.ergoplatform.appkit.Mnemonic
 import scorex.crypto.authds.merkle.sparse.BlockchainSimulator
 import org.ergoplatform.ErgoAddress
@@ -13,18 +13,18 @@ import models.Sale
 import contracts.SaleBox
 import org.ergoplatform.appkit.impl.ErgoTreeContract
 import org.ergoplatform.appkit.BlockchainContext
-import org.ergoplatform.appkit.AppkitProvingInterpreter
+import org.ergoplatform.sdk.AppkitProvingInterpreter
 import org.ergoplatform.wallet.mnemonic.{Mnemonic => WMnemonic}
-import org.ergoplatform.wallet.secrets.ExtendedSecretKey
-import sigmastate.basics.DiffieHellmanTupleProverInput
+import sigmastate.crypto.DiffieHellmanTupleProverInput
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder
 import org.ergoplatform.appkit.InputBox
 import scala.collection.mutable.HashMap
 import scala.collection.JavaConverters._
 import org.ergoplatform.appkit.TransactionBox
 import org.ergoplatform.appkit.OutBox
-import org.ergoplatform.appkit.ErgoToken
+import org.ergoplatform.sdk.ErgoToken
 import java.util.UUID
+import org.ergoplatform.sdk.wallet.secrets.ExtendedSecretKey
 
 object Pratir {
 
@@ -72,8 +72,8 @@ object Pratir {
         .asScala
         .foreach(token =>
           balance.put(
-            token.getId().toString(),
-            token.getValue() + balance.getOrElse(token.getId().toString(), 0L)
+            token.getId.toString(),
+            token.getValue + balance.getOrElse(token.getId.toString(), 0L)
           )
         )
     })
@@ -108,9 +108,8 @@ object Pratir {
     processedStr.replaceAll("[^\\w-]+", "")
   }
 
-  /** 
-   * This code was GPT generated :O
-   */
+  /** This code was GPT generated :O
+    */
   def isValidUUID(uuidStr: String): Boolean = {
     try {
       UUID.fromString(uuidStr)

@@ -1,16 +1,16 @@
 package contracts
 
-import org.ergoplatform.appkit.JavaHelpers
 import org.ergoplatform.ErgoAddressEncoder
 import util.Pratir
 import org.ergoplatform.appkit.Address
 import models.Sale
 import org.ergoplatform.appkit.ErgoValue
 import org.ergoplatform.restapi.client.Transactions
+import org.ergoplatform.appkit.AppkitHelpers
 
 object SaleBox {
 
-    val script = """
+  val script = """
     {
         val currentTime = CONTEXT.preHeader.timestamp
         val live = currentTime < _endTime
@@ -19,14 +19,22 @@ object SaleBox {
     }
     """
 
-    def contract(sale: Sale) = {
-        val constants = new java.util.HashMap[String,Object]()
-        constants.put("PratirPK",Pratir.address.getPublicKey())
-        constants.put("SellerPK",Address.create(sale.sellerWallet).getPublicKey())
-        constants.put("_endTime", ErgoValue.of(sale.endTime.toEpochMilli()).getValue())
-        constants.put("_uniqueTime", ErgoValue.of(sale.created_at.toEpochMilli()).getValue())
-        JavaHelpers.compile(
-            constants, script, ErgoAddressEncoder.MainnetNetworkPrefix
-        )
-    } 
+  def contract(sale: Sale) = {
+    val constants = new java.util.HashMap[String, Object]()
+    constants.put("PratirPK", Pratir.address.getPublicKey())
+    constants.put("SellerPK", Address.create(sale.sellerWallet).getPublicKey())
+    constants.put(
+      "_endTime",
+      ErgoValue.of(sale.endTime.toEpochMilli()).getValue()
+    )
+    constants.put(
+      "_uniqueTime",
+      ErgoValue.of(sale.created_at.toEpochMilli()).getValue()
+    )
+    AppkitHelpers.compile(
+      constants,
+      script,
+      ErgoAddressEncoder.MainnetNetworkPrefix
+    )
+  }
 }
