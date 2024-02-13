@@ -64,7 +64,7 @@ class SaleController @Inject() (
         sys.env.get("ERGO_NODE").get,
         NetworkType.MAINNET,
         "",
-        ""
+        sys.env.get("ERGO_EXPLORER").get
       )
       val height = ergoClient
         .getDataSource()
@@ -90,7 +90,7 @@ class SaleController @Inject() (
           sys.env.get("ERGO_NODE").get,
           NetworkType.MAINNET,
           "",
-          ""
+          sys.env.get("ERGO_EXPLORER").get
         )
         val height = ergoClient
           .getDataSource()
@@ -121,7 +121,7 @@ class SaleController @Inject() (
           sys.env.get("ERGO_NODE").get,
           NetworkType.MAINNET,
           "",
-          ""
+          sys.env.get("ERGO_EXPLORER").get
         )
         val height = ergoClient
           .getDataSource()
@@ -152,7 +152,7 @@ class SaleController @Inject() (
       sys.env.get("ERGO_NODE").get,
       NetworkType.MAINNET,
       "",
-      ""
+      sys.env.get("ERGO_EXPLORER").get
     )
     val height = ergoClient
       .getDataSource()
@@ -196,7 +196,7 @@ class SaleController @Inject() (
         sys.env.get("ERGO_NODE").get,
         NetworkType.MAINNET,
         "",
-        ""
+        sys.env.get("ERGO_EXPLORER").get
       )
       val height = ergoClient
         .getDataSource()
@@ -286,7 +286,7 @@ class SaleController @Inject() (
           sys.env.get("ERGO_NODE").get,
           NetworkType.MAINNET,
           "",
-          ""
+          sys.env.get("ERGO_EXPLORER").get
         )
         val height = ergoClient
           .getDataSource()
@@ -331,7 +331,7 @@ class SaleController @Inject() (
           sys.env.get("ERGO_NODE").get,
           NetworkType.MAINNET,
           "",
-          ""
+          sys.env.get("ERGO_EXPLORER").get
         )
         val sale =
           Await
@@ -387,7 +387,7 @@ class SaleController @Inject() (
           sys.env.get("ERGO_NODE").get,
           NetworkType.MAINNET,
           "",
-          ""
+          sys.env.get("ERGO_EXPLORER").get
         )
         try {
           Ok(

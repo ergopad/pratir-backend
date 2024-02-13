@@ -83,7 +83,7 @@ class MintController @Inject() (
       sys.env.get("ERGO_NODE").get,
       NetworkType.MAINNET,
       "",
-      ""
+      sys.env.get("ERGO_EXPLORER").get
     )
     try {
       Ok(

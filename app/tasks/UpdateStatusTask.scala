@@ -64,7 +64,7 @@ class UpdateStatusTask @Inject() (
         sys.env.get("ERGO_NODE").get,
         NetworkType.MAINNET,
         "",
-        ""
+        sys.env.get("ERGO_EXPLORER").get
       )
       val salesdao = new SalesDAO(dbConfigProvider, cruxClient)
       val mintdao = new MintDAO(dbConfigProvider)
