@@ -35,6 +35,8 @@ import play.api.libs.json.Json
 import play.api.libs.json.JsError
 import play.api.libs.json.JsSuccess
 import org.ergoplatform.appkit.impl.BlockchainContextImpl
+import com.amazonaws.services.batch.model.NodeDetails
+import org.ergoplatform.appkit.impl.NodeDataSourceImpl
 
 object TokenOrderStatus extends Enumeration {
   type TokenOrderStatus = Value
@@ -439,10 +441,13 @@ final case class TokenOrder(
 
   def followUp(ergoClient: ErgoClient, salesdao: SalesDAO): Unit = {
 
-    val mempoolTxState = ergoClient
-      .getDataSource()
-      .asInstanceOf[NodePoolDataSource]
-      .getUnconfirmedTransactionState(followUpTxId)
+    val mempoolTxState =
+      NodePoolDataSource.getUnconfirmedTransactionState(
+        followUpTxId,
+        ergoClient
+          .getDataSource()
+          .asInstanceOf[NodeDataSourceImpl]
+      )
     // If the tx is no longer in the mempool we need to ensure it is confirmed and set the state accordingly
     if (mempoolTxState == 404) {
       try {

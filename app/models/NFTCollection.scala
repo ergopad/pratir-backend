@@ -33,6 +33,7 @@ import database.SalesDAO
 import sigma.Coll
 import shapeless.TypeCase
 import shapeless.Typeable
+import org.ergoplatform.appkit.impl.NodeDataSourceImpl
 
 object NFTCollectionStatus extends Enumeration {
   type NFTCollectionStatus = Value
@@ -127,18 +128,22 @@ final case class NFTCollection(
           Duration.Inf
         )
       } else {
-        var issuerBox = ergoClient
-          .getDataSource()
-          .asInstanceOf[NodePoolDataSource]
-          .getAllUnspentBoxesFor(_mintContract.toAddress())
-          .asScala
-          .filter(ib =>
-            if (ib.getTokens().size() > 0) {
-              ib.getTokens().get(0).getId.toString().equals(tokenId)
-            } else {
-              false
-            }
-          )(0)
+        var issuerBox =
+          NodePoolDataSource
+            .getAllUnspentBoxesFor(
+              _mintContract.toAddress(),
+              ergoClient
+                .getDataSource()
+                .asInstanceOf[NodeDataSourceImpl]
+            )
+            .asScala
+            .filter(ib =>
+              if (ib.getTokens().size() > 0) {
+                ib.getTokens().get(0).getId.toString().equals(tokenId)
+              } else {
+                false
+              }
+            )(0)
 
         ergoClient.execute(
           new java.util.function.Function[BlockchainContext, Unit] {
@@ -238,10 +243,13 @@ final case class NFTCollection(
       new java.util.function.Function[BlockchainContext, Unit] {
         override def apply(ctx: BlockchainContext): Unit = {
           val balance = Pratir.balance(
-            ctx
-              .getDataSource()
-              .asInstanceOf[NodePoolDataSource]
-              .getAllUnspentBoxesFor(_mintContract.toAddress())
+            NodePoolDataSource
+              .getAllUnspentBoxesFor(
+                _mintContract.toAddress(),
+                ctx
+                  .getDataSource()
+                  .asInstanceOf[NodeDataSourceImpl]
+              )
               .asScala
               .filter(ib =>
                 if (ib.getRegisters().size() > 0) {
@@ -395,10 +403,13 @@ final case class NFTCollection(
         Duration.Inf
       )
     } else {
-      val mempoolTxState = ergoClient
-        .getDataSource()
-        .asInstanceOf[NodePoolDataSource]
-        .getUnconfirmedTransactionState(mintingTxId)
+      val mempoolTxState =
+        NodePoolDataSource.getUnconfirmedTransactionState(
+          mintingTxId,
+          ergoClient
+            .getDataSource()
+            .asInstanceOf[NodeDataSourceImpl]
+        )
       // If the tx is no longer in the mempool we need to ensure it is confirmed and set the state accordingly
       if (mempoolTxState == 404) {
         val _artist = artist(usersdao)

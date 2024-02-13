@@ -28,6 +28,7 @@ import org.ergoplatform.sdk.ErgoId
 import play.api.libs.json.Json
 import scala.collection.mutable.ArrayBuffer
 import play.api.libs.json.JsValue
+import org.ergoplatform.appkit.impl.NodeDataSourceImpl
 
 object SaleStatus extends Enumeration {
   type SaleStatus = Value
@@ -181,11 +182,15 @@ final case class Sale(
   def handleLive(ergoClient: ErgoClient, salesdao: SalesDAO): Unit = {
     if (status == SaleStatus.LIVE || status == SaleStatus.SOLD_OUT) {
 
-      val boxes = ergoClient
-        .getDataSource()
-        .asInstanceOf[NodePoolDataSource]
-        .getAllUnspentBoxesFor(getSaleAddress)
-        .asScala
+      val boxes =
+        NodePoolDataSource
+          .getAllUnspentBoxesFor(
+            getSaleAddress,
+            ergoClient
+              .getDataSource()
+              .asInstanceOf[NodeDataSourceImpl]
+          )
+          .asScala
 
       val balance = Pratir.balance(boxes)
 
@@ -222,11 +227,15 @@ final case class Sale(
   def handlePending(ergoClient: ErgoClient, salesdao: SalesDAO): Unit = {
     if (status != SaleStatus.PENDING) return
 
-    val boxes = ergoClient
-      .getDataSource()
-      .asInstanceOf[NodePoolDataSource]
-      .getAllUnspentBoxesFor(getSaleAddress)
-      .asScala
+    val boxes =
+      NodePoolDataSource
+        .getAllUnspentBoxesFor(
+          getSaleAddress,
+          ergoClient
+            .getDataSource()
+            .asInstanceOf[NodeDataSourceImpl]
+        )
+        .asScala
 
     val balance = Pratir.balance(boxes)
 
@@ -302,11 +311,15 @@ final case class Sale(
     ergoClient.execute(
       new java.util.function.Function[BlockchainContext, UnsignedTransaction] {
         override def apply(ctx: BlockchainContext): UnsignedTransaction = {
-          val currentBoxes = ctx
-            .getDataSource()
-            .asInstanceOf[NodePoolDataSource]
-            .getAllUnspentBoxesFor(getSaleAddress)
-            .asScala
+          val currentBoxes =
+            NodePoolDataSource
+              .getAllUnspentBoxesFor(
+                getSaleAddress,
+                ctx
+                  .getDataSource()
+                  .asInstanceOf[NodeDataSourceImpl]
+              )
+              .asScala
 
           val ergNeeded =
             2000000L + initialNanoErgFee + currentBoxes.size * 1000000L - currentBoxes

@@ -1,14 +1,15 @@
 package util;
 
-import org.ergoplatform.appkit.impl.NodeAndExplorerDataSourceImpl;
+import org.ergoplatform.appkit.impl.NodeDataSourceImpl;
 import org.ergoplatform.appkit.impl.InputBoxImpl;
+import org.ergoplatform.appkit.Transaction;
+import org.ergoplatform.appkit.OutBox;
 import org.ergoplatform.restapi.client.ApiClient;
 import org.ergoplatform.explorer.client.ExplorerApiClient;
 import org.ergoplatform.appkit.Address;
 import java.util.List;
 import java.util.ArrayList;
 import org.ergoplatform.appkit.InputBox;
-import org.ergoplatform.restapi.client.Transactions;
 import org.ergoplatform.restapi.client.ErgoTransaction;
 import org.ergoplatform.restapi.client.ErgoTransactionInput;
 import org.ergoplatform.restapi.client.ErgoTransactionOutput;
@@ -21,67 +22,51 @@ import okhttp3.OkHttpClient;
 import com.google.common.base.Preconditions;
 import org.javatuples.Triplet;
 
-public class NodePoolDataSource extends NodeAndExplorerDataSourceImpl {
+public class NodePoolDataSource {
 
-	private final DanaidesAPI danaidesApi;
-
-	public NodePoolDataSource(ApiClient nodeClient, DanaidesAPIClient danaidesClient) {
-		super(nodeClient, null);
-
-		if (danaidesClient != null) {
-			OkHttpClient okDanaides = danaidesClient.getOkBuilder().build();
-			Retrofit retrofitDanaides = danaidesClient.getAdapterBuilder().client(okDanaides).build();
-			danaidesApi = retrofitDanaides.create(DanaidesAPI.class);
-		} else
-			danaidesApi = null;
-	}
-
-	@Override
-	public List<InputBox> getUnconfirmedUnspentBoxesFor(Address address, int offset, int limit) {
-		return getMempoolBoxesFor(address, offset, limit).getValue1();
-	}
-
-	public Triplet<List<String>, List<InputBox>, Transactions> getMempoolBoxesFor(Address address, int offset,
-			int limit) {
+	public static Triplet<List<String>, List<InputBox>, List<Transaction>> getMempoolBoxesFor(Address address,
+			int offset, int limit, NodeDataSourceImpl ds) {
 		List<String> spentBoxes = new ArrayList<>();
 		List<InputBox> outputBoxes = new ArrayList<>();
 		String ergoTreeHex = address.getErgoAddress().script().bytesHex();
-		Transactions transactions = executeCall(getNodeTransactionsApi().getUnconfirmedTransactions(limit, offset));
+		List<Transaction> transactions = ds.getUnconfirmedTransactions(offset, limit);
 
 		// now check if we have boxes on the address
-		for (ErgoTransaction tx : transactions) {
-			for (ErgoTransactionInput input : tx.getInputs()) {
-				spentBoxes.add(input.getBoxId());
+		for (Transaction tx : transactions) {
+			for (String input : tx.getInputBoxesIds()) {
+				spentBoxes.add(input);
 			}
-			for (ErgoTransactionOutput output : tx.getOutputs()) {
+			Short i = 0;
+			for (OutBox output : tx.getOutputs()) {
 				if (output.getErgoTree().equals(ergoTreeHex)) {
 					// we have an unconfirmed box - get info from node for it
 					try {
-						outputBoxes.add(new InputBoxImpl(output));
+						outputBoxes.add(output.convertToInputWith(tx.getId(), i));
 					} catch (ErgoClientException e) {
 						// ignore error, no box to add
 					}
 				}
+				i++;
 			}
 		}
 		return Triplet.with(spentBoxes, outputBoxes, transactions);
 	}
 
-	public List<InputBox> getAllUnspentBoxesFor(Address address) {
-		return getAllUnspentBoxesFor(address, true);
+	public static List<InputBox> getAllUnspentBoxesFor(Address address, NodeDataSourceImpl ds) {
+		return NodePoolDataSource.getAllUnspentBoxesFor(address, ds, true);
 	}
 
-	public List<InputBox> getAllUnspentBoxesFor(Address address, Boolean includeMempool) {
+	public static List<InputBox> getAllUnspentBoxesFor(Address address, NodeDataSourceImpl ds, Boolean includeMempool) {
 
 		List<InputBox> confirmed = new ArrayList<>();
 		boolean foundAll = false;
 		int offset = 0;
 
 		while (!foundAll) {
-			List<InputBox> confirmedPartial = getUnspentBoxesFor(address, offset, 100);
+			List<InputBox> confirmedPartial = ds.getUnspentBoxesFor(address, offset, 1000);
 			confirmed.addAll(confirmedPartial);
-			if (confirmedPartial.size() == 100) {
-				offset += 100;
+			if (confirmedPartial.size() == 1000) {
+				offset += 1000;
 			} else {
 				foundAll = true;
 			}
@@ -94,17 +79,10 @@ public class NodePoolDataSource extends NodeAndExplorerDataSourceImpl {
 			offset = 0;
 			foundAll = false;
 
-			while (!foundAll) {
-				Triplet<List<String>, List<InputBox>, Transactions> partialMempool = getMempoolBoxesFor(address, offset,
-						100);
-				unconfirmed.addAll(partialMempool.getValue1());
-				spent.addAll(partialMempool.getValue0());
-				if (partialMempool.getValue2().size() >= 99) {
-					offset += 100;
-				} else {
-					foundAll = true;
-				}
-			}
+			Triplet<List<String>, List<InputBox>, List<Transaction>> partialMempool = NodePoolDataSource
+					.getMempoolBoxesFor(address, offset, 1000, ds);
+			unconfirmed.addAll(partialMempool.getValue1());
+			spent.addAll(partialMempool.getValue0());
 
 			confirmed.removeIf(ib -> spent.contains(ib.getId().toString()));
 			unconfirmed.removeIf(ib -> spent.contains(ib.getId().toString()));
@@ -115,20 +93,8 @@ public class NodePoolDataSource extends NodeAndExplorerDataSourceImpl {
 		return confirmed;
 	}
 
-	@Override
-	public List<InputBox> getUnspentBoxesFor(Address address, int offset, int limit) {
-		List<InputBox> inputBoxes = new ArrayList<>();
-		List<ErgoTransactionOutput> boxes = executeCall(danaidesApi.getUTXOByErgoTree(
-				new ErgoTreeHex().ergoTree(address.getErgoAddress().script().bytesHex()), limit, offset));
-
-		for (ErgoTransactionOutput output : boxes) {
-			inputBoxes.add(new InputBoxImpl(output));
-		}
-		return inputBoxes;
-	}
-
-	public Integer getUnconfirmedTransactionState(String txId) {
-		Call<ErgoTransaction> apiCall = getNodeTransactionsApi().getUnconfirmedTransactionById(txId);
+	public static Integer getUnconfirmedTransactionState(String txId, NodeDataSourceImpl ds) {
+		Call<ErgoTransaction> apiCall = ds.getNodeTransactionsApi().getUnconfirmedTransactionById(txId);
 		try {
 			Response<ErgoTransaction> response = apiCall.execute();
 			return response.code();

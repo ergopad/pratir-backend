@@ -29,6 +29,7 @@ import contracts.Mint
 import database.{MintDAO, SalesDAO, UsersDAO}
 import sigma.Coll
 import sigma.Colls
+import org.ergoplatform.appkit.impl.NodeDataSourceImpl
 
 object NFTStatus extends Enumeration {
   type NFTStatus = Value
@@ -108,11 +109,14 @@ final case class NFT(
           val hash = digest.digest(data)
 
           val extraInputs =
-            ergoClient
-              .getDataSource()
-              .asInstanceOf[NodePoolDataSource]
+            NodePoolDataSource
               .getAllUnspentBoxesFor(
-                collection.mintContract(collection.artist(usersdao)).toAddress()
+                collection
+                  .mintContract(collection.artist(usersdao))
+                  .toAddress(),
+                ergoClient
+                  .getDataSource()
+                  .asInstanceOf[NodeDataSourceImpl]
               )
               .asScala
               .filter(b => {
@@ -376,18 +380,25 @@ final case class NFT(
         Duration.Inf
       )
     } else {
-      val mempoolTxState = ergoClient
-        .getDataSource()
-        .asInstanceOf[NodePoolDataSource]
-        .getUnconfirmedTransactionState(mintTransactionId)
+      val mempoolTxState =
+        NodePoolDataSource.getUnconfirmedTransactionState(
+          mintTransactionId,
+          ergoClient
+            .getDataSource()
+            .asInstanceOf[NodeDataSourceImpl]
+        )
       // If the tx is no longer in the mempool we need to ensure it is confirmed and set the state accordingly
       if (mempoolTxState == 404) {
         val mintingAddress = address(mintdao, salesdao, usersdao)
         val balance = Pratir.balance(
-          ergoClient
-            .getDataSource()
-            .asInstanceOf[NodePoolDataSource]
-            .getAllUnspentBoxesFor(mintingAddress, false)
+          NodePoolDataSource
+            .getAllUnspentBoxesFor(
+              mintingAddress,
+              ergoClient
+                .getDataSource()
+                .asInstanceOf[NodeDataSourceImpl],
+              false
+            )
             .asScala
         )
         if (balance._2.contains(tokenId)) {
