@@ -79,9 +79,10 @@ class MintController @Inject() (
     val collectionId = UUID.fromString(_collectionId)
     val collection =
       Await.result(mintdao.getCollection(collectionId), Duration.Inf)
-    val ergoClient = RestApiErgoClient.createWithoutExplorer(
+    val ergoClient = RestApiErgoClient.create(
       sys.env.get("ERGO_NODE").get,
       NetworkType.MAINNET,
+      "",
       ""
     )
     try {

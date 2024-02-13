@@ -60,9 +60,10 @@ class UpdateStatusTask @Inject() (
   )(() =>
     try {
       Random.setSeed(Instant.now().toEpochMilli())
-      val ergoClient = RestApiErgoClient.createWithoutExplorer(
+      val ergoClient = RestApiErgoClient.create(
         sys.env.get("ERGO_NODE").get,
         NetworkType.MAINNET,
+        "",
         ""
       )
       val salesdao = new SalesDAO(dbConfigProvider, cruxClient)

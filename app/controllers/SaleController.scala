@@ -60,9 +60,10 @@ class SaleController @Inject() (
 
   def getAll(): Action[AnyContent] = Action.async { implicit request =>
     {
-      val ergoClient = RestApiErgoClient.createWithoutExplorer(
+      val ergoClient = RestApiErgoClient.create(
         sys.env.get("ERGO_NODE").get,
         NetworkType.MAINNET,
+        "",
         ""
       )
       val height = ergoClient
@@ -85,9 +86,10 @@ class SaleController @Inject() (
   def getAllHighlighted(): Action[AnyContent] = Action.async {
     implicit request =>
       {
-        val ergoClient = RestApiErgoClient.createWithoutExplorer(
+        val ergoClient = RestApiErgoClient.create(
           sys.env.get("ERGO_NODE").get,
           NetworkType.MAINNET,
+          "",
           ""
         )
         val height = ergoClient
@@ -115,9 +117,10 @@ class SaleController @Inject() (
   def getAllFiltered(status: Option[String], address: Option[String]) =
     Action.async { implicit request =>
       {
-        val ergoClient = RestApiErgoClient.createWithoutExplorer(
+        val ergoClient = RestApiErgoClient.create(
           sys.env.get("ERGO_NODE").get,
           NetworkType.MAINNET,
+          "",
           ""
         )
         val height = ergoClient
@@ -145,9 +148,10 @@ class SaleController @Inject() (
     val jsonObject = content.asJson
     val addressListJson = Json.fromJson[AddressList](jsonObject.get)
 
-    val ergoClient = RestApiErgoClient.createWithoutExplorer(
+    val ergoClient = RestApiErgoClient.create(
       sys.env.get("ERGO_NODE").get,
       NetworkType.MAINNET,
+      "",
       ""
     )
     val height = ergoClient
@@ -188,9 +192,10 @@ class SaleController @Inject() (
 
   def getSale(_saleId: String) = Action { implicit request =>
     try {
-      val ergoClient = RestApiErgoClient.createWithoutExplorer(
+      val ergoClient = RestApiErgoClient.create(
         sys.env.get("ERGO_NODE").get,
         NetworkType.MAINNET,
+        "",
         ""
       )
       val height = ergoClient
@@ -277,9 +282,10 @@ class SaleController @Inject() (
           ),
           Duration.Inf
         )
-        val ergoClient = RestApiErgoClient.createWithoutExplorer(
+        val ergoClient = RestApiErgoClient.create(
           sys.env.get("ERGO_NODE").get,
           NetworkType.MAINNET,
+          "",
           ""
         )
         val height = ergoClient
@@ -321,9 +327,10 @@ class SaleController @Inject() (
     bootstrapSaleRequest match {
       case None => BadRequest
       case Some(bootstrapSale) => {
-        val ergoClient = RestApiErgoClient.createWithoutExplorer(
+        val ergoClient = RestApiErgoClient.create(
           sys.env.get("ERGO_NODE").get,
           NetworkType.MAINNET,
+          "",
           ""
         )
         val sale =
@@ -376,9 +383,10 @@ class SaleController @Inject() (
     buyRequest match {
       case None => BadRequest
       case Some(buyOrder) => {
-        val ergoClient = RestApiErgoClient.createWithoutExplorer(
+        val ergoClient = RestApiErgoClient.create(
           sys.env.get("ERGO_NODE").get,
           NetworkType.MAINNET,
+          "",
           ""
         )
         try {
