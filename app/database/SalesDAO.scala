@@ -361,7 +361,7 @@ class SalesDAO @Inject() (
     db.run(sql"""
         select  "id", "tokenId", amount, "originalAmount", rarity, "saleId"  
         from 
-            (select "id", "tokenId", amount, "originalAmount", rarity, "saleId", (random()) as "lucky_num"
+            (select "id", token_id as "tokenId", amount, original_amount as "originalAmount", rarity, sale_id as "saleId", (random()) as "lucky_num"
             from "tokens_for_sale"
             where "amount" > 0 
             and "sale_id" = UUID(${saleId.toString()})
