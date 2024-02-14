@@ -33,6 +33,7 @@ import util.NFTStorageClient
 
 import models._
 import org.ergoplatform.appkit.RestApiErgoClient
+import play.api.Logging
 
 @Singleton
 class MintController @Inject() (
@@ -44,7 +45,8 @@ class MintController @Inject() (
     protected val dbConfigProvider: DatabaseConfigProvider
 )(implicit ec: ExecutionContext)
     extends BaseController
-    with HasDatabaseConfigProvider[JdbcProfile] {
+    with HasDatabaseConfigProvider[JdbcProfile]
+    with Logging {
 
   def getAllCollections(): mvc.Action[mvc.AnyContent] = Action.async {
     implicit request =>
@@ -63,7 +65,10 @@ class MintController @Inject() (
         val collection = Await.result(mintdao.getCollection(uuid), Duration.Inf)
         Ok(Json.toJson(collection))
       } catch {
-        case e: Exception => BadRequest(e.getMessage())
+        case e: Exception => {
+          logger.error("Caught unexpected error", e);
+          BadRequest(e.getMessage())
+        }
       }
     }
 
@@ -104,7 +109,10 @@ class MintController @Inject() (
         BadRequest(
           "Not enough erg for change box, try consolidating your utxos to remove this error"
         )
-      case e: Exception => BadRequest(e.getMessage())
+      case e: Exception => {
+        logger.error("Caught unexpected error", e);
+        BadRequest(e.getMessage())
+      }
     }
   }
 
@@ -130,7 +138,10 @@ class MintController @Inject() (
           Created(Json.toJson(collectionAdded))
       }
     } catch {
-      case e: Exception => BadRequest(Json.toJson(e.getMessage()))
+      case e: Exception => {
+        logger.error("Caught unexpected error", e);
+        BadRequest(e.getMessage())
+      }
     }
   }
 
@@ -163,7 +174,10 @@ class MintController @Inject() (
           NotFound("File Not Found")
         }
     } catch {
-      case e: Exception => BadRequest(e.getMessage)
+      case e: Exception => {
+        logger.error("Caught unexpected error", e);
+        BadRequest(e.getMessage())
+      }
     }
   }
 }

@@ -47,7 +47,18 @@ class UserController @Inject() (
       Ok(
         Json.toJson(
           user.getOrElse(
-            User(mockId, address, address, "", "", "", "", JsArray.empty, Instant.EPOCH, Instant.EPOCH)
+            User(
+              mockId,
+              address,
+              address,
+              "",
+              "",
+              "",
+              "",
+              JsArray.empty,
+              Instant.EPOCH,
+              Instant.EPOCH
+            )
           )
         )
       )
@@ -92,7 +103,8 @@ class UserController @Inject() (
               user.tagline,
               user.website,
               user.socials,
-              if (checkUser.isDefined) checkUser.get.createdAt else Instant.now(),
+              if (checkUser.isDefined) checkUser.get.createdAt
+              else Instant.now(),
               Instant.now()
             )
           if (checkUser.isDefined)
@@ -198,7 +210,10 @@ class UserController @Inject() (
               NotFound("AuthRequest Not Found")
             }
           } catch {
-            case e: Exception => BadRequest(e.getMessage)
+            case e: Exception => {
+              logger.error("Caught unexpected error", e);
+              BadRequest(e.getMessage())
+            }
           }
       }
   }
@@ -232,7 +247,10 @@ class UserController @Inject() (
           NotFound("File Not Found")
         }
     } catch {
-      case e: Exception => BadRequest(e.getMessage)
+      case e: Exception => {
+        logger.error("Caught unexpected error", e);
+        BadRequest(e.getMessage())
+      }
     }
   }
 

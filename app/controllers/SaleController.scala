@@ -46,6 +46,7 @@ import contracts.BuyOrder
 import database._
 import models._
 import org.ergoplatform.appkit.RestApiErgoClient
+import play.api.Logging
 
 @Singleton
 class SaleController @Inject() (
@@ -56,7 +57,8 @@ class SaleController @Inject() (
     protected val dbConfigProvider: DatabaseConfigProvider
 )(implicit ec: ExecutionContext)
     extends BaseController
-    with HasDatabaseConfigProvider[JdbcProfile] {
+    with HasDatabaseConfigProvider[JdbcProfile]
+    with Logging {
 
   def getAll(): Action[AnyContent] = Action.async { implicit request =>
     {
@@ -228,7 +230,10 @@ class SaleController @Inject() (
         )
       }
     } catch {
-      case e: Exception => BadRequest(e.getMessage())
+      case e: Exception => {
+        logger.error("Caught unexpected error", e);
+        BadRequest(e.getMessage())
+      }
     }
   }
 
@@ -361,7 +366,10 @@ class SaleController @Inject() (
             BadRequest(
               "Not enough erg for change box, try consolidating your utxos to remove this error"
             )
-          case e: Exception => BadRequest(e.getMessage())
+          case e: Exception => {
+            logger.error("Caught unexpected error", e);
+            BadRequest(e.getMessage())
+          }
         }
       }
     }
@@ -621,7 +629,10 @@ class SaleController @Inject() (
             BadRequest(
               "Not enough erg for change box, try consolidating your utxos to remove this error"
             )
-          case e: Exception => BadRequest(e.getMessage())
+          case e: Exception => {
+            logger.error("Caught unexpected error", e);
+            BadRequest(e.getMessage())
+          }
         }
       }
     }
@@ -656,7 +667,10 @@ class SaleController @Inject() (
             Unauthorized("Unauthorized - Token Verification Failed")
           }
         } catch {
-          case e: Exception => BadRequest(e.getMessage)
+          case e: Exception => {
+            logger.error("Caught unexpected error", e);
+            BadRequest(e.getMessage())
+          }
         }
       }
     }
@@ -691,7 +705,10 @@ class SaleController @Inject() (
             Unauthorized("Unauthorized - Token Verification Failed")
           }
         } catch {
-          case e: Exception => BadRequest(e.getMessage)
+          case e: Exception => {
+            logger.error("Caught unexpected error", e);
+            BadRequest(e.getMessage())
+          }
         }
       }
     }
