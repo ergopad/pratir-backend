@@ -2,6 +2,7 @@ package controllers;
 
 import java.time.Instant
 import java.util.UUID
+import java.util.Base64
 import java.nio.charset.CharsetEncoder
 import java.nio.charset.StandardCharsets
 
@@ -400,226 +401,239 @@ class SaleController @Inject() (
           sys.env.get("ERGO_EXPLORER").get
         )
         try {
-          Ok(
-            Json.toJson(
-              MUnsignedTransaction(
-                ergoClient.execute(
-                  new java.util.function.Function[
-                    BlockchainContext,
-                    UnsignedTransaction
-                  ] {
-                    override def apply(
-                        ctx: BlockchainContext
-                    ): UnsignedTransaction = {
-                      val totalPrices = new HashMap[String, Long]()
-                      val buyOrderBoxes =
-                        buyOrder.requests.flatMap((bsr: BuySaleRequest) => {
-                          bsr.packRequests.flatMap(bpr => {
-                            val packPrice = Await.result(
-                              salesdao.getPrice(bpr.packId),
-                              Duration.Inf
-                            )
+          val unsigned = ergoClient.execute(
+            new java.util.function.Function[
+              BlockchainContext,
+              UnsignedTransaction
+            ] {
+              override def apply(
+                  ctx: BlockchainContext
+              ): UnsignedTransaction = {
+                val totalPrices = new HashMap[String, Long]()
+                val buyOrderBoxes =
+                  buyOrder.requests.flatMap((bsr: BuySaleRequest) => {
+                    bsr.packRequests.flatMap(bpr => {
+                      val packPrice = Await.result(
+                        salesdao.getPrice(bpr.packId),
+                        Duration.Inf
+                      )
 
-                            val combinedPackPrice = new HashMap[String, Long]()
-                            packPrice.foreach(p =>
-                              combinedPackPrice.put(
+                      val combinedPackPrice = new HashMap[String, Long]()
+                      packPrice.foreach(p =>
+                        combinedPackPrice.put(
+                          p.tokenId,
+                          p.amount + combinedPackPrice.getOrElse(
+                            p.tokenId,
+                            0L
+                          )
+                        )
+                      )
+
+                      val derivedPrices =
+                        DerivedPrice.fromPrice(
+                          packPrice,
+                          ctx.getHeight(),
+                          ctx.getDataSource(),
+                          cruxClient
+                        )
+
+                      val combinedDerivedPrices =
+                        derivedPrices.map(dp => {
+                          val combinedDerivedPrice =
+                            new HashMap[String, Long]()
+                          dp.foreach(p => {
+                            combinedDerivedPrice.put(
+                              p.tokenId,
+                              p.amount + combinedDerivedPrice.getOrElse(
                                 p.tokenId,
-                                p.amount + combinedPackPrice.getOrElse(
-                                  p.tokenId,
-                                  0L
-                                )
+                                0L
                               )
                             )
-
-                            val derivedPrices =
-                              DerivedPrice.fromPrice(
-                                packPrice,
-                                ctx.getHeight(),
-                                ctx.getDataSource(),
-                                cruxClient
-                              )
-
-                            val combinedDerivedPrices =
-                              derivedPrices.map(dp => {
-                                val combinedDerivedPrice =
-                                  new HashMap[String, Long]()
-                                dp.foreach(p => {
-                                  combinedDerivedPrice.put(
-                                    p.tokenId,
-                                    p.amount + combinedDerivedPrice.getOrElse(
-                                      p.tokenId,
-                                      0L
-                                    )
-                                  )
-                                })
-                                combinedDerivedPrice
-                              })
-
-                            val potentialPrices =
-                              Array(combinedPackPrice) ++ combinedDerivedPrices
-
-                            val selectedPrice = potentialPrices
-                              .find(pp => pp.get(bpr.currencyTokenId).isDefined)
-                              .get
-
-                            scala.collection.immutable
-                              .Range(0, bpr.count)
-                              .map(i => {
-
-                                val boxValue =
-                                  selectedPrice
-                                    .getOrElse("0" * 64, 0L) + 10000000L
-
-                                totalPrices.put(
-                                  "0" * 64,
-                                  boxValue + totalPrices.getOrElse("0" * 64, 0L)
-                                )
-                                val outBoxBuilder = ctx
-                                  .newTxBuilder()
-                                  .outBoxBuilder()
-                                  .registers(
-                                    ErgoValueBuilder.buildFor(
-                                      Colls.fromArray(
-                                        bsr.saleId
-                                          .toString()
-                                          .getBytes(StandardCharsets.UTF_8)
-                                      )
-                                    ),
-                                    ErgoValueBuilder.buildFor(
-                                      Colls.fromArray(
-                                        bpr.packId
-                                          .toString()
-                                          .getBytes(StandardCharsets.UTF_8)
-                                      )
-                                    ),
-                                    ErgoValueBuilder.buildFor(
-                                      Colls.fromArray(
-                                        Address
-                                          .create(buyOrder.targetAddress)
-                                          .toPropositionBytes()
-                                      )
-                                    ),
-                                    ErgoValueBuilder.buildFor(
-                                      Colls.fromArray(
-                                        UUID
-                                          .randomUUID()
-                                          .toString()
-                                          .getBytes(StandardCharsets.UTF_8)
-                                      )
-                                    )
-                                  )
-                                  .contract(
-                                    new ErgoTreeContract(
-                                      BuyOrder.contract(buyOrder.userWallet(0)),
-                                      NetworkType.MAINNET
-                                    )
-                                  )
-                                  .value(boxValue)
-                                if (
-                                  !bpr.currencyTokenId
-                                    .equals("0" * 64) || selectedPrice.size > 1
-                                ) {
-                                  val tokens = selectedPrice
-                                    .filter(sp => !sp._1.equals("0" * 64))
-                                    .map(sp => new ErgoToken(sp._1, sp._2))
-                                    .toArray
-                                  tokens.foreach(t =>
-                                    totalPrices.put(
-                                      t.getId.toString,
-                                      t.getValue + totalPrices
-                                        .getOrElse(t.getId.toString, 0L)
-                                    )
-                                  )
-                                  outBoxBuilder
-                                    .tokens(
-                                      tokens: _*
-                                    )
-                                    .build()
-                                } else
-                                  outBoxBuilder.build()
-                              })
                           })
+                          combinedDerivedPrice
                         })
 
-                      val boxesLoader = new ExplorerAndPoolUnspentBoxesLoader()
-                        .withAllowChainedTx(true)
+                      val potentialPrices =
+                        Array(combinedPackPrice) ++ combinedDerivedPrices
 
-                      val boxOperations = BoxOperations
-                        .createForSenders(
-                          buyOrder.userWallet
-                            .map(Address.create(_))
-                            .toList
-                            .asJava,
-                          ctx
-                        )
-                        .withInputBoxesLoader(boxesLoader)
-                        .withMaxInputBoxesToSelect(100)
-                        .withFeeAmount(1000000L)
-                        .withAmountToSpend(totalPrices.get("0" * 64).get)
+                      val selectedPrice = potentialPrices
+                        .find(pp => pp.get(bpr.currencyTokenId).isDefined)
+                        .get
 
-                      if (totalPrices.size > 1)
-                        boxOperations.withTokensToSpend(
-                          totalPrices
-                            .filterNot(_._1 == "0" * 64)
-                            .map((kv: (String, Long)) =>
-                              new ErgoToken(kv._1, kv._2)
-                            )
-                            .toList
-                            .asJava
-                        )
+                      scala.collection.immutable
+                        .Range(0, bpr.count)
+                        .map(i => {
 
-                      val unsigned =
-                        boxOperations.buildTxWithDefaultInputs(tb =>
-                          tb.addOutputs(buyOrderBoxes: _*)
-                        )
+                          val boxValue =
+                            selectedPrice
+                              .getOrElse("0" * 64, 0L) + 10000000L
 
-                      buyOrderBoxes.foreach(bob => {
-                        Await.result(
-                          salesdao.newTokenOrder(
-                            UUID.fromString(
-                              new String(
-                                bob
-                                  .getRegisters()
-                                  .get(3)
-                                  .getValue()
-                                  .asInstanceOf[Coll[Byte]]
-                                  .toArray,
-                                StandardCharsets.UTF_8
-                              )
-                            ),
-                            buyOrder.targetAddress,
-                            UUID.fromString(
-                              new String(
-                                bob
-                                  .getRegisters()
-                                  .get(0)
-                                  .getValue()
-                                  .asInstanceOf[Coll[Byte]]
-                                  .toArray,
-                                StandardCharsets.UTF_8
-                              )
-                            ),
-                            UUID.fromString(
-                              new String(
-                                bob
-                                  .getRegisters()
-                                  .get(1)
-                                  .getValue()
-                                  .asInstanceOf[Coll[Byte]]
-                                  .toArray,
-                                StandardCharsets.UTF_8
+                          totalPrices.put(
+                            "0" * 64,
+                            boxValue + totalPrices.getOrElse("0" * 64, 0L)
+                          )
+                          val outBoxBuilder = ctx
+                            .newTxBuilder()
+                            .outBoxBuilder()
+                            .registers(
+                              ErgoValueBuilder.buildFor(
+                                Colls.fromArray(
+                                  bsr.saleId
+                                    .toString()
+                                    .getBytes(StandardCharsets.UTF_8)
+                                )
+                              ),
+                              ErgoValueBuilder.buildFor(
+                                Colls.fromArray(
+                                  bpr.packId
+                                    .toString()
+                                    .getBytes(StandardCharsets.UTF_8)
+                                )
+                              ),
+                              ErgoValueBuilder.buildFor(
+                                Colls.fromArray(
+                                  Address
+                                    .create(buyOrder.targetAddress)
+                                    .toPropositionBytes()
+                                )
+                              ),
+                              ErgoValueBuilder.buildFor(
+                                Colls.fromArray(
+                                  UUID
+                                    .randomUUID()
+                                    .toString()
+                                    .getBytes(StandardCharsets.UTF_8)
+                                )
                               )
                             )
-                          ),
-                          Duration.Inf
-                        )
-                      })
+                            .contract(
+                              new ErgoTreeContract(
+                                BuyOrder.contract(buyOrder.userWallet(0)),
+                                NetworkType.MAINNET
+                              )
+                            )
+                            .value(boxValue)
+                          if (
+                            !bpr.currencyTokenId
+                              .equals("0" * 64) || selectedPrice.size > 1
+                          ) {
+                            val tokens = selectedPrice
+                              .filter(sp => !sp._1.equals("0" * 64))
+                              .map(sp => new ErgoToken(sp._1, sp._2))
+                              .toArray
+                            tokens.foreach(t =>
+                              totalPrices.put(
+                                t.getId.toString,
+                                t.getValue + totalPrices
+                                  .getOrElse(t.getId.toString, 0L)
+                              )
+                            )
+                            outBoxBuilder
+                              .tokens(
+                                tokens: _*
+                              )
+                              .build()
+                          } else
+                            outBoxBuilder.build()
+                        })
+                    })
+                  })
 
-                      unsigned
-                    }
-                  }
-                )
-              )
+                val boxesLoader = new ExplorerAndPoolUnspentBoxesLoader()
+                  .withAllowChainedTx(true)
+
+                val boxOperations = BoxOperations
+                  .createForSenders(
+                    buyOrder.userWallet
+                      .map(Address.create(_))
+                      .toList
+                      .asJava,
+                    ctx
+                  )
+                  .withInputBoxesLoader(boxesLoader)
+                  .withMaxInputBoxesToSelect(100)
+                  .withFeeAmount(1000000L)
+                  .withAmountToSpend(totalPrices.get("0" * 64).get)
+
+                if (totalPrices.size > 1)
+                  boxOperations.withTokensToSpend(
+                    totalPrices
+                      .filterNot(_._1 == "0" * 64)
+                      .map((kv: (String, Long)) => new ErgoToken(kv._1, kv._2))
+                      .toList
+                      .asJava
+                  )
+
+                val unsigned =
+                  boxOperations.buildTxWithDefaultInputs(tb =>
+                    tb.addOutputs(buyOrderBoxes: _*)
+                  )
+
+                buyOrderBoxes.foreach(bob => {
+                  Await.result(
+                    salesdao.newTokenOrder(
+                      UUID.fromString(
+                        new String(
+                          bob
+                            .getRegisters()
+                            .get(3)
+                            .getValue()
+                            .asInstanceOf[Coll[Byte]]
+                            .toArray,
+                          StandardCharsets.UTF_8
+                        )
+                      ),
+                      buyOrder.targetAddress,
+                      UUID.fromString(
+                        new String(
+                          bob
+                            .getRegisters()
+                            .get(0)
+                            .getValue()
+                            .asInstanceOf[Coll[Byte]]
+                            .toArray,
+                          StandardCharsets.UTF_8
+                        )
+                      ),
+                      UUID.fromString(
+                        new String(
+                          bob
+                            .getRegisters()
+                            .get(1)
+                            .getValue()
+                            .asInstanceOf[Coll[Byte]]
+                            .toArray,
+                          StandardCharsets.UTF_8
+                        )
+                      )
+                    ),
+                    Duration.Inf
+                  )
+                })
+
+                unsigned
+              }
+            }
+          )
+          val reduced = ergoClient.execute(
+            new java.util.function.Function[
+              BlockchainContext,
+              String
+            ] {
+              override def apply(
+                  ctx: BlockchainContext
+              ): String = {
+                Base64
+                  .getUrlEncoder()
+                  .encodeToString(
+                    ctx.newProverBuilder().build().reduce(unsigned, 0).toBytes()
+                  )
+              }
+            }
+          )
+          Ok(
+            Json.toJson(
+              MUnsignedTransactionResponse(MUnsignedTransaction(unsigned), reduced)
             )
           )
         } catch {
