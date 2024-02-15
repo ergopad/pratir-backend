@@ -459,6 +459,7 @@ class SaleController @Inject() (
                       val selectedPrice = potentialPrices
                         .find(pp => pp.get(bpr.currencyTokenId).isDefined)
                         .get
+                        .filter(p => p._2 > 0L)
 
                       scala.collection.immutable
                         .Range(0, bpr.count)
@@ -633,7 +634,10 @@ class SaleController @Inject() (
           )
           Ok(
             Json.toJson(
-              MUnsignedTransactionResponse(MUnsignedTransaction(unsigned), reduced)
+              MUnsignedTransactionResponse(
+                MUnsignedTransaction(unsigned),
+                reduced
+              )
             )
           )
         } catch {
