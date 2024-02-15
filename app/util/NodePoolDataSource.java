@@ -79,10 +79,17 @@ public class NodePoolDataSource {
 			offset = 0;
 			foundAll = false;
 
-			Triplet<List<String>, List<InputBox>, List<Transaction>> partialMempool = NodePoolDataSource
-					.getMempoolBoxesFor(address, offset, 1000, ds);
-			unconfirmed.addAll(partialMempool.getValue1());
-			spent.addAll(partialMempool.getValue0());
+			while (!foundAll) {
+
+				Triplet<List<String>, List<InputBox>, List<Transaction>> partialMempool = NodePoolDataSource
+						.getMempoolBoxesFor(address, offset, 100, ds);
+				unconfirmed.addAll(partialMempool.getValue1());
+				spent.addAll(partialMempool.getValue0());
+				if (partialMempool.getValue2().size() >= 100)
+					offset += 100;
+				else
+					foundAll = true;
+			}
 
 			confirmed.removeIf(ib -> spent.contains(ib.getId().toString()));
 			unconfirmed.removeIf(ib -> spent.contains(ib.getId().toString()));
