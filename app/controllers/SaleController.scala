@@ -231,10 +231,21 @@ class SaleController @Inject() (
         }
         Ok(
           Json.toJson(
-            GetPackTokensResponse(
-              packTokens =
-                userBalance._2.keySet.filter(packTokens.contains(_)).toSeq
-            )
+            userBalance._2
+              .filter(token => packTokens.contains(token._1))
+              .map(pt => {
+                val packTokenInfo =
+                  Await
+                    .result(salesdao.getSaleForPackToken(pt._1), Duration.Inf)(
+                      0
+                    )
+                GetPackTokensResponse(
+                  saleId = packTokenInfo._1,
+                  packId = packTokenInfo._2,
+                  packToken = pt._1,
+                  amount = pt._2
+                )
+              })
           )
         )
     }

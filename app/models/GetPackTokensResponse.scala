@@ -4,7 +4,10 @@ import play.api.libs.json.Json
 import java.util.UUID
 
 final case class GetPackTokensResponse(
-    packTokens: Seq[String]
+    saleId: UUID,
+    packId: UUID,
+    packToken: String,
+    amount: Long
 )
 
 object GetPackTokensResponse {
