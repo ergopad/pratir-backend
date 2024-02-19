@@ -9,6 +9,7 @@ import play.api.cache.AsyncCacheApi
 import java.util.concurrent.TimeUnit
 import play.api.cache.SyncCacheApi
 import org.ergoplatform.appkit.BlockchainDataSource
+import play.api.libs.json.JsValue
 
 final case class PriceStats(
     decimals: Int,
@@ -50,7 +51,38 @@ class CruxClient @Inject() (ws: WSClient, cache: SyncCacheApi) {
     })
   }
 
-  def heightToTimestamp(height: Int, dataSource: BlockchainDataSource): Long = {
+  def getTokensFromFollowUp(
+      orderBoxId: String,
+      followUpTxId: String
+  ): Seq[(String, Long)] = {
+    val followUpTx = cache.getOrElseUpdate(followUpTxId, cacheExpire)({
+      val request = ws
+        .url(
+          sys.env
+            .get("ERGO_NODE")
+            .get + "/blockchain/transaction/byId/" + followUpTxId
+        )
+        .get()
+      val response = Await.result(request, Duration.Inf)
+      response
+    })
+    val inputs = followUpTx.json.\("inputs").get.as[Seq[JsValue]]
+    val orderBoxIndex =
+      Range(0, inputs.length).toSeq.find(i =>
+        orderBoxId.equals(inputs(i)("boxId").as[String])
+      )
+    orderBoxIndex match {
+      case None => Seq()
+      case Some(value) =>
+        val outputAssets =
+          followUpTx.json("outputs")(value)("assets").as[Seq[JsValue]]
+        outputAssets.map(oa =>
+          (oa("tokenId").as[String], oa("amount").as[Long])
+        )
+    }
+  }
+
+  def heightToTimestamp(height: Int): Long = {
     cache.getOrElseUpdate(height.toString())({
       val request = ws
         .url(sys.env.get("ERGO_NODE").get + "/blocks/chainSlice")

@@ -28,7 +28,6 @@ object DerivedPrice {
   def fromPrice(
       prices: Seq[Price],
       height: Int,
-      dataSource: BlockchainDataSource,
       cruxClient: CruxClient,
       buffer: Double = 0.0
   ): Array[Array[DerivedPrice]] = {
@@ -39,7 +38,7 @@ object DerivedPrice {
             .filter(p => !p.tokenId.equals(price.tokenId))
             .map(p => DerivedPrice(p.id, p.tokenId, p.amount, p.packId))
           val currentTime =
-            cruxClient.heightToTimestamp(height, dataSource) / 1000;
+            cruxClient.heightToTimestamp(height) / 1000;
           val timeWindow = 12 * 3600;
           val baseTokenPrice =
             cruxClient.get_price_stats(price.tokenId, currentTime, timeWindow);

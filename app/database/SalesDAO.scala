@@ -189,7 +189,7 @@ class SalesDAO @Inject() (
       withoutDerived.map(pf => {
         pf.copy(derivedPrice =
           Some(
-            DerivedPrice.fromPrice(pf.price, height, dataSource, cruxClient)
+            DerivedPrice.fromPrice(pf.price, height, cruxClient)
           )
         )
       })
@@ -330,7 +330,9 @@ class SalesDAO @Inject() (
 
   def getTokenOrderHistory(
       addresses: Seq[String],
-      salesOpt: Option[Seq[UUID]]
+      salesOpt: Option[Seq[UUID]],
+      offset: Int,
+      limit: Int
   ): Future[Seq[TokenOrder]] = {
     val query = TokenOrders.tokenOrders
       .filter(_.userWallet.inSet(addresses))
@@ -339,6 +341,8 @@ class SalesDAO @Inject() (
       )
       .filterNot(_.status === TokenOrderStatus.INITIALIZED)
       .sortBy(_.createdAt.desc)
+      .drop(offset)
+      .take(limit)
       .result
     db.run(query)
   }

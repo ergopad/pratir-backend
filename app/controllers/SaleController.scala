@@ -447,11 +447,20 @@ class SaleController @Inject() (
       case None => BadRequest
       case Some(value) =>
         val orders = Await.result(
-          salesdao.getTokenOrderHistory(value.addresses, value.sales),
+          salesdao.getTokenOrderHistory(
+            value.addresses,
+            value.sales,
+            value.offset,
+            value.limit
+          ),
           Duration.Inf
         )
         Ok(
-          Json.toJson(orders.map(to => GetBuyOrdersResponse.fromTokenOrder(to)))
+          Json.toJson(
+            orders.map(to =>
+              GetBuyOrdersResponse.fromTokenOrder(to, cruxClient)
+            )
+          )
         )
     }
   }
@@ -505,7 +514,6 @@ class SaleController @Inject() (
                         DerivedPrice.fromPrice(
                           packPrice,
                           ctx.getHeight(),
-                          ctx.getDataSource(),
                           cruxClient
                         )
 

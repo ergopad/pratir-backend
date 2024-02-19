@@ -3,6 +3,7 @@ package models
 import play.api.libs.json.Json
 import java.util.UUID
 import java.time.Instant
+import util.CruxClient
 
 final case class GetBuyOrdersResponse(
     id: UUID,
@@ -20,7 +21,20 @@ final case class GetBuyOrdersResponse(
 object GetBuyOrdersResponse {
   implicit val json = Json.format[GetBuyOrdersResponse]
 
-  def fromTokenOrder(tokenOrder: TokenOrder): GetBuyOrdersResponse = {
+  def fromTokenOrder(
+      tokenOrder: TokenOrder,
+      cruxClient: CruxClient
+  ): GetBuyOrdersResponse = {
+    val tokensBought = if (
+      tokenOrder.status == TokenOrderStatus.FULLFILLING || tokenOrder.status == TokenOrderStatus.FULLFILLED
+    ) {
+      cruxClient.getTokensFromFollowUp(
+        tokenOrder.orderBoxId,
+        tokenOrder.followUpTxId
+      )
+    } else {
+      Seq()
+    }
     GetBuyOrdersResponse(
       id = tokenOrder.id,
       userAddress = tokenOrder.userAddress,
@@ -28,7 +42,7 @@ object GetBuyOrdersResponse {
       packId = tokenOrder.packId,
       orderBoxId = tokenOrder.orderBoxId,
       followUpTxId = tokenOrder.followUpTxId,
-      tokensBought = Seq(),
+      tokensBought = tokensBought,
       status = tokenOrder.status,
       created_at = tokenOrder.created_at,
       updated_at = tokenOrder.updated_at

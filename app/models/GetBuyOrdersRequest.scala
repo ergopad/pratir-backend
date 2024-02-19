@@ -5,7 +5,9 @@ import java.util.UUID
 
 final case class GetBuyOrdersRequest(
     addresses: Seq[String],
-    sales: Option[Seq[UUID]]
+    sales: Option[Seq[UUID]],
+    offset: Int,
+    limit: Int
 )
 
 object GetBuyOrdersRequest {

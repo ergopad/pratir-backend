@@ -24,8 +24,7 @@ object PackFull {
   def apply(
       p: Pack,
       salesdao: SalesDAO,
-      height: Int = -1,
-      dataSource: BlockchainDataSource = null
+      height: Int = -1
   ): PackFull = {
     val price = Await.result(salesdao.getPrice(p.id), Duration.Inf)
     val content = Await.result(salesdao.getPackEntries(p.id), Duration.Inf)
@@ -46,7 +45,7 @@ object PackFull {
     val derivedPrices =
       if (height >= 0)
         Some(
-          DerivedPrice.fromPrice(price, height, dataSource, salesdao.cruxClient)
+          DerivedPrice.fromPrice(price, height, salesdao.cruxClient)
         )
       else None
     PackFull(

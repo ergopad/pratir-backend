@@ -166,8 +166,7 @@ final case class TokenOrder(
       val fullPack = PackFull(
         pack,
         salesdao,
-        orderBox.getCreationHeight(),
-        ergoClient.getDataSource()
+        orderBox.getCreationHeight()
       )
       val packPrice = fullPack.price
 
