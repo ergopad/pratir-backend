@@ -215,6 +215,22 @@ class SalesDAO @Inject() (
     db.run(query)
   }
 
+  def getPackTokens(): Future[Seq[String]] = {
+    val query =
+      Prices.prices.filter(_.amount <= 1L).map(_.tokenId).distinct.result
+    db.run(query)
+  }
+
+  def getPackTokensForSale(sale_id: UUID): Future[Seq[String]] = {
+    val query = Prices.prices
+      .filter(_.pack.filter(_.saleId === sale_id).exists)
+      .filter(_.amount <= 1L)
+      .map(_.tokenId)
+      .distinct
+      .result
+    db.run(query)
+  }
+
   def injectPackTokenId(
       packPlaceHolder: String,
       tokenId: String,

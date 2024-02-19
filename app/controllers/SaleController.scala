@@ -48,6 +48,8 @@ import database._
 import models._
 import org.ergoplatform.appkit.RestApiErgoClient
 import play.api.Logging
+import org.ergoplatform.appkit.impl.NodeDataSourceImpl
+import cats.instances.duration
 
 @Singleton
 class SaleController @Inject() (
@@ -190,6 +192,51 @@ class SaleController @Inject() (
           )
         )
 
+    }
+  }
+
+  def getUserPacks() = Action { implicit request =>
+    val content = request.body
+    val jsonObject = content.asJson
+    val getPackTokensRequestJson =
+      Json.fromJson[GetPackTokensRequest](jsonObject.get)
+
+    val ergoClient = RestApiErgoClient.create(
+      sys.env.get("ERGO_NODE").get,
+      NetworkType.MAINNET,
+      "",
+      sys.env.get("ERGO_EXPLORER").get
+    )
+
+    getPackTokensRequestJson match {
+      case je: JsError => BadRequest(JsError.toJson(je))
+      case js: JsSuccess[GetPackTokensRequest] =>
+        val getPackTokensRequest = js.value
+        val userBalance = Pratir.balance(
+          getPackTokensRequest.addresses.flatMap(address =>
+            NodePoolDataSource
+              .getAllUnspentBoxesFor(
+                Address.create(address),
+                ergoClient.getDataSource().asInstanceOf[NodeDataSourceImpl]
+              )
+              .asScala
+          )
+        )
+        val packTokens = getPackTokensRequest.sales match {
+          case None => Await.result(salesdao.getPackTokens(), Duration.Inf)
+          case Some(sales) =>
+            sales.flatMap(s =>
+              Await.result(salesdao.getPackTokensForSale(s), Duration.Inf)
+            )
+        }
+        Ok(
+          Json.toJson(
+            GetPackTokensResponse(
+              packTokens =
+                userBalance._2.keySet.filter(packTokens.contains(_)).toSeq
+            )
+          )
+        )
     }
   }
 
