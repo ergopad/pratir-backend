@@ -328,9 +328,16 @@ class SalesDAO @Inject() (
     db.run(query)
   }
 
-  def getTokenOrderHistory(address: String): Future[Seq[TokenOrder]] = {
+  def getTokenOrderHistory(
+      addresses: Seq[String],
+      salesOpt: Option[Seq[UUID]]
+  ): Future[Seq[TokenOrder]] = {
     val query = TokenOrders.tokenOrders
-      .filter(_.userWallet === address)
+      .filter(_.userWallet.inSet(addresses))
+      .filterOpt(salesOpt)((tokenOrder, sales) =>
+        tokenOrder.saleId.inSet(sales)
+      )
+      .filterNot(_.status === TokenOrderStatus.INITIALIZED)
       .sortBy(_.createdAt.desc)
       .result
     db.run(query)

@@ -436,10 +436,24 @@ class SaleController @Inject() (
     }
   }
 
-  def getBuyOrders(address: String): Action[AnyContent] = Action.async {
-    implicit request =>
-      val orders = salesdao.getTokenOrderHistory(address)
-      orders.map(o => Ok(Json.toJson(o)))
+  def getBuyOrders() = Action { implicit request =>
+    val content = request.body
+    val jsonObject = content.asJson
+    val getBuyOrdersOpt: Option[GetBuyOrdersRequest] =
+      jsonObject.flatMap(
+        Json.fromJson[GetBuyOrdersRequest](_).asOpt
+      )
+    getBuyOrdersOpt match {
+      case None => BadRequest
+      case Some(value) =>
+        val orders = Await.result(
+          salesdao.getTokenOrderHistory(value.addresses, value.sales),
+          Duration.Inf
+        )
+        Ok(
+          Json.toJson(orders.map(to => GetBuyOrdersResponse.fromTokenOrder(to)))
+        )
+    }
   }
 
   def buyOrder() = Action { implicit request =>
