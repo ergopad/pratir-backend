@@ -28,7 +28,7 @@ POST    /sale/bootstrap                 controllers.SaleController.bootstrapSale
 POST    /sale/highlight                 controllers.SaleController.highlightSale()
 POST    /sale/highlight/delete          controllers.SaleController.removeSaleFromHighlights()
 POST    /sale/packtokens                controllers.SaleController.getUserPacks
-GET     /order/:address                 controllers.SaleController.getBuyOrders(address: String)
+POST    /order/history                  controllers.SaleController.getBuyOrders
 POST    /order                          controllers.SaleController.buyOrder()
 
 # User Controller
