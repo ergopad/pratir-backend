@@ -1,76 +1,54 @@
 # Routes
-
 # This file defines all application routes (Higher priority routes first)
-
 # https://www.playframework.com/documentation/latest/ScalaRouting
-
 # ~~~~
 
 # Ping Controller
-
-GET /ping controllers.PingController.ping()
+GET     /ping                           controllers.PingController.ping()
 
 # Sale Controller
-
-### 
-
-# summary: Get all sales
-
-# tags:
-
-# - Sale endpoints
-
-# responses:
-
-# 200:
-
-# description: success
-
-# schema:
-
-# type: array
-
-# items:
-
-# $ref: '#/definitions/models.SaleLite'
-
-### 
-
-GET /sale controllers.SaleController.getAllFiltered(status: Option[String] ?=
-None, address: Option[String] ?= None) GET /sale/highlight
-controllers.SaleController.getAllHighlighted() GET /sale/:saleId
-controllers.SaleController.getSale(saleId: String) POST /sale
-controllers.SaleController.createSale() POST /sale/filtered
-controllers.SaleController.getAllFilteredMulti(status: Option[String] ?= None)
-POST /sale/bootstrap controllers.SaleController.bootstrapSale() POST
-/sale/highlight controllers.SaleController.highlightSale() POST
-/sale/highlight/delete controllers.SaleController.removeSaleFromHighlights()
-POST /sale/packtokens controllers.SaleController.getUserPacks GET
-/order/:address controllers.SaleController.getBuyOrders(address: String) POST
-/order controllers.SaleController.buyOrder()
+###
+#  summary: Get all sales
+#  tags:
+#    - Sale endpoints
+#  responses:
+#    200:
+#      description: success
+#      schema:
+#        type: array
+#        items:
+#          $ref: '#/definitions/models.SaleLite'
+###
+GET     /sale                           controllers.SaleController.getAllFiltered(status: Option[String] ?= None, address: Option[String] ?= None)
+GET     /sale/highlight                 controllers.SaleController.getAllHighlighted()
+GET     /sale/:saleId                   controllers.SaleController.getSale(saleId: String)
+POST    /sale                           controllers.SaleController.createSale()
+POST    /sale/filtered                  controllers.SaleController.getAllFilteredMulti(status: Option[String] ?= None)
+POST    /sale/bootstrap                 controllers.SaleController.bootstrapSale()
+POST    /sale/highlight                 controllers.SaleController.highlightSale()
+POST    /sale/highlight/delete          controllers.SaleController.removeSaleFromHighlights()
+POST    /sale/packtokens                controllers.SaleController.getUserPacks
+GET     /order/:address                 controllers.SaleController.getBuyOrders(address: String)
+POST    /order                          controllers.SaleController.buyOrder()
 
 # User Controller
+GET     /user                           controllers.UserController.getAll()
+GET     /user/:address                  controllers.UserController.getUser(address: String)
+POST    /user                           controllers.UserController.updateUser()
 
-GET /user controllers.UserController.getAll() GET /user/:address
-controllers.UserController.getUser(address: String) POST /user
-controllers.UserController.updateUser()
+POST    /auth                           controllers.UserController.auth()
+POST    /auth/:verificationId           controllers.UserController.verify(verificationId: String)
 
-POST /auth controllers.UserController.auth() POST /auth/:verificationId
-controllers.UserController.verify(verificationId: String)
-
-POST /upload_file controllers.UserController.uploadFile()
+POST    /upload_file                    controllers.UserController.uploadFile()
 
 # Mint Controller
+GET     /collection                     controllers.MintController.getAllCollectionsFiltered(address: Option[String] ?= None)
+GET     /collection/:collectionId       controllers.MintController.getCollection(collectionId: String)
+POST    /collection                     controllers.MintController.createCollection()
+GET     /collection/:collectionId/mint  controllers.MintController.mintCollection(collectionId: String)
 
-GET /collection controllers.MintController.getAllCollectionsFiltered(address:
-Option[String] ?= None) GET /collection/:collectionId
-controllers.MintController.getCollection(collectionId: String) POST /collection
-controllers.MintController.createCollection() GET /collection/:collectionId/mint
-controllers.MintController.mintCollection(collectionId: String)
-
-POST /nft controllers.MintController.createNFTs() POST /nft/upload_file
-controllers.MintController.uploadFile()
+POST    /nft                            controllers.MintController.createNFTs()
+POST    /nft/upload_file                controllers.MintController.uploadFile()
 
 # Assets
-
-GET /assets/*file controllers.Assets.at(file)
+GET     /assets/*file                   controllers.Assets.at(file)
