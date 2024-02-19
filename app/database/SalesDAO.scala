@@ -242,7 +242,7 @@ class SalesDAO @Inject() (
         )
       )
       .map(p => (p.saleId, p.id))
-      .take(0)
+      .take(1)
       .result
     db.run(query)
   }
