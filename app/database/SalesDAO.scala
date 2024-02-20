@@ -331,6 +331,7 @@ class SalesDAO @Inject() (
   def getTokenOrderHistory(
       addresses: Seq[String],
       salesOpt: Option[Seq[UUID]],
+      ordersOpt: Option[Seq[UUID]],
       offset: Int,
       limit: Int
   ): Future[Seq[TokenOrder]] = {
@@ -339,6 +340,7 @@ class SalesDAO @Inject() (
       .filterOpt(salesOpt)((tokenOrder, sales) =>
         tokenOrder.saleId.inSet(sales)
       )
+      .filterOpt(ordersOpt)((tokenOrder, orders) => tokenOrder.id.inSet(orders))
       .filterNot(_.status === TokenOrderStatus.INITIALIZED)
       .sortBy(_.createdAt.desc)
       .drop(offset)

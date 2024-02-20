@@ -450,6 +450,7 @@ class SaleController @Inject() (
           salesdao.getTokenOrderHistory(
             value.addresses,
             value.sales,
+            value.orders,
             value.offset,
             value.limit
           ),
@@ -482,14 +483,14 @@ class SaleController @Inject() (
           sys.env.get("ERGO_EXPLORER").get
         )
         try {
-          val unsigned = ergoClient.execute(
+          val (unsigned, orders) = ergoClient.execute(
             new java.util.function.Function[
               BlockchainContext,
-              UnsignedTransaction
+              (UnsignedTransaction, Seq[BuySaleResponse])
             ] {
               override def apply(
                   ctx: BlockchainContext
-              ): UnsignedTransaction = {
+              ): (UnsignedTransaction, Seq[BuySaleResponse]) = {
                 val totalPrices = new HashMap[String, Long]()
                 val buyOrderBoxes =
                   buyOrder.requests.flatMap((bsr: BuySaleRequest) => {
@@ -650,49 +651,57 @@ class SaleController @Inject() (
                     tb.addOutputs(buyOrderBoxes: _*)
                   )
 
-                buyOrderBoxes.foreach(bob => {
+                val orders = buyOrderBoxes.map(bob => {
+                  BuySaleResponse(
+                    saleId = UUID.fromString(
+                      new String(
+                        bob
+                          .getRegisters()
+                          .get(0)
+                          .getValue()
+                          .asInstanceOf[Coll[Byte]]
+                          .toArray,
+                        StandardCharsets.UTF_8
+                      )
+                    ),
+                    packId = UUID.fromString(
+                      new String(
+                        bob
+                          .getRegisters()
+                          .get(1)
+                          .getValue()
+                          .asInstanceOf[Coll[Byte]]
+                          .toArray,
+                        StandardCharsets.UTF_8
+                      )
+                    ),
+                    orderId = UUID.fromString(
+                      new String(
+                        bob
+                          .getRegisters()
+                          .get(3)
+                          .getValue()
+                          .asInstanceOf[Coll[Byte]]
+                          .toArray,
+                        StandardCharsets.UTF_8
+                      )
+                    )
+                  )
+                })
+
+                orders.foreach(bob => {
                   Await.result(
                     salesdao.newTokenOrder(
-                      UUID.fromString(
-                        new String(
-                          bob
-                            .getRegisters()
-                            .get(3)
-                            .getValue()
-                            .asInstanceOf[Coll[Byte]]
-                            .toArray,
-                          StandardCharsets.UTF_8
-                        )
-                      ),
+                      bob.orderId,
                       buyOrder.targetAddress,
-                      UUID.fromString(
-                        new String(
-                          bob
-                            .getRegisters()
-                            .get(0)
-                            .getValue()
-                            .asInstanceOf[Coll[Byte]]
-                            .toArray,
-                          StandardCharsets.UTF_8
-                        )
-                      ),
-                      UUID.fromString(
-                        new String(
-                          bob
-                            .getRegisters()
-                            .get(1)
-                            .getValue()
-                            .asInstanceOf[Coll[Byte]]
-                            .toArray,
-                          StandardCharsets.UTF_8
-                        )
-                      )
+                      bob.saleId,
+                      bob.packId
                     ),
                     Duration.Inf
                   )
                 })
 
-                unsigned
+                (unsigned, orders)
               }
             }
           )
@@ -714,9 +723,12 @@ class SaleController @Inject() (
           )
           Ok(
             Json.toJson(
-              MUnsignedTransactionResponse(
-                MUnsignedTransaction(unsigned),
-                reduced
+              BuyResponse(
+                unsigned = MUnsignedTransactionResponse(
+                  MUnsignedTransaction(unsigned),
+                  reduced
+                ),
+                orders = orders
               )
             )
           )
