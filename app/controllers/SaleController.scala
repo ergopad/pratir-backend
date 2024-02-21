@@ -459,7 +459,16 @@ class SaleController @Inject() (
         Ok(
           Json.toJson(
             orders.map(to =>
-              GetBuyOrdersResponse.fromTokenOrder(to, cruxClient)
+              GetBuyOrdersResponse.fromTokenOrder(
+                to,
+                Await
+                  .result(
+                    salesdao.getPackTokenForPack(to.packId),
+                    Duration.Inf
+                  )
+                  .headOption,
+                cruxClient
+              )
             )
           )
         )

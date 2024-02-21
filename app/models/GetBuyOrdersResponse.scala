@@ -10,6 +10,7 @@ final case class GetBuyOrdersResponse(
     userAddress: String,
     saleId: UUID,
     packId: UUID,
+    packToken: Option[String],
     orderBoxId: String,
     followUpTxId: String,
     tokensBought: Seq[(String, Long)],
@@ -23,6 +24,7 @@ object GetBuyOrdersResponse {
 
   def fromTokenOrder(
       tokenOrder: TokenOrder,
+      packToken: Option[String],
       cruxClient: CruxClient
   ): GetBuyOrdersResponse = {
     val tokensBought = if (
@@ -40,6 +42,7 @@ object GetBuyOrdersResponse {
       userAddress = tokenOrder.userAddress,
       saleId = tokenOrder.saleId,
       packId = tokenOrder.packId,
+      packToken = packToken,
       orderBoxId = tokenOrder.orderBoxId,
       followUpTxId = tokenOrder.followUpTxId,
       tokensBought = tokensBought,
