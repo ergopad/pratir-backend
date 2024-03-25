@@ -169,48 +169,23 @@ final case class NFT(
                 .build()
           }
 
-          val mintNFTBox = if (rarity.contains("_pt_")) {
-            ctx
-              .newTxBuilder()
-              .outBoxBuilder()
-              .mintToken(
-                new Eip4Token(
-                  issuerBox.getId().toString(),
-                  amount,
-                  name,
-                  description,
-                  0,
-                  ErgoValueBuilder.buildFor(
-                    Colls.fromArray(Array[Byte](1.toByte, 5.toByte))
-                  ),
-                  ErgoValueBuilder.buildFor(Colls.fromArray(hash)),
-                  ErgoValueBuilder.buildFor(
-                    Colls.fromArray(image.getBytes(StandardCharsets.UTF_8))
-                  )
-                )
+          val mintNFTBox = ctx
+            .newTxBuilder()
+            .outBoxBuilder()
+            .mintToken(
+              Eip4TokenBuilder.buildNftPictureToken(
+                issuerBox.getId().toString(),
+                amount,
+                name,
+                description,
+                0,
+                hash,
+                image
               )
-              .value(1000000L)
-              .contract(address(mintdao, salesdao, usersdao).toErgoContract())
-              .build()
-          } else {
-            ctx
-              .newTxBuilder()
-              .outBoxBuilder()
-              .mintToken(
-                Eip4TokenBuilder.buildNftPictureToken(
-                  issuerBox.getId().toString(),
-                  amount,
-                  name,
-                  description,
-                  0,
-                  hash,
-                  image
-                )
-              )
-              .value(1000000L)
-              .contract(address(mintdao, salesdao, usersdao).toErgoContract())
-              .build()
-          }
+            )
+            .value(1000000L)
+            .contract(address(mintdao, salesdao, usersdao).toErgoContract())
+            .build()
 
           ctx
             .newTxBuilder()
