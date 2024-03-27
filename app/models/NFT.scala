@@ -90,7 +90,7 @@ final case class NFT(
           val contentType = uc.getContentType()
           val contentLength = uc.getContentLength()
           if (contentType.startsWith("text/") || contentLength == -1) {
-            throw new IOException("This is not a binary file.")
+            throw new IOException(f"$u is not a binary file.")
           }
           val raw = uc.getInputStream()
           val in = new BufferedInputStream(raw)
