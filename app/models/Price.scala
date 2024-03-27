@@ -53,9 +53,12 @@ object DerivedPrice {
               .map(st => {
                 val derivedTokenPrice =
                   cruxClient.get_price_stats(st, currentTime, timeWindow);
-                val derivedAmount = math.round(
-                  basePriceValue / derivedTokenPrice.avgUsd * math
-                    .pow(10, derivedTokenPrice.decimals)
+                val derivedAmount = math.max(
+                  math.round(
+                    basePriceValue / derivedTokenPrice.avgUsd * math
+                      .pow(10, derivedTokenPrice.decimals)
+                  ),
+                  1L
                 )
                 Array(
                   DerivedPrice(
