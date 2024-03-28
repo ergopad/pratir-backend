@@ -372,6 +372,7 @@ final case class NFT(
               ergoClient
                 .getDataSource()
                 .asInstanceOf[NodeDataSourceImpl],
+              null,
               false
             )
             .asScala

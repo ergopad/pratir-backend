@@ -37,6 +37,8 @@ import play.api.libs.json.JsSuccess
 import org.ergoplatform.appkit.impl.BlockchainContextImpl
 import com.amazonaws.services.batch.model.NodeDetails
 import org.ergoplatform.appkit.impl.NodeDataSourceImpl
+import org.javatuples.Triplet
+import org.ergoplatform.appkit.Transaction
 
 object TokenOrderStatus extends Enumeration {
   type TokenOrderStatus = Value
@@ -62,7 +64,15 @@ final case class TokenOrder(
     created_at: Instant,
     updated_at: Instant
 ) extends Logging {
-  def handleInitialized(ergoClient: ErgoClient, salesdao: SalesDAO): Unit = {
+  def handleInitialized(
+      ergoClient: ErgoClient,
+      salesdao: SalesDAO,
+      mempoolState: Triplet[
+        java.util.List[String],
+        java.util.List[InputBox],
+        java.util.List[Transaction]
+      ]
+  ): Unit = {
     val boxes = NodePoolDataSource
       .getAllUnspentBoxesFor(
         new ErgoTreeContract(
@@ -71,7 +81,8 @@ final case class TokenOrder(
         ).toAddress(),
         ergoClient
           .getDataSource()
-          .asInstanceOf[NodeDataSourceImpl]
+          .asInstanceOf[NodeDataSourceImpl],
+        mempoolState
       )
       .asScala
 
@@ -97,7 +108,12 @@ final case class TokenOrder(
 
   def handleSale(
       ergoClient: ErgoClient,
-      salesdao: SalesDAO
+      salesdao: SalesDAO,
+      mempoolState: Triplet[
+        java.util.List[String],
+        java.util.List[InputBox],
+        java.util.List[Transaction]
+      ]
   ): Option[Fulfillment] = {
     val boxes = NodePoolDataSource
       .getAllUnspentBoxesFor(

@@ -47,6 +47,7 @@ import models.Fulfillment
 import scala.collection.mutable.Buffer
 import scala.collection.mutable.ArrayBuffer
 import models.NFTCollectionStatus
+import _root_.org.ergoplatform.appkit.impl.NodeDataSourceImpl
 
 class UpdateStatusTask @Inject() (
     protected val dbConfigProvider: DatabaseConfigProvider,
@@ -136,6 +137,11 @@ class UpdateStatusTask @Inject() (
 
   def handleOrders(ergoClient: ErgoClient, salesdao: SalesDAO) = {
 
+    val mempoolState =
+      NodePoolDataSource.getMempoolBoxes(
+        ergoClient.getDataSource().asInstanceOf[NodeDataSourceImpl]
+      )
+
     val initializedOrders =
       Await.result(salesdao.getInitializedTokenOrders, Duration.Inf)
 
@@ -145,7 +151,7 @@ class UpdateStatusTask @Inject() (
       try {
         if (oto.status == TokenOrderStatus.INITIALIZED) {
 
-          oto.handleInitialized(ergoClient, salesdao)
+          oto.handleInitialized(ergoClient, salesdao, mempoolState)
 
         }
       } catch {
@@ -161,7 +167,7 @@ class UpdateStatusTask @Inject() (
           oto.status == TokenOrderStatus.CONFIRMING || oto.status == TokenOrderStatus.CONFIRMED
         ) {
 
-          oto.handleSale(ergoClient, salesdao) match {
+          oto.handleSale(ergoClient, salesdao, mempoolState) match {
             case Some(fulfillment) =>
               fulfillments.put(
                 fulfillment.saleId,

@@ -24,6 +24,38 @@ import org.javatuples.Triplet;
 
 public class NodePoolDataSource {
 
+	public static Triplet<List<String>, List<InputBox>, List<Transaction>> getMempoolBoxes(NodeDataSourceImpl ds) {
+		List<String> spentBoxes = new ArrayList<>();
+		List<InputBox> outputBoxes = new ArrayList<>();
+		List<Transaction> allTransactions = new ArrayList<>();
+
+		int offset = 0;
+		int limit = 100;
+		boolean finished = false;
+
+		while (!finished) {
+			List<Transaction> transactions = ds.getUnconfirmedTransactions(offset, limit);
+
+			// now check if we have boxes on the address
+			for (Transaction tx : transactions) {
+				for (String input : tx.getInputBoxesIds()) {
+					spentBoxes.add(input);
+				}
+				Short i = 0;
+				for (OutBox output : tx.getOutputs()) {
+					outputBoxes.add(output.convertToInputWith(tx.getId(), i));
+					i++;
+				}
+				allTransactions.add(tx);
+			}
+			if (transactions.size() < limit) {
+				finished = true;
+			}
+		}
+
+		return Triplet.with(spentBoxes, outputBoxes, allTransactions);
+	}
+
 	public static Triplet<List<String>, List<InputBox>, List<Transaction>> getMempoolBoxesFor(Address address,
 			int offset, int limit, NodeDataSourceImpl ds) {
 		List<String> spentBoxes = new ArrayList<>();
@@ -53,10 +85,16 @@ public class NodePoolDataSource {
 	}
 
 	public static List<InputBox> getAllUnspentBoxesFor(Address address, NodeDataSourceImpl ds) {
-		return NodePoolDataSource.getAllUnspentBoxesFor(address, ds, true);
+		return NodePoolDataSource.getAllUnspentBoxesFor(address, ds, null, true);
 	}
 
-	public static List<InputBox> getAllUnspentBoxesFor(Address address, NodeDataSourceImpl ds, Boolean includeMempool) {
+	public static List<InputBox> getAllUnspentBoxesFor(Address address, NodeDataSourceImpl ds,
+			Triplet<List<String>, List<InputBox>, List<Transaction>> mempoolState) {
+		return NodePoolDataSource.getAllUnspentBoxesFor(address, ds, mempoolState, true);
+	}
+
+	public static List<InputBox> getAllUnspentBoxesFor(Address address, NodeDataSourceImpl ds,
+			Triplet<List<String>, List<InputBox>, List<Transaction>> mempoolState, Boolean includeMempool) {
 
 		List<InputBox> confirmed = new ArrayList<>();
 		boolean foundAll = false;
@@ -74,27 +112,20 @@ public class NodePoolDataSource {
 
 		if (includeMempool) {
 			List<InputBox> unconfirmed = new ArrayList<>();
-			List<String> spent = new ArrayList<>();
+			String ergoTreeHex = address.getErgoAddress().script().bytesHex();
 
-			offset = 0;
-			foundAll = false;
-
-			while (!foundAll) {
-
-				Triplet<List<String>, List<InputBox>, List<Transaction>> partialMempool = NodePoolDataSource
-						.getMempoolBoxesFor(address, offset, 100, ds);
-				unconfirmed.addAll(partialMempool.getValue1());
-				spent.addAll(partialMempool.getValue0());
-				if (partialMempool.getValue2().size() >= 100)
-					offset += 100;
-				else
-					foundAll = true;
+			Triplet<List<String>, List<InputBox>, List<Transaction>> mempool = null;
+			if (mempoolState == null) {
+				mempool = NodePoolDataSource.getMempoolBoxes(ds);
+			} else {
+				mempool = mempoolState;
 			}
-
-			confirmed.removeIf(ib -> spent.contains(ib.getId().toString()));
-			unconfirmed.removeIf(ib -> spent.contains(ib.getId().toString()));
+			unconfirmed.addAll(mempool.getValue1());
+			unconfirmed.removeIf(ib -> !ib.getErgoTree().equals(ergoTreeHex));
+			List<String> spent = mempool.getValue0();
 
 			confirmed.addAll(unconfirmed);
+			confirmed.removeIf(ib -> spent.contains(ib.getId().toString()));
 		}
 
 		return confirmed;
