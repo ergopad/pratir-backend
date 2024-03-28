@@ -342,9 +342,7 @@ class SalesDAO @Inject() (
   def getTokenOrderHistory(
       addresses: Seq[String],
       salesOpt: Option[Seq[UUID]],
-      ordersOpt: Option[Seq[UUID]],
-      offset: Int,
-      limit: Int
+      ordersOpt: Option[Seq[UUID]]
   ): Future[Seq[TokenOrder]] = {
     val query = TokenOrders.tokenOrders
       .filter(_.userWallet.inSet(addresses))
@@ -354,8 +352,6 @@ class SalesDAO @Inject() (
       .filterOpt(ordersOpt)((tokenOrder, orders) => tokenOrder.id.inSet(orders))
       .filterNot(_.status === TokenOrderStatus.INITIALIZED)
       .sortBy(_.createdAt.desc)
-      .drop(offset)
-      .take(limit)
       .result
     db.run(query)
   }

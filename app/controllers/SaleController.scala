@@ -450,25 +450,30 @@ class SaleController @Inject() (
           salesdao.getTokenOrderHistory(
             value.addresses,
             value.sales,
-            value.orders,
-            value.offset,
-            value.limit
+            value.orders
           ),
           Duration.Inf
         )
+        val total = orders.size
         Ok(
           Json.toJson(
-            orders.map(to =>
-              GetBuyOrdersResponse.fromTokenOrder(
-                to,
-                Await
-                  .result(
-                    salesdao.getPackTokenForPack(to.packId),
-                    Duration.Inf
+            GetAllBuyOrderResponse(
+              total,
+              orders
+                .drop(value.offset)
+                .take(value.limit)
+                .map(to =>
+                  GetBuyOrdersResponse.fromTokenOrder(
+                    to,
+                    Await
+                      .result(
+                        salesdao.getPackTokenForPack(to.packId),
+                        Duration.Inf
+                      )
+                      .headOption,
+                    cruxClient
                   )
-                  .headOption,
-                cruxClient
-              )
+                )
             )
           )
         )

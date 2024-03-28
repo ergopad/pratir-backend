@@ -52,3 +52,12 @@ object GetBuyOrdersResponse {
     )
   }
 }
+
+final case class GetAllBuyOrderResponse(
+    total: Int,
+    items: Seq[GetBuyOrdersResponse]
+)
+
+object GetAllBuyOrderResponse {
+  implicit val json = Json.format[GetAllBuyOrderResponse]
+}
