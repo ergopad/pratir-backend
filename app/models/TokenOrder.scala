@@ -123,7 +123,9 @@ final case class TokenOrder(
         ).toAddress(),
         ergoClient
           .getDataSource()
-          .asInstanceOf[NodeDataSourceImpl]
+          .asInstanceOf[NodeDataSourceImpl],
+        null,
+        false
       )
       .asScala
     // Testing only
