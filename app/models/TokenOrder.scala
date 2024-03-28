@@ -63,18 +63,18 @@ final case class TokenOrder(
     updated_at: Instant
 ) extends Logging {
   def handleInitialized(ergoClient: ErgoClient, salesdao: SalesDAO): Unit = {
-    val boxes = ergoClient
-      .getDataSource()
-      .getUnconfirmedUnspentBoxesFor(
+    val boxes = NodePoolDataSource
+      .getAllUnspentBoxesFor(
         new ErgoTreeContract(
           BuyOrder.contract(userAddress),
           NetworkType.MAINNET
         ).toAddress(),
-        0,
-        100
+        ergoClient
+          .getDataSource()
+          .asInstanceOf[NodeDataSourceImpl]
       )
       .asScala
-      .toArray
+
     val orderBox = boxes.filter((box: InputBox) =>
       id == UUID.fromString(
         new String(
@@ -99,18 +99,17 @@ final case class TokenOrder(
       ergoClient: ErgoClient,
       salesdao: SalesDAO
   ): Option[Fulfillment] = {
-    val boxes = ergoClient
-      .getDataSource()
-      .getUnspentBoxesFor(
+    val boxes = NodePoolDataSource
+      .getAllUnspentBoxesFor(
         new ErgoTreeContract(
           BuyOrder.contract(userAddress),
           NetworkType.MAINNET
         ).toAddress(),
-        0,
-        100
+        ergoClient
+          .getDataSource()
+          .asInstanceOf[NodeDataSourceImpl]
       )
       .asScala
-      .toArray
     // Testing only
     // val boxes = ergoClient.getDataSource().asInstanceOf[NodePoolDataSource].getAllUnspentBoxesFor(new ErgoTreeContract(BuyOrder.contract(userAddress),NetworkType.MAINNET).toAddress()).asScala.toArray
     val height = ergoClient

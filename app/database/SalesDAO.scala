@@ -314,10 +314,21 @@ class SalesDAO @Inject() (
     )
   }
 
+  def getInitializedTokenOrders(): Future[Seq[TokenOrder]] = {
+    val query = TokenOrders.tokenOrders
+      .filter(
+        _.status === TokenOrderStatus.INITIALIZED
+      )
+      .sortBy(_.createdAt)
+      .result
+    db.run(query)
+  }
+
   def getOpenTokenOrders(): Future[Seq[TokenOrder]] = {
     val query = TokenOrders.tokenOrders
       .filterNot(
         _.status inSet Seq(
+          TokenOrderStatus.INITIALIZED,
           TokenOrderStatus.FULLFILLED,
           TokenOrderStatus.REFUNDED,
           TokenOrderStatus.FAILED

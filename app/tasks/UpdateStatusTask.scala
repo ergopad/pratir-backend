@@ -136,20 +136,29 @@ class UpdateStatusTask @Inject() (
 
   def handleOrders(ergoClient: ErgoClient, salesdao: SalesDAO) = {
 
-    val openOrders = Await.result(salesdao.getOpenTokenOrders, Duration.Inf)
+    val initializedOrders =
+      Await.result(salesdao.getInitializedTokenOrders, Duration.Inf)
 
     val fulfillments = new HashMap[UUID, Buffer[Fulfillment]]()
 
-    openOrders.foreach(oto => {
+    initializedOrders.foreach(oto => {
       try {
         if (oto.status == TokenOrderStatus.INITIALIZED) {
 
           oto.handleInitialized(ergoClient, salesdao)
 
         }
+      } catch {
+        case e: Exception => logger.error(e.getMessage())
+      }
+    })
 
+    val openOrders = Await.result(salesdao.getOpenTokenOrders, Duration.Inf)
+
+    openOrders.foreach(oto => {
+      try {
         if (
-          oto.status == TokenOrderStatus.INITIALIZED || oto.status == TokenOrderStatus.CONFIRMING || oto.status == TokenOrderStatus.CONFIRMED
+          oto.status == TokenOrderStatus.CONFIRMING || oto.status == TokenOrderStatus.CONFIRMED
         ) {
 
           oto.handleSale(ergoClient, salesdao) match {
