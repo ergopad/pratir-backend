@@ -71,7 +71,7 @@ public class NodePoolDataSource {
 			}
 			Short i = 0;
 			for (OutBox output : tx.getOutputs()) {
-				if (output.getErgoTree().equals(ergoTreeHex)) {
+				if (output.getErgoTree().bytesHex().equals(ergoTreeHex)) {
 					// we have an unconfirmed box - get info from node for it
 					try {
 						outputBoxes.add(output.convertToInputWith(tx.getId(), i));
@@ -122,7 +122,7 @@ public class NodePoolDataSource {
 				mempool = mempoolState;
 			}
 			unconfirmed.addAll(mempool.getValue1());
-			unconfirmed.removeIf(ib -> !ib.getErgoTree().equals(ergoTreeHex));
+			unconfirmed.removeIf(ib -> !ib.getErgoTree().bytesHex().equals(ergoTreeHex));
 			List<String> spent = mempool.getValue0();
 
 			confirmed.addAll(unconfirmed);
