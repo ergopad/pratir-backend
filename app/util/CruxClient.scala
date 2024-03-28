@@ -64,7 +64,23 @@ class CruxClient @Inject() (ws: WSClient, cache: SyncCacheApi) {
         )
         .get()
       val response = Await.result(request, Duration.Inf)
-      response
+      if (response.status == 200) {
+        response
+      } else {
+        val memRequest = ws
+          .url(
+            sys.env
+              .get("ERGO_NODE")
+              .get + "/transactions/unconfirmed/byTransactionId/" + followUpTxId
+          )
+          .get()
+        val memResponse = Await.result(memRequest, Duration.Inf)
+        if (memResponse.status == 200) {
+          memResponse
+        } else {
+          throw new Exception(f"Could not find follow up tx $followUpTxId")
+        }
+      }
     })
     val inputs = followUpTx.json.\("inputs").get.as[Seq[JsValue]]
     val orderBoxIndex =
