@@ -51,6 +51,7 @@ public class NodePoolDataSource {
 			if (transactions.size() < limit) {
 				finished = true;
 			}
+			offset += limit;
 		}
 
 		return Triplet.with(spentBoxes, outputBoxes, allTransactions);
