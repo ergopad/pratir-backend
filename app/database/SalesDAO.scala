@@ -339,15 +339,31 @@ class SalesDAO @Inject() (
     db.run(query)
   }
 
+  def getRealPacks(
+      salesOpt: Option[Seq[UUID]]
+  ): Future[Seq[UUID]] = {
+    val query =
+      Packs.packs.filterOpt(salesOpt)((pack, sales) =>
+        pack.saleId.inSet(sales)
+      ) join PackEntries.packEntries.filterNot(
+        _.rarity.~>(0).+>>("rarity").like("_pt_rarity%")
+      ) on (_.id === _.packId)
+    db.run(query.map(_._1.id).result)
+  }
+
   def getTokenOrderHistory(
       addresses: Seq[String],
       salesOpt: Option[Seq[UUID]],
-      ordersOpt: Option[Seq[UUID]]
+      ordersOpt: Option[Seq[UUID]],
+      realPacksOpt: Option[Seq[UUID]]
   ): Future[Seq[TokenOrder]] = {
     val query = TokenOrders.tokenOrders
       .filter(_.userWallet.inSet(addresses))
       .filterOpt(salesOpt)((tokenOrder, sales) =>
         tokenOrder.saleId.inSet(sales)
+      )
+      .filterOpt(realPacksOpt)((tokenOrder, realPacks) =>
+        tokenOrder.packId.inSet(realPacks)
       )
       .filterOpt(ordersOpt)((tokenOrder, orders) => tokenOrder.id.inSet(orders))
       .filterNot(_.status === TokenOrderStatus.INITIALIZED)

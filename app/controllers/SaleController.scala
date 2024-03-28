@@ -446,11 +446,16 @@ class SaleController @Inject() (
     getBuyOrdersOpt match {
       case None => BadRequest
       case Some(value) =>
+        val realPacks = Await.result(
+          salesdao.getRealPacks(value.sales),
+          Duration.Inf
+        )
         val orders = Await.result(
           salesdao.getTokenOrderHistory(
             value.addresses,
             value.sales,
-            value.orders
+            value.orders,
+            Some(realPacks)
           ),
           Duration.Inf
         )
