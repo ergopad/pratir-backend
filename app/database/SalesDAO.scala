@@ -335,6 +335,7 @@ class SalesDAO @Inject() (
         )
       )
       .sortBy(_.createdAt)
+      .take(120)
       .result
     db.run(query)
   }
