@@ -142,6 +142,8 @@ class UpdateStatusTask @Inject() (
         ergoClient.getDataSource().asInstanceOf[NodeDataSourceImpl]
       )
 
+    val confirmedOrderBoxes = HashMap[String, Seq[InputBox]]()
+
     val initializedOrders =
       Await.result(salesdao.getInitializedTokenOrders, Duration.Inf)
 
@@ -151,7 +153,12 @@ class UpdateStatusTask @Inject() (
       try {
         if (oto.status == TokenOrderStatus.INITIALIZED) {
 
-          oto.handleInitialized(ergoClient, salesdao, mempoolState)
+          oto.handleInitialized(
+            ergoClient,
+            salesdao,
+            mempoolState,
+            confirmedOrderBoxes
+          )
 
         }
       } catch {

@@ -71,20 +71,24 @@ final case class TokenOrder(
         java.util.List[String],
         java.util.List[InputBox],
         java.util.List[Transaction]
-      ]
+      ],
+      confirmedUserBoxes: HashMap[String, Seq[InputBox]]
   ): Unit = {
-    val boxes = NodePoolDataSource
-      .getAllUnspentBoxesFor(
-        new ErgoTreeContract(
-          BuyOrder.contract(userAddress),
-          NetworkType.MAINNET
-        ).toAddress(),
-        ergoClient
-          .getDataSource()
-          .asInstanceOf[NodeDataSourceImpl],
-        mempoolState
-      )
-      .asScala
+    val boxes = confirmedUserBoxes.getOrElseUpdate(
+      userAddress,
+      NodePoolDataSource
+        .getAllUnspentBoxesFor(
+          new ErgoTreeContract(
+            BuyOrder.contract(userAddress),
+            NetworkType.MAINNET
+          ).toAddress(),
+          ergoClient
+            .getDataSource()
+            .asInstanceOf[NodeDataSourceImpl],
+          mempoolState
+        )
+        .asScala
+    )
 
     val orderBox = boxes.filter((box: InputBox) =>
       id == UUID.fromString(
