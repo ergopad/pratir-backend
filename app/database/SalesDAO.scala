@@ -324,14 +324,34 @@ class SalesDAO @Inject() (
     db.run(query)
   }
 
-  def getOpenTokenOrders(): Future[Seq[TokenOrder]] = {
+  def getConfirmingTokenOrders(): Future[Seq[TokenOrder]] = {
     val query = TokenOrders.tokenOrders
-      .filterNot(
+      .filter(
+        _.status === TokenOrderStatus.CONFIRMING
+      )
+      .sortBy(_.createdAt)
+      .take(120)
+      .result
+    db.run(query)
+  }
+
+  def getConfirmedTokenOrders(): Future[Seq[TokenOrder]] = {
+    val query = TokenOrders.tokenOrders
+      .filter(
+        _.status === TokenOrderStatus.CONFIRMED
+      )
+      .sortBy(_.createdAt)
+      .take(120)
+      .result
+    db.run(query)
+  }
+
+  def getFollowUpTokenOrders(): Future[Seq[TokenOrder]] = {
+    val query = TokenOrders.tokenOrders
+      .filter(
         _.status inSet Seq(
-          TokenOrderStatus.INITIALIZED,
-          TokenOrderStatus.FULLFILLED,
-          TokenOrderStatus.REFUNDED,
-          TokenOrderStatus.FAILED
+          TokenOrderStatus.FULLFILLING,
+          TokenOrderStatus.REFUNDING
         )
       )
       .sortBy(_.createdAt)

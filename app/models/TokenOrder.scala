@@ -110,6 +110,69 @@ final case class TokenOrder(
       )
   }
 
+  def handleConfirming(
+      ergoClient: ErgoClient,
+      salesdao: SalesDAO
+  ): Unit = {
+    val boxes = NodePoolDataSource
+      .getAllUnspentBoxesFor(
+        new ErgoTreeContract(
+          BuyOrder.contract(userAddress),
+          NetworkType.MAINNET
+        ).toAddress(),
+        ergoClient
+          .getDataSource()
+          .asInstanceOf[NodeDataSourceImpl],
+        null,
+        false
+      )
+      .asScala
+
+    if (
+      boxes.exists((box: InputBox) =>
+        id == UUID.fromString(
+          new String(
+            box
+              .getRegisters()
+              .get(3)
+              .getValue()
+              .asInstanceOf[Coll[Byte]]
+              .toArray,
+            StandardCharsets.UTF_8
+          )
+        )
+      )
+    ) {
+
+      val orderBox = boxes
+        .find((box: InputBox) =>
+          id == UUID.fromString(
+            new String(
+              box
+                .getRegisters()
+                .get(3)
+                .getValue()
+                .asInstanceOf[Coll[Byte]]
+                .toArray,
+              StandardCharsets.UTF_8
+            )
+          )
+        )
+        .get
+
+      if (status == TokenOrderStatus.CONFIRMING)
+        Await.result(
+          salesdao.updateTokenOrderStatus(
+            id,
+            orderBox.getId.toString,
+            TokenOrderStatus.CONFIRMED,
+            ""
+          ),
+          Duration.Inf
+        )
+    }
+  }
+
   def handleSale(
       ergoClient: ErgoClient,
       salesdao: SalesDAO,
@@ -170,17 +233,6 @@ final case class TokenOrder(
           )
         )
         .get
-
-      if (status == TokenOrderStatus.CONFIRMING)
-        Await.result(
-          salesdao.updateTokenOrderStatus(
-            id,
-            orderBox.getId.toString,
-            TokenOrderStatus.CONFIRMED,
-            ""
-          ),
-          Duration.Inf
-        )
 
       val sale = Await.result(salesdao.getSale(saleId), Duration.Inf)._1._1
       val pack = Await.result(salesdao.getPack(packId), Duration.Inf)

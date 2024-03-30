@@ -166,32 +166,32 @@ class UpdateStatusTask @Inject() (
       }
     })
 
-    val openOrders = Await.result(salesdao.getOpenTokenOrders, Duration.Inf)
+    val confirmingOrders =
+      Await.result(salesdao.getConfirmingTokenOrders, Duration.Inf)
 
-    openOrders.foreach(oto => {
+    confirmingOrders.foreach(cto => {
       try {
-        if (
-          oto.status == TokenOrderStatus.CONFIRMING || oto.status == TokenOrderStatus.CONFIRMED
-        ) {
+        cto.handleConfirming(ergoClient, salesdao)
+      } catch {
+        case e: Exception => logger.error(e.getMessage())
+      }
+    })
 
-          oto.handleSale(ergoClient, salesdao, mempoolState) match {
-            case Some(fulfillment) =>
-              fulfillments.put(
+    val confirmedOrders =
+      Await.result(salesdao.getConfirmedTokenOrders, Duration.Inf)
+
+    confirmedOrders.foreach(oto => {
+      try {
+        oto.handleSale(ergoClient, salesdao, mempoolState) match {
+          case Some(fulfillment) =>
+            fulfillments.put(
+              fulfillment.saleId,
+              fulfillments.getOrElse(
                 fulfillment.saleId,
-                fulfillments.getOrElse(
-                  fulfillment.saleId,
-                  new ArrayBuffer[Fulfillment]()
-                ) ++ Array(fulfillment)
-              )
-            case None =>
-          }
-
-        } else if (
-          oto.status == TokenOrderStatus.FULLFILLING || oto.status == TokenOrderStatus.REFUNDING
-        ) {
-
-          oto.followUp(ergoClient, salesdao)
-
+                new ArrayBuffer[Fulfillment]()
+              ) ++ Array(fulfillment)
+            )
+          case None =>
         }
       } catch {
         case e: Exception => logger.error(e.getMessage())
@@ -209,5 +209,17 @@ class UpdateStatusTask @Inject() (
             .fulfill(batch.toArray, ergoClient, salesdao)
         )
     )
+
+    val followUpOrder =
+      Await.result(salesdao.getFollowUpTokenOrders, Duration.Inf)
+
+    followUpOrder.foreach(fto => {
+      try {
+        fto.followUp(ergoClient, salesdao)
+      } catch {
+        case e: Exception => logger.error(e.getMessage())
+      }
+    })
+
   }
 }
