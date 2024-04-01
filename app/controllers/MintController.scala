@@ -125,17 +125,21 @@ class MintController @Inject() (
         case js: JsSuccess[NewNFTCollection] =>
           val collectionAdded = mintdao.insertCollection(js.value)
           js.value.saleId match {
-            case Some(saleId) =>
+            case Some(saleId) => {
+              val packCollectionAdded = mintdao.insertCollection(
+                js.value.copy(name = js.value + " Packs")
+              )
               mintdao.insertNFTs(
                 Await
                   .result(salesdao.getSale(saleId), Duration.Inf)
                   ._1
                   ._1
-                  .packTokensToMint(salesdao, collectionAdded.id)
+                  .packTokensToMint(salesdao, packCollectionAdded.id)
               )
-            case None => None
+              Created(Json.toJson(Seq(collectionAdded, packCollectionAdded)))
+            }
+            case None => Created(Json.toJson(Seq(collectionAdded)))
           }
-          Created(Json.toJson(collectionAdded))
       }
     } catch {
       case e: Exception => {
