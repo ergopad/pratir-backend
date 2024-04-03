@@ -290,7 +290,15 @@ class SaleController @Inject() (
       }
     } catch {
       case nse: NoSuchElementException =>
-        NotFound("Could not find sale with id " + _saleId)
+        NotFound(
+          Json.toJson(
+            ErrorResponse(
+              404,
+              "NoSuchElementException",
+              "Could not find sale with id " + _saleId
+            )
+          )
+        )
       case e: Exception => {
         logger.error("Caught unexpected error", e);
         BadRequest(e.getMessage())
