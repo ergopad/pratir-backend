@@ -67,7 +67,15 @@ class MintController @Inject() (
       } catch {
         case e: Exception => {
           logger.error("Caught unexpected error", e);
-          BadRequest(e.getMessage())
+          InternalServerError(
+            Json.toJson(
+              ErrorResponse(
+                500,
+                e.getClass().getCanonicalName(),
+                e.getMessage()
+              )
+            )
+          )
         }
       }
     }
@@ -81,16 +89,17 @@ class MintController @Inject() (
   }
 
   def mintCollection(_collectionId: String) = Action { implicit request =>
-    val collectionId = UUID.fromString(_collectionId)
-    val collection =
-      Await.result(mintdao.getCollection(collectionId), Duration.Inf)
-    val ergoClient = RestApiErgoClient.create(
-      sys.env.get("ERGO_NODE").get,
-      NetworkType.MAINNET,
-      "",
-      sys.env.get("ERGO_EXPLORER").get
-    )
     try {
+      val collectionId = UUID.fromString(_collectionId)
+      val collection =
+        Await.result(mintdao.getCollection(collectionId), Duration.Inf)
+      val ergoClient = RestApiErgoClient.create(
+        sys.env.get("ERGO_NODE").get,
+        NetworkType.MAINNET,
+        "",
+        sys.env.get("ERGO_EXPLORER").get
+      )
+
       Ok(
         Json.toJson(
           MUnsignedTransaction(
@@ -101,17 +110,45 @@ class MintController @Inject() (
     } catch {
       case nete: NotEnoughTokensException =>
         BadRequest(
-          "The wallet did not contain the tokens required for bootstrapping"
+          Json.toJson(
+            ErrorResponse(
+              400,
+              "NotEnoughTokensException",
+              "The wallet did not contain the tokens required for minting"
+            )
+          )
         )
       case neee: NotEnoughErgsException =>
-        BadRequest("Not enough erg in wallet for bootstrapping")
+        BadRequest(
+          Json.toJson(
+            ErrorResponse(
+              400,
+              "NotEnoughErgsException",
+              "Not enough erg in wallet for minting"
+            )
+          )
+        )
       case necfc: NotEnoughCoinsForChangeException =>
         BadRequest(
-          "Not enough erg for change box, try consolidating your utxos to remove this error"
+          Json.toJson(
+            ErrorResponse(
+              400,
+              "NotEnoughCoinsForChangeException",
+              "Not enough erg for change box, try consolidating your utxos to remove minting"
+            )
+          )
         )
       case e: Exception => {
         logger.error("Caught unexpected error", e);
-        BadRequest(e.getMessage())
+        InternalServerError(
+          Json.toJson(
+            ErrorResponse(
+              500,
+              e.getClass().getCanonicalName(),
+              e.getMessage()
+            )
+          )
+        )
       }
     }
   }
@@ -144,20 +181,43 @@ class MintController @Inject() (
     } catch {
       case e: Exception => {
         logger.error("Caught unexpected error", e);
-        BadRequest(e.getMessage())
+        InternalServerError(
+          Json.toJson(
+            ErrorResponse(
+              500,
+              e.getClass().getCanonicalName(),
+              e.getMessage()
+            )
+          )
+        )
       }
     }
   }
 
   def createNFTs() = Action { implicit request =>
-    val content = request.body
-    val jsonObject = content.asJson
+    try {
+      val content = request.body
+      val jsonObject = content.asJson
 
-    Json.fromJson[Seq[NewNFT]](jsonObject.get) match {
-      case je: JsError => BadRequest(JsError.toJson(je))
-      case js: JsSuccess[Seq[NewNFT]] =>
-        val nftsAdded = mintdao.insertNewNFTs(js.value)
-        Created(Json.toJson(nftsAdded))
+      Json.fromJson[Seq[NewNFT]](jsonObject.get) match {
+        case je: JsError => BadRequest(JsError.toJson(je))
+        case js: JsSuccess[Seq[NewNFT]] =>
+          val nftsAdded = mintdao.insertNewNFTs(js.value)
+          Created(Json.toJson(nftsAdded))
+      }
+    } catch {
+      case e: Exception => {
+        logger.error("Caught unexpected error", e);
+        InternalServerError(
+          Json.toJson(
+            ErrorResponse(
+              500,
+              e.getClass().getCanonicalName(),
+              e.getMessage()
+            )
+          )
+        )
+      }
     }
   }
 
@@ -180,7 +240,15 @@ class MintController @Inject() (
     } catch {
       case e: Exception => {
         logger.error("Caught unexpected error", e);
-        BadRequest(e.getMessage())
+        InternalServerError(
+          Json.toJson(
+            ErrorResponse(
+              500,
+              e.getClass().getCanonicalName(),
+              e.getMessage()
+            )
+          )
+        )
       }
     }
   }

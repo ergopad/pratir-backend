@@ -64,7 +64,7 @@ class SaleController @Inject() (
     with Logging {
 
   def getAll(): Action[AnyContent] = Action.async { implicit request =>
-    {
+    try {
       val ergoClient = RestApiErgoClient.create(
         sys.env.get("ERGO_NODE").get,
         NetworkType.MAINNET,
@@ -85,12 +85,27 @@ class SaleController @Inject() (
           )
         )
       )
+    } catch {
+      case e: Exception => {
+        logger.error("Caught unexpected error", e);
+        Future(
+          InternalServerError(
+            Json.toJson(
+              ErrorResponse(
+                500,
+                e.getClass().getCanonicalName(),
+                e.getMessage()
+              )
+            )
+          )
+        )
+      }
     }
   }
 
   def getAllHighlighted(): Action[AnyContent] = Action.async {
     implicit request =>
-      {
+      try {
         val ergoClient = RestApiErgoClient.create(
           sys.env.get("ERGO_NODE").get,
           NetworkType.MAINNET,
@@ -116,12 +131,27 @@ class SaleController @Inject() (
             )
           )
         )
+      } catch {
+        case e: Exception => {
+          logger.error("Caught unexpected error", e);
+          Future(
+            InternalServerError(
+              Json.toJson(
+                ErrorResponse(
+                  500,
+                  e.getClass().getCanonicalName(),
+                  e.getMessage()
+                )
+              )
+            )
+          )
+        }
       }
   }
 
   def getAllFiltered(status: Option[String], address: Option[String]) =
     Action.async { implicit request =>
-      {
+      try {
         val ergoClient = RestApiErgoClient.create(
           sys.env.get("ERGO_NODE").get,
           NetworkType.MAINNET,
@@ -145,109 +175,157 @@ class SaleController @Inject() (
               )
             )
           )
+      } catch {
+        case e: Exception => {
+          logger.error("Caught unexpected error", e);
+          Future(
+            InternalServerError(
+              Json.toJson(
+                ErrorResponse(
+                  500,
+                  e.getClass().getCanonicalName(),
+                  e.getMessage()
+                )
+              )
+            )
+          )
+        }
       }
     }
 
   def getAllFilteredMulti(status: Option[String]) = Action { implicit request =>
-    val content = request.body
-    val jsonObject = content.asJson
-    val addressListJson = Json.fromJson[AddressList](jsonObject.get)
+    try {
+      val content = request.body
+      val jsonObject = content.asJson
+      val addressListJson = Json.fromJson[AddressList](jsonObject.get)
 
-    val ergoClient = RestApiErgoClient.create(
-      sys.env.get("ERGO_NODE").get,
-      NetworkType.MAINNET,
-      "",
-      sys.env.get("ERGO_EXPLORER").get
-    )
-    val height = ergoClient
-      .getDataSource()
-      .getLastBlockHeaders(1, false)
-      .get(0)
-      .getHeight()
+      val ergoClient = RestApiErgoClient.create(
+        sys.env.get("ERGO_NODE").get,
+        NetworkType.MAINNET,
+        "",
+        sys.env.get("ERGO_EXPLORER").get
+      )
+      val height = ergoClient
+        .getDataSource()
+        .getLastBlockHeaders(1, false)
+        .get(0)
+        .getHeight()
 
-    addressListJson match {
-      case je: JsError => BadRequest(JsError.toJson(je))
-      case js: JsSuccess[AddressList] =>
-        val addressList = js.value
-        Ok(
-          Json.toJson(
-            addressList.addresses
-              .map(addr =>
-                Await.result(
-                  salesdao.getAllFiltered(status, Some(addr)),
-                  Duration.Inf
-                )
-              )
-              .flatten
-              .map(sale =>
-                Json.toJson(
-                  SaleLite.fromSale(
-                    sale,
-                    salesdao,
-                    height,
-                    ergoClient.getDataSource()
+      addressListJson match {
+        case je: JsError => BadRequest(JsError.toJson(je))
+        case js: JsSuccess[AddressList] =>
+          val addressList = js.value
+          Ok(
+            Json.toJson(
+              addressList.addresses
+                .map(addr =>
+                  Await.result(
+                    salesdao.getAllFiltered(status, Some(addr)),
+                    Duration.Inf
                   )
                 )
-              )
+                .flatten
+                .map(sale =>
+                  Json.toJson(
+                    SaleLite.fromSale(
+                      sale,
+                      salesdao,
+                      height,
+                      ergoClient.getDataSource()
+                    )
+                  )
+                )
+            )
+          )
+
+      }
+    } catch {
+      case e: Exception => {
+        logger.error("Caught unexpected error", e);
+        InternalServerError(
+          Json.toJson(
+            ErrorResponse(
+              500,
+              e.getClass().getCanonicalName(),
+              e.getMessage()
+            )
           )
         )
-
+      }
     }
   }
 
   def getUserPacks() = Action { implicit request =>
-    val content = request.body
-    val jsonObject = content.asJson
-    val getPackTokensRequestJson =
-      Json.fromJson[GetPackTokensRequest](jsonObject.get)
+    try {
+      val content = request.body
+      val jsonObject = content.asJson
+      val getPackTokensRequestJson =
+        Json.fromJson[GetPackTokensRequest](jsonObject.get)
 
-    val ergoClient = RestApiErgoClient.create(
-      sys.env.get("ERGO_NODE").get,
-      NetworkType.MAINNET,
-      "",
-      sys.env.get("ERGO_EXPLORER").get
-    )
+      val ergoClient = RestApiErgoClient.create(
+        sys.env.get("ERGO_NODE").get,
+        NetworkType.MAINNET,
+        "",
+        sys.env.get("ERGO_EXPLORER").get
+      )
 
-    getPackTokensRequestJson match {
-      case je: JsError => BadRequest(JsError.toJson(je))
-      case js: JsSuccess[GetPackTokensRequest] =>
-        val getPackTokensRequest = js.value
-        val userBalance = Pratir.balance(
-          getPackTokensRequest.addresses.flatMap(address =>
-            NodePoolDataSource
-              .getAllUnspentBoxesFor(
-                Address.create(address),
-                ergoClient.getDataSource().asInstanceOf[NodeDataSourceImpl]
-              )
-              .asScala
-          )
-        )
-        val packTokens = getPackTokensRequest.sales match {
-          case None => Await.result(salesdao.getPackTokens(), Duration.Inf)
-          case Some(sales) =>
-            sales.flatMap(s =>
-              Await.result(salesdao.getPackTokensForSale(s), Duration.Inf)
-            )
-        }
-        Ok(
-          Json.toJson(
-            userBalance._2
-              .filter(token => packTokens.contains(token._1))
-              .map(pt => {
-                val packTokenInfo =
-                  Await
-                    .result(salesdao.getSaleForPackToken(pt._1), Duration.Inf)(
-                      0
-                    )
-                GetPackTokensResponse(
-                  saleId = packTokenInfo._1,
-                  packId = packTokenInfo._2,
-                  packToken = pt._1,
-                  amount = pt._2
+      getPackTokensRequestJson match {
+        case je: JsError => BadRequest(JsError.toJson(je))
+        case js: JsSuccess[GetPackTokensRequest] =>
+          val getPackTokensRequest = js.value
+          val userBalance = Pratir.balance(
+            getPackTokensRequest.addresses.flatMap(address =>
+              NodePoolDataSource
+                .getAllUnspentBoxesFor(
+                  Address.create(address),
+                  ergoClient.getDataSource().asInstanceOf[NodeDataSourceImpl]
                 )
-              })
+                .asScala
+            )
+          )
+          val packTokens = getPackTokensRequest.sales match {
+            case None => Await.result(salesdao.getPackTokens(), Duration.Inf)
+            case Some(sales) =>
+              sales.flatMap(s =>
+                Await.result(salesdao.getPackTokensForSale(s), Duration.Inf)
+              )
+          }
+          Ok(
+            Json.toJson(
+              userBalance._2
+                .filter(token => packTokens.contains(token._1))
+                .map(pt => {
+                  val packTokenInfo =
+                    Await
+                      .result(
+                        salesdao.getSaleForPackToken(pt._1),
+                        Duration.Inf
+                      )(
+                        0
+                      )
+                  GetPackTokensResponse(
+                    saleId = packTokenInfo._1,
+                    packId = packTokenInfo._2,
+                    packToken = pt._1,
+                    amount = pt._2
+                  )
+                })
+            )
+          )
+      }
+    } catch {
+      case e: Exception => {
+        logger.error("Caught unexpected error", e);
+        InternalServerError(
+          Json.toJson(
+            ErrorResponse(
+              500,
+              e.getClass().getCanonicalName(),
+              e.getMessage()
+            )
           )
         )
+      }
     }
   }
 
@@ -301,118 +379,141 @@ class SaleController @Inject() (
         )
       case e: Exception => {
         logger.error("Caught unexpected error", e);
-        BadRequest(e.getMessage())
+        InternalServerError(
+          Json.toJson(
+            ErrorResponse(
+              500,
+              e.getClass().getCanonicalName(),
+              e.getMessage()
+            )
+          )
+        )
       }
     }
   }
 
   def createSale() = Action { implicit request =>
-    val content = request.body
-    val jsonObject = content.asJson
-    val sale = Json.fromJson[NewSale](jsonObject.get)
+    try {
+      val content = request.body
+      val jsonObject = content.asJson
+      val sale = Json.fromJson[NewSale](jsonObject.get)
 
-    sale match {
-      case je: JsError => BadRequest(JsError.toJson(je))
-      case js: JsSuccess[NewSale] =>
-        val newSale = js.value
+      sale match {
+        case je: JsError => BadRequest(JsError.toJson(je))
+        case js: JsSuccess[NewSale] =>
+          val newSale = js.value
 
-        val saleId = UUID.randomUUID()
-        val encryptedPassword = Pratir.encoder.encode(newSale.password)
-        val saleAdded = Sale(
-          saleId,
-          newSale.name,
-          newSale.description,
-          newSale.startTime,
-          newSale.endTime,
-          newSale.sellerWallet,
-          SaleStatus.PENDING,
-          Pratir.initialNanoErgFee,
-          Pratir.saleFeePct,
-          encryptedPassword,
-          Instant.now(),
-          Instant.now(),
-          Json.toJson(newSale.profitShare)
-        )
-        val tokensAdded = newSale.tokens.map((token: NewTokenForSale) =>
-          TokenForSale(
-            UUID.randomUUID(),
-            token.tokenId,
-            0,
-            token.amount,
-            token.rarity,
-            saleId
+          val saleId = UUID.randomUUID()
+          val encryptedPassword = Pratir.encoder.encode(newSale.password)
+          val saleAdded = Sale(
+            saleId,
+            newSale.name,
+            newSale.description,
+            newSale.startTime,
+            newSale.endTime,
+            newSale.sellerWallet,
+            SaleStatus.PENDING,
+            Pratir.initialNanoErgFee,
+            Pratir.saleFeePct,
+            encryptedPassword,
+            Instant.now(),
+            Instant.now(),
+            Json.toJson(newSale.profitShare)
           )
-        )
-        val packsDBIO = DBIO.seq(newSale.packs.flatMap((pack: NewPack) => {
-          pack.toPacks(saleId)
-        }): _*)
-        Await.result(
-          db.run(
-            DBIO.seq(
-              Sales.sales += saleAdded,
-              TokensForSale.tokensForSale ++= tokensAdded,
-              packsDBIO
+          val tokensAdded = newSale.tokens.map((token: NewTokenForSale) =>
+            TokenForSale(
+              UUID.randomUUID(),
+              token.tokenId,
+              0,
+              token.amount,
+              token.rarity,
+              saleId
             )
-          ),
-          Duration.Inf
-        )
-        val ergoClient = RestApiErgoClient.create(
-          sys.env.get("ERGO_NODE").get,
-          NetworkType.MAINNET,
-          "",
-          sys.env.get("ERGO_EXPLORER").get
-        )
-        val height = ergoClient
-          .getDataSource()
-          .getLastBlockHeaders(1, false)
-          .get(0)
-          .getHeight()
-        val fullSale = SaleFull.fromSaleId(
-          saleAdded.id.toString(),
-          salesdao,
-          height,
-          ergoClient.getDataSource()
-        )
-        val bootStrapTx =
-          try {
-            Some(
-              MUnsignedTransaction(
-                saleAdded.bootstrapTx(
-                  newSale.sourceAddresses,
-                  ergoClient,
-                  salesdao
+          )
+          val packsDBIO = DBIO.seq(newSale.packs.flatMap((pack: NewPack) => {
+            pack.toPacks(saleId)
+          }): _*)
+          Await.result(
+            db.run(
+              DBIO.seq(
+                Sales.sales += saleAdded,
+                TokensForSale.tokensForSale ++= tokensAdded,
+                packsDBIO
+              )
+            ),
+            Duration.Inf
+          )
+          val ergoClient = RestApiErgoClient.create(
+            sys.env.get("ERGO_NODE").get,
+            NetworkType.MAINNET,
+            "",
+            sys.env.get("ERGO_EXPLORER").get
+          )
+          val height = ergoClient
+            .getDataSource()
+            .getLastBlockHeaders(1, false)
+            .get(0)
+            .getHeight()
+          val fullSale = SaleFull.fromSaleId(
+            saleAdded.id.toString(),
+            salesdao,
+            height,
+            ergoClient.getDataSource()
+          )
+          val bootStrapTx =
+            try {
+              Some(
+                MUnsignedTransaction(
+                  saleAdded.bootstrapTx(
+                    newSale.sourceAddresses,
+                    ergoClient,
+                    salesdao
+                  )
                 )
               )
+            } catch {
+              case e: Exception => None
+            }
+          Created(Json.toJson(CreatedSale(fullSale, bootStrapTx)))
+      }
+    } catch {
+      case e: Exception => {
+        logger.error("Caught unexpected error", e);
+        InternalServerError(
+          Json.toJson(
+            ErrorResponse(
+              500,
+              e.getClass().getCanonicalName(),
+              e.getMessage()
             )
-          } catch {
-            case e: Exception => None
-          }
-        Created(Json.toJson(CreatedSale(fullSale, bootStrapTx)))
+          )
+        )
+      }
     }
   }
 
   def bootstrapSale() = Action { implicit request =>
-    val content = request.body
-    val jsonObject = content.asJson
-    val bootstrapSaleRequest: Option[BootstrapSale] =
-      jsonObject.flatMap(
-        Json.fromJson[BootstrapSale](_).asOpt
-      )
-    bootstrapSaleRequest match {
-      case None => BadRequest
-      case Some(bootstrapSale) => {
-        val ergoClient = RestApiErgoClient.create(
-          sys.env.get("ERGO_NODE").get,
-          NetworkType.MAINNET,
-          "",
-          sys.env.get("ERGO_EXPLORER").get
+    try {
+      val content = request.body
+      val jsonObject = content.asJson
+      val bootstrapSaleRequest: Option[BootstrapSale] =
+        jsonObject.flatMap(
+          Json.fromJson[BootstrapSale](_).asOpt
         )
-        val sale =
-          Await
-            .result(salesdao.getSale(bootstrapSale.saleId), Duration.Inf)
-            ._1
-            ._1
-        try {
+      bootstrapSaleRequest match {
+        case None => BadRequest
+        case Some(bootstrapSale) => {
+          val ergoClient = RestApiErgoClient.create(
+            sys.env.get("ERGO_NODE").get,
+            NetworkType.MAINNET,
+            "",
+            sys.env.get("ERGO_EXPLORER").get
+          )
+          val sale =
+            Await
+              .result(salesdao.getSale(bootstrapSale.saleId), Duration.Inf)
+              ._1
+              ._1
           Ok(
             Json.toJson(
               MUnsignedTransaction(
@@ -424,92 +525,136 @@ class SaleController @Inject() (
               )
             )
           )
-        } catch {
-          case nete: NotEnoughTokensException =>
-            BadRequest(
+
+        }
+      }
+    } catch {
+      case nete: NotEnoughTokensException =>
+        BadRequest(
+          Json.toJson(
+            ErrorResponse(
+              400,
+              "NotEnoughTokensException",
               "The wallet did not contain the tokens required for bootstrapping"
             )
-          case neee: NotEnoughErgsException =>
-            BadRequest("Not enough erg in wallet for bootstrapping")
-          case necfc: NotEnoughCoinsForChangeException =>
-            BadRequest(
+          )
+        )
+      case neee: NotEnoughErgsException =>
+        BadRequest(
+          Json.toJson(
+            ErrorResponse(
+              400,
+              "NotEnoughErgsException",
+              "Not enough erg in wallet for bootstrapping"
+            )
+          )
+        )
+      case necfc: NotEnoughCoinsForChangeException =>
+        BadRequest(
+          Json.toJson(
+            ErrorResponse(
+              400,
+              "NotEnoughCoinsForChangeException",
               "Not enough erg for change box, try consolidating your utxos to remove this error"
             )
-          case e: Exception => {
-            logger.error("Caught unexpected error", e);
-            BadRequest(e.getMessage())
-          }
-        }
+          )
+        )
+      case e: Exception => {
+        logger.error("Caught unexpected error", e);
+        InternalServerError(
+          Json.toJson(
+            ErrorResponse(
+              500,
+              e.getClass().getCanonicalName(),
+              e.getMessage()
+            )
+          )
+        )
       }
     }
   }
 
   def getBuyOrders() = Action { implicit request =>
-    val content = request.body
-    val jsonObject = content.asJson
-    val getBuyOrdersOpt: Option[GetBuyOrdersRequest] =
-      jsonObject.flatMap(
-        Json.fromJson[GetBuyOrdersRequest](_).asOpt
-      )
-    getBuyOrdersOpt match {
-      case None => BadRequest
-      case Some(value) =>
-        val realPacks = Await.result(
-          salesdao.getRealPacks(value.sales),
-          Duration.Inf
+    try {
+      val content = request.body
+      val jsonObject = content.asJson
+      val getBuyOrdersOpt: Option[GetBuyOrdersRequest] =
+        jsonObject.flatMap(
+          Json.fromJson[GetBuyOrdersRequest](_).asOpt
         )
-        val orders = Await.result(
-          salesdao.getTokenOrderHistory(
-            value.addresses,
-            value.sales,
-            value.orders,
-            Some(realPacks)
-          ),
-          Duration.Inf
-        )
-        val total = orders.size
-        Ok(
-          Json.toJson(
-            GetAllBuyOrderResponse(
-              total,
-              orders
-                .drop(value.offset)
-                .take(value.limit)
-                .map(to =>
-                  GetBuyOrdersResponse.fromTokenOrder(
-                    to,
-                    Await
-                      .result(
-                        salesdao.getPackTokenForPack(to.packId),
-                        Duration.Inf
-                      )
-                      .headOption,
-                    cruxClient
+      getBuyOrdersOpt match {
+        case None => BadRequest
+        case Some(value) =>
+          val realPacks = Await.result(
+            salesdao.getRealPacks(value.sales),
+            Duration.Inf
+          )
+          val orders = Await.result(
+            salesdao.getTokenOrderHistory(
+              value.addresses,
+              value.sales,
+              value.orders,
+              Some(realPacks)
+            ),
+            Duration.Inf
+          )
+          val total = orders.size
+          Ok(
+            Json.toJson(
+              GetAllBuyOrderResponse(
+                total,
+                orders
+                  .drop(value.offset)
+                  .take(value.limit)
+                  .map(to =>
+                    GetBuyOrdersResponse.fromTokenOrder(
+                      to,
+                      Await
+                        .result(
+                          salesdao.getPackTokenForPack(to.packId),
+                          Duration.Inf
+                        )
+                        .headOption,
+                      cruxClient
+                    )
                   )
-                )
+              )
+            )
+          )
+      }
+    } catch {
+      case e: Exception => {
+        logger.error("Caught unexpected error", e);
+        InternalServerError(
+          Json.toJson(
+            ErrorResponse(
+              500,
+              e.getClass().getCanonicalName(),
+              e.getMessage()
             )
           )
         )
+      }
     }
   }
 
   def buyOrder() = Action { implicit request =>
-    val content = request.body
-    val jsonObject = content.asJson
-    val buyRequest: Option[BuyRequest] =
-      jsonObject.flatMap(
-        Json.fromJson[BuyRequest](_).asOpt
-      )
-    buyRequest match {
-      case None => BadRequest
-      case Some(buyOrder) => {
-        val ergoClient = RestApiErgoClient.create(
-          sys.env.get("ERGO_NODE").get,
-          NetworkType.MAINNET,
-          "",
-          sys.env.get("ERGO_EXPLORER").get
+    try {
+      val content = request.body
+      val jsonObject = content.asJson
+      val buyRequest: Option[BuyRequest] =
+        jsonObject.flatMap(
+          Json.fromJson[BuyRequest](_).asOpt
         )
-        try {
+      buyRequest match {
+        case None => BadRequest
+        case Some(buyOrder) => {
+          val ergoClient = RestApiErgoClient.create(
+            sys.env.get("ERGO_NODE").get,
+            NetworkType.MAINNET,
+            "",
+            sys.env.get("ERGO_EXPLORER").get
+          )
           val (unsigned, orders) = ergoClient.execute(
             new java.util.function.Function[
               BlockchainContext,
@@ -743,7 +888,11 @@ class SaleController @Inject() (
                 Base64
                   .getUrlEncoder()
                   .encodeToString(
-                    ctx.newProverBuilder().build().reduce(unsigned, 0).toBytes()
+                    ctx
+                      .newProverBuilder()
+                      .build()
+                      .reduce(unsigned, 0)
+                      .toBytes()
                   )
               }
             }
@@ -759,35 +908,66 @@ class SaleController @Inject() (
               )
             )
           )
-        } catch {
-          case nete: NotEnoughTokensException =>
-            BadRequest("The wallet did not enough tokens for this order")
-          case neee: NotEnoughErgsException =>
-            BadRequest("Not enough erg in wallet for this order")
-          case necfc: NotEnoughCoinsForChangeException =>
-            BadRequest(
+
+        }
+      }
+    } catch {
+      case nete: NotEnoughTokensException =>
+        BadRequest(
+          Json.toJson(
+            ErrorResponse(
+              400,
+              "NotEnoughTokensException",
+              "The wallet did not contain the tokens required for this order"
+            )
+          )
+        )
+      case neee: NotEnoughErgsException =>
+        BadRequest(
+          Json.toJson(
+            ErrorResponse(
+              400,
+              "NotEnoughErgsException",
+              "Not enough erg in wallet for this order"
+            )
+          )
+        )
+      case necfc: NotEnoughCoinsForChangeException =>
+        BadRequest(
+          Json.toJson(
+            ErrorResponse(
+              400,
+              "NotEnoughCoinsForChangeException",
               "Not enough erg for change box, try consolidating your utxos to remove this error"
             )
-          case e: Exception => {
-            logger.error("Caught unexpected error", e);
-            BadRequest(e.getMessage())
-          }
-        }
+          )
+        )
+      case e: Exception => {
+        logger.error("Caught unexpected error", e);
+        InternalServerError(
+          Json.toJson(
+            ErrorResponse(
+              500,
+              e.getClass().getCanonicalName(),
+              e.getMessage()
+            )
+          )
+        )
       }
     }
   }
 
   def highlightSale() = Action { implicit request =>
-    val content = request.body
-    val jsonObject = content.asJson
-    val highlightSaleRequest: Option[HighlightSaleRequest] =
-      jsonObject.flatMap(
-        Json.fromJson[HighlightSaleRequest](_).asOpt
-      )
-    highlightSaleRequest match {
-      case None => BadRequest
-      case Some(highlightSale) => {
-        try {
+    try {
+      val content = request.body
+      val jsonObject = content.asJson
+      val highlightSaleRequest: Option[HighlightSaleRequest] =
+        jsonObject.flatMap(
+          Json.fromJson[HighlightSaleRequest](_).asOpt
+        )
+      highlightSaleRequest match {
+        case None => BadRequest
+        case Some(highlightSale) => {
           if (isValidAuthToken(highlightSale.verificationToken)) {
             Await.result(
               salesdao.highlightSale(highlightSale.saleId),
@@ -803,29 +983,46 @@ class SaleController @Inject() (
               )
             )
           } else {
-            Unauthorized("Unauthorized - Token Verification Failed")
+            Unauthorized(
+              Json.toJson(
+                ErrorResponse(
+                  403,
+                  "Unauthorized",
+                  "Token Verification Failed"
+                )
+              )
+            )
           }
-        } catch {
-          case e: Exception => {
-            logger.error("Caught unexpected error", e);
-            BadRequest(e.getMessage())
-          }
+
         }
+      }
+    } catch {
+      case e: Exception => {
+        logger.error("Caught unexpected error", e);
+        InternalServerError(
+          Json.toJson(
+            ErrorResponse(
+              500,
+              e.getClass().getCanonicalName(),
+              e.getMessage()
+            )
+          )
+        )
       }
     }
   }
 
   def removeSaleFromHighlights() = Action { implicit request =>
-    val content = request.body
-    val jsonObject = content.asJson
-    val highlightSaleRequest: Option[HighlightSaleRequest] =
-      jsonObject.flatMap(
-        Json.fromJson[HighlightSaleRequest](_).asOpt
-      )
-    highlightSaleRequest match {
-      case None => BadRequest
-      case Some(highlightSale) => {
-        try {
+    try {
+      val content = request.body
+      val jsonObject = content.asJson
+      val highlightSaleRequest: Option[HighlightSaleRequest] =
+        jsonObject.flatMap(
+          Json.fromJson[HighlightSaleRequest](_).asOpt
+        )
+      highlightSaleRequest match {
+        case None => BadRequest
+        case Some(highlightSale) => {
           if (isValidAuthToken(highlightSale.verificationToken)) {
             Await.result(
               salesdao.removeSaleFromHighlights(highlightSale.saleId),
@@ -841,14 +1038,31 @@ class SaleController @Inject() (
               )
             )
           } else {
-            Unauthorized("Unauthorized - Token Verification Failed")
+            Unauthorized(
+              Json.toJson(
+                ErrorResponse(
+                  403,
+                  "Unauthorized",
+                  "Token Verification Failed"
+                )
+              )
+            )
           }
-        } catch {
-          case e: Exception => {
-            logger.error("Caught unexpected error", e);
-            BadRequest(e.getMessage())
-          }
+
         }
+      }
+    } catch {
+      case e: Exception => {
+        logger.error("Caught unexpected error", e);
+        InternalServerError(
+          Json.toJson(
+            ErrorResponse(
+              500,
+              e.getClass().getCanonicalName(),
+              e.getMessage()
+            )
+          )
+        )
       }
     }
   }
