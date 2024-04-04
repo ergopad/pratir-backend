@@ -61,7 +61,7 @@ object DerivedPrice {
                   1L
                 )
                 if (
-                  derivedTokenPrice.avgUsd < derivedTokenPrice.minUsd * 1.001 && derivedTokenPrice.avgUsd > derivedTokenPrice.maxUsd * 0.999
+                  derivedTokenPrice.avgUsd < derivedTokenPrice.minUsd * 1.2 && derivedTokenPrice.avgUsd > derivedTokenPrice.maxUsd * 0.8
                 ) {
                   Some(
                     Array(
