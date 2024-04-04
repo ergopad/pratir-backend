@@ -50,7 +50,7 @@ object DerivedPrice {
           Some(
             DerivedPrice.supported_tokens
               .filter(st => !st.equals(price.tokenId))
-              .map(st => {
+              .flatMap(st => {
                 val derivedTokenPrice =
                   cruxClient.get_price_stats(st, currentTime, timeWindow);
                 val derivedAmount = math.max(
@@ -60,14 +60,20 @@ object DerivedPrice {
                   ),
                   1L
                 )
-                Array(
-                  DerivedPrice(
-                    price.id,
-                    st,
-                    derivedAmount,
-                    price.packId
+                if (
+                  derivedTokenPrice.avgUsd < derivedTokenPrice.minUsd * 1.001 && derivedTokenPrice.avgUsd > derivedTokenPrice.maxUsd * 0.999
+                ) {
+                  Some(
+                    Array(
+                      DerivedPrice(
+                        price.id,
+                        st,
+                        derivedAmount,
+                        price.packId
+                      )
+                    ) ++ otherPrices
                   )
-                ) ++ otherPrices
+                } else { None }
               })
           )
         } else {
