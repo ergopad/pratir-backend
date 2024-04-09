@@ -44,7 +44,8 @@ object SaleStatus extends Enumeration {
 
 final case class SaleProfitShare(
     address: String,
-    pct: Int
+    pct: Int,
+    maxUsd: Option[Long]
 )
 
 object SaleProfitShare {

@@ -182,7 +182,7 @@ class UpdateStatusTask @Inject() (
 
     confirmedOrders.foreach(oto => {
       try {
-        oto.handleSale(ergoClient, salesdao, mempoolState) match {
+        oto.handleSale(ergoClient, salesdao, mempoolState, cruxClient) match {
           case Some(fulfillment) =>
             fulfillments.put(
               fulfillment.saleId,

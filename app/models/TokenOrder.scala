@@ -39,6 +39,8 @@ import com.amazonaws.services.batch.model.NodeDetails
 import org.ergoplatform.appkit.impl.NodeDataSourceImpl
 import org.javatuples.Triplet
 import org.ergoplatform.appkit.Transaction
+import cats.instances.uuid
+import util.CruxClient
 
 object TokenOrderStatus extends Enumeration {
   type TokenOrderStatus = Value
@@ -180,7 +182,8 @@ final case class TokenOrder(
         java.util.List[String],
         java.util.List[InputBox],
         java.util.List[Transaction]
-      ]
+      ],
+      cruxClient: CruxClient
   ): Option[Fulfillment] = {
     val boxes = NodePoolDataSource
       .getAllUnspentBoxesFor(
@@ -390,9 +393,69 @@ final case class TokenOrder(
                   }) ++ Array(
                     SaleProfitShare(
                       Address.create(Pratir.pratirFeeWallet).toString(),
-                      sale.saleFeePct
+                      sale.saleFeePct,
+                      Some(50L)
                     )
                   )
+
+                  profitShareBoxes = Some(profitShares.map(ps => {
+
+                    val feeTokens = combinedPrices.filterNot(cp =>
+                      cp._1 == "0" * 64 || math.abs(
+                        cp._2
+                      ) * ps.pct / 100 < 1
+                    )
+                    val maxFee = DerivedPrice.fromPrice(
+                      Seq(
+                        Price(
+                          UUID.randomUUID(),
+                          DerivedPrice.sigUsd,
+                          ps.maxUsd.getOrElse(10L),
+                          UUID.randomUUID()
+                        )
+                      ),
+                      ctx.getHeight(),
+                      cruxClient
+                    )
+                    val feeBoxBuilder = ctx
+                      .newTxBuilder()
+                      .outBoxBuilder()
+                      .contract(
+                        Address.create(ps.address).toErgoContract()
+                      )
+                      .value(
+                        (combinedPrices.getOrElse(
+                          "0" * 64,
+                          0L
+                        ) * ps.pct / 100L).min(
+                          maxFee
+                            .find(mf => mf(0).tokenId.equals("0" * 64))
+                            .get(0)
+                            .amount
+                        ) + 1000000L
+                      )
+                    if (feeTokens.size > 0)
+                      feeBoxBuilder.tokens(
+                        feeTokens
+                          .map(t =>
+                            new ErgoToken(
+                              t._1,
+                              (math.abs(t._2) * ps.pct / 100)
+                                .min(
+                                  if (t._1.equals(DerivedPrice.sigUsd))
+                                    ps.maxUsd.getOrElse(10L)
+                                  else
+                                    maxFee
+                                      .find(mf => mf(0).tokenId.equals(t._1))
+                                      .get(0)
+                                      .amount
+                                )
+                            )
+                          )
+                          .toArray: _*
+                      )
+                    feeBoxBuilder.build()
+                  }))
 
                   val totalProfitSharePct =
                     profitShares.foldLeft(0)((z, ps) => z + ps.pct)
@@ -428,39 +491,6 @@ final case class TokenOrder(
                         .toArray: _*
                     )
                   sellerBox = Some(sellerBoxBuilder.build())
-
-                  profitShareBoxes = Some(profitShares.map(ps => {
-
-                    val feeTokens = combinedPrices.filterNot(cp =>
-                      cp._1 == "0" * 64 || math.abs(
-                        cp._2
-                      ) * ps.pct / 100 < 1
-                    )
-                    val feeBoxBuilder = ctx
-                      .newTxBuilder()
-                      .outBoxBuilder()
-                      .contract(
-                        Address.create(ps.address).toErgoContract()
-                      )
-                      .value(
-                        combinedPrices.getOrElse(
-                          "0" * 64,
-                          0L
-                        ) * ps.pct / 100 + 1000000L
-                      )
-                    if (feeTokens.size > 0)
-                      feeBoxBuilder.tokens(
-                        feeTokens
-                          .map(t =>
-                            new ErgoToken(
-                              t._1,
-                              math.abs(t._2) * ps.pct / 100
-                            )
-                          )
-                          .toArray: _*
-                      )
-                    feeBoxBuilder.build()
-                  }))
                 }
               }
             )
