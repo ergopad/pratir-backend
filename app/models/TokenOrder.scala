@@ -457,8 +457,7 @@ final case class TokenOrder(
                     feeBoxBuilder.build()
                   }))
 
-                  val totalProfitSharePct =
-                    profitShares.foldLeft(0)((z, ps) => z + ps.pct)
+                  val totalProfitShare = Pratir.balance(profitShareBoxes.get)
 
                   val sellerBoxBuilder = ctx
                     .newTxBuilder()
@@ -470,7 +469,7 @@ final case class TokenOrder(
                       combinedPrices.getOrElse(
                         "0" * 64,
                         0L
-                      ) * (100 - totalProfitSharePct) / 100 + 1000000L
+                      ) - (totalProfitShare._1 - profitShareBoxes.get.size * 1000000L) + 1000000L
                     )
                   if (combinedPrices.filterNot(_._1 == "0" * 64).size > 0)
                     sellerBoxBuilder.tokens(
@@ -479,13 +478,7 @@ final case class TokenOrder(
                         .map(t =>
                           new ErgoToken(
                             t._1,
-                            math
-                              .round(
-                                math
-                                  .abs(t._2)
-                                  .toDouble * (100.0 - totalProfitSharePct) / 100.0
-                              )
-                              .toLong
+                            t._2 - totalProfitShare._2.getOrElse(t._1, 0L)
                           )
                         )
                         .toArray: _*
