@@ -164,7 +164,7 @@ class MintController @Inject() (
           js.value.saleId match {
             case Some(saleId) => {
               val packCollectionAdded = mintdao.insertCollection(
-                js.value.copy(name = js.value + " Packs")
+                js.value.copy(name = js.value.name + " Packs")
               )
               mintdao.insertNFTs(
                 Await
