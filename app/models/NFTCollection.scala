@@ -154,7 +154,7 @@ final case class NFTCollection(
                   if (
                     !nftsToBeMinted(i)
                       .registersMatch(collection, issuerBox) || issuerBox
-                      .getValue() < (nftsToBeMinted.size + 1) * 2000000L
+                      .getValue() < (nftsToBeMinted.size + 1 - i) * 2000000L
                   ) {
                     logger.info(
                       "Issuerbox does not match NFT metadata so preparation tx is being generated"
@@ -164,7 +164,7 @@ final case class NFTCollection(
                       .outBoxBuilder()
                       .contract(_mintContract)
                       .tokens(issuerBox.getTokens().asScala: _*)
-                      .value((nftsToBeMinted.size + 1) * 2000000L)
+                      .value((nftsToBeMinted.size + 1 - i) * 2000000L)
                       .registers(
                         nftsToBeMinted(i).issuerBoxRegisters(collection): _*
                       )
