@@ -152,7 +152,9 @@ final case class NFTCollection(
                 .take(mimMax)
                 .foreach(i => {
                   if (
-                    !nftsToBeMinted(i).registersMatch(collection, issuerBox)
+                    !nftsToBeMinted(i)
+                      .registersMatch(collection, issuerBox) || issuerBox
+                      .getValue() < (nftsToBeMinted.size + 1) * 2000000L
                   ) {
                     logger.info(
                       "Issuerbox does not match NFT metadata so preparation tx is being generated"
@@ -162,19 +164,31 @@ final case class NFTCollection(
                       .outBoxBuilder()
                       .contract(_mintContract)
                       .tokens(issuerBox.getTokens().asScala: _*)
-                      .value(issuerBox.getValue - 1000000L)
+                      .value((nftsToBeMinted.size + 1) * 2000000L)
                       .registers(
                         nftsToBeMinted(i).issuerBoxRegisters(collection): _*
                       )
                       .build()
 
-                    val unsignedPrepareTx = ctx
-                      .newTxBuilder()
-                      .addInputs(issuerBox)
-                      .addOutputs(newIssuerBox)
-                      .fee(1000000L)
-                      .sendChangeTo(_mintContract.toAddress())
-                      .build()
+                    val boxesLoader = new ExplorerAndPoolUnspentBoxesLoader()
+                      .withAllowChainedTx(true)
+
+                    val boxOperations = BoxOperations
+                      .createForSender(
+                        _mintContract.toAddress(),
+                        ctx
+                      )
+                      .withInputBoxesLoader(boxesLoader)
+                      .withMaxInputBoxesToSelect(100)
+                      .withFeeAmount(1000000L)
+                      .withAmountToSpend(newIssuerBox.getValue())
+                      .withTokensToSpend(issuerBox.getTokens())
+
+                    val unsignedPrepareTx =
+                      boxOperations.buildTxWithDefaultInputs(tb =>
+                        tb.addOutputs(newIssuerBox)
+                      )
+
                     val signedPrepareTx = Pratir.sign(ctx, unsignedPrepareTx)
                     ctx.sendTransaction(signedPrepareTx)
                     issuerBox = signedPrepareTx.getOutputsToSpend().get(0)
