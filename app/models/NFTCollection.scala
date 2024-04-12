@@ -139,7 +139,9 @@ final case class NFTCollection(
             .asScala
             .filter(ib =>
               if (ib.getTokens().size() > 0) {
-                ib.getTokens().get(0).getId.toString().equals(tokenId)
+                ib.getTokens()
+                  .asScala
+                  .exists(et => et.getId.toString().equals(tokenId))
               } else {
                 false
               }
