@@ -34,6 +34,7 @@ import sigma.Coll
 import shapeless.TypeCase
 import shapeless.Typeable
 import org.ergoplatform.appkit.impl.NodeDataSourceImpl
+import org.ergoplatform.sdk.ErgoToken
 
 object NFTCollectionStatus extends Enumeration {
   type NFTCollectionStatus = Value
@@ -165,7 +166,7 @@ final case class NFTCollection(
                       .newTxBuilder()
                       .outBoxBuilder()
                       .contract(_mintContract)
-                      .tokens(issuerBox.getTokens().asScala: _*)
+                      .tokens(new ErgoToken(tokenId, 1L))
                       .value((nftsToBeMinted.size + 1 - i) * 2000000L)
                       .registers(
                         nftsToBeMinted(i).issuerBoxRegisters(collection): _*
@@ -184,7 +185,7 @@ final case class NFTCollection(
                       .withMaxInputBoxesToSelect(100)
                       .withFeeAmount(1000000L)
                       .withAmountToSpend(newIssuerBox.getValue())
-                      .withTokensToSpend(issuerBox.getTokens())
+                      .withTokensToSpend(newIssuerBox.getTokens())
 
                     val unsignedPrepareTx =
                       boxOperations.buildTxWithDefaultInputs(tb =>
