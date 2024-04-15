@@ -478,16 +478,13 @@ final case class TokenOrder(
                         .map(t =>
                           new ErgoToken(
                             t._1,
-                            t._2 - totalProfitShare._2.getOrElse(t._1, 0L)
+                            math.abs(t._2) - totalProfitShare._2
+                              .getOrElse(t._1, 0L)
                           )
                         )
                         .toArray: _*
                     )
                   sellerBox = Some(sellerBoxBuilder.build())
-                  logger.info(f"${sellerBox.get.getTokens()}")
-                  profitShareBoxes.get.foreach(psb =>
-                    logger.info(f"${psb.getTokens()}")
-                  )
                 }
               }
             )
