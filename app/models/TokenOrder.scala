@@ -484,8 +484,10 @@ final case class TokenOrder(
                         .toArray: _*
                     )
                   sellerBox = Some(sellerBoxBuilder.build())
-                  logger.info(f"${sellerBox}")
-                  logger.info(f"${profitShareBoxes}")
+                  logger.info(f"${sellerBox.get.getTokens()}")
+                  profitShareBoxes.get.foreach(psb =>
+                    logger.info(f"${psb.getTokens()}")
+                  )
                 }
               }
             )
