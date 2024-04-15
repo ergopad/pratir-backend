@@ -403,7 +403,7 @@ final case class TokenOrder(
                     val feeTokens = combinedPrices.filterNot(cp =>
                       cp._1 == "0" * 64 || math.abs(
                         cp._2
-                      ) * ps.pct / 100 < 1
+                      ) * ps.pct / 100 <= 0
                     )
                     val maxFee = DerivedPrice.fromPrice(
                       Seq(
@@ -484,6 +484,8 @@ final case class TokenOrder(
                         .toArray: _*
                     )
                   sellerBox = Some(sellerBoxBuilder.build())
+                  logger.info(f"${sellerBox}")
+                  logger.info(f"${profitShareBoxes}")
                 }
               }
             )
