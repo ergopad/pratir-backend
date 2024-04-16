@@ -283,13 +283,15 @@ class SaleController @Inject() (
                 .asScala
             )
           )
-          val packTokens = getPackTokensRequest.sales match {
+          val packTokens = (getPackTokensRequest.sales match {
             case None => Await.result(salesdao.getPackTokens(), Duration.Inf)
             case Some(sales) =>
               sales.flatMap(s =>
                 Await.result(salesdao.getPackTokensForSale(s), Duration.Inf)
               )
-          }
+          }).filterNot(tokenId =>
+            DerivedPrice.supported_tokens.contains(tokenId)
+          )
           Ok(
             Json.toJson(
               userBalance._2
