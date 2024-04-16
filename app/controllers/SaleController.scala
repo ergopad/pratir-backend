@@ -616,6 +616,9 @@ class SaleController @Inject() (
                           salesdao.getPackTokenForPack(to.packId),
                           Duration.Inf
                         )
+                        .filterNot(ti =>
+                          DerivedPrice.supported_tokens.contains(ti)
+                        )
                         .headOption,
                       cruxClient
                     )
