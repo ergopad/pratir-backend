@@ -331,6 +331,78 @@ class SaleController @Inject() (
     }
   }
 
+  def getPacksStats(_saleId: String) = Action { implicit request =>
+    try {
+      if (Pratir.isValidUUID(_saleId)) {
+        val packTokenIds =
+          Await.result(
+            salesdao.getPackTokensForSale(UUID.fromString(_saleId)),
+            Duration.Inf
+          )
+        val stats =
+          Await.result(salesdao.getTokensForSale(packTokenIds), Duration.Inf)
+        val sold = stats.foldLeft(0) { (c, tfs) =>
+          c + (tfs.originalAmount - tfs.amount)
+        }
+        // Hardcoded 25k cap for blitz, should be a sale config
+        val remaining = math.min(
+          stats.foldLeft(0) { (c, tfs) =>
+            c + tfs.originalAmount
+          },
+          25000
+        ) - sold
+        Ok(
+          Json.toJson(
+            SaleStats(
+              sold = sold,
+              remaining = remaining,
+              tokenStats = stats.map { tfs =>
+                TokenSaleStats(
+                  tokenId = tfs.tokenId,
+                  sold = tfs.amount - tfs.originalAmount,
+                  remaining = tfs.amount
+                )
+              }
+            )
+          )
+        )
+      } else {
+        BadRequest(
+          Json.toJson(
+            ErrorResponse(
+              400,
+              "Invalid UUID",
+              "This is not a valid UUID " + _saleId
+            )
+          )
+        )
+      }
+    } catch {
+      case nse: NoSuchElementException =>
+        NotFound(
+          Json.toJson(
+            ErrorResponse(
+              404,
+              "NoSuchElementException",
+              "Could not find sale with id " + _saleId
+            )
+          )
+        )
+      case e: Exception => {
+        logger.error("Caught unexpected error", e);
+        InternalServerError(
+          Json.toJson(
+            ErrorResponse(
+              500,
+              e.getClass().getCanonicalName(),
+              e.getMessage()
+            )
+          )
+        )
+      }
+    }
+  }
+
   def getSale(_saleId: String) = Action { implicit request =>
     try {
       val ergoClient = RestApiErgoClient.create(

@@ -290,6 +290,12 @@ class SalesDAO @Inject() (
     db.run(query)
   }
 
+  def getTokensForSale(tokenIds: Seq[String]): Future[Seq[TokenForSale]] = {
+    val query =
+      TokensForSale.tokensForSale.filter(_.tokenId.inSet(tokenIds)).result
+    db.run(query)
+  }
+
   def newTokenOrder(
       id: UUID,
       userAddress: String,
@@ -356,6 +362,16 @@ class SalesDAO @Inject() (
       )
       .sortBy(_.createdAt)
       .take(120)
+      .result
+    db.run(query)
+  }
+
+  def getSold(tokenIds: Seq[String]): Future[Int] = {
+    val query = TokensForSale.tokensForSale
+      .filter(tfs => tfs.tokenId.inSet(tokenIds))
+      .map(tfs => tfs.originalAmount - tfs.amount)
+      .sum
+      .getOrElse(0)
       .result
     db.run(query)
   }
