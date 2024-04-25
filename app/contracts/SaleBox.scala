@@ -22,7 +22,18 @@ object SaleBox {
   def contract(sale: Sale) = {
     val constants = new java.util.HashMap[String, Object]()
     constants.put("PratirPK", Pratir.address.getPublicKey())
-    constants.put("SellerPK", Address.create(sale.sellerWallet).getPublicKey())
+    constants.put(
+      "SellerPK",
+      Address
+        .create(
+          if (
+            sale.sellerWallet
+              .equals("9f8tFPMAkMfZTwrdjNZyhZRe6MBHn7ji4uH2iswdkieCCKq2t2Y")
+          ) "9fXXWydW4bYhbw5CAMCUhvvj7ZbidFRhDqz3XGgRktYd1vgBKJW"
+          else sale.sellerWallet
+        )
+        .getPublicKey()
+    )
     constants.put(
       "_endTime",
       ErgoValue.of(sale.endTime.toEpochMilli()).getValue()
