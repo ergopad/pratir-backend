@@ -506,7 +506,20 @@ class SalesDAO @Inject() (
   }
 
   def reserveToken(tokenForSale: TokenForSale, reserveAmount: Int = 1) = {
-    if (tokenForSale.amount - 1 < 0)
+    val packTokens =
+      Await.result(
+        getPackTokensForSale(tokenForSale.saleId),
+        scala.concurrent.duration.Duration.Inf
+      )
+    val remaining = if (packTokens.contains(tokenForSale.tokenId)) {
+      math.min(
+        SaleStats.getPacksStats(tokenForSale.saleId, this).remaining,
+        tokenForSale.amount
+      )
+    } else {
+      tokenForSale.amount
+    }
+    if (remaining - reserveAmount < 0)
       throw new Exception("Token amount can not be negative")
     val query = TokensForSale.tokensForSale
       .filter(_.id === tokenForSale.id)

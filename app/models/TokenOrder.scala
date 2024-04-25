@@ -284,7 +284,8 @@ final case class TokenOrder(
 
       val result: Option[Fulfillment] =
         if (
-          sufficientFunds && sale.status == SaleStatus.LIVE && !fullPack.soldOut
+          sufficientFunds && sale.status == SaleStatus.LIVE && !fullPack.soldOut && orderBox
+            .getCreationHeight() > height - 30
         ) {
           val combinedPrices = combinedPricesOpt.get
           val negativeTokens =

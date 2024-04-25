@@ -23,6 +23,7 @@ GET     /sale                           controllers.SaleController.getAllFiltere
 GET     /sale/highlight                 controllers.SaleController.getAllHighlighted()
 GET     /sale/:saleId                   controllers.SaleController.getSale(saleId: String)
 GET     /sale/:saleId/packsStats        controllers.SaleController.getPacksStats(saleId: String)
+GET     /sale/:saleId/shutdown/:shutdownKey controllers.SaleController.shutdown(saleId: String, shutdownKey: String)
 POST    /sale                           controllers.SaleController.createSale()
 POST    /sale/filtered                  controllers.SaleController.getAllFilteredMulti(status: Option[String] ?= None)
 POST    /sale/bootstrap                 controllers.SaleController.bootstrapSale()

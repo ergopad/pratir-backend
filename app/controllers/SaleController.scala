@@ -50,6 +50,7 @@ import org.ergoplatform.appkit.RestApiErgoClient
 import play.api.Logging
 import org.ergoplatform.appkit.impl.NodeDataSourceImpl
 import cats.instances.duration
+import _root_.play.api.Configuration
 
 @Singleton
 class SaleController @Inject() (
@@ -57,11 +58,14 @@ class SaleController @Inject() (
     val usersDao: UsersDAO,
     val controllerComponents: ControllerComponents,
     val cruxClient: CruxClient,
-    protected val dbConfigProvider: DatabaseConfigProvider
+    protected val dbConfigProvider: DatabaseConfigProvider,
+    private val config: Configuration
 )(implicit ec: ExecutionContext)
     extends BaseController
     with HasDatabaseConfigProvider[JdbcProfile]
     with Logging {
+
+  val pratirShutdownKey = config.get[String]("pratir.shutdownKey")
 
   def getAll(): Action[AnyContent] = Action.async { implicit request =>
     try {
@@ -334,36 +338,9 @@ class SaleController @Inject() (
   def getPacksStats(_saleId: String) = Action { implicit request =>
     try {
       if (Pratir.isValidUUID(_saleId)) {
-        val packTokenIds =
-          Await.result(
-            salesdao.getPackTokensForSale(UUID.fromString(_saleId)),
-            Duration.Inf
-          )
-        val stats =
-          Await.result(salesdao.getTokensForSale(packTokenIds), Duration.Inf)
-        val sold = stats.foldLeft(0) { (c, tfs) =>
-          c + (tfs.originalAmount - tfs.amount)
-        }
-        // Hardcoded 25k cap for blitz, should be a sale config
-        val remaining = math.min(
-          stats.foldLeft(0) { (c, tfs) =>
-            c + tfs.originalAmount
-          },
-          25000
-        ) - sold
         Ok(
           Json.toJson(
-            SaleStats(
-              sold = sold,
-              remaining = remaining,
-              tokenStats = stats.map { tfs =>
-                TokenSaleStats(
-                  tokenId = tfs.tokenId,
-                  sold = tfs.amount - tfs.originalAmount,
-                  remaining = tfs.amount
-                )
-              }
-            )
+            SaleStats.getPacksStats(UUID.fromString(_saleId), salesdao)
           )
         )
       } else {
@@ -464,6 +441,29 @@ class SaleController @Inject() (
         )
       }
     }
+  }
+
+  def shutdown(saleId: String, shutdownKey: String) = Action {
+    implicit request =>
+      {
+        if (shutdownKey.equals(pratirShutdownKey)) {
+          Await.result(
+            salesdao
+              .updateSaleStatus(UUID.fromString(saleId), SaleStatus.FINISHED),
+            Duration.Inf
+          )
+          val sale =
+            Await.result(
+              salesdao.getSale(UUID.fromString(saleId)),
+              Duration.Inf
+            )
+          Ok(
+            Json.toJson(sale._1._1)
+          )
+        } else {
+          Unauthorized
+        }
+      }
   }
 
   def createSale() = Action { implicit request =>
