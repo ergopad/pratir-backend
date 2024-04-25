@@ -446,7 +446,17 @@ class SaleController @Inject() (
   def shutdown(saleId: String, shutdownKey: String) = Action {
     implicit request =>
       {
-        if (shutdownKey.equals(pratirShutdownKey)) {
+        val sale =
+          Await.result(
+            salesdao.getSale(UUID.fromString(saleId)),
+            Duration.Inf
+          )
+        if (
+          shutdownKey.equals(pratirShutdownKey) || Pratir.encoder.matches(
+            shutdownKey,
+            sale._1._1.password
+          )
+        ) {
           Await.result(
             salesdao
               .updateSaleStatus(UUID.fromString(saleId), SaleStatus.FINISHED),
