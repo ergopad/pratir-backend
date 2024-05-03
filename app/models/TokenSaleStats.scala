@@ -41,7 +41,7 @@ object SaleStats {
       stats.foldLeft(0) { (c, tfs) =>
         c + tfs.originalAmount
       },
-      25000
+      20000
     ) - sold
     SaleStats(
       sold = sold,
